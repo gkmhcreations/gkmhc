@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@drawable/saffron_background_rr_corner">
+
+    <TextView
+        android:id="@+id/lagnam_horai_hdr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_centerHorizontal="true"
+        android:maxLines="3"
+        android:textStyle="bold"
+        android:textColor="@color/blue"
+        android:text="@string/lagnam_details"
+        android:layout_marginStart="1dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:layout_below="@id/lagnam_horai_hdr">
+
+        <TableLayout
+            android:id="@+id/lagnam_horai_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*"
+            android:shrinkColumns="*">
+
+            <TableRow
+                android:background="@drawable/row_bg"
+                android:paddingLeft="1dp"
+                android:paddingRight="1dp"
+                android:paddingStart="1dp"
+                android:paddingEnd="1dp">
+
+                <TextView
+                    android:id="@+id/lagnam_horai_table_hdr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.34"
+                    android:maxLines="3"
+                    android:textStyle="bold"
+                    android:textColor="@color/blue"
+                    android:text="@string/lagnam_heading" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.33"
+                    android:maxLines="3"
+                    android:textStyle="bold"
+                    android:textColor="@color/blue"
+                    android:text="@string/start_time"
+                    android:gravity="center_horizontal"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.33"
+                    android:maxLines="3"
+                    android:textStyle="bold"
+                    android:textColor="@color/blue"
+                    android:text="@string/end_time"
+                    android:gravity="center_horizontal"/>
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+</RelativeLayout>

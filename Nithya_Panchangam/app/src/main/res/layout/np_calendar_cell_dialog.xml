@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@drawable/saffron_background_rr_corner">
+
+    <ViewFlipper
+        android:id="@+id/drikCalendarFlipImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:flipInterval="2000">
+        <ImageView
+            android:id="@+id/np_calendar_icon1"
+            android:contentDescription="@string/nothing_special"
+            android:layout_width="64dp"
+            android:layout_height="64dp" />
+        <ImageView
+            android:id="@+id/np_calendar_icon2"
+            android:contentDescription="@string/nothing_special"
+            android:layout_width="64dp"
+            android:layout_height="64dp" />
+        <ImageView
+            android:id="@+id/np_calendar_icon3"
+            android:contentDescription="@string/nothing_special"
+            android:layout_width="64dp"
+            android:layout_height="64dp" />
+        <ImageView
+            android:id="@+id/np_calendar_icon4"
+            android:contentDescription="@string/nothing_special"
+            android:layout_width="64dp"
+            android:layout_height="64dp" />
+    </ViewFlipper>
+
+    <TableLayout
+        android:orientation="vertical"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TableRow
+            android:id="@+id/layout1"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp"
+            android:paddingStart="1dp"
+            android:paddingEnd="1dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/np_date_hdr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:textStyle="bold"
+                android:maxLines="5"
+                android:layout_weight="1"
+                android:textColor="@color/blue"
+                android:text="@string/Day"
+                android:layout_marginStart="1dp" />
+            <TextView
+                android:id="@+id/np_date_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:layout_weight="3"
+                android:maxLines="5"
+                android:textStyle="bold"
+                android:gravity="end"
+                android:textColor="@color/green"
+                android:text=""
+                android:textAlignment="viewEnd"
+                android:layout_marginStart="1dp" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/layout2"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/dhina_vishesham_hdr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:layout_weight="1"
+                android:maxLines="5"
+                android:textStyle="bold"
+                android:textColor="@color/blue"
+                android:text="@string/festivals_events"
+                android:layout_marginStart="1dp" />
+            <TextView
+                android:id="@+id/dhina_vishesham"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:layout_weight="2"
+                android:maxLines="5"
+                android:textStyle="bold"
+                android:gravity="end"
+                android:textColor="@color/green"
+                android:text=""
+                android:textAlignment="textEnd"
+                android:layout_marginStart="1dp" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/layout3"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/np_cell_maasam_hdr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:layout_weight="1"
+                android:maxLines="5"
+                android:textStyle="bold"
+                android:textColor="@color/blue"
+                android:text="@string/maasam_heading"
+                android:layout_marginStart="1dp" />
+            <TextView
+                android:id="@+id/np_cell_maasam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:layout_weight="2"
+                android:maxLines="5"
+                android:textStyle="bold"
+                android:textColor="@color/green"
+                android:gravity="end"
+                android:text=""
+                android:textAlignment="viewEnd"
+                android:layout_marginStart="1dp" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/layout4"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/np_cell_thithi_hdr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:layout_weight="1"
+                android:maxLines="5"
+                android:textStyle="bold"
+                android:textColor="@color/blue"
+                android:text="@string/thithi_heading"
+                android:layout_marginStart="1dp" />
+            <TextView
+                android:id="@+id/np_cell_thithi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:layout_weight="2"
+                android:maxLines="5"
+                android:textStyle="bold"
+                android:textColor="@color/green"
+                android:gravity="end"
+                android:text=""
+                android:textAlignment="viewEnd"
+                android:layout_marginStart="1dp" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/layout5"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/np_cell_natchathiram_hdr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:layout_weight="1"
+                android:maxLines="5"
+                android:textStyle="bold"
+                android:textColor="@color/blue"
+                android:text="@string/nakshatram_heading"
+                android:layout_marginStart="1dp" />
+            <TextView
+                android:id="@+id/np_cell_natchathiram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:layout_weight="2"
+                android:maxLines="5"
+                android:textStyle="bold"
+                android:textColor="@color/green"
+                android:gravity="end"
+                android:text=""
+                android:textAlignment="viewEnd"
+                android:layout_marginStart="1dp" />
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

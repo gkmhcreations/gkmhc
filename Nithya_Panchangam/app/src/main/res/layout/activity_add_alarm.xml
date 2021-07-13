@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/default_background"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/alarmTimeValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/blue"
+        android:textStyle="bold"
+        android:maxLines="5"
+        android:text="@string/alarm_time"/>
+
+    <TextView
+        android:id="@+id/alarmTypeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/blue"
+        android:textStyle="bold"
+        android:maxLines="5"
+        android:text=""/>
+
+    <LinearLayout
+        android:id="@+id/timeLayout"
+        android:layout_below="@id/alarmTimeValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TimePicker
+            android:id="@+id/alarmSetTime"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:numbersBackgroundColor="@color/white"
+            android:numbersSelectorColor="@color/blue"
+            android:numbersTextColor="@color/black"
+            android:padding="5dp"
+            android:textAlignment="center"
+            android:timePickerMode="spinner" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/alarmFieldsLayout"
+        android:layout_below="@id/timeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:background="@drawable/layout_bg"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/details"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/blue"
+                android:textStyle="bold"
+                android:maxLines="5"
+                android:text="@string/details"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/repeat_hdr"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/blue"
+                    android:maxLines="5"
+                    android:text="@string/repeat" />
+
+                <RelativeLayout
+                    android:id="@+id/repeatLayout"
+                    android:layout_toEndOf="@id/repeat_hdr"
+                    android:layout_alignParentEnd="true"
+                    android:gravity="end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/repeat_details"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@color/blue"
+                        android:maxLines="5"
+                        android:text="@string/repeat_once" />
+
+                    <ImageView
+                        android:id="@+id/repeat_settings"
+                        android:gravity="center_vertical"
+                        android:src="@drawable/ic_calendar_next_small_arrow"
+                        android:layout_toEndOf="@id/repeat_details"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/repeat_arrow" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/vibrate_hdr"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/blue"
+                    android:maxLines="5"
+                    android:text="@string/vibrate_when_alarm_sounds" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/vibration_settings"
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_toEndOf="@id/vibrate_hdr"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/ringtone_hdr"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/blue"
+                    android:maxLines="5"
+                    android:text="@string/ringtone" />
+
+                <ImageView
+                    android:id="@+id/ringtone_settings"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="150dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/ringtone_button_bg"
+                    android:layout_toEndOf="@id/ringtone_hdr"
+                    android:gravity="center_horizontal"
+                    android:src="@drawable/ic_ringtone"
+                    android:contentDescription="@string/ringtone_image" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:paddingTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/label_hdr"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/blue"
+                    android:maxLines="5"
+                    android:text="@string/label" />
+
+                <EditText
+                    android:id="@+id/label_text"
+                    android:labelFor="@id/label_text"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="80dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_toEndOf="@id/label_hdr"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/blue"
+                    android:textSize="18sp"
+                    android:maxLines="5"
+                    android:autofillHints="AlarmLabel"
+                    android:inputType="text"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

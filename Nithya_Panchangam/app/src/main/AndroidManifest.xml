@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.gkmhc.vedanta.nithya_panchangam">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:allowBackup="true"
+        android:fullBackupContent="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Nithya_Panchangam">
+
+        <activity android:name="com.gkmhc.vedanta.nithya_panchangam.AlarmLockScreenNotification"
+            android:excludeFromRecents="true"
+            android:keepScreenOn="true"
+            android:showOnLockScreen="true">
+        </activity>
+
+        <activity android:name="com.gkmhc.vedanta.nithya_panchangam.NithyaPanchangamCalendar"
+            android:configChanges="screenSize|keyboardHidden|orientation|locale"
+            android:theme="@style/Theme.Nithya_Panchangam">
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="com.gkmhc.vedanta.nithya_panchangam" />
+
+        <activity
+            android:name="com.gkmhc.vedanta.nithya_panchangam.AboutActivity"
+            android:theme="@style/ThemeOverlay.Nithya_Panchangam.SplashScreen" />
+        <activity android:name="com.gkmhc.vedanta.nithya_panchangam.NithyaPanchangamSettings" />
+        <activity android:name="com.gkmhc.vedanta.nithya_panchangam.HandleAlarmReminderActivity" />
+
+        <receiver
+            android:name="com.gkmhc.vedanta.nithya_panchangam.NPBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.ACTION_TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.DATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.gkmhc.vedanta.nithya_panchangam.SplashScreen"
+            android:theme="@style/ThemeOverlay.Nithya_Panchangam.SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name="com.gkmhc.vedanta.nithya_panchangam.NithyaPanchangamWidget"
+            android:theme="@style/ThemeOverlay.Nithya_Panchangam.AppWidgetContainer">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/nithya_panchangam_widget_info" />
+        </receiver>
+
+        <activity
+            android:name="com.gkmhc.vedanta.nithya_panchangam.MainActivity"
+            android:configChanges="screenSize|keyboardHidden|orientation|locale"
+            android:theme="@style/Theme.Nithya_Panchangam">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

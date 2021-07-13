@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/transparent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:id="@+id/np_location_hdr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".Panchangam">
+
+        <TextView
+            android:id="@+id/nithya_panchangam_hdr"
+            android:ellipsize="end"
+            android:text="@string/nithya_panchangam_header"
+            android:textStyle="bold"
+            android:maxLines="3"
+            android:textColor="@color/maroon"
+            android:gravity="start"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/location"
+            android:ellipsize="marquee"
+            android:text="@string/pref_def_location_val"
+            android:textStyle="bold"
+            android:maxLines="3"
+            android:textColor="@color/maroon"
+            android:gravity="end"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/panchangam_table"
+        android:background="@drawable/default_background"
+        android:paddingTop="2dp"
+        android:layout_below="@id/np_location_hdr"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:cacheColorHint="#00000000"
+        android:divider="#A0A0A0"
+        android:dividerHeight="1dp"
+        android:scrollingCache="false"
+        android:smoothScrollbar="true">
+    </ListView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/npDayPrev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
+        android:backgroundTint="@color/white_transparent"
+        android:src="@drawable/ic_calendar_prev"
+        android:theme="@style/PanchangamCalendarTheme"
+        android:contentDescription="@string/scroll_calendar_left"
+        android:layout_alignParentStart="true" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/npDayNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
+        android:backgroundTint="@color/white_transparent"
+        android:src="@drawable/ic_calendar_next"
+        android:theme="@style/PanchangamCalendarTheme"
+        android:contentDescription="@string/scroll_calendar_right"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>

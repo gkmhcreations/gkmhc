@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/no_alarms"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:text="@string/no_alarms"
+        android:textSize="20sp"
+        android:maxLines="5"
+        android:textStyle="bold"
+        android:textColor="@color/blue"
+        android:layout_centerVertical="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ListView
+        android:id="@+id/alarm_table"
+        android:background="@drawable/default_background"
+        android:paddingTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:cacheColorHint="#00000000"
+        android:divider="#A0A0A0"
+        android:dividerHeight="1dp"
+        android:scrollingCache="false"
+        android:smoothScrollbar="true">
+    </ListView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_add_alarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="@color/lightSaffron"
+        android:layout_margin="@dimen/np_table_top_row_size"
+        android:src="@drawable/ic_add"
+        android:theme="@style/PanchangamCalendarTheme"
+        app:fabSize="normal"
+        android:contentDescription="@string/add_alarm" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_delete_alarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/lightSaffron"
+        android:src="@drawable/ic_delete"
+        android:theme="@style/PanchangamCalendarTheme"
+        app:fabSize="normal"
+        android:contentDescription="@string/delete_alarm" />
+</RelativeLayout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@drawable/saffron_background_rr_corner">
+
+    <ImageView
+        android:id="@+id/np_location_icon"
+        android:contentDescription="@string/location_selection"
+        android:src="@drawable/ic_location"
+        android:layout_width="64dp"
+        android:layout_height="64dp" />
+
+    <TextView
+        android:id="@+id/np_cell_natchathiram_hdr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:maxLines="3"
+        android:textStyle="bold"
+        android:textColor="@color/blue"
+        android:text="@string/enter_preferred_location"
+        android:layout_marginStart="1dp" />
+
+    <AutoCompleteTextView
+        android:id="@+id/location_dropbox"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_marginStart="1dp"
+        android:gravity="start"
+        android:hint="@string/pref_location"
+        android:text=""
+        android:textColor="@color/maroon"
+        android:textStyle="bold" />
+</LinearLayout>

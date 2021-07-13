@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/pref_locale"/>
+        <ListPreference
+            android:key="@string/pref_np_locale_key"
+            android:title="@string/preferred_display_lang"
+            android:entries="@array/locale_list"
+            android:entryValues="@array/locale_list"
+            android:defaultValue="@string/pref_def_locale"
+            android:summary="Choose preferred display language"/>
+
+    <PreferenceCategory
+        android:title="@string/pref_location"/>
+        <ListPreference
+            android:key="@string/pref_location_settings_key"
+            android:title="@string/pref_location_type_details"
+            android:entries="@array/pref_location_settings"
+            android:entryValues="@array/pref_location_settings"
+            android:defaultValue="@string/pref_def_location_type"
+            android:summary="Choose location settings"/>
+
+    <PreferenceCategory
+        android:title="@string/pref_sankalpam"/>
+        <ListPreference
+            android:key="@string/pref_sankalpam_type_key"
+            android:title="@string/pref_sankalpam_details"
+            android:entries="@array/pref_sankalpam_type_list"
+            android:entryValues="@array/pref_sankalpam_type_list"
+            android:defaultValue="@string/pref_def_sankalpam_type"
+            android:summary="Choose preferred sankalpam Type"/>
+
+    <PreferenceCategory
+        android:title="@string/pref_panchangam"/>
+        <ListPreference
+            android:key="@string/pref_panchangam_key"
+            android:title="@string/pref_panchangam_type"
+            android:entries="@array/pref_allowed_panchangam_list"
+            android:entryValues="@array/pref_allowed_panchangam_list"
+            android:defaultValue="@string/pref_def_panchangam"
+            android:summary="Choose preferred panchangam type"/>
+
+</PreferenceScreen>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/saffron_background_rr_corner">
+
+    <TextView
+        android:id="@+id/repeat_option_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/blue"
+        android:textStyle="bold"
+        android:maxLines="5"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="18dp"
+        android:text="@string/select_repeat_option"/>
+
+    <CheckBox
+        android:id="@+id/repeat_once"
+        android:text="@string/repeat_once"
+        android:textColor="@color/blue"
+        android:maxLines="5"
+        android:padding="@dimen/np_table_top_row_size"
+        android:paddingTop="18dp"
+        android:checked="true"
+        android:layout_below="@id/repeat_option_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <CheckBox
+        android:id="@+id/repeat_daily"
+        android:text="@string/repeat_daily"
+        android:textColor="@color/blue"
+        android:maxLines="5"
+        android:padding="@dimen/np_table_top_row_size"
+        android:paddingTop="@dimen/np_table_top_row_size"
+        android:layout_below="@id/repeat_once"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <CheckBox
+        android:id="@+id/repeat_custom"
+        android:text="@string/repeat_custom"
+        android:textColor="@color/blue"
+        android:maxLines="5"
+        android:padding="@dimen/np_table_top_row_size"
+        android:paddingTop="@dimen/np_table_top_row_size"
+        android:paddingBottom="18dp"
+        android:layout_below="@id/repeat_daily"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <CheckBox
+        android:id="@+id/repeat_every_occurrence"
+        android:text="@string/repeat_every_occurrence"
+        android:textColor="@color/blue"
+        android:maxLines="5"
+        android:padding="@dimen/np_table_top_row_size"
+        android:paddingTop="@dimen/np_table_top_row_size"
+        android:paddingBottom="18dp"
+        android:layout_below="@id/repeat_once"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ScrollView
+        android:layout_below="@id/repeat_custom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/repeat_custom_suboptions"
+            android:visibility="gone"
+            android:paddingStart="40dp"
+            android:paddingEnd="1dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/repeat_custom_sunday"
+                android:text="@string/repeat_sunday"
+                android:textColor="@color/blue"
+                android:maxLines="5"
+                android:padding="@dimen/np_table_top_row_size"
+                android:paddingTop="@dimen/np_table_top_row_size"
+                android:checked="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:id="@+id/repeat_custom_monday"
+                android:text="@string/repeat_monday"
+                android:textColor="@color/blue"
+                android:maxLines="5"
+                android:padding="@dimen/np_table_top_row_size"
+                android:paddingTop="@dimen/np_table_top_row_size"
+                android:checked="true"
+                android:layout_below="@id/repeat_custom_sunday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:id="@+id/repeat_custom_tuesday"
+                android:text="@string/repeat_tuesday"
+                android:textColor="@color/blue"
+                android:maxLines="5"
+                android:padding="@dimen/np_table_top_row_size"
+                android:paddingTop="@dimen/np_table_top_row_size"
+                android:checked="true"
+                android:layout_below="@id/repeat_custom_monday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:id="@+id/repeat_custom_wednesday"
+                android:text="@string/repeat_wednesday"
+                android:textColor="@color/blue"
+                android:maxLines="5"
+                android:padding="@dimen/np_table_top_row_size"
+                android:paddingTop="@dimen/np_table_top_row_size"
+                android:checked="true"
+                android:layout_below="@id/repeat_custom_tuesday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:id="@+id/repeat_custom_thursday"
+                android:text="@string/repeat_thursday"
+                android:textColor="@color/blue"
+                android:maxLines="5"
+                android:padding="@dimen/np_table_top_row_size"
+                android:paddingTop="@dimen/np_table_top_row_size"
+                android:checked="true"
+                android:layout_below="@id/repeat_custom_wednesday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:id="@+id/repeat_custom_friday"
+                android:text="@string/repeat_friday"
+                android:textColor="@color/blue"
+                android:maxLines="5"
+                android:padding="@dimen/np_table_top_row_size"
+                android:paddingTop="@dimen/np_table_top_row_size"
+                android:checked="true"
+                android:layout_below="@id/repeat_custom_thursday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:id="@+id/repeat_custom_saturday"
+                android:text="@string/repeat_saturday"
+                android:textColor="@color/blue"
+                android:maxLines="5"
+                android:padding="@dimen/np_table_top_row_size"
+                android:paddingTop="@dimen/np_table_top_row_size"
+                android:paddingBottom="18dp"
+                android:checked="true"
+                android:layout_below="@id/repeat_custom_friday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

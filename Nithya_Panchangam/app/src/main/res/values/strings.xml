@@ -1,0 +1,213 @@
+<resources>
+    <string name="app_name">Nithya Panchangam</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="nithya_panchangam_header">
+        "Nithya Panchangam"
+    </string>
+    <string name="sankalpam_shubam_begin">Mamo patha, samastha duritha kshyadwara Shri Parameshwara preethyartham shubhe shobhane muhoorthe aadhyabrahmanaha dwithiye pararthe shwetha varaha kalpe vaivasvatha manvanthare ashta vimshathi thame kaliyuge prathame pade jambudweepe bhaaratha varshe bharatha khande meroho dakshine parshwe shakabdhe asmin varthamane vyavahaarike prabhavadhinaam shashtyaam samvatsaranaam madhye</string>
+    <string name="sankalpam_shubam_var_mid_portion" translatable="false">
+        "**** nama samvathsare Uthirayine/Dhakshinayine **** rithou **** maase Krishnapakshe/Shuklapakshe **** subha thithou ****vasara yukhtayaam **** nakshatra yukhtayaam **** nama yoga yukhtayaam, **** karana yukhtayaam"
+    </string>
+    <string name="sankalpam_shubam_end">Shubha nakshatra, shubha yoga, shubha karana, evam guna visheshana vishishtayaam asyaam shubha thithou asmaakam, sarveshaam, sakudumbanaam, kshema, sthairya, veerya, vijaya, ayur arogyam, abhivriddhyartham, mama gruhe maha lakshmi nitya nivaasa siddhyartham, mama ishta kaamya phala siddhyartham, mama vyaapaara, vyavahaara, udyoga abhivriddhi siddhyartham samastha mangala avapthyartham, sharirey vartamaanakaala varthishyamana sakala rogha parihara dwara kshipra arogya saukhyam siddhyartham</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="gkm_copyright">© GKM Heritage Creations, 2021</string>
+    <string name="settings_title" translatable="false">Settings</string>
+    <string name="pref_np_locale_key" translatable="false">PREF_NP_LOCALE_KEY</string>
+    <string name="pref_locale" translatable="false">Display Language</string>
+    <string name="pref_def_locale" translatable="false">English</string>
+    <string name="preferred_display_lang" translatable="false">Preferred Display Language</string>
+    <string name="pref_panchangam_key" translatable="false">PREF_PANCHANGAM_KEY</string>
+    <string name="pref_panchangam" translatable="false">Panchangam</string>
+    <string name="pref_panchangam_type" translatable="false">Panchangam Type</string>
+    <string name="pref_panchangam_drik" translatable="false">Drik Ganitham</string>
+    <string name="pref_def_panchangam" translatable="false">Drik Ganitham</string>
+    <string name="pref_location_settings_key" translatable="false">PREF_LOCATION_SETTINGS_KEY</string>
+    <string name="pref_location" translatable="false">Location</string>
+    <string name="pref_location_type_details" translatable="false">Location Settings</string>
+    <string name="pref_def_location_type" translatable="false">Manual Selection (Recommended)</string>
+    <string name="pref_def_location_val" translatable="false">Varanasi, India</string>
+    <string name="pref_sankalpam_type_key" translatable="false">PREF_SANKALPAM_TYPE_KEY</string>
+    <string name="pref_sankalpam" translatable="false">Sankalpam</string>
+    <string name="pref_sankalpam_details" translatable="false">Sankalpam Details</string>
+    <string name="pref_sankalpam_type_shubam" translatable="false">Shubham</string>
+    <string name="pref_sankalpam_type_srardham" translatable="false">Shrardham</string>
+    <string name="pref_def_sankalpam_type" translatable="false">Shubham</string>
+    <string name="pref_location_gps" translatable="false">GPS Location (Permissions Required)</string>
+    <string-array name="locale_list">
+        <item>Tamil</item>
+        <item>Sanskrit</item>
+        <item>English</item>
+    </string-array>
+    <string-array name="pref_allowed_panchangam_list">
+        <item>@string/pref_panchangam_drik</item>
+    </string-array>
+    <string-array name="pref_location_settings">
+        <item>Manual Selection (Recommended)</item>
+        <item>GPS Location (Permissions Required)</item>
+    </string-array>
+    <string-array name="pref_sankalpam_type_list">
+        <item>@string/pref_sankalpam_type_shubam</item>
+        <item>@string/pref_sankalpam_type_srardham</item>
+    </string-array>
+    <string name="samvatsaram_heading">Samvatsaram (Year)</string>
+    <string name="aayanam_heading">Aayanam (6-month cycle)</string>
+    <string name="rithou_heading">Rithu (Season)</string>
+    <string name="maasam_heading">Maasam (Month)</string>
+    <string name="paksham_heading">Paksham (15-day cycle)</string>
+    <string name="thithi_heading">Thithi (Lunar Day)</string>
+    <string name="vaasaram_heading">Vaasaram (Weekday)</string>
+    <string name="raasi_heading">Raasi (Planet)</string>
+    <string name="nakshatram_heading">Nakshatram (Star)</string>
+    <string name="yogam_heading">Yogam (Time)</string>
+    <string name="karanam_heading">Karanam (Half-Thithi)</string>
+    <string name="good_time_heading">Good Time</string>
+    <string name="raahu_kaalam_heading">Raahu Kaalam</string>
+    <string name="emakandam_heading">Yamagandam</string>
+    <string name="kuligai_heading">Kuligai</string>
+    <string name="panchangam_tab_heading">Panchangam</string>
+    <string name="sankalpam_tab_heading">Sankalpam</string>
+    <string name="alarm_tab_heading">Alarm</string>
+    <string name="stopwatch_tab_heading">Stopwatch</string>
+    <string name="splash_screen_banner">Swamiye Saranam Ayyappa</string>
+    <string name="sankalpam_nama_samvathsare">nama samvathsare</string>
+    <string name="sankalpam_maase">maase</string>
+    <string name="sankalpam_subha_thithou">shubha thithou</string>
+    <string name="sankalpam_yukhtayaam">yukhtayaam</string>
+    <string name="sankalpam_nakshatra_yukhtayaam">nakshatra yukhtayaam</string>
+    <string name="sankalpam_yoga_yukhtayaam">yoga yukhtayaam</string>
+    <string name="sankalpam_karana_yukhtayaam">karana yukhtayaam</string>
+    <string name="chandrashtama_natchathiram_heading">Chandrashtama Natchathiram (Star)</string>
+    <string name="lagnam_heading">Lagnam</string>
+    <string name="horai_heading">Horai</string>
+    <string name="sankalpam_srardham_begin">Mamo patha, samastha duritha kshyadwara Shri Parameshwara preethyartham, apavithra pavithrova sarvavastham gathobhiva | yasmareth pundarikaksham sabhahyaam apyantharaha suchihi || maanasam vaachikam paapam karmanaa samuparchitham | Shri Rama smaranenaiva vyapohathi nasamshayaha ||  Shri Rama Rama Rama | Thithirvishnuhu thathaa vaaraha nakshathram Vishnu revacha | yogashcha karanam chaiva sarvam Vishnu mayam Jagat || Shri Govinda Govinda Govinda || Adya Shri Bhagavathaha maha purushasya Vishnoho Rajya pravartha maanasya adyabrahmanaha dwithiya parardhe shwetha varaha kalpe vaivasvatha manvanthare ashta vimshathi thame kaliyuge prathame pade jambudweepe bhaaratha varshe bharatha khande meroho dakshine parshwe shakabde asmin varthamane vyavahaarike prabhavadinaam shashtyaam samvatsaranaam madhye</string>
+    <string name="sankalpam_punya_thithou">punya thithou</string>
+    <string name="sankalpam_srardham_end_1">Vishnu yoga Vishnu karana evam guna visheshana vishishtayaam asyaam</string>
+    <string name="sankalpam_srardham_end_2">(Prachinaviti) ............ Gothranaam, Vasurudra adithya swaroopanam asmad pithru pithamaha prapitamahaanam --- (if mother alive) pithamahi, pithu-pithamahi pithu-prapitaamahi (or else) (if mother not alive) matuhu, pithamahi, pithu-pithamahi, (mother’s gothram) ............ Gothranaam, sapatneeka, mathamaha, mathu-pithaamaha, mathu-prapithaamaha naam ubhaya vamsha pithrunaam akshayya thripthyartham</string>
+    <string name="sankalpam_srardham_end_3">punya kale Darsha Shrardham hiranya roopena adhya karishye</string>
+    <string name="amruthathi_yogam_heading">Amruthathi Yogam</string>
+    <string name="vaasaram_suffix">vaasara</string>
+    <string name="solar_calendar">Sauramānam</string>
+    <string name="splash_logo" translatable="false">Splash Logo</string>
+    <string name="ayyappan_logo" translatable="false">Ayyappan Logo</string>
+    <string name="add_alarm">Add Alarm</string>
+    <string name="delete_alarm" translatable="false">Delete Alarm</string>
+    <string name="scroll_calendar_left" translatable="false">Prev</string>
+    <string name="scroll_calendar_right" translatable="false">Next</string>
+    <string name="start_alarm" translatable="false">Start Alarm</string>
+    <string name="stop_alarm" translatable="false">Stop Alarm</string>
+    <string name="calendar" translatable="false">Calendar</string>
+    <string name="settings" translatable="false">Settings</string>
+    <string name="about" translatable="false">About</string>
+    <string name="alarm_time">"Alarm Time - "</string>
+    <string name="vedic">Vedic</string>
+    <string name="vibrate_when_alarm_sounds">Vibrate</string>
+    <string name="repeat">Repeat</string>
+    <string name="location_unknown" translatable="false">Location Unknown!</string>
+    <string name="location_permission_denied" translatable="false">Location - Permission Denied!</string>
+    <string name="sunrise_heading">Sunrise</string>
+    <string name="sunset_heading">Sunset</string>
+    <string name="planet_sun">Sun</string>
+    <string name="planet_mon">Mon</string>
+    <string name="planet_tue">Tue</string>
+    <string name="planet_wed">Wed</string>
+    <string name="planet_thu">Thu</string>
+    <string name="planet_fri">Fri</string>
+    <string name="planet_sat">Sat</string>
+    <string name="def_stopwatch_value" translatable="false">00:00:000</string>
+    <string name="festivals_events">Day\'s Event(s)</string>
+    <string name="akshaya_thrithiyai">Akshaya Thrithiyai</string>
+    <string name="ammavasai">Amavasai</string>
+    <string name="pournami">Pournami</string>
+    <string name="sri_rama_navami">Sri Rama Navami</string>
+    <string name="sashti">Sashti</string>
+    <string name="ekadasi">Ekadasi</string>
+    <string name="pradosham">Pradosham</string>
+    <string name="makara_sankaranthi">Makara Sankaranthi, Pongal</string>
+    <string name="sankara_jayanthi">Shri Adi Shankara Jayanthi</string>
+    <string name="vaikasi_visakam">Vaikasi Visakam</string>
+    <string name="aadi_perukku">Aadi Perukku</string>
+    <string name="aadi_pooram">Aadi Pooram, Andal Jayanthi</string>
+    <string name="garuda_panchami">Garuda Panchami</string>
+    <string name="varalakshmi_vratham">Varalakshmi Vratham</string>
+    <string name="avani_avittam_yajur">Avani Avittam (Yajur)</string>
+    <string name="avani_avittam_rig">Avani Avittam (Rig)</string>
+    <string name="avani_avittam_sam">Avani Avittam (Sam)</string>
+    <string name="maha_sankata_hara_chaturthi">Maha Sankata Hara Chaturthi</string>
+    <string name="gokulashtami">Gokulashtami</string>
+    <string name="vinayagar_chaturthi">Ganesh Chaturthi</string>
+    <string name="maha_bharani">Maha Bharani</string>
+    <string name="mahalaya_ammavasai">Mahalaya Ammavasai</string>
+    <string name="navarathiri">Navarathiri Arambham</string>
+    <string name="saraswathi_pooja">Saraswathi Pooja</string>
+    <string name="vijaya_dasami">Vijaya Dasami</string>
+    <string name="deepavali">Deepavali</string>
+    <string name="soora_samharam">Soora Samharam</string>
+    <string name="karthigai_deepam">Karthigai Deepam</string>
+    <string name="sashti_vratham">Sashti Vratham</string>
+    <string name="arudhra_darshan">Arudhra Darshan</string>
+    <string name="sri_ramanuja_jayanthi">Shri Ramanuja Jayanthi</string>
+    <string name="tamil_puthandu">Tamil Puthandu</string>
+    <string name="panguni_uthiram">Panguni Uthiram</string>
+    <string name="karadaiyan_nombu">Karadaiyan Nombu</string>
+    <string name="maasi_magam">Maasi Magam</string>
+    <string name="bheeshmashtami">Bheeshmashtami</string>
+    <string name="ratha_saptami">Ratha Saptami</string>
+    <string name="vasantha_panchami">Vasantha Panchami</string>
+    <string name="thai_poosam">Thai Poosam</string>
+    <string name="maha_sivarathiri">Maha Shivarathiri</string>
+    <string name="naraka_chathurdasi">Naraka Chathurdasi</string>
+    <string name="Day">Day</string>
+    <string name="enter_preferred_location">Enter a preferred location:</string>
+    <string name="ringtone">Ringtone</string>
+    <string name="details">Details</string>
+    <string name="dismiss_alarm">Dismiss</string>
+    <string name="snooze_alarm">Snooze</string>
+    <string name="channel_name">Nithya Panchangam</string>
+    <string name="channel_description">Nithya Panchangam Events</string>
+    <string name="label">Label</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="no_reminders">No Reminders!</string>
+    <string name="no_alarms">No Alarms!</string>
+    <string name="delete_reminder">Delete Reminder</string>
+    <string name="reminder_tab_heading">Reminder</string>
+    <string name="chithra_pournami">Chithra Pournami</string>
+    <string name="select_repeat_option">Select Repeat Option</string>
+    <string name="repeat_once">Once</string>
+    <string name="repeat_daily">Daily</string>
+    <string name="repeat_custom">Custom</string>
+    <string name="repeat_every_occurrence">Every Occurrence</string>
+    <string name="repeat_sunday">Sunday</string>
+    <string name="repeat_monday">Monday</string>
+    <string name="repeat_tuesday">Tuesday</string>
+    <string name="repeat_wednesday">Wednesday</string>
+    <string name="repeat_thursday">Thursday</string>
+    <string name="repeat_friday">Friday</string>
+    <string name="repeat_saturday">Saturday</string>
+    <string name="repeat_arrow">Repeat Arrow</string>
+    <string name="ringtone_image">Ringtone Image</string>
+    <string name="vedic_alarm_is_on">Alarm is ON</string>
+    <string name="location_selection">Location Selection!</string>
+    <string name="hh_mm">HH:MM</string>
+    <string name="sankata_hara_chathurthi">Sankata Hara Chathurthi</string>
+    <string name="nothing_special">Nothing Special!</string>
+    <string name="hanuman_jayanthi">Shri Hanumath Jayanthi</string>
+    <string name="maha_periyava_jayanthi">Shri Chandrasekharendra Saraswati Mahaswamigal Jayanthi</string>
+    <string name="puthu_periyava_jayanthi">Shri Jayendra Saraswathi Swamigal Jayanthi</string>
+    <string name="bala_periyava_jayanthi">Shri Shankara Vijayendra Saraswathi Swamigal Jayanthi</string>
+    <string name="sringeri_periyava_jayanthi">Shri Bharathi Theertha Swaminaha Vardhanthi</string>
+    <string name="appayya_dikshitar_jayanthi">Shri Appayya Dikshitar Jayanthi</string>
+    <string name="lagnam_details">Dhina Lagnams</string>
+    <string name="horai_details">Dhina Horai(s)</string>
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
+    <string name="cancel">Cancel</string>
+    <string name="select">Select</string>
+    <string name="vedic_reminder_is_on">Reminder is ON</string>
+    <string name="select_year">Select Year</string>
+    <string name="ugadi">Ugadi</string>
+    <string name="agni_nakshathiram_begin">Agni Nakshathiran Begins</string>
+    <string name="agni_nakshathiram_end">Agni Nakshathiram Ends</string>
+    <string name="onam">Onam</string>
+    <string name="mahalayam_start">Mahalayam Begins</string>
+</resources>

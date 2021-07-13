@@ -1,0 +1,46 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Nithya_Panchangam" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryVariant">@color/lightblue</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/cyan</item>
+        <item name="colorSecondaryVariant">@color/lightcyan</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="ThemeOverlay.Nithya_Panchangam.SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>>
+        <item name="android:windowBackground">@drawable/default_background</item>
+    </style>
+    <style name="ThemeOverlay.Nithya_Panchangam.AppWidgetContainer" parent="">
+        <item name="appWidgetBackgroundColor">@color/lightblue</item>
+        <item name="appWidgetTextColor">@color/blue</item>
+    </style>
+    <style name="PanchangamCalendarTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@android:color/holo_blue_dark</item>
+        <item name="android:windowBackground">@color/lightcyan</item>
+        <item name="colorControlActivated">@color/blue</item>
+        <item name="android:textColorPrimary">@android:color/holo_green_dark</item>
+        <item name="android:textColorSecondary">@android:color/holo_green_dark</item>
+    </style>
+    <style name="AlarmStateTheme" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorSwitchThumbNormal">@color/gray</item>
+        <item name="trackColor">@color/lightgray</item>
+    </style>
+
+    <style name="MyTabLayout" parent="Base.Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/MyTabTextAppearance</item>
+    </style>
+    <style name="MyTabTextAppearance" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/blue</item>
+        <item name="textAllCaps">true</item>
+    </style>
+</resources>

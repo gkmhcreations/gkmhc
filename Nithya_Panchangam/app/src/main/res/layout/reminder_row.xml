@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/transparent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/reminder_icon"
+        android:contentDescription="@string/festivals_events"
+        android:src="@drawable/swamy_ayyappan_circle"
+        android:layout_centerVertical="true"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
+
+    <LinearLayout
+        android:id="@+id/reminder_details_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="50dp"
+        android:padding="4dp">
+
+        <TextView
+            android:id="@+id/reminder_date_time"
+            android:ellipsize="end"
+            android:maxLines="5"
+            android:text="@string/hh_mm"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textColor="@color/blue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/reminder_addl_settings"
+            android:ellipsize="marquee"
+            android:maxLines="5"
+            android:text=""
+            android:textColor="@color/blue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/reminder_label"
+            android:ellipsize="marquee"
+            android:maxLines="5"
+            android:text=""
+            android:textColor="@color/blue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/reminder_state"
+        android:theme="@style/AlarmStateTheme"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"/>
+</RelativeLayout>

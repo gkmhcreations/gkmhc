@@ -1,12 +1,9 @@
 package com.gkmhc.utils;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-
 import swisseph.*;
 
 /**
@@ -38,7 +35,7 @@ import swisseph.*;
  *
  * Credits: Source for the Drik calculations is referred from Karanam Ramkumar's link below:
  *          https://fdocuments.in/document/panchangam-calculations.html
- *          Source for SwissEph for getting Longitude & Latitude for Ravi & Moon and Udhaya Lagnam:
+ *          Source for SwissEph for getting Longitude & Lattide for Ravi & Moon and Udhaya Lagnam:
  *          http://th-mack.de/download/contrib/VedicHouses.java
  *
  * This whole software project is distributed under GNU GPL:
@@ -50,10 +47,8 @@ import swisseph.*;
 public class VedicCalendar extends Calendar {
     // Non-static members of this class.
     // This is unavoidable.
-    private HashMap<String, Integer> dhinaVisheshamList = null;
-    private final HashMap<String, String[]> vedicCalendarLocaleList;
-    private final double refRaviAyanamAtDayStart;
-    private final double refChandraAyanamAtDayStart;
+    private final double refRaviAyanam;
+    private final double refChandraAyanam;
     private double dailyRaviMotion; // DRM
     private double dailyChandraMotion; // DCM
     private double sunRiseTotalMins = 0;
@@ -86,35 +81,33 @@ public class VedicCalendar extends Calendar {
     private static final int REF_DATE = 14;
 
     private static final int SAMVATSARAM_NUM_YEARS = 60;
-    private static final int MAX_NAKSHATHRAMS = 27;
+    private static final int MAX_NATCHATHIRAMS = 27;
     private static final int MAX_AYANAM_MINUTES = 21600; // 30deg * 60 mins per degree
     private static final int MAX_THITHI_MINUTES = 720; // 12deg * 60 mins per degree
-    private static final int MAX_NAKSHATHRAM_MINUTES = 800; // 13deg 20' * 60 mins per degree
+    private static final int MAX_NATCHATHIRAM_MINUTES = 800; // 13deg 20' * 60 mins per degree
     private static final int MAX_RAASI_MINUTES = 1800; // 30deg * 60 mins per degree
     private static final int MAX_KARANAM_MINUTES = 360; // 1/4th of natchathiram
     private static final int MAX_KARANAMS = 60;
-    private static final int MAX_RITHUS = 6;
+    private static final int MAX_RITHOUS = 6;
     private static final int MAX_AYANAMS = 2;
     private static final int MAX_PAKSHAMS = 2;
     private static final int MAX_RAASIS = 12;
     private static final int MAX_THITHIS = 30;
-    private static final int MAX_VAASARAMS = 7;
-    private static final int MAX_AMRUTHATHI_YOGAMS = 3;
+    private static final int THITHI_DEGREES = 12;
     private static final int KARANAM_DEGREES = 6;
     private static final int REF_UTHARAYINAM_START_MONTH = 3;
     private static final int REF_DHAKSHINAYINAM_START_MONTH = 8;
     private static final int MAX_24HOURS = 24;
     private static final int MAX_MINS_IN_HOUR = 60;
     private static final int MAX_MINS_IN_DAY = 1440;
-    private static final int APPROX_HOURS_TILL_NEXTDAY_SUNRISE = 30;
-    private static final int MAX_PANCHANGAM_FIELDS = 16;
     private static final int SUNRISE_TOTAL_MINS = 360;
     private static final int SUNSET_TOTAL_MINS = 1080;
-    private static final int CHANDRASHTAMA_NAKSHATHRAM_OFFSET = 16;
+    private static final int CHANDRASHTAMA_NATCHATHIRAM_OFFSET = 16;
     private static final double MAX_KAALAM_FACTOR = 0.125;
     private static final double LAGNAM_DAILY_OFFSET = 3; // TODO - This needs to be fine-tuned
-    private static double DEF_LONGITUDE = (82 + 58.34 / 60.0); // Default to Varanasi
-    private static double DEF_LATITUDE = (25 + 19 / 60.0); // Default to Varanasi
+    private double defLongitude = (82 + 58.34 / 60.0); // Default to Varanasi
+    private double defLatitude = (25 + 19 / 60.0); // Default to Varanasi
+    private static HashMap<String, Integer> dhinaVisheshamList = null;
     private static double defTimezone = INDIAN_STANDARD_TIME; // IST
 
     // Only "Drik Ganitham" supported as of now
@@ -124,26 +117,271 @@ public class VedicCalendar extends Calendar {
     public static final int MATCH_SANKALPAM_EXACT = 1;      // To get details as per current time
     public static final int MATCH_PANCHANGAM_PROMINENT = 2; // To get details as per prominence
 
-    // Table types for adding locale values based on panchangam type
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_SAMVATSARAM = "samvatsaram";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_AYANAM = "ayanam";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_RITHU = "rithu";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_MAASAM = "maasam";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_PAKSHAM = "paksham";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_THITHI = "thithi";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_THITHI = "sankalpa-thithi";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_RAASI = "raasi";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_NAKSHATHRAM = "natchathiram";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_NAKSHATHRAM = "sankalpa-natchathiram";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_YOGAM = "yogam";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_KARANAM = "karanam";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_VAASARAM = "vaasaram";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_DHINAM = "dhinam";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_HORAI = "horai";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_AMRUTATHI_YOGAM = "amruthathi-yogam";
+    private static final String[] localeList = {
+            "en", // English
+            "ta", // Tamil
+            "sa"  // Sanskrit
+    };
 
-    public static final int AYANAMSA_CHITRAPAKSHA = 0;
-    public static final int AYANAMSA_LAHIRI = 1;
+    // 2D table of samvatsarams to facilitate 2-tuple lookup {samvatsaramIndex, locale}
+    // Note: To add support for new locale, add the corresponding string in last column in each row.
+    // For Ex: To add Hindi string for "Prabhava" samvatsaram, change 1st row as follows:
+    //         {"Prabhava", "பிரபவ", "प्रभव", "प्रभव"},
+    // Design considerations:
+    //  - Why not use HashMap or any other DS?
+    //  - The string arrays used below uses a simple O(1) lookup based on {samvatsaramIndex, locale}.
+    //    So, there is no real benefit of going to a HashMap or the likes.
+    //  - String arrays is simple to use & maintain and in this particular case is quite
+    //    performance efficient.
+    private static final String[][] samvatsaramTable = {
+            {"Prabhava", "பிரபவ", "प्रभव"},
+            {"Vibhava", "விபவ", "विभव"},
+            {"Sukla", "சுக்ல", "शुक्ल"},
+            {"Pramodoota", "பிரமோதூத", "प्रमोद"},
+            {"Prachorpaththi", "பிரசோற்பத்தி", "प्रजापति"},
+            {"Aangirasa", "ஆங்கீரச", "आङ्गिरस"},
+            {"Srimukha", "ஸ்ரீமுக", "श्रीमुख"},
+            {"Bhava", "பவ", "भाव"},
+            {"Yuva", "யுவ", "युव"},
+            {"Dhaatu", "தாது", "धातृ"},
+            {"Eeswara", "ஈஸ்வர", "ईश्वर"},
+            {"Vehudhanya", "வெகுதானிய", "बहुधान्य"},
+            {"Pramathi", "பிரமாதி", "प्रमाधि"},
+            {"Vikrama", "விக்கிரம", "विक्रम"},
+            {"Vishu", "விஷு", "वृष"},
+            {"Chithrabhaanu", "சித்திரபானு", "चित्रभानु"},
+            {"Subhaanu", "சுபானு", "स्वभानु"},
+            {"Dhaarana", "தாரண", "तारण"},
+            {"Paarthiba", "பார்த்திப", "पार्थिव"},
+            {"Viya", "விய", "व्यय"},
+            {"Sarvajith", "சர்வசித்து", "सर्वजित्"},
+            {"Sarvadhari", "சர்வதாரி", "सर्वधारी"},
+            {"Virodhi", "விரோதி", "विरोधी"},
+            {"Vikruthi", "விக்ருதி", "विकृति"},
+            {"Kara", "கர", "खर"},
+            {"Nandhana", "நந்தன", "नन्दन"},
+            {"Vijaya", "விஜய", "विजय"},
+            {"Jaya", "ஜய", "जय"},
+            {"Manmatha", "மன்மத", "मन्मथ"},
+            {"Dhunmukhi", "துற்முகி", "दुर्मुखी"},
+            {"Hevalambhi", "ஹேவிளம்பி", "हेविलम्बी"},
+            {"Vilambhi", "விளம்பி", "विलम्बी"},
+            {"Vikari", "விகாரி", "विकारी"},
+            {"Saarvari", "சார்வரி", "शार्वरी"},
+            {"Plava", "பிலவ", "प्लव"},
+            {"Subakrith", "சுபகிருது", "शुभकृत्"},
+            {"Sobakrith", "சோபகிருது", "शोभकृत्"},
+            {"Krodhi", "குரோதி", "क्रोधी"},
+            {"Visuvaasuva", "விசுவாசுவ", "विश्वावसु"},
+            {"Parabhaava", "பரபாவ", "पराभव"},
+            {"Plavanga", "பிலவங்க", "प्लवङ्ग"},
+            {"Keelaka", "கீலக", "कीलक"},
+            {"Saumya", "சௌமிய", "सौम्य"},
+            {"Sadharana", "சாதாரண", "साधारण"},
+            {"Virodhikrithu", "விரோதகிருது", "विरोधिकृति"},
+            {"Paridhaabi", "பரிதாபி", "परिधावी"},
+            {"Paramaadhisa", "பிரமாதீச", "प्रमादीच"},
+            {"Aanandha", "ஆனந்த", "आनन्द"},
+            {"Rakshasa", "ராட்சச", "राक्षस"},
+            {"Nala", "நள", "नल"},
+            {"Pingala", "பிங்கள", "पिङ्गल"},
+            {"Kalayukthi", "காளயுக்தி", "कालयुक्ति"},
+            {"Siddharthi", "சித்தார்த்தி", "सिद्धार्थी"},
+            {"Raudhri", "ரௌத்திரி", "रौद्र"},
+            {"Dunmathi", "துன்மதி", "दुर्मति"},
+            {"Dhundubhi", "துந்துபி", "दुन्दुभि"},
+            {"Rudhrodhgaari", "ருத்ரோத்காரி", "रुधिरोद्गारी"},
+            {"Raktakshi", "ரக்தாட்சி", "रक्ताक्षी"},
+            {"Krodhana", "குரோதன", "क्रोधन"},
+            {"Akshaya", "அட்சய", "अक्षय"},
+    };
+
+    // 2D table of Ayanam(s) to facilitate 2-tuple lookup {ayanamIndex, locale}
+    // Note: To add support for new locale, add the corresponding string in last column in each row.
+    // For Ex, refer samvatsaramTable
+    // Design considerations:
+    //  - Why not use HashMap or any other DS?
+    //  - The string arrays used below uses a simple O(1) lookup based on {ayanamIndex, locale}.
+    //    So, there is no real benefit of going to a HashMap or the likes.
+    //  - String arrays is simple to use & maintain and in this particular case is quite
+    //    performance efficient.
+    private static final String[][] ayanamTable = {
+            {"Utharayinam", "உத்தராயணம்", "उत्तरायणम्"},
+            {"Dhakshinayinam", "தட்சிணாயணம்", "दक्षिणायनम्"},
+    };
+
+    // 2D table of maasam to facilitate 2-tuple lookup {maasamIndex, locale}
+    // Note: To add support for new locale, add the corresponding string in last column in each row.
+    // For Ex, refer samvatsaramTable
+    // Design considerations:
+    //  - Why not use HashMap or any other DS?
+    //  - The string arrays used below uses a simple O(1) lookup based on {maasamIndex, locale}.
+    //    So, there is no real benefit of going to a HashMap or the likes.
+    //  - String arrays is simple to use & maintain and in this particular case is quite
+    //    performance efficient.
+    private static final String[][] maasamTable = {
+            {"Mesha", "சித்திரை", "मेषः"},
+            {"Rishabha", "வைகாசி", "वृषभः"},
+            {"Mithuna", "ஆனி", "मिथुनम्"},
+            {"Kataka", "ஆடி", "कटकः"},
+            {"Simha", "ஆவணி", "सिंहः"},
+            {"Kanni", "புரட்டாசி", "कन्या"},
+            {"Thula", "ஐப்பசி", "तुला"},
+            {"Vrichiga", "கார்த்திகை", "वृश्चिकः"},
+            {"Dhanusu", "மார்கழி", "धनुः"},
+            {"Makara", "தை", "मकरः"},
+            {"Kumbha", "மாசி", "कुम्भः"},
+            {"Meena", "பங்குனி", "मीनः"}
+    };
+
+    // Same as maasam table to facilitate 2-tuple lookup {maasamIndex, locale}
+    // Why do we need this table?
+    // For Panchangam - For sanskrit locale, show proper sanskrit raasi / maasam
+    //                  For tamil locale, show proper tamil raasi / maasam
+    // For Sankalpam - Irrespective of locale, show the transliteration of Sanskrit
+    //                 raasi / maasam only.
+    private static final String[][] raasiTable = {
+            {"Mesha", "மேஷ", "मेषः"},
+            {"Rishabha", "ரிஷப", "वृषभः"},
+            {"Mithuna", "மிதுன", "मिथुनम्"},
+            {"Kataka", "கடக", "कटकः"},
+            {"Simha", "சிம்ம", "सिंहः"},
+            {"Kanni", "கன்னி", "कन्या"},
+            {"Thula", "துலா", "तुला"},
+            {"Vrichiga", "விருச்சிக", "वृश्चिकः"},
+            {"Dhanusu", "தனுசு", "धनुः"},
+            {"Makara", "மகர", "मकरः"},
+            {"Kumbha", "கும்ப", "कुम्भः"},
+            {"Meena", "மீன", "मीनः"}
+    };
+
+    // 2D table of rithu to facilitate 2-tuple lookup {rithuIndex, locale}
+    // Note: To add support for new locale, add the corresponding string in last column in each row.
+    // For Ex, refer samvatsaramTable
+    // Design considerations:
+    //  - Why not use HashMap or any other DS?
+    //  - The string arrays used below uses a simple O(1) lookup based on {rithuIndex, locale}.
+    //    So, there is no real benefit of going to a HashMap or the likes.
+    //  - String arrays is simple to use & maintain and in this particular case is quite
+    //    performance efficient.
+    private static final String[][] RithuTable = {
+            {"Vasantharithu", "வசந்தரிது", "वसन्तऋतुः"},
+            {"Greeshmarithu", "க்ரீஷ்மரிது", "ग्रीष्मऋतुः"},
+            {"Varsharithu", "வர்ஷரிது", "वर्षऋतुः"},
+            {"Sharadarithu", "ஷரத்ரிது", "शरद्ऋतुः"},
+            {"Hemantharithu", "ஹேமந்தரிது", "हेमन्तऋतुः"},
+            {"Shishirarithu", "ஷிஷிரரிது", "शिशिरऋतुः"}
+    };
+
+    // 2D table of paksham to facilitate 2-tuple lookup {pakshamIndex, locale}
+    // Note: To add support for new locale, add the corresponding string in last column in each row.
+    // For Ex, refer samvatsaramTable
+    // Design considerations:
+    //  - Why not use HashMap or any other DS?
+    //  - The string arrays used below uses a simple O(1) lookup based on {pakshamIndex, locale}.
+    //    So, there is no real benefit of going to a HashMap or the likes.
+    //  - String arrays is simple to use & maintain and in this particular case is quite
+    //    performance efficient.
+    private static final String[][] pakshamTable = {
+            {"Shukla", "ஶுக்ல", "शुक्ल"},
+            {"Krishna", "க்ருஷ்ண", "कृष्ण"}
+    };
+
+    // 2D table of thithi to facilitate 2-tuple lookup {thithiIndex, locale}
+    // Note: To add support for new locale, add the corresponding string in last column in each row.
+    // For Ex, refer samvatsaramTable
+    // Design considerations:
+    //  - Why not use HashMap or any other DS?
+    //  - The string arrays used below uses a simple O(1) lookup based on {thithiIndex, locale}.
+    //    So, there is no real benefit of going to a HashMap or the likes.
+    //  - String arrays is simple to use & maintain and in this particular case is quite
+    //    performance efficient.
+    private static final String[][] thithiTable = {
+            {"Prathama", "ப்ரதமா", "प्रथमा"},
+            {"Dvithiya", "த்விதீயா", "द्वितीया"},
+            {"Thrithiya", "த்ருதீயா", "तृतीया"},
+            {"Chathurthi", "சதுர்தீ", "चतुर्थी"},
+            {"Panchami", "பஞ்சமீ", "पञ्चमी"},
+            {"Sashti", "ஷஷ்டீ", "षष्ठी"},
+            {"Sapthami", "ஸப்தமீ", "सप्तमी"},
+            {"Ashtami", "அஷ்டமீ", "अष्टमी"},
+            {"Navami", "நவமீ", "नवमी"},
+            {"Dasami", "தசமீ", "दशमी"},
+            {"Ekadasi", "ஏகாதசி", "एकादशी"},
+            {"Dvadasi", "த்வாதசி", "द्वादशी"},
+            {"Thrayodasi", "த்ரயோதசி", "त्रयोदशी"},
+            {"Chathurdasi", "சதுர்தசி", "चतुर्दशी"},
+            {"Pournami", "பௌர்ணமீ", "पौर्णमासी"},
+            {"Prathama", "ப்ரதமா", "प्रथमा"},
+            {"Dvithiya", "த்விதீயா", "द्वितीया"},
+            {"Thrithiya", "த்ருதீயா", "तृतीया"},
+            {"Chathurthi", "சதுர்தீ", "चतुर्थी"},
+            {"Panchami", "பஞ்சமீ", "पञ्चमी"},
+            {"Sashti", "ஷஷ்டீ", "षष्ठी"},
+            {"Sapthami", "ஸப்தமீ", "सप्तमी"},
+            {"Ashtami", "அஷ்டமீ", "अष्टमी"},
+            {"Navami", "நவமீ", "नवमी"},
+            {"Dasami", "தசமீ", "दशमी"},
+            {"Ekadasi", "ஏகாதசி", "एकादशी"},
+            {"Dvadasi", "த்வாதசி", "द्वादशी"},
+            {"Thrayodasi", "த்ரயோதசி", "त्रयोदशी"},
+            {"Chathurdasi", "சதுர்தசி", "चतुर्दशी"},
+            {"Amavasya", "அமாவாசை", "अमावस्या"}
+    };
+
+    // 2D table of vaasaram to facilitate 2-tuple lookup {vaasaramIndex, locale}
+    // Note: To add support for new locale, add the corresponding string in last column in each row.
+    // For Ex, refer samvatsaramTable
+    // Design considerations:
+    //  - Why not use HashMap or any other DS?
+    //  - The string arrays used below uses a simple O(1) lookup based on {vaasaramIndex, locale}.
+    //    So, there is no real benefit of going to a HashMap or the likes.
+    //  - String arrays is simple to use & maintain and in this particular case is quite
+    //    performance efficient.
+    private static final String[][] vaasaramTable = {
+            {"Bhanu", "பானு", "भानुः"},
+            {"Indhu", "இந்து", "इन्दुः"},
+            {"Bhouma", "பௌம", "भौमः"},
+            {"Soumya", "ஸௌம்ய", "सौम्यः"},
+            {"Guru", "குரு", "गुरुः"},
+            {"Brughu", "ப்ருகு", "भृगुः"},
+            {"Sthira", "ஸ்திர", "स्थिरः"}
+    };
+
+    // Same as vaasaram table to facilitate 2-tuple lookup {vaasaramIndex, locale}
+    // Why do we need this table?
+    // For Panchangam - For sanskrit locale, show proper sanskrit vaasaram
+    //                  For tamil locale, show proper tamil dhinam
+    // For Sankalpam - Irrespective of locale, show the transliteration of Sanskrit
+    //                 raasi / maasam only.
+    private static final String[][] dhinaTable = {
+            {"Bhanu", "ஞாயிறு", "भानुः"},
+            {"Indhu", "திங்கள்", "इन्दुः"},
+            {"Bhouma", "செவ்வாய்", "भौमः"},
+            {"Soumya", "புதன்", "सौम्यः"},
+            {"Guru", "வியாழன்", "गुरुः"},
+            {"Brughu", "வெள்ளி", "भृगुः"},
+            {"Sthira", "சனி", "स्थिरः"}
+    };
+
+    // 2D table of horai to facilitate 2-tuple lookup {horaiIndex, locale}
+    // Note: To add support for new locale, add the corresponding string in last column in each row.
+    // For Ex, refer samvatsaramTable
+    // Design considerations:
+    //  - Why not use HashMap or any other DS?
+    //  - The string arrays used below uses a simple O(1) lookup based on {horaiIndex, locale}.
+    //    So, there is no real benefit of going to a HashMap or the likes.
+    //  - String arrays is simple to use & maintain and in this particular case is quite
+    //    performance efficient.
+    private static final String[][] horaiTable = {
+            {"Sooriya", "சூரிய", "सूर्यः"},
+            {"Chandra", "சந்", "चन्द्रः"},
+            {"Mangal", "அங்", "मङ्गलः"},
+            {"Budh", "புத", "बुधः"},
+            {"Guru", "குரு", "गुरुः"},
+            {"Sukra", "சுக்", "शुक्रः"},
+            {"Shani", "சனி", "शनिः"}
+    };
 
     private static final int HORAI_ASUBHAM = 0;
     private static final int HORAI_NORMAL = 1;
@@ -190,6 +428,96 @@ public class VedicCalendar extends Calendar {
             102  // {"Meena", "மீன", "मीन"} => 4 Nazhigai, 1/4 Nazhigai (102 mins)
     };
 
+    // 2D table of natchathiram to facilitate 2-tuple lookup {natchathiramIndex, locale}
+    // Note: To add support for new locale, add the corresponding string in last column in each row.
+    // For Ex, refer samvatsaramTable
+    // Design considerations:
+    //  - Why not use HashMap or any other DS?
+    //  - The string arrays used below uses a simple O(1) lookup based on {natchathiramIndex, locale}.
+    //    So, there is no real benefit of going to a HashMap or the likes.
+    //  - String arrays is simple to use & maintain and in this particular case is quite
+    //    performance efficient.
+    private static final String[][] natchathiramTable = {
+            {"Ashwini", "அஸ்வினி", "अश्विनी"},
+            {"Bharani", "பரணி", "अपभरणी"},
+            {"Karthikai", "கிருத்திகை", "कृत्तिका"},
+            {"Rohini", "ரோஹினி", "रोहिणी"},
+            {"Mrigashirisham", "ம்ருகசிரீஷம்", "मृगशीर्षम्"},
+            {"Thiruvathirai", "திருவாதிரை", "आर्द्रा"},
+            {"Punarpoosam", "புனர்பூசம்", "पुनर्वसुः"},
+            {"Poosam", "பூசம்", "पुष्यः"},
+            {"Ayilyam", "ஆயில்யம்", "आश्रेषा"},
+            {"Magam", "மகம்", "मघा"},
+            {"Pooram", "பூரம்", "पूर्वफल्गुनी"},
+            {"Uthiram", "உத்திரம்", "उत्तरफल्गुनी"},
+            {"Hastham", "ஹஸ்தம்", "हस्तः"},
+            {"Chithirai", "சித்திரை", "चित्रा"},
+            {"Swathi", "சுவாதி", "स्वाती"},
+            {"Visaka", "விசாகம்", "विशाखा"},
+            {"Anusham", "அனுஷம்", "अनूराधा"},
+            {"Kettai", "கேட்டை", "ज्येष्ठा"},
+            {"Moolam", "மூலம்", "मूला"},
+            {"Pooradam", "பூராடம்", "पूर्वाषाढा"},
+            {"Uthiradam", "உத்திராடம்", "उत्तराषाढा"},
+            {"Thiruvonam", "திருவோணம்", "श्रवणम्"},
+            {"Avittam", "அவிட்டம்", "श्रविष्ठा"},
+            {"Sadhayam", "சதயம்", "शतभिषक्"},
+            {"Poorattathi", "பூரட்டாதி", "पूर्वप्रोष्ठपदा"},
+            {"Uthirattathi", "உத்திரட்டாதி", "उत्तरप्रोष्ठपदा"},
+            {"Revathi", "ரேவதி", "रेवती"}
+    };
+
+    // Same as natchathiram table to facilitate 2-tuple lookup {natchathiramIndex, locale}
+    // Why do we need this table?
+    // For Panchangam - For sanskrit locale, show proper sanskrit natchathirams
+    //                  For tamil locale, show proper tamil natchathirams
+    // For Sankalpam - Irrespective of locale, show the transliteration of Sanskrit
+    //                 natchathiram(s) only.
+    private static final String[][] sankalpaNakshatramTable = {
+            {"Ashwini", "அஸ்வினீ", "अश्विनी"},
+            {"Apabharani", "அபபரனீ", "अपभरणी"},
+            {"Kruthika", "கிருத்திகா", "कृत्तिका"},
+            {"Rohini", "ரோஹினீ", "रोहिणी"},
+            {"Mrigashiro", "ம்ருகசீரோ", "मृगशीर्षम्"},
+            {"Arthra", "ஆர்த்ரா", "आर्द्रा"},
+            {"Punarvasu", "புனர்வசு", "पुनर्वसुः"},
+            {"Pushya", "புஷ்ய", "पुष्यः"},
+            {"Aslesha", "ஆஸ்லேஷா", "आश्रेषा"},
+            {"Maga", "மக", "मघा"},
+            {"Purva Palguni", "பூர்வ பல்குனீ", "पूर्वफल्गुनी"},
+            {"Uthira Palguni", "உத்திர பல்குனீ", "उत्तरफल्गुनी"},
+            {"Hastha", "ஹஸ்த", "हस्तः"},
+            {"Chithirai", "சித்திரா", "चित्रा"},
+            {"Swathi", "ஸ்வாதீ", "स्वाती"},
+            {"Visaka", "விசாகா", "विशाखा"},
+            {"Anuradha", "அனுராதா", "अनूराधा"},
+            {"Jyeshta", "ஜ்யேஷ்டா", "ज्येष्ठा"},
+            {"Moola", "மூல", "मूला"},
+            {"Purvashada", "பூர்வாஷாடா", "पूर्वाषाढा"},
+            {"Uthirashada", "உத்திராஷாடா", "उत्तराषाढा"},
+            {"Sravana", "ச்ரவண", "श्रवणम्"},
+            {"Sravishta", "ச்ரவிஷ்டா", "श्रविष्ठा"},
+            {"Sadhabhishaka", "சதாபிஷக", "शतभिषक्"},
+            {"Purva Proshtapadha", "பூரவ ப்ரோஷ்டபதா", "पूर्वप्रोष्ठपदा"},
+            {"Uthira Proshtapadha", "உத்திர ப்ரோஷ்டபதா", "उत्तरप्रोष्ठपदा"},
+            {"Revathi", "ரேவதீ", "रेवती"}
+    };
+
+    // 2D table of amruthathi yogam to facilitate 2-tuple lookup {yogamIndex, locale}
+    // Note: To add support for new locale, add the corresponding string in last column in each row.
+    // For Ex, refer samvatsaramTable
+    // Design considerations:
+    //  - Why not use HashMap or any other DS?
+    //  - The string arrays used below uses a simple O(1) lookup based on {yogamIndex, locale}.
+    //    So, there is no real benefit of going to a HashMap or the likes.
+    //  - String arrays is simple to use & maintain and in this particular case is quite
+    //    performance efficient.
+    private static final String[][] amruthathiYogamTable = {
+            {"Amruthayogam", "அம்ருதயோகம்", "अमृतयोगः"},
+            {"Siddhayogam", "சித்தயோகம்", "सिद्धयोगः"},
+            {"Maranayogam", "மரணயோகம்", "मरणयोगः"}
+    };
+
     // Index into amruthathiYogamTable
     // 0 - Amruthayogam, 1 - Sidhayogam, 2 - Maranayogam
     // Design considerations:
@@ -228,6 +556,117 @@ public class VedicCalendar extends Calendar {
             "0112102", // Revathi
     };
 
+    // 2D table of yogam to facilitate 2-tuple lookup {yogamIndex, locale}
+    // Note: To add support for new locale, add the corresponding string in last column in each row.
+    // For Ex, refer samvatsaramTable
+    // Design considerations:
+    //  - Why not use HashMap or any other DS?
+    //  - The string arrays used below uses a simple O(1) lookup based on {yogamIndex, locale}.
+    //    So, there is no real benefit of going to a HashMap or the likes.
+    //  - String arrays is simple to use & maintain and in this particular case is quite
+    //    performance efficient.
+    private static final String[][] yogamTable = {
+            {"Vishkambam", "விஷ்கம்பம்", "विष्कम्भः"},
+            {"Preethi", "பிரீதி", "प्रीतिः"},
+            {"Ayushmaan", "ஆயுஷ்மான்", "आयुष्मान्"},
+            {"Sowbhagyam", "சௌபாக்கியம்", "सौभाग्यः"},
+            {"Shobanam", "சோபனம்", "शोभनः"},
+            {"Athikandam", "அதிகண்டம்", "अतिगण्डः"},
+            {"Sukarmam", "சுகர்மம்", "सुकर्म"},
+            {"Thruthi", "திருதி", "धृतिः"},
+            {"Soolam", "சூலம்", "शूलः"},
+            {"Kandam", "கண்டம்", "गण्डः"},
+            {"Vruddhi", "விருதி", "वृद्धिः"},
+            {"Duruvam", "துருவம்", "ध्रुवः"},
+            {"Vyakadam", "வியாகதம்", "व्याघातः"},
+            {"Arisanam", "அரிசணம்", "हर्षणः"},
+            {"Vachiram", "வச்சிரம்", "वज्रम्"},
+            {"Siddhi", "சித்தி", "सिद्धिः"},
+            {"Vyathipaadam", "வியதிபாதம்", "व्यतीपातः"},
+            {"Variyaam", "வரியான்", "वरीयान्"},
+            {"Parikam", "பரிகம்", "परिघः"},
+            {"Sivam", "சிவம்", "शिवः"},
+            {"Sittham", "சித்தம்", "सिद्धिः"},
+            {"Saththyam", "சாத்தீயம்", "साध्यः"},
+            {"Subham", "சுபம்", "शुभः"},
+            {"Suppiram", "சுப்பிரம்", "शुक्लः"},
+            {"Bramyam", "பிராமியம்", "ब्रह्म"},
+            {"Ainthiram", "ஐந்திரம்", "इन्द्रः"},
+            {"Vaithruthi", "வைதிருதி", "वैधृतिः"}
+    };
+
+    // 2D table of karanam to facilitate 2-tuple lookup {karanamIndex, locale}
+    // Note: To add support for new locale, add the corresponding string in last column in each row.
+    // For Ex, refer samvatsaramTable
+    // Design considerations:
+    //  - Why not use HashMap or any other DS?
+    //  - The string arrays used below uses a simple O(1) lookup based on {karanamIndex, locale}.
+    //    So, there is no real benefit of going to a HashMap or the likes.
+    //  - String arrays is simple to use & maintain and in this particular case is quite
+    //    performance efficient.
+    private static final String[][] karanamTable = {
+            {"Kimsthuknam", "கிம்ஸ்துக்னம்", "किंस्तुघ्नः"},  // FIXED
+            {"Bava", "பவ", "बवः"},
+            {"Baalava", "பாலவ", "बालवः"},
+            {"Koulava", "கௌலவ", "कौलवः"},
+            {"Thaithila", "தைதூலை", "तैतिलः"},
+            {"Gara", "கரசை", "गरः"},
+            {"Vanija", "வணிசை", "वणिजः"},
+            {"Vishti", "விஷ்டி", "विष्टिः"},
+            {"Bava", "பவ", "बवः"},
+            {"Baalava", "பாலவ", "बालवः"},
+            {"Koulava", "கௌலவ", "कौलवः"},
+            {"Thaithila", "தைதூலை", "तैतिलः"},
+            {"Gara", "கரசை", "गरः"},
+            {"Vanija", "வணிசை", "वणिजः"},
+            {"Vishti", "விஷ்டி", "विष्टिः"},
+            {"Bava", "பவ", "बवः"},
+            {"Baalava", "பாலவ", "बालवः"},
+            {"Koulava", "கௌலவ", "कौलवः"},
+            {"Thaithila", "தைதூலை", "तैतिलः"},
+            {"Gara", "கரசை", "गरः"},
+            {"Vanija", "வணிசை", "वणिजः"},
+            {"Vishti", "விஷ்டி", "विष्टिः"},
+            {"Bava", "பவ", "बवः"},
+            {"Baalava", "பாலவ", "बालवः"},
+            {"Koulava", "கௌலவ", "कौलवः"},
+            {"Thaithila", "தைதூலை", "तैतिलः"},
+            {"Gara", "கரசை", "गरः"},
+            {"Vanija", "வணிசை", "वणिजः"},
+            {"Vishti", "விஷ்டி", "विष्टिः"},
+            {"Bava", "பவ", "बवः"},
+            {"Baalava", "பாலவ", "बालवः"},
+            {"Koulava", "கௌலவ", "कौलवः"},
+            {"Thaithila", "தைதூலை", "तैतिलः"},
+            {"Gara", "கரசை", "गरः"},
+            {"Vanija", "வணிசை", "वणिजः"},
+            {"Vishti", "விஷ்டி", "विष्टिः"},
+            {"Bava", "பவ", "बवः"},
+            {"Baalava", "பாலவ", "बालवः"},
+            {"Koulava", "கௌலவ", "कौलवः"},
+            {"Thaithila", "தைதூலை", "तैतिलः"},
+            {"Gara", "கரசை", "गरः"},
+            {"Vanija", "வணிசை", "वणिजः"},
+            {"Vishti", "விஷ்டி", "विष्टिः"},
+            {"Bava", "பவ", "बवः"},
+            {"Baalava", "பாலவ", "बालवः"},
+            {"Koulava", "கௌலவ", "कौलवः"},
+            {"Thaithila", "தைதூலை", "तैतिलः"},
+            {"Gara", "கரசை", "गरः"},
+            {"Vanija", "வணிசை", "वणिजः"},
+            {"Vishti", "விஷ்டி", "विष्टिः"},
+            {"Bava", "பவ", "बवः"},
+            {"Baalava", "பாலவ", "बालवः"},
+            {"Koulava", "கௌலவ", "कौलवः"},
+            {"Thaithila", "தைதூலை", "तैतिलः"},
+            {"Gara", "கரசை", "गरः"},
+            {"Vanija", "வணிசை", "वणिजः"},
+            {"Vishti", "விஷ்டி", "विष्टिः"},
+            {"Shakuni", "சகுனி", "शकुनिः"},  // FIXED
+            {"Chatushpaada", "சதுஷ்பாதம்", "चतुष्पात्"},  // FIXED
+            {"Naga", "நாகவம்", "नाग"}         // FIXED
+    };
+
     public static final int PANCHANGAM_DHINA_VISHESHAM_RANGE_START = 0;
     public static final int PANCHANGAM_DHINA_VISHESHAM_AMAVAASAI = 0;
     public static final int PANCHANGAM_DHINA_VISHESHAM_POURNAMI = 1;
@@ -248,8 +687,8 @@ public class VedicCalendar extends Calendar {
     public static final int PANCHANGAM_DHINA_VISHESHAM_PANGUNI_UTHIRAM = 16;
     public static final int PANCHANGAM_DHINA_VISHESHAM_UGADI = 17;
     public static final int PANCHANGAM_DHINA_VISHESHAM_TAMIL_PUTHANDU = 18;
-    public static final int PANCHANGAM_DHINA_VISHESHAM_AGNI_NAKSHATHRAM_BEGIN = 19;
-    public static final int PANCHANGAM_DHINA_VISHESHAM_AGNI_NAKSHATHRAM_END = 20;
+    public static final int PANCHANGAM_DHINA_VISHESHAM_AGNI_NATCHATHIRAM_BEGIN = 19;
+    public static final int PANCHANGAM_DHINA_VISHESHAM_AGNI_NATCHATHIRAM_END = 20;
     public static final int PANCHANGAM_DHINA_VISHESHAM_RAMANUJA_JAYANTHI = 21;
     public static final int PANCHANGAM_DHINA_VISHESHAM_SRI_RAMA_NAVAMI = 22;
     public static final int PANCHANGAM_DHINA_VISHESHAM_CHITHRA_POURNAMI = 23;
@@ -328,12 +767,16 @@ public class VedicCalendar extends Calendar {
     /**
      * Use this API to create an instance of SwissEph library
      *
-     * @param localPath  Full path to location where SwissEph library can store local information.
+     * @param localpath  Full path to location where SwissEph library can store local information.
      */
-    public static void initSwissEph(String localPath) {
+    public static void initSwissEph(String localpath) {
         //long startTime = System.nanoTime();
-        swissEphInst = new SwissEph(localPath);
+        swissEphInst = new SwissEph(localpath);
+        // Set sidereal mode:
+        swissEphInst.swe_set_sid_mode(SweConst.SE_SIDM_TRUE_CITRA, 0, 0);
         //long endTime = System.nanoTime();
+        createDhinaVisheshamsList();
+        //System.out.println("VedicCalendar SwissEph()... Time Taken: " + VedicCalendar.getTimeTaken(startTime, endTime));
     }
 
     /**
@@ -344,34 +787,17 @@ public class VedicCalendar extends Calendar {
      * @param locLongitude    Longitude of the location
      * @param locLatitude     Latitude of the location
      * @param timeZone        Timezone of the location
-     * @param prefAyanamsa    Preferred Ayanamsa
-     * @param vcLocaleList    List of panchangam fields & values as per the locale of choice.
      *
-     * @return  Returns a valid instance of VedicCalendar class or NULL if any of
-     *          refCalendar (or) panchangamType (or) vcLocaleList are invalid.
+     * @return  Returns a valid instance of VedicCalendar class or NULL if either or both
+     *          refCalendar (or) panchangamType are invalid.
      */
     public static VedicCalendar getInstance(int panchangamType, Calendar refCalendar,
                                             double locLongitude, double locLatitude,
-                                            double timeZone, int prefAyanamsa,
-                                            HashMap<String, String[]> vcLocaleList) {
-        if ((refCalendar == null) || (vcLocaleList == null) ||
-            (panchangamType != PANCHANGAM_TYPE_DRIK_GANITHAM)) {
+                                            double timeZone) {
+        if ((refCalendar == null) || (panchangamType != PANCHANGAM_TYPE_DRIK_GANITHAM)) {
             return null;
         }
-
-        // Validate if vcLocaleList contains all required Panchangam fields & values.
-        // Once this is done, there is no need to NULL check vedicCalendarLocaleList rest of the
-        // file.
-        if (!isVCLocaleListValid(vcLocaleList)) {
-            return null;
-        }
-
-        // Chitrapaksha & Lahiri are only supported Ayanamsa Modes
-        if ((prefAyanamsa != AYANAMSA_CHITRAPAKSHA) && (prefAyanamsa != AYANAMSA_LAHIRI)) {
-            return null;
-        }
-        return new VedicCalendar(panchangamType, refCalendar, locLongitude, locLatitude, timeZone,
-                prefAyanamsa, vcLocaleList);
+        return new VedicCalendar(refCalendar, locLongitude, locLatitude, timeZone);
     }
 
     /**
@@ -381,21 +807,14 @@ public class VedicCalendar extends Calendar {
      * Step 3) Using SwissEph, get next day's Ravi & Chandra longitudes
      * Step 4) Calculate daily motion for Ravi & Chandra
      * Step 5) Calculate given day's sunrise & sunset
-     *  @param refCalendar  A Calendar date as per Gregorian Calendar
+     *
+     * @param refCalendar   A Calendar date as per Gregorian Calendar
      * @param locLongitude  Longitude of the location
      * @param locLatitude   Latitude of the location
      * @param timeZone      Timezone of the location
-     * @param prefAyanamsa  Preferred Ayanamsa
-     * @param vcLocaleList  Locale List
      */
-    private VedicCalendar(int panchangamType, Calendar refCalendar,
-                          double locLongitude, double locLatitude, double timeZone,
-                          int prefAyanamsa, HashMap<String, String[]> vcLocaleList) {
-        // Create a Dhina Vishesham list for each instance as the locale may change for
-        // each instance and thereby helps take care of panchangam as well as reminder texts.
-        vedicCalendarLocaleList = vcLocaleList;
-        createDinaVisheshamsList();
-
+    private VedicCalendar(Calendar refCalendar, double locLongitude, double locLatitude,
+                          double timeZone) {
         defTimezone = timeZone;
         refHour = refCalendar.get(Calendar.HOUR_OF_DAY);
         refMin = refCalendar.get(Calendar.MINUTE);
@@ -404,91 +823,89 @@ public class VedicCalendar extends Calendar {
         refYear = refCalendar.get(Calendar.YEAR);
         refVaasaram = refCalendar.get(Calendar.DAY_OF_WEEK);
 
-        if (prefAyanamsa == AYANAMSA_CHITRAPAKSHA) {
-            // Set sidereal mode: SE_SIDM_TRUE_CITRA for "Drik Ganitham"
-            swissEphInst.swe_set_sid_mode(SweConst.SE_SIDM_TRUE_CITRA, 0, 0);
-        } else {
-            // Set sidereal mode: SE_SIDM_LAHIRI for "Lahiri" Ayanamsa
-            // TODO - Check if the various Vakhyam calendars aligns with this setting!
-            swissEphInst.swe_set_sid_mode(SweConst.SE_SIDM_LAHIRI, 0, 0);
-        }
-
         // Get Chandra's & Ravi's longitudes as per Sunrise for the given day
         //long startTime = System.nanoTime();
-        refRaviAyanamAtDayStart = calcPlanetLongitude(refCalendar, SweConst.SE_SUN);
+        refRaviAyanam = calcPlanetLongitude(refCalendar, SweConst.SE_SUN);
         //long endTime = System.nanoTime();
-        //System.out.println("VedicCalendarProf","calcPlanetLongitude() for Sun... Time Taken: " +
+        //Log.d("VedicCalendarProf","calcPlanetLongitude() for Sun... Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime, endTime));
         //startTime = System.nanoTime();
-        refChandraAyanamAtDayStart = calcPlanetLongitude(refCalendar, SweConst.SE_MOON);
+        refChandraAyanam = calcPlanetLongitude(refCalendar, SweConst.SE_MOON);
         //endTime = System.nanoTime();
-        //System.out.println("VedicCalendarProf","calcPlanetLongitude() for Moon... Time Taken: " +
+        //Log.d("VedicCalendarProf","calcPlanetLongitude() for Moon... Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime, endTime));
 
         // If no longitude or latitude is given, then assume Varanasi's longitude & latitude
         if (locLongitude != 0) {
-            DEF_LONGITUDE = locLongitude;
+            defLongitude = locLongitude;
         }
         if (locLatitude != 0) {
-            DEF_LATITUDE = locLatitude;
+            defLatitude = locLatitude;
         }
-        double[] geoPos = new double[] {DEF_LONGITUDE, DEF_LATITUDE, 0}; // Chennai
+        double[] geoPos = new double[] {defLongitude, defLatitude, 0}; // Chennai
 
         swissEphInst.swe_set_topo(geoPos[0], geoPos[1], geoPos[2]);
         Calendar nextDayCalendar = (Calendar) refCalendar.clone();
         nextDayCalendar.add(Calendar.DATE, 1);
         //startTime = System.nanoTime();
-        double nextDayRaviAyanamAtDayStart = calcPlanetLongitude(nextDayCalendar, SweConst.SE_SUN);
+        double nextDay_ravi_ayanam = calcPlanetLongitude(nextDayCalendar, SweConst.SE_SUN);
         //endTime = System.nanoTime();
-        //System.out.println("VedicCalendarProf","calcPlanetLongitude() Prev Day for Sun... Time Taken: " +
+        //Log.d("VedicCalendarProf","calcPlanetLongitude() Prev Day for Sun... Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime, endTime));
 
         //startTime = System.nanoTime();
-        double nextDayChandraAyanamAtDayStart = calcPlanetLongitude(nextDayCalendar, SweConst.SE_MOON);
+        double nextDay_chandra_ayanam = calcPlanetLongitude(nextDayCalendar, SweConst.SE_MOON);
         //endTime = System.nanoTime();
-        //System.out.println("VedicCalendarProf","calcPlanetLongitude() Prev Day for Sun... Time Taken: " +
+        //Log.d("VedicCalendarProf","calcPlanetLongitude() Prev Day for Sun... Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime, endTime));
-
-        dailyRaviMotion = (nextDayRaviAyanamAtDayStart - refRaviAyanamAtDayStart);
+        dailyRaviMotion = (nextDay_ravi_ayanam - refRaviAyanam);
         if (dailyRaviMotion < 0) {
             dailyRaviMotion += MAX_AYANAM_MINUTES;
         }
-        dailyChandraMotion = (nextDayChandraAyanamAtDayStart - refChandraAyanamAtDayStart);
+        dailyChandraMotion = (nextDay_chandra_ayanam - refChandraAyanam);
         if (dailyChandraMotion < 0) {
             dailyChandraMotion += MAX_AYANAM_MINUTES;
         }
-
-        //System.out.println("VedicCalendar" + "Ref Ravi => " + refRaviAyanamAtDayStart +
+        //System.out.println("VedicCalendar" + "Ref Ravi => " + refRaviAyanam +
         //        " Prev Day Ravi => " + nextDay_ravi_ayanam + " DRM: " + dailyRaviMotion);
-        //System.out.println("VedicCalendar" + "Ref Chandra => " + refChandraAyanamAtDayStart +
+        //System.out.println("VedicCalendar" + "Ref Chandra => " + refChandraAyanam +
         //        " Prev Day Chandra => " + nextDay_chandra_ayanam + " DCM: " + dailyChandraMotion);
     }
 
     /**
      * Use this API to get the Samvatsaram (year).
      *
+     * @param locale      Language
+     *        Note: Currently only 3 locales are supported. (English, Tamil, Sanskrit)
+     *              If an unsupported locale is given as input, then by default "English" is
+     *              assumed instead of return ERROR.
+     *
      * @return Exact Samvatsaram as a string (as per Drik calendar)
      */
-    public String getSamvatsaram() {
+    public String getSamvatsaram(String locale) {
 
         // Logic:
         // Step 1: Get the differential years between given date & reference date
         // Step 2: Given the keys {samvatsaram_index, locale}, find the exact matching
         //         samvatsaram string (as per the locale) in the samvatsaram mapping table.
         int diffYears = calcDiffYears(refDate, refMonth, refYear);
+        int localeIndex = getLocaleIndex(locale);
 
         // System.out.println("VedicCalendar: get_samvatsaram --- Diff Years: " + diffYears);
-        String[] samvatsaramList =
-                vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_SAMVATSARAM);
-        return samvatsaramList[diffYears];
+        return samvatsaramTable[diffYears][localeIndex];
     }
 
     /**
      * Use this API to get the Ayanam (half-year).
      *
+     * @param locale      Language
+     *        Note: Currently only 3 locales are supported. (English, Tamil, Sanskrit)
+     *              If an unsupported locale is given as input, then by default "English" is
+     *              assumed instead of return ERROR.
      * @return Exact Ayanam as a string (as per Drik calendar)
      */
-    public String getAyanam(int queryType) {
+    public String getAyanam(String locale, int queryType) {
+        int localeIndex = getLocaleIndex(locale);
         int ayanamIndex = 0;
         String ayanamStr;
         int maasamIndex = getMaasamIndex(queryType);
@@ -503,20 +920,25 @@ public class VedicCalendar extends Calendar {
         // Step 3: Given the keys {ayanamIndex, locale}, find the exact matching
         //         ayanam string (as per the locale) in the ayanam mapping table.
         if ((maasamIndex >= REF_UTHARAYINAM_START_MONTH) &&
-            (maasamIndex <= REF_DHAKSHINAYINAM_START_MONTH)) {
+                (maasamIndex <= REF_DHAKSHINAYINAM_START_MONTH)) {
             ayanamIndex = 1;
         }
+        ayanamStr = ayanamTable[(ayanamIndex % MAX_AYANAMS)][localeIndex];
+
         // System.out.println("VedicCalendar: get_samvatsaram --- Ayanam: " + ayanamStr);
-        String[] ayanamList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_AYANAM);
-        return ayanamList[(ayanamIndex % MAX_AYANAMS)];
+        return ayanamStr;
     }
 
     /**
      * Use this API to get the Rithu (season).
      *
+     * @param locale      Language
+     *        Note: Currently only 3 locales are supported. (English, Tamil, Sanskrit)
+     *              If an unsupported locale is given as input, then by default "English" is
+     *              assumed instead of return ERROR.
      * @return Exact Rithu as a string (as per Drik calendar)
      */
-    public String getRithu(int queryType) {
+    public String getRithu(String locale, int queryType) {
         // Logic:
         // Step 1: Get Maasam Index based on given Calendar date
         // Step 2: Work out rithu index (basically 2 months is one season)
@@ -525,16 +947,20 @@ public class VedicCalendar extends Calendar {
 
         int maasamIndex = getMaasamIndex(queryType);
         int rithuIndex = maasamIndex / 2;
-        String[] rithuList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_RITHU);
-        return rithuList[(rithuIndex % MAX_RITHUS)];
+        int localeIndex = getLocaleIndex(locale);
+        return RithuTable[(rithuIndex % MAX_RITHOUS)][localeIndex];
     }
 
     /**
      * Use this API to get the Maasam (solar month).
      *
+     * @param locale      Language
+     *        Note: Currently only 3 locales are supported. (English, Tamil, Sanskrit)
+     *              If an unsupported locale is given as input, then by default "English" is
+     *              assumed instead of return ERROR.
      * @return Exact Maasam as a string (as per Drik calendar)
      */
-    public String getMaasam(int queryType) {
+    public String getMaasam(String locale, int queryType) {
         // Logic:
         // Step 1: Get Maasam Index based on given Calendar date
         //         - Get Ravi's longitude for the given day & the next day
@@ -545,75 +971,37 @@ public class VedicCalendar extends Calendar {
         //         raasi left in the given calendar day.
         // Step 2: Given the keys {maasamIndex, locale}, find the exact matching
         //         maasam string (as per the locale) in the maasam mapping table.
-        int maasamIndex = (int) (refRaviAyanamAtDayStart / MAX_RAASI_MINUTES);
+        int localeIndex = getLocaleIndex(locale);
+        int maasamIndex = getMaasamIndex(queryType);
 
-        // Get Sunrise & Sunset timings
-        calcSunrise(queryType);
-        calcSunset(queryType);
+        // Tamil months when in Panchangam mode.
+        String maasamStr = raasiTable[(maasamIndex % MAX_RAASIS)][localeIndex];
+        if (locale.equalsIgnoreCase(localeList[1]) &&
+                (queryType != MATCH_SANKALPAM_EXACT)) {
 
-        double earthMinFor1RaviCelMin = (MAX_MINS_IN_DAY / dailyRaviMotion);
-        double timeLeftToSunset = sunSetTotalMins - (defTimezone * MAX_MINS_IN_HOUR);
-        double raviAyanamAtSunset = refRaviAyanamAtDayStart +
-                (timeLeftToSunset / earthMinFor1RaviCelMin);
-        int maasamIndexAtSunset = (int) (raviAyanamAtSunset / MAX_RAASI_MINUTES);
-
-        if (queryType != MATCH_PANCHANGAM_FULLDAY) {
-            if (maasamIndex != maasamIndexAtSunset) {
-                maasamIndex = maasamIndexAtSunset;
-            }
+            // Refer maasamTable only for Tamil.
+            maasamStr = maasamTable[(maasamIndex % MAX_RAASIS)][localeIndex];
         }
-
-        String[] maasamList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_MAASAM);
-        String[] raasiList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_RAASI);
-        String maasamStr = raasiList[(maasamIndex % MAX_RAASIS)];
-        String nextMaasamStr = raasiList[((maasamIndex + 1) % MAX_RAASIS)];
-        if (queryType != MATCH_SANKALPAM_EXACT) {
-            maasamStr = maasamList[(maasamIndex % MAX_RAASIS)];
-            nextMaasamStr = maasamList[((maasamIndex + 1) % MAX_RAASIS)];
-        }
-
-        if (queryType == MATCH_PANCHANGAM_FULLDAY) {
-            double maasamRef = Math.ceil(refRaviAyanamAtDayStart / MAX_RAASI_MINUTES);
-            maasamRef *= MAX_RAASI_MINUTES;
-            double maasamSpan = maasamRef - refRaviAyanamAtDayStart;
-
-            // 2) Find the Earth Hours during the day based on daily motion of Ravi & Chandra.
-            maasamSpan /= dailyRaviMotion;
-            maasamSpan *= MAX_24HOURS;
-            maasamSpan += defTimezone;
-
-            if (maasamSpan <= 0) {
-                System.out.println("Error: VedicCalendar: Negative getMaasam(): " + maasamSpan);
-            }
-            // 3) Split Earth hours into HH:MM
-            int maasamSpanHour = (int) maasamSpan;
-            maasamSpan *= MAX_MINS_IN_HOUR;
-            int maasamSpanMin = (int)Math.ceil(maasamSpan % MAX_MINS_IN_HOUR);
-            if (maasamIndex != maasamIndexAtSunset) {
-                maasamStr += String.format(" (%02d:%02d)", maasamSpanHour, maasamSpanMin);
-                maasamStr += ARROW_SYMBOL + nextMaasamStr;
-            } else {
-                if (maasamSpanHour < APPROX_HOURS_TILL_NEXTDAY_SUNRISE) {
-                    maasamStr += String.format(" (%02d:%02d)", maasamSpanHour, maasamSpanMin);
-                    maasamStr += ARROW_SYMBOL + nextMaasamStr;
-                }
-            }
-        }
-
         return maasamStr;
     }
 
     /**
      * Use this API to get the Paksham (15-day lunar cycle).
      *
+     * @param locale      Language
+     *        Note: Currently only 3 locales are supported. (English, Tamil, Sanskrit)
+     *              If an unsupported locale is given as input, then by default "English" is
+     *              assumed instead of return ERROR.
+     *
      * @return Exact Paksham as a string (as per Drik calendar)
      */
-    public String getPaksham() {
+    public String getPaksham(String locale) {
         // Logic:
         // Step 1: Get thithi number for the given Calendar date
         // Step 2: Calculate Paksham index
         // Step 3: Given the keys {pakshamIndex, locale}, find the exact matching
         //         paksham string (as per the locale) in the paksham mapping table.
+        int localeIndex = getLocaleIndex(locale);
         int pakshamIndex = 0;
         int thithiIndex = getThithiNum();
 
@@ -622,9 +1010,7 @@ public class VedicCalendar extends Calendar {
         if (thithiIndex > 14) {
             pakshamIndex = 1;
         }
-
-        String[] pakshamList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_PAKSHAM);
-        return pakshamList[(pakshamIndex % MAX_PAKSHAMS)];
+        return pakshamTable[(pakshamIndex % MAX_PAKSHAMS)][localeIndex];
     }
 
     /**
@@ -636,40 +1022,35 @@ public class VedicCalendar extends Calendar {
      *
      * @return Exact Date as a number (as per Drik calendar)
      */
-    public int getDinaAnkam(int queryType) {
+    public int getDhinaAnkham(int queryType) {
         // Logic:
         // Step 1: Find the longitude of Ravi(Sun) on the given day at Sunset.
         //         A sample representation of longitude - 343deg 22’ 44".
         //         Each degree has 60 mins, 1 min has 60 secs
         //         So, 343deg 22’ 44" can be represented as 20602.73 (in minutes)
         // Step 2: Based on Ravi's longitude, find the remaining Raasi minutes before Ravi enters
-        //         next Raasi. Align this to the given timezone
-        // Step 3: Divide resultant expression by Ravi's daily motion to get Dina Ankham
-
+        //         next Raasi.
+        // Step 3: Divide resultant expression by Ravi's daily motion to get Dhina Ankham
         calcSunset(queryType);
         double raviAyanamAtSunset = dailyRaviMotion / MAX_MINS_IN_DAY;
-        raviAyanamAtSunset = refRaviAyanamAtDayStart + (raviAyanamAtSunset * sunSetTotalMins);
-
-        double earthMinFor1CelMin = (MAX_MINS_IN_DAY / dailyRaviMotion);
-
-        // This is important!
-        // Align this to given timezone as Longitude fetched from SwissEph is in 00:00 hours (UTC)
-        raviAyanamAtSunset -= ((defTimezone * MAX_MINS_IN_HOUR) / earthMinFor1CelMin);
-        double dhinaAnkamVal = Math.ceil((raviAyanamAtSunset -
+        raviAyanamAtSunset = refRaviAyanam + (raviAyanamAtSunset * sunSetTotalMins);
+        double dhinaAnkhamVal = Math.ceil((raviAyanamAtSunset -
                 Math.floor(raviAyanamAtSunset/MAX_RAASI_MINUTES) * MAX_RAASI_MINUTES) /
                 dailyRaviMotion);
 
-        //System.out.println("VedicCalendar " + "getDinaAnkam: Ravi: " + refRaviAyanamAtDayStart +
-        //        " mins " + "Ravi at Sunset: " + raviAyanamAtSunset +
-        //        " DRM: " + dailyRaviMotion + " Thithi => " + dhinaAnkamVal +
-        //        " Sunset: " + sunSetTotalMins);
+        //System.out.println("VedicCalendar " + "get_thithi: Ravi: " + refRaviAyanam +
+        //        " mins " + " DRM: " + dailyRaviMotion + " Thithi => " + dhinaAnkhamVal);
 
-        return (int)dhinaAnkamVal;
+        return (int)dhinaAnkhamVal;
     }
 
     /**
      * Use this API to get the Thithi (lunar day).
      *
+     * @param locale Language as per locale settings
+     *        Note: Currently only 3 locales are supported. (English, Tamil, Sanskrit)
+     *              If an unsupported locale is given as input, then by default "English" is
+     *              assumed instead of return ERROR.
      * @param queryType MATCH_SANKALPAM_EXACT
      *                      - to get exact Thithi based on actual Sunrise on a given day.
      *                  MATCH_PANCHANGAM_FULLDAY
@@ -679,7 +1060,7 @@ public class VedicCalendar extends Calendar {
      *
      * @return Exact Thithi as a string (as per Drik calendar)
      */
-    public String getThithi(int queryType) {
+    public String getThithi(String locale, int queryType) {
         // Logic:
         // Step 1: Find the longitude of Ravi(Sun) and Chandra(Moon) on the given day
         //         A sample representation of longitude - 343deg 22’ 44".
@@ -708,66 +1089,86 @@ public class VedicCalendar extends Calendar {
         // Step 10: Given the keys {thithiIndex, locale}, find the exact matching
         //          thithi string (as per the locale) in the thithi mapping table for given thithi
         //          and next thithi as well.
+        int localeIndex = getLocaleIndex(locale);
         double thithiSpan;
-        double earthMinFor1RaviCelMin = (MAX_MINS_IN_DAY / dailyRaviMotion);
-        double earthMinFor1ChandraCelMin = (MAX_MINS_IN_DAY / dailyChandraMotion);
 
-        /*double chandraRaviDistance =
-                (refChandraAyanamAtDayStart + ((defTimezone * MAX_MINS_IN_HOUR) /
-                        earthMinFor1ChandraCelMin)) -
-                (refRaviAyanamAtDayStart + ((defTimezone * MAX_MINS_IN_HOUR) /
-                        earthMinFor1RaviCelMin));*/
-        double chandraRaviDistance = refChandraAyanamAtDayStart - refRaviAyanamAtDayStart;
+        double chandraRaviDistance = refChandraAyanam - refRaviAyanam;
         if (chandraRaviDistance < 0) {
             chandraRaviDistance += MAX_AYANAM_MINUTES;
         }
 
-        //System.out.println("VedicCalendar: " + "Ravi: " + refRaviAyanamAtDayStart + " Chandra: " +
-        //                    refChandraAyanamAtDayStart + " Diff: " + chandraRaviDistance);
+        //System.out.println("VedicCalendar: " + "Ravi: " + refRaviAyanam + " Chandra: " +
+        //                    refChandraAyanam + " Diff: " + chandraRaviDistance);
 
         // 1) Calculate the Thithi index & mapping string for the given calendar day
-        // Day Start is 00:00 hours!
         int thithiSpanHour;
-        int thithiSpanMin;
-        int thithiAtDayStart = (int) (chandraRaviDistance / MAX_THITHI_MINUTES);
-        thithiAtDayStart %= MAX_THITHIS;
+        int thithiSpanMin = 0;
+        int thithiIndexSunrise = (int) (chandraRaviDistance / MAX_THITHI_MINUTES);
+        thithiIndexSunrise %= MAX_THITHIS;
 
-        // Get the exact Sunrise & Sunset timings
+        // Get Sunrise & Sunset timings
         calcSunrise(queryType);
-        calcSunset(queryType);
 
-        double thithiRef = Math.ceil(chandraRaviDistance / MAX_THITHI_MINUTES);
-        thithiRef *= MAX_THITHI_MINUTES;
-        thithiSpan = thithiRef - chandraRaviDistance;
+        if ((queryType == MATCH_SANKALPAM_EXACT) || (queryType == MATCH_PANCHANGAM_FULLDAY)) {
+            // 2) Get Thithi span for the given calendar day
+            thithiSpan = getThithiSpan((thithiIndexSunrise + 1), THITHI_DEGREES);
+            // If 1st Karanam occurs before sunrise, then start with next Karanam.
+            if (thithiSpan < sunRiseTotalMins) {
+                thithiIndexSunrise += 1;
+                thithiIndexSunrise %= MAX_THITHIS;
+                thithiSpan = getThithiSpan(((thithiIndexSunrise + 1) % MAX_THITHIS), THITHI_DEGREES);
+            }
+            thithiSpanHour = (int) (thithiSpan / MAX_MINS_IN_HOUR);
+            thithiSpanMin = (int) (thithiSpan % MAX_MINS_IN_HOUR);
 
-        // 2) Find the Earth Hours during the day based on daily motion of Ravi & Chandra.
-        thithiSpan /= (dailyChandraMotion - dailyRaviMotion);
-        thithiSpan *= MAX_24HOURS;
-        thithiSpan += defTimezone;
-
-        if (thithiSpan <= 0) {
-            //System.out.println("VedicCalendar: Negative getThithi(): " + thithiSpan);
-        }
-        // 3) Split Earth hours into HH:MM
-        thithiSpanHour = (int) thithiSpan;
-        thithiSpan *= MAX_MINS_IN_HOUR;
-        thithiSpanMin = (int)Math.ceil(thithiSpan % MAX_MINS_IN_HOUR);
-
-        String thithiStr = "";
-        String secondThithiStr = "";
-        String[] thithiList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_THITHI);
-        String[] sankalpaThithiList =
-                vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_THITHI);
-        // If the query is for "Sankalpam", then return "thithi" + "suffix" (locale-specific)
-        if (queryType == MATCH_SANKALPAM_EXACT) {
-            thithiStr = sankalpaThithiList[thithiAtDayStart];
-            secondThithiStr = sankalpaThithiList[(thithiAtDayStart + 1)];
         } else {
-            thithiStr = thithiList[thithiAtDayStart];
-            secondThithiStr = thithiList[(thithiAtDayStart + 1) % MAX_THITHIS];
+            // 1) Calculate the thithi span within the day
+            // This is a rough calculation
+            double raviAyanamAtSunset = dailyRaviMotion / MAX_MINS_IN_DAY;
+            raviAyanamAtSunset = refRaviAyanam + (raviAyanamAtSunset * sunSetTotalMins);
+            double chandraAyanamAtSunset = dailyChandraMotion / MAX_MINS_IN_DAY;
+            chandraAyanamAtSunset = refChandraAyanam + (chandraAyanamAtSunset * sunSetTotalMins);
+
+            double chandraRaviDistanceAtSunset = chandraAyanamAtSunset - raviAyanamAtSunset;
+            if (chandraRaviDistanceAtSunset < 0) {
+                chandraRaviDistanceAtSunset += MAX_AYANAM_MINUTES;
+            }
+
+            int thithiIndexSunset = (int) (chandraRaviDistanceAtSunset / MAX_THITHI_MINUTES);
+            thithiIndexSunset %= MAX_THITHIS;
+
+            // There is a change in thithi in the evening
+            if (thithiIndexSunset != thithiIndexSunrise) {
+                // 12 & 27 (Pradosham), 17 (Krishna Chathurthi) are evening thithis
+                thithiIndexSunrise = thithiIndexSunset;
+                /*if ((thithiIndex == 4) ||
+                        (thithiIndex == 11) || (thithiIndex == 17) ||
+                        (thithiIndex == 19) || (thithiIndex == 26)) {
+                }*/
+            }
+
+            double thithiRef = Math.ceil(chandraRaviDistance / MAX_THITHI_MINUTES);
+            thithiRef *= MAX_THITHI_MINUTES;
+            thithiSpan = thithiRef - chandraRaviDistance;
+
+            // 2) Find the Earth Hours during the day based on daily motion of Ravi & Chandra.
+            thithiSpan /= (dailyChandraMotion - dailyRaviMotion);
+            thithiSpan *= MAX_24HOURS;
+            thithiSpan += defTimezone;
+
+            if (thithiSpan <= 0) {
+                //System.out.println("VedicCalendar: Negative getThithi(): " + thithiSpan);
+            }
+            // 3) Split Earth hours into HH:MM
+            thithiSpanHour = (int) thithiSpan;
+            thithiSpan *= MAX_MINS_IN_HOUR;
         }
-        //System.out.println("VedicCalendar: Thithi Index: " + thithiAtDayStart +
-        //        " Thithi: " + thithiStr + " query type: " + queryType);
+        String thithiStr = thithiTable[thithiIndexSunrise][localeIndex];
+        int secondThithiIndex = thithiIndexSunrise + 1;
+        String secondThithiStr =
+                thithiTable[(secondThithiIndex % MAX_THITHIS)][localeIndex];
+        System.out.println("VedicCalendar: Thithi Index: " + thithiIndexSunrise +
+                " Thithi: " + thithiStr + " query type: " + queryType);
 
         // 3 scenarios here:
         // 1) If 1st Thithi is present before sunrise then choose 2nd Thithi (or)
@@ -790,180 +1191,20 @@ public class VedicCalendar extends Calendar {
                 thithiStr = secondThithiStr;
             }
         } else {
-
-            // Calculate Current day's thithi at Sunrise.
-            // Find time left to Sunrise as per local timezone.
-            // For example, Ravi Longitude at DayStart is at 00:00 hours (UTC).
-            // This means that for IST, this is already showing Ravi's longitude at 05:30 hours.
-            // If Sunrise is at 06:00 hours in the morning, then
-            // Ravi's Longitude at Sunrise (IST) =
-            //      Ravi's Daystart longitude + ((06:00 - 05:30) hours * factor)
-            double timeLeftToSunrise = sunRiseTotalMins - (defTimezone * MAX_MINS_IN_HOUR);
-            double curRaviAyanamAtSunrise = refRaviAyanamAtDayStart +
-                    (timeLeftToSunrise / earthMinFor1RaviCelMin);
-            double curChandraAyanamAtSunrise = refChandraAyanamAtDayStart +
-                    (timeLeftToSunrise / earthMinFor1ChandraCelMin);
-            double curChandraRaviDistanceAtSunrise = curChandraAyanamAtSunrise - curRaviAyanamAtSunrise;
-            if (curChandraRaviDistanceAtSunrise < 0) {
-                curChandraRaviDistanceAtSunrise += MAX_AYANAM_MINUTES;
-            }
-            int curThithiAtSunrise = (int) (curChandraRaviDistanceAtSunrise / MAX_THITHI_MINUTES);
-            curThithiAtSunrise %= MAX_THITHIS;
-
-            // Calculate Current day's thithi at Sunset
-            double timeLeftToSunset = sunSetTotalMins - (defTimezone * MAX_MINS_IN_HOUR);
-            double curRaviAyanamAtSunset = refRaviAyanamAtDayStart +
-                    (timeLeftToSunset / earthMinFor1RaviCelMin);
-            double curChandraAyanamAtSunset = refChandraAyanamAtDayStart +
-                    (timeLeftToSunset / earthMinFor1ChandraCelMin);
-            double curChandraRaviDistanceAtSunset = curChandraAyanamAtSunset - curRaviAyanamAtSunset;
-            if (curChandraRaviDistanceAtSunset < 0) {
-                curChandraRaviDistanceAtSunset += MAX_AYANAM_MINUTES;
-            }
-            int curThithiAtSunset = (int) (curChandraRaviDistanceAtSunset / MAX_THITHI_MINUTES);
-            curThithiAtSunset %= MAX_THITHIS;
-
-            // Calculate previous day's thithi at Sunrise
-            double prevDayRaviAyanamAtSunrise = curRaviAyanamAtSunrise - dailyRaviMotion;
-            double prevDayChandraAyanamAtSunrise = curChandraAyanamAtSunrise - dailyChandraMotion;
-            double prevDayChandraRaviDistanceAtSunrise = prevDayChandraAyanamAtSunrise - prevDayRaviAyanamAtSunrise;
-            if (prevDayChandraRaviDistanceAtSunrise < 0) {
-                prevDayChandraRaviDistanceAtSunrise += MAX_AYANAM_MINUTES;
-            }
-            int prevDayThithiAtSunrise = (int) (prevDayChandraRaviDistanceAtSunrise / MAX_THITHI_MINUTES);
-            prevDayThithiAtSunrise %= MAX_THITHIS;
-
-            // Calculate previous day's thithi at Sunset
-            double prevDayRaviAyanamAtSunset = curRaviAyanamAtSunset - dailyRaviMotion;
-            double prevDayChandraAyanamAtSunset = curChandraAyanamAtSunset - dailyChandraMotion;
-            double prevDayChandraRaviDistanceAtSunset = prevDayChandraAyanamAtSunset - prevDayRaviAyanamAtSunset;
-            if (prevDayChandraRaviDistanceAtSunset < 0) {
-                prevDayChandraRaviDistanceAtSunset += MAX_AYANAM_MINUTES;
-            }
-            int prevDayThithiAtSunset = (int) (prevDayChandraRaviDistanceAtSunset / MAX_THITHI_MINUTES);
-            prevDayThithiAtSunset %= MAX_THITHIS;
-
             // MATCH_PANCHANGAM_PROMINENT - Identify the prominent Thithi of the day.
-            // Scenarios possible:
-            // 1) Thithi spans full-day
-            //      --> Prominent Thithi: Thithi of the day!
-            // 2) Thithi spans before Sunrise but changes afterwards
-            //       --> Prominent Thithi: Thithi at Sunrise
-            // 3) Thithi spans till after Sunset but changes afterwards
-            //       --> Prominent Thithi: Thithi at Sunrise
-            // 4) Thithi spans before Sunset but changes afterwards
-            //       --> Prominent Thithi:
-            //           Except Chathurthi, Sashti, Thrayodashi rest of the thithi(s) would
-            //           follow the prominent thithi at Sunrise
-            //    Thithi Prominence at Sunrise --> Prathama, Dvithiya, Thrithiya, Panchami, Saptami,
-            //      Ashtami, Navami, Dashami, Ekadashi, Dvadashi, Chathurdashi, Pournami, Amavasai
-            //    Thithi Prominence at Sunset --> Chathurthi, Sashti, Thrayodashi
-            // 5) Thithi spans till sometime after Sunrise but changes afterwards
-            //       --> Prominent Thithi:
-            //           Except Chathurthi, Sashti, Thrayodashi rest of the thithi(s) would
-            //           follow the prominent thithi at Sunrise
-            // Logic is as follows:
-            // 1) Is thithi(at day start - 00:00 hours) present at Sunrise?
-            //    If yes,
-            //        2) Is thithi present at Sunset?
-            //           If yes,
-            //    Else, choose next thithi as the "prominent" thithi for the day
-            //
-            //
-            // Note: It is impossible for 3 thithi(s) to occur within the same day!
-            //       For example, (below scenario is unrealistic!)
-            //       thithi-1 at day-start, thithi-2 at Sunrise, thithi-3 at Sunset or beyond
-            //       why?
-            //       A thithi spans 12 degrees(720 celestial mins, i.e ~19-26 Earth hours!)
-            //       So, it is impossible for a day to have more than 2 thithi(s).
-            if (isSunsetProminentThithi(curThithiAtSunset)) {
-                // For Sunset-Prominent Thithi(s) occurring at Sunset
-                // Scenarios include:
-                // 1) Thrayodashi at Sunset, Thrayodashi at PrevDay Sunset => Prominent: Thrayodashi
-                // 2) Thrayodashi at Sunset, Dvadashi at Sunrise => Prominent: Thrayodashi
-                // 3) Chathurthi at Sunset, Thrithiya at PrevDay Sunrise,
-                //    Panchami at PrevDay prevDay Sunrise
-                //      => Prominent: Sashti
-                // 4) Chathurthi at Sunrise, Thrithiya at prevDay Sunrise,
-                //    Panchami at PrevDay prevDay Sunset
-                //      => Prominent: Sashti
-                if (prevDayThithiAtSunset == curThithiAtSunset) {
-                    // 1) Thrayodashi at Sunset, Thrayodashi at PrevDay Sunset
-                    //      => Prominent: Thrayodashi
+            //thithiStr = thithiTable[thithiIndex][localeIndex];
+            /*if (thithiSpanHour < MAX_24HOURS) {
+                double secondRaasiSpan = MAX_MINS_IN_DAY - thithiSpan;
+                if (secondRaasiSpan > thithiSpan) {
                     thithiStr = secondThithiStr;
-                    System.out.println("VedicCalendar" + " getThithi: Same Sunset Night Thithi!");
-                } else {
-                    thithiStr = thithiList[curThithiAtSunset];
-                    System.out.println("VedicCalendar" + " getThithi: Sunset Night Thithi!");
                 }
-            } else {
-                // For Sunrise-Prominent Thithi(s) occurring at Sunset
-                // Scenarios include:
-                // 1) *Prathama* at Sunset, Prathama at Sunrise => Prominent: *Prathama*
-                // 2) *Dvithiya* at Sunset, Prathama at Sunrise => Prominent: *Prathama*
-                // 3) *Saptami* at Sunset, Sashti at Sunrise, Panchami at PrevDay Sunset
-                //      => Prominent: *Sashti*
-                // 4) *Chathurdashi* at Sunset, Thrayodashi at Sunrise, Thrayodashi at PrevDay Sunset
-                //      => Prominent: *Chathurdashi*
-                if (curThithiAtSunrise == curThithiAtSunset) {
-                    // 1) Prathama at Sunset, Prathama at Sunrise => Prominent: Prathama
-                    thithiStr = thithiList[curThithiAtSunrise];
-                    System.out.println("VedicCalendar" + " getThithi: same Morning Thithi throughout day!");
-                } else {
-                    if (isSunsetProminentThithi(curThithiAtSunrise)) {
-                        // Special situation where there are 3 Thithi(s) in 36 hours!
-                        // For ex: Panchami at prevDay Sunset, Sashti at curDay Sunrise &
-                        //         Saptami at curDay Sunset
-                        if ((prevDayThithiAtSunset != curThithiAtSunset) &&
-                                (prevDayThithiAtSunset != curThithiAtSunrise)) {
-                            // 3) Saptami at Sunset, Sashti at Sunrise, Panchami at PrevDay Sunset
-                            //      => Prominent: Sashti
-                            thithiStr = thithiList[curThithiAtSunrise];
-                            System.out.println("VedicCalendar" + " getThithi: Sunset Morning Special Thithi!");
-                        } else {
-                            // 4) Chathurdashi at Sunset, Thrayodashi at Sunrise, Thrayodashi at PrevDay Sunset
-                            //      => Prominent: Chathurdashi
-                            thithiStr = thithiList[curThithiAtSunset];
-                            System.out.println("VedicCalendar" + " getThithi: Sunset Morning Thithi!");
-                        }
-                    } else {
-                        // 2) Dvithiya at Sunset, Prathama at Sunrise => Prominent: Prathama
-                        thithiStr = thithiList[curThithiAtSunrise];
-                        System.out.println("VedicCalendar" + " getThithi: Sunrise Morning Thithi!");
-                    }
-                }
-            }
-
-            System.out.println("VedicCalendar" + " Day: " + refDate + "/" + refMonth + "/" +
-                    refYear + " getThithi: Thithi => " + thithiStr + " thithiSpan: " + thithiSpan +
-                    " later: " + secondThithiStr +
-                    " sunRiseTotalMins: " + sunRiseTotalMins +
-                    " sunSetTotalMins: " + sunSetTotalMins +
-                    " curThithiAtSunrise: " + curThithiAtSunrise +
-                    " curThithiAtSunset: " + curThithiAtSunset +
-                    " prevDayThithiAtSunrise: " + prevDayThithiAtSunrise +
-                    " prevDayThithiAtSunset: " + prevDayThithiAtSunset);
+            }*/
         }
 
-        //System.out.println("VedicCalendar", "getThithi: Thithi => " + thithiStr +
+        //System.out.println("VedicCalendar", "get_thithiStr: Thithi => " + thithiStr +
         //        " thithi Span = " + thithiSpanMin + " later: " + secondThithiStr);
 
         return thithiStr;
-    }
-
-    private boolean isSunsetProminentThithi(int thithiNum) {
-        // If Shukla Chathurthi is present at Sunset then choose the same
-        return (thithiNum == 3) ||
-                // If Shukla Sashti is present at Sunset then choose the same
-                (thithiNum == 5) ||
-                // If Shukla Thrayodashi is present at Sunset then choose the same
-                (thithiNum == 12) ||
-                // If Krishna Chathurthi is present at Sunset then choose the same
-                (thithiNum == 18) ||
-                // If Krishna Thrayodashi is present at Sunset then choose the same
-                (thithiNum == 27) ||
-                // If Krishna Chathurdashi is present at Sunset then choose the same
-                (thithiNum == 28);
     }
 
     /**
@@ -972,7 +1213,7 @@ public class VedicCalendar extends Calendar {
      * @return Exact Thithi as a number (as per Drik calendar)
      */
     private int getThithiNum() {
-        double chandraRaviDistance = refChandraAyanamAtDayStart - refRaviAyanamAtDayStart;
+        double chandraRaviDistance = refChandraAyanam - refRaviAyanam;
         if (chandraRaviDistance < 0) {
             chandraRaviDistance += MAX_AYANAM_MINUTES;
         }
@@ -985,31 +1226,67 @@ public class VedicCalendar extends Calendar {
     /**
      * Use this API to get the Vaasaram (weekday).
      *
+     * @param locale Language as per locale settings
+     *        Note: Currently only 3 locales are supported. (English, Tamil, Sanskrit)
+     *              If an unsupported locale is given as input, then by default "English" is
+     *              assumed instead of return ERROR.
      * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY / MATCH_PANCHANGAM_PROMINENT
      *                      - to get exact Vaasaram
      *
      * @return Exact Vaasaram as a string (as per Drik calendar)
      */
-    public String getVaasaram(int queryType) {
+    public String getVaasaram(String locale, int queryType) {
         // Logic:
         // Step 1: Get vaasaramIndex => weekday for the given Calendar date
         // Step 2: Given the keys {vaasaramIndex, locale}, find the exact matching
         //         vaasaram string (as per the locale) in the vaasaram mapping table.
-
-        String vaasamVal = "";
-        String[] vaasaramList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_VAASARAM);
-        String[] dhinamList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_DHINAM);
-        if (queryType == MATCH_SANKALPAM_EXACT) {
-            vaasamVal = vaasaramList[refVaasaram - 1];
-        } else {
-            vaasamVal = dhinamList[refVaasaram - 1];
+        int localeIndex = getLocaleIndex(locale);
+        // Tamil months when in Panchangam mode.
+        String vaasaramStr = vaasaramTable[refVaasaram - 1][localeIndex];
+        if ((locale.equalsIgnoreCase(localeList[1])) &&
+            (queryType != MATCH_SANKALPAM_EXACT)) {
+            vaasaramStr = dhinaTable[refVaasaram -1][localeIndex];
         }
-        return vaasamVal;
+        return vaasaramStr;
+    }
+
+    /**
+     * Use this API to get the Vaasaram (weekday).
+     * This is a static API that can be used even without a VedicCalendar Instance.
+     *
+     * @param refCalendar A Calendar date as per Gregorian Calendar
+     * @param locale Language as per locale settings
+     *        Note: Currently only 3 locales are supported. (English, Tamil, Sanskrit)
+     *              If an unsupported locale is given as input, then by default "English" is
+     *              assumed instead of return ERROR.
+     * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY / MATCH_PANCHANGAM_PROMINENT
+     *                      - to get exact Vaasaram
+     *
+     * @return Exact Vaasaram as a string (as per Drik calendar)
+     */
+    public static String getVaasaram(Calendar refCalendar, String locale, int queryType) {
+        // Logic:
+        // Step 1: Get vaasaramIndex => weekday for the given Calendar date
+        // Step 2: Given the keys {vaasaramIndex, locale}, find the exact matching
+        //         vaasaram string (as per the locale) in the vaasaram mapping table.
+        int vaasaramIndex = refCalendar.get(Calendar.DAY_OF_WEEK);
+        int localeIndex = getLocaleIndex(locale);
+        // Tamil months when in Panchangam mode.
+        String vaasaramStr = vaasaramTable[vaasaramIndex - 1][localeIndex];
+        if ((locale.equalsIgnoreCase(localeList[1])) &&
+                (queryType != MATCH_SANKALPAM_EXACT)) {
+            vaasaramStr = dhinaTable[vaasaramIndex -1][localeIndex];
+        }
+        return vaasaramStr;
     }
 
     /**
      * Use this API to get the Nakshatram (star).
      *
+     * @param locale Language as per locale settings
+     *        Note: Currently only 3 locales are supported. (English, Tamil, Sanskrit)
+     *              If an unsupported locale is given as input, then by default "English" is
+     *              assumed instead of return ERROR.
      * @param queryType MATCH_SANKALPAM_EXACT
      *                      - to get exact Nakshatram based on actual Sunrise on a given day.
      *                  MATCH_PANCHANGAM_FULLDAY
@@ -1019,17 +1296,17 @@ public class VedicCalendar extends Calendar {
      *
      * @return Exact Nakshatram as a string (as per Drik calendar)
      */
-    public String getNakshatram(int queryType) {
+    public String getNakshatram(String locale, int queryType) {
         // Logic:
         // Step 1: Find the longitude of Chandra(Moon) on the given day
         //         A sample representation of longitude - 343deg 22’ 44".
         //         Each degree has 60 mins, 1 min has 60 secs
         //         So, 343deg 22’ 44" can be represented as 20602.73 (in minutes)
-        // Step 2: Divide Chandra's longitude (R) by MAX_NAKSHATHRAM_MINUTES to
+        // Step 2: Divide Chandra's longitude (R) by MAX_NATCHATHIRAM_MINUTES to
         //         calculate natchathiramIndex
-        //         Each natchathiram's span(MAX_NAKSHATHRAM_MINUTES) is 13deg 20 mins (800 mins)
+        //         Each natchathiram's span(MAX_NATCHATHIRAM_MINUTES) is 13deg 20 mins (800 mins)
         // Step 3: To calculate natchathiramIndex
-        //         - Formula is natchathiramIndex = (R / MAX_NAKSHATHRAM_MINUTES)
+        //         - Formula is natchathiramIndex = (R / MAX_NATCHATHIRAM_MINUTES)
         //         Note: natchathiramIndex thus obtained may need to be fine-tuned based on amount
         //               of natchathiram minutes left in the given calendar day.
         // Step 4: Get Chandra's longitude for the given day & the next day
@@ -1043,14 +1320,15 @@ public class VedicCalendar extends Calendar {
         // Step 7: Given the keys {natchathiramIndex, locale}, find the exact matching
         //         natchathiram string (as per the locale) in the natchathiram mapping table.
         // Step 8: Align remaining minutes as per the given Calendar day's Sun Rise Time
+        int localeIndex = getLocaleIndex(locale);
         double natchathiramSpan;
         int natchathiramSpanHour;
         int natchathiramSpanMin = 0;
 
         // 1) Calculate the Nakshatram index(current & next) & mapping string for the given
         //    calendar day
-        int natchathiramIndex = (int) (refChandraAyanamAtDayStart / MAX_NAKSHATHRAM_MINUTES);
-        natchathiramIndex %= MAX_NAKSHATHRAMS;
+        int natchathiramIndex = (int) (refChandraAyanam / MAX_NATCHATHIRAM_MINUTES);
+        natchathiramIndex %= MAX_NATCHATHIRAMS;
 
         // Get Sunrise & Sunset timings
         calcSunrise(queryType);
@@ -1062,7 +1340,7 @@ public class VedicCalendar extends Calendar {
             // If 1st Nakshatram occurs before sunrise, then start with next Nakshatram.
             if (natchathiramSpan < sunRiseTotalMins) {
                 natchathiramIndex += 1;
-                natchathiramIndex %= MAX_NAKSHATHRAMS;
+                natchathiramIndex %= MAX_NATCHATHIRAMS;
                 natchathiramSpan = getNakshatramSpan(natchathiramIndex, false);
             }
             natchathiramSpanHour = (int) (natchathiramSpan / MAX_MINS_IN_HOUR);
@@ -1079,18 +1357,12 @@ public class VedicCalendar extends Calendar {
             natchathiramSpan *= MAX_MINS_IN_HOUR;
         }
 
-        String natchathiramStr = "";
-        String secondNakshatramStr = "";
-        String[] natchathiramList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_NAKSHATHRAM);
-        String[] sankalpanatchathiramList =
-                vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_NAKSHATHRAM);
-        int secondNakshatramIndex = ((natchathiramIndex + 1) % MAX_NAKSHATHRAMS);
+        String natchathiramStr = natchathiramTable[natchathiramIndex][localeIndex];
+        int secondNakshatramIndex = ((natchathiramIndex + 1) % MAX_NATCHATHIRAMS);
+        String secondNakshatramStr = natchathiramTable[secondNakshatramIndex][localeIndex];
         if (queryType == MATCH_SANKALPAM_EXACT) {
-            natchathiramStr = sankalpanatchathiramList[natchathiramIndex];
-            secondNakshatramStr = sankalpanatchathiramList[secondNakshatramIndex];
-        } else {
-            natchathiramStr = natchathiramList[natchathiramIndex];
-            secondNakshatramStr = natchathiramList[secondNakshatramIndex];
+            natchathiramStr = sankalpaNakshatramTable[natchathiramIndex][localeIndex];
+            secondNakshatramStr = sankalpaNakshatramTable[secondNakshatramIndex][localeIndex];
         }
 
         // 3 scenarios here:
@@ -1135,6 +1407,10 @@ public class VedicCalendar extends Calendar {
      * Use this API to get the Nakshatram (star) that falls at 17th paadam (8th Raasi) from the
      * given day's natchathiram.
      *
+     * @param locale Language as per locale settings
+     *        Note: Currently only 3 locales are supported. (English, Tamil, Sanskrit)
+     *              If an unsupported locale is given as input, then by default "English" is
+     *              assumed instead of return ERROR.
      * @param queryType MATCH_SANKALPAM_EXACT
      *                      - to get exact Nakshatram based on actual Sunrise on a given day.
      *                  MATCH_PANCHANGAM_FULLDAY
@@ -1144,19 +1420,19 @@ public class VedicCalendar extends Calendar {
      *
      * @return Exact Chandrashtama Nakshatram as a string (as per Drik calendar)
      */
-    public String getChandrashtamaNakshatram(int queryType) {
+    public String getChandrashtamaNakshatram(String locale, int queryType) {
         // Logic:
         // Step 1: Find the longitude of Chandra(Moon) on the given day
         //        A sample representation of longitude - 343deg 22’ 44".
         //        Each degree has 60 mins, 1 min has 60 secs
         //        So, 343deg 22’ 44" can be represented as 20602.73 (in minutes)
-        // Step 2: Divide Chandra's longitude (R) by MAX_NAKSHATHRAM_MINUTES to
+        // Step 2: Divide Chandra's longitude (R) by MAX_NATCHATHIRAM_MINUTES to
         //         calculate natchathiramIndex
-        //         Each natchathiram's span(MAX_NAKSHATHRAM_MINUTES) is 13deg 20 mins (800 mins)
+        //         Each natchathiram's span(MAX_NATCHATHIRAM_MINUTES) is 13deg 20 mins (800 mins)
         // Step 3: To calculate chandrashtama natchathiram index (cnatchathiramIndex)
         //         - Formula is
         //         - cnatchathiram_offset = from R, go back 16 natchathiram duration
-        //         - cnatchathiramIndex = (cnatchathiram_offset / MAX_NAKSHATHRAM_MINUTES)
+        //         - cnatchathiramIndex = (cnatchathiram_offset / MAX_NATCHATHIRAM_MINUTES)
         //         Note: cnatchathiramIndex thus obtained may need to be fine-tuned based on amount
         //               of natchathiram minutes left in the given calendar day.
         // Step 4: Get Chandra's longitude for the given day & the next day
@@ -1170,20 +1446,21 @@ public class VedicCalendar extends Calendar {
         // Step 7: Given the keys {cnatchathiramIndex, locale}, find the exact matching
         //         natchathiram string (as per the locale) in the natchathiram mapping table.
         // Step 8: Align remaining minutes as per the given Calendar day's Sun Rise Time
+        int localeIndex = getLocaleIndex(locale);
         double natchathiramSpan;
         int natchathiramSpanHour;
         int natchathiramSpanMin = 0;
 
         // 1) Calculate the Nakshatram index(current & next) & mapping string for the given
         //    calendar day
-        int natchathiramIndex = (int) (refChandraAyanamAtDayStart / MAX_NAKSHATHRAM_MINUTES);
-        natchathiramIndex %= MAX_NAKSHATHRAMS;
-        int cnatchathiramIndex = (int) (refChandraAyanamAtDayStart - (MAX_NAKSHATHRAM_MINUTES *
-                CHANDRASHTAMA_NAKSHATHRAM_OFFSET));
+        int natchathiramIndex = (int) (refChandraAyanam / MAX_NATCHATHIRAM_MINUTES);
+        natchathiramIndex %= MAX_NATCHATHIRAMS;
+        int cnatchathiramIndex = (int) (refChandraAyanam - (MAX_NATCHATHIRAM_MINUTES *
+                CHANDRASHTAMA_NATCHATHIRAM_OFFSET));
         if (cnatchathiramIndex < 0) {
             cnatchathiramIndex += MAX_AYANAM_MINUTES;
         }
-        cnatchathiramIndex /= MAX_NAKSHATHRAM_MINUTES;
+        cnatchathiramIndex /= MAX_NATCHATHIRAM_MINUTES;
 
         // Get Sunrise & Sunset timings
         calcSunrise(queryType);
@@ -1195,10 +1472,10 @@ public class VedicCalendar extends Calendar {
             // If 1st Nakshatram occurs before sunrise, then start with next Nakshatram.
             if (natchathiramSpan < sunRiseTotalMins) {
                 natchathiramIndex += 1;
-                natchathiramIndex %= MAX_NAKSHATHRAMS;
+                natchathiramIndex %= MAX_NATCHATHIRAMS;
                 natchathiramSpan = getNakshatramSpan(natchathiramIndex, false);
                 cnatchathiramIndex += 1;
-                cnatchathiramIndex %= MAX_NAKSHATHRAMS;
+                cnatchathiramIndex %= MAX_NATCHATHIRAMS;
             }
             natchathiramSpanHour = (int) (natchathiramSpan / MAX_MINS_IN_HOUR);
             natchathiramSpanMin = (int) (natchathiramSpan % MAX_MINS_IN_HOUR);
@@ -1214,18 +1491,12 @@ public class VedicCalendar extends Calendar {
             natchathiramSpan *= MAX_MINS_IN_HOUR;
         }
 
-        String natchathiramStr = "";
-        String secondNakshatramStr = "";
-        String[] natchathiramList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_NAKSHATHRAM);
-        String[] sankalpanatchathiramList =
-                vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_NAKSHATHRAM);
-        int secondNakshatramIndex = ((cnatchathiramIndex + 1) % MAX_NAKSHATHRAMS);
+        String natchathiramStr = natchathiramTable[cnatchathiramIndex][localeIndex];
+        int secondNakshatramIndex = ((cnatchathiramIndex + 1) % MAX_NATCHATHIRAMS);
+        String secondNakshatramStr = natchathiramTable[secondNakshatramIndex][localeIndex];
         if (queryType == MATCH_SANKALPAM_EXACT) {
-            natchathiramStr = sankalpanatchathiramList[cnatchathiramIndex];
-            secondNakshatramStr = sankalpanatchathiramList[secondNakshatramIndex];
-        } else {
-            natchathiramStr = natchathiramList[cnatchathiramIndex];
-            secondNakshatramStr = natchathiramList[secondNakshatramIndex];
+            natchathiramStr = sankalpaNakshatramTable[natchathiramIndex][localeIndex];
+            secondNakshatramStr = sankalpaNakshatramTable[secondNakshatramIndex][localeIndex];
         }
 
         // 3 scenarios here:
@@ -1270,6 +1541,10 @@ public class VedicCalendar extends Calendar {
     /**
      * Use this API to get the Raasi (planet).
      *
+     * @param locale Language as per locale settings
+     *        Note: Currently only 3 locales are supported. (English, Tamil, Sanskrit)
+     *              If an unsupported locale is given as input, then by default "English" is
+     *              assumed instead of return ERROR.
      * @param queryType MATCH_SANKALPAM_EXACT
      *                      - to get exact Raasi based on actual Sunrise on a given day.
      *                  MATCH_PANCHANGAM_FULLDAY
@@ -1279,7 +1554,7 @@ public class VedicCalendar extends Calendar {
      *
      * @return Exact Raasi as a string (as per Drik calendar)
      */
-    public String getRaasi(int queryType) {
+    public String getRaasi(String locale, int queryType) {
         // Logic:
         // Step 1: Find the longitude of Chandra(Moon) on the given day
         //         A sample representation of longitude - 343deg 22’ 44".
@@ -1302,15 +1577,17 @@ public class VedicCalendar extends Calendar {
         // Step 7: Given the keys {raasiIndex, locale}, find the exact matching
         //         raasi string (as per the locale) in the raasi mapping table.
         // Step 8: Align remaining minutes as per the given Calendar day's Sun Rise Time
+        int localeIndex = getLocaleIndex(locale);
 
         // 1) Calculate the Raasi index(current & next) & mapping string
         //    for the given calendar day
-        int raasiIndex = (int) (refChandraAyanamAtDayStart / MAX_RAASI_MINUTES);
+        int raasiIndex = (int) (refChandraAyanam / MAX_RAASI_MINUTES);
         raasiIndex %= MAX_RAASIS;
+        String raasiStr = raasiTable[raasiIndex][localeIndex];
 
-        String[] raasiList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_RAASI);
-        String raasiStr = raasiList[(raasiIndex % MAX_RAASIS)];
-        String secondRaasiStr = raasiList[((raasiIndex + 1) % MAX_RAASIS)];
+        int secondRaasiIndex = raasiIndex + 1;
+        String secondRaasiStr =
+                raasiTable[(secondRaasiIndex % MAX_RAASIS)][localeIndex];
 
         // 2) Get 1st Raasi span for the given calendar day
         double raasiSpan = getRaasiSpan(raasiIndex, SweConst.SE_MOON, false);
@@ -1353,6 +1630,10 @@ public class VedicCalendar extends Calendar {
     /**
      * Use this API to get the Yogam (time).
      *
+     * @param locale Language as per locale settings
+     *        Note: Currently only 3 locales are supported. (English, Tamil, Sanskrit)
+     *              If an unsupported locale is given as input, then by default "English" is
+     *              assumed instead of return ERROR.
      * @param queryType MATCH_SANKALPAM_EXACT
      *                      - to get exact Yogam based on actual Sunrise on a given day.
      *                  MATCH_PANCHANGAM_FULLDAY
@@ -1362,18 +1643,18 @@ public class VedicCalendar extends Calendar {
      *
      * @return Exact Yogam as a string (as per Drik calendar)
      */
-    public String getYogam(int queryType) {
+    public String getYogam(String locale, int queryType) {
         // Logic:
         // Step 1: Find the longitude of Ravi(Sun) and Chandra(Moon) on the given day
         //        A sample representation of longitude - 343deg 22’ 44".
         //        Each degree has 60 mins, 1 min has 60 secs
         //        So, 343deg 22’ 44" can be represented as 20602.73 (in minutes)
-        // Step 2: Divide Chandra's longitude (R) by MAX_NAKSHATHRAM_MINUTES to
+        // Step 2: Divide Chandra's longitude (R) by MAX_NATCHATHIRAM_MINUTES to
         //         calculate yogamIndex
         //         Each yogam's span is 13deg 20 mins (800 mins)
         // Step 3: To calculate yogam index
         //         - Formula is
-        //         - yogamIndex = (R / MAX_NAKSHATHRAM_MINUTES)
+        //         - yogamIndex = (R / MAX_NATCHATHIRAM_MINUTES)
         //         Note: yogamIndex thus obtained may need to be fine-tuned based on amount
         //               of yogam minutes left in the given calendar day.
         // Step 4: Get Ravi's longitude for the given day & the next day
@@ -1389,13 +1670,14 @@ public class VedicCalendar extends Calendar {
         // Step 7: Given the keys {yogamIndex, locale}, find the exact matching
         //         yogam string (as per the locale) in the yogam mapping table.
         // Step 8: Align remaining minutes as per the given Calendar day's Sun Rise Time
-        int sumAyanam = (int) (refChandraAyanamAtDayStart + refRaviAyanamAtDayStart);
+        int localeIndex = getLocaleIndex(locale);
+        int sumAyanam = (int) (refChandraAyanam + refRaviAyanam);
         sumAyanam %= MAX_AYANAM_MINUTES;
 
         // 1) Calculate the Yogam index(current & next) & mapping string
         //    for the given calendar day
-        int yogamIndex = (sumAyanam / MAX_NAKSHATHRAM_MINUTES);
-        yogamIndex %= MAX_NAKSHATHRAMS;
+        int yogamIndex = (sumAyanam / MAX_NATCHATHIRAM_MINUTES);
+        yogamIndex %= MAX_NATCHATHIRAMS;
 
         // 2) Get 1st yogam span for the given calendar day
         double yogamSpan = getYogamSpan(yogamIndex);
@@ -1406,13 +1688,13 @@ public class VedicCalendar extends Calendar {
         // If 1st Yogam occurs before sunrise, then start with next Yogam.
         if (yogamSpan < sunRiseTotalMins) {
             yogamIndex += 1;
-            yogamIndex %= MAX_NAKSHATHRAMS;
+            yogamIndex %= MAX_NATCHATHIRAMS;
             yogamSpan = getYogamSpan(yogamIndex);
         }
+        String yogamStr = yogamTable[yogamIndex][localeIndex];
 
-        String[] yogamList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_YOGAM);
-        String yogamStr = yogamList[(yogamIndex % MAX_NAKSHATHRAMS)];
-        String secondYogamStr = yogamList[((yogamIndex + 1) % MAX_NAKSHATHRAMS)];
+        int secondYogamIndex = ((yogamIndex + 1) % MAX_NATCHATHIRAMS);
+        String secondYogamStr = yogamTable[secondYogamIndex][localeIndex];
 
         int yogamSpanHour = (int) (yogamSpan / MAX_MINS_IN_HOUR);
         int yogamSpanMin = (int) (yogamSpan % MAX_MINS_IN_HOUR);
@@ -1450,6 +1732,10 @@ public class VedicCalendar extends Calendar {
     /**
      * Use this API to get the Karanam (half-thithi).
      *
+     * @param locale Language as per locale settings
+     *        Note: Currently only 3 locales are supported. (English, Tamil, Sanskrit)
+     *              If an unsupported locale is given as input, then by default "English" is
+     *              assumed instead of return ERROR.
      * @param queryType MATCH_SANKALPAM_EXACT
      *                      - to get exact Karanam based on actual Sunrise on a given day.
      *                  MATCH_PANCHANGAM_FULLDAY
@@ -1459,7 +1745,7 @@ public class VedicCalendar extends Calendar {
      *
      * @return Exact Karanam as a string (as per Drik calendar)
      */
-    public String getKaranam(int queryType) {
+    public String getKaranam(String locale, int queryType) {
         // Logic:
         // Step 1: Find the longitude of Ravi(Sun) and Chandra(Moon) on the given day
         //         A sample representation of longitude - 343deg 22’ 44".
@@ -1489,7 +1775,8 @@ public class VedicCalendar extends Calendar {
         // Step 10: Given the keys {karanam_index, locale}, find the exact matching
         //          karanam string (as per the locale) in the karanam mapping table for given
         //          karanam and for next karanam as well.
-        double chandraRaviDistance = refChandraAyanamAtDayStart - refRaviAyanamAtDayStart;
+        int localeIndex = getLocaleIndex(locale);
+        double chandraRaviDistance = refChandraAyanam - refRaviAyanam;
         if (chandraRaviDistance < 0) {
             chandraRaviDistance += MAX_AYANAM_MINUTES;
         }
@@ -1511,13 +1798,13 @@ public class VedicCalendar extends Calendar {
             firstHalfKaranam %= MAX_KARANAMS;
             karanamSpan = getThithiSpan(((firstHalfKaranam + 1) % MAX_KARANAMS), KARANAM_DEGREES);
         }
-
-        String[] karanamList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_KARANAM);
-        String karanamStr = karanamList[(firstHalfKaranam % MAX_KARANAMS)];
-        String karanamSecHalfStr = karanamList[((firstHalfKaranam + 1) % MAX_KARANAMS)];
-
+        String karanamStr = karanamTable[firstHalfKaranam][localeIndex];
         int karanamSpanHour = (int) (karanamSpan / MAX_MINS_IN_HOUR);
         int karanamSpanMin = (int) (karanamSpan % MAX_MINS_IN_HOUR);
+
+        int secondHalfKaranam = firstHalfKaranam + 1;
+        String karanamSecHalfStr = karanamTable[secondHalfKaranam % MAX_KARANAMS]
+                [localeIndex];
 
         // 3) Formulate karanam string based on the factors below:
         //    - Panchangam needs full day's karanam details {karanam (HH:MM) > next_karanam}
@@ -1551,6 +1838,10 @@ public class VedicCalendar extends Calendar {
     /**
      * Use this API to get the Amruthathi Yogam (Auspicious Time).
      *
+     * @param locale Language as per locale settings
+     *        Note: Currently only 3 locales are supported. (English, Tamil, Sanskrit)
+     *              If an unsupported locale is given as input, then by default "English" is
+     *              assumed instead of return ERROR.
      * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY
      *                      - to get Amruthathi Yogam(s) for full day based on actual Sunrise.
      *                  MATCH_PANCHANGAM_PROMINENT
@@ -1558,17 +1849,17 @@ public class VedicCalendar extends Calendar {
      *
      * @return Exact Amruthathi Yogam as a string (as per Drik calendar)
      */
-    public String getAmruthathiYogam (int queryType) {
+    public String getAmruthathiYogam (String locale, int queryType) {
         // Logic:
         // Step 1: Find the longitude of Chandra(Moon) on the given day
         //         A sample representation of longitude - 343deg 22’ 44".
         //         Each degree has 60 mins, 1 min has 60 secs
         //         So, 343deg 22’ 44" can be represented as 20602.73 (in minutes)
-        // Step 2: Divide Chandra's longitude (R) by MAX_NAKSHATHRAM_MINUTES to
+        // Step 2: Divide Chandra's longitude (R) by MAX_NATCHATHIRAM_MINUTES to
         //         calculate natchathiramIndex
-        //         Each natchathiram's span(MAX_NAKSHATHRAM_MINUTES) is 13deg 20 mins (800 mins)
+        //         Each natchathiram's span(MAX_NATCHATHIRAM_MINUTES) is 13deg 20 mins (800 mins)
         // Step 3: To calculate natchathiramIndex
-        //         - Formula is natchathiramIndex = (R / MAX_NAKSHATHRAM_MINUTES)
+        //         - Formula is natchathiramIndex = (R / MAX_NATCHATHIRAM_MINUTES)
         //         Note: natchathiramIndex thus obtained may need to be fine-tuned based on amount
         //               of natchathiram minutes left in the given calendar day.
         // Step 4: Get Chandra's longitude for the given day & the next day
@@ -1584,19 +1875,21 @@ public class VedicCalendar extends Calendar {
         //         matching amrutathi yogam in the amruthathiYogamTable mapping table for
         //         the given day and the next amruthathi yogam for the rest of the day as well.
         // Step 9: Align remaining minutes as per the given Calendar day's Sun Rise Time
+        int localeIndex = getLocaleIndex(locale);
 
         // 1) Calculate the Nakshatram index(current & next) & mapping string for the given
         //    calendar day
-        int natchathiramIndex = (int) (refChandraAyanamAtDayStart / MAX_NAKSHATHRAM_MINUTES);
-        natchathiramIndex %= MAX_NAKSHATHRAMS;
-        String ayogamStr = getAyogamStr(natchathiramIndex, (refVaasaram - 1));
+        int natchathiramIndex = (int) (refChandraAyanam / MAX_NATCHATHIRAM_MINUTES);
+        natchathiramIndex %= MAX_NATCHATHIRAMS;
+        String ayogamStr = get_ayogamStr(natchathiramIndex, (refVaasaram - 1), localeIndex);
 
         int secondNakshatramIndex = natchathiramIndex + 1;
-        secondNakshatramIndex %= MAX_NAKSHATHRAMS;
-        String secondAyogamStr = getAyogamStr(secondNakshatramIndex, (refVaasaram - 1));
+        secondNakshatramIndex %= MAX_NATCHATHIRAMS;
+        String second_ayogamStr = get_ayogamStr(secondNakshatramIndex, (refVaasaram - 1),
+                localeIndex);
 
         // 2) Get 1st Nakshatram span for the given calendar day
-        double natchathiramSpan = getNakshatramSpan(natchathiramIndex, false);
+        double natchathiramSpan = getNakshatramSpan(natchathiramIndex, true);
         int natchathiramSpanHour = (int) (natchathiramSpan / MAX_MINS_IN_HOUR);
         int natchathiramSpanMin = (int) (natchathiramSpan % MAX_MINS_IN_HOUR);
 
@@ -1604,11 +1897,11 @@ public class VedicCalendar extends Calendar {
         //    - Panchangam needs full day's yogam details {Yogam (HH:MM) > next_yogam}
         //    - Sankalpam needs the exact yogam at the time of the current query
         if (queryType == MATCH_PANCHANGAM_FULLDAY) {
-            if (!ayogamStr.equalsIgnoreCase(secondAyogamStr)) {
+            if (!ayogamStr.equalsIgnoreCase(second_ayogamStr)) {
                 ayogamStr +=
                         String.format(" (%02d:%02d)", natchathiramSpanHour, natchathiramSpanMin);
                 if (natchathiramSpanHour < MAX_24HOURS) {
-                    ayogamStr += ARROW_SYMBOL + secondAyogamStr;
+                    ayogamStr += ARROW_SYMBOL + second_ayogamStr;
                 }
             }
         } else {
@@ -1618,15 +1911,15 @@ public class VedicCalendar extends Calendar {
             if (natchathiramSpanHour < MAX_24HOURS) {
                 double secondRaasiSpan = MAX_MINS_IN_DAY - natchathiramSpan;
                 if (secondRaasiSpan > natchathiramSpan) {
-                    ayogamStr = secondAyogamStr;
+                    ayogamStr = second_ayogamStr;
                 }
             } else if ((refHour >= natchathiramSpanHour)) {
-                ayogamStr = secondAyogamStr;
+                ayogamStr = second_ayogamStr;
             }
         }
 
         //System.out.println("VedicCalendar", "get_amruthathi_yogam: Yogam => " + ayogamStr +
-        //        " Nakshatram Span = " + natchathiramSpanMin + " later: " + secondAyogamStr);
+        //        " Nakshatram Span = " + natchathiramSpanMin + " later: " + second_ayogamStr);
 
         return ayogamStr;
     }
@@ -1803,7 +2096,7 @@ public class VedicCalendar extends Calendar {
 
             int currWeekday = curCalendar.get(Calendar.DAY_OF_WEEK);
             int isSubhaHorai = horaisubhamTable[currWeekday - 1];
-            //System.out.println("VedicCalendar", "Hour: " + (dayMins / 60) +
+            //Log.d("VedicCalendar", "Hour: " + (dayMins / 60) +
             //        " Day = " + currWeekday + " Horai = " + horaiTable[currWeekday - 1][2] +
             //        " Subham = " + isSubhaHorai);
             if ((isSubhaHorai == HORAI_SUBHAM) && (isHourSubham)) {
@@ -1839,6 +2132,10 @@ public class VedicCalendar extends Calendar {
     /**
      * Use this API to get the Horai for the given time in a given Calendar day.
      *
+     * @param locale Language as per locale settings
+     *        Note: Currently only 3 locales are supported. (English, Tamil, Sanskrit)
+     *              If an unsupported locale is given as input, then by default "English" is
+     *              assumed instead of return ERROR.
      * @param queryType MATCH_SANKALPAM_EXACT
      *                      - to get exact Horai that matches current time.
      *                  MATCH_PANCHANGAM_FULLDAY / MATCH_PANCHANGAM_PROMINENT
@@ -1847,7 +2144,7 @@ public class VedicCalendar extends Calendar {
      * @return @return List of Horai(s) & their span (as per Drik calendar)
      *         It is the caller's responsibility to parse horai list and interpret accordingly.
      */
-    public ArrayList<LagnamHoraiInfo> getHorai(int queryType) {
+    public ArrayList<LagnamHoraiInfo> getHorai(String locale, int queryType) {
         // Logic:
         // Step 1: Gather given Time from refCalendar
         //         Note: Given vaaram(week) is the starting Horai of the day
@@ -1856,6 +2153,7 @@ public class VedicCalendar extends Calendar {
         //         exact horai for the given hour of the day
         ArrayList<LagnamHoraiInfo> horaiInfoList = new ArrayList<>();
         int refTotalMins = (refHour * MAX_MINS_IN_HOUR) + refMin;
+        int localeIndex = getLocaleIndex(locale);
         int sunRiseTotalHours = (int)Math.ceil(sunRiseTotalMins / MAX_MINS_IN_HOUR);
 
         Calendar curCalendar = Calendar.getInstance();
@@ -1865,7 +2163,6 @@ public class VedicCalendar extends Calendar {
         // Get Sunrise timings
         calcSunrise(queryType);
 
-        String[] horaiList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_HORAI);
         // Day Horai Span = (Sunset - Sunrise)
         // Night Horai Span = (Sunrise - Sunset) (+ve)
         double perHoraiDaySpan = (sunSetTotalMins - sunRiseTotalMins) / 12;
@@ -1879,7 +2176,7 @@ public class VedicCalendar extends Calendar {
             iterHorai = "";
             double perHoraiSpan = 0;
             if ((horaiStartTime < sunRiseTotalMins) ||
-                    ((horaiStartTime + perHoraiSpan) > sunSetTotalMins)) {
+                ((horaiStartTime + perHoraiSpan) > sunSetTotalMins)) {
                 perHoraiSpan = perHoraiNightSpan;
             } else {
                 perHoraiSpan = perHoraiDaySpan;
@@ -1891,7 +2188,7 @@ public class VedicCalendar extends Calendar {
             // Else, take care of midnight timings.
             // if yes, then mark the row as "current".
             if ((horaiStartTime <= refTotalMins) &&
-                    ((horaiStartTime + perHoraiSpan) >= refTotalMins)) {
+                ((horaiStartTime + perHoraiSpan) >= refTotalMins)) {
                 isCurHorai = true;
             } else if (numHours == 0) {
                 if (refTotalMins <= horaiStartTime) {
@@ -1901,7 +2198,7 @@ public class VedicCalendar extends Calendar {
             horaiStartTime += perHoraiSpan;
 
             int currWeekday = curCalendar.get(Calendar.DAY_OF_WEEK);
-            String horaiVal = horaiList[currWeekday - 1];
+            String horaiVal = horaiTable[currWeekday - 1][localeIndex];
             int isSubhaHorai = horaisubhamTable[currWeekday - 1];
             if (isSubhaHorai == HORAI_SUBHAM) {
                 iterHorai += "<font color='blue'>";
@@ -1919,7 +2216,7 @@ public class VedicCalendar extends Calendar {
             } else {
                 nextiterHorai = "<font color='red'>";
             }
-            nextiterHorai += horaiList[currWeekday - 1];
+            nextiterHorai += horaiTable[currWeekday - 1][localeIndex];
             nextiterHorai += "</font>" + "<br>";
 
             LagnamHoraiInfo horaiInfo = new LagnamHoraiInfo(iterHorai,
@@ -1952,6 +2249,10 @@ public class VedicCalendar extends Calendar {
     /**
      * Use this API to get the Lagnam for the given time in a given Calendar day.
      *
+     * @param locale Language as per locale settings
+     *        Note: Currently only 3 locales are supported. (English, Tamil, Sanskrit)
+     *              If an unsupported locale is given as input, then by default "English" is
+     *              assumed instead of return ERROR.
      * @param queryType MATCH_SANKALPAM_EXACT
      *                      - to get exact Lagnam that matches current time.
      *                  MATCH_PANCHANGAM_FULLDAY / MATCH_PANCHANGAM_PROMINENT
@@ -1960,7 +2261,7 @@ public class VedicCalendar extends Calendar {
      * @return Exact list of lagnams & their span (as per Drik calendar)
      *         It is the caller's responsibility to parse horai list and interpret accordingly.
      */
-    public ArrayList<LagnamHoraiInfo> getLagnam(int queryType) {
+    public ArrayList<LagnamHoraiInfo> getLagnam(String locale, int queryType) {
         // Logic:
         // Step 1: Gather given Time from refCalendar
         //         Note: Given vaaram(week) is the starting Horai of the day
@@ -1970,18 +2271,19 @@ public class VedicCalendar extends Calendar {
         //         from Udhaya Lagnam
         //long startTime = System.nanoTime();
         ArrayList<LagnamHoraiInfo> lagnamInfoList = new ArrayList<>();
+        int localeIndex = getLocaleIndex(locale);
         int refTotalMins = (refHour * MAX_MINS_IN_HOUR) + refMin;
 
         // Get Sunrise timings
         calcSunrise(queryType);
 
         //long startDATime = System.nanoTime();
-        int dhinaAnkam = getDinaAnkam(MATCH_SANKALPAM_EXACT);
+        int thithiNum = getDhinaAnkham(MATCH_SANKALPAM_EXACT);
         //long endDATime = System.nanoTime();
         //System.out.println("VedicCalendarProf" + " getLagnam() DA for Sun... Time Taken: " +
         //        VedicCalendar.getTimeTaken(startDATime, endDATime));
 
-        double udhayaLagnamOffset = ((dhinaAnkam - 1) * LAGNAM_DAILY_OFFSET);
+        double udhayaLagnamOffset = ((thithiNum - 1) * LAGNAM_DAILY_OFFSET);
 
         // UdhayaLagnam is the Raasi seen at Sunrise.
         // Note: UdhayaLagnam does not change for a given maasam(month).
@@ -2013,8 +2315,6 @@ public class VedicCalendar extends Calendar {
         int numLagnams = 0;
         int lagnamBeforeSunrise = 0;
         lagnamStartOfDay = sunRiseTotalMins - udhayaLagnamOffset;
-
-        String[] raasiList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_RAASI);
         while (numLagnams < MAX_RAASIS) {
             String timeStr;
             lagnamStartOfDay += lagnamDurationTable[udhayaLagnam];
@@ -2023,10 +2323,9 @@ public class VedicCalendar extends Calendar {
             } else {
                 timeStr = formatTimeHHMM(lagnamStartOfDay);
             }
-            String lagnamStr = raasiList[(udhayaLagnam) % MAX_RAASIS];
-            String nextLagnamStr = raasiList[(udhayaLagnam + 1) % MAX_RAASIS];
+            String nextLagnamStr = raasiTable[(udhayaLagnam + 1) % MAX_RAASIS][localeIndex];
             LagnamHoraiInfo lagnamInfo =
-                    new LagnamHoraiInfo(lagnamStr, timeStr, false);
+                    new LagnamHoraiInfo(raasiTable[udhayaLagnam][localeIndex], timeStr, false);
 
             // Retrieve lagnam that corresponds to current local time
             if ((curTotalMins >= prevLagnamEnd) && (curTotalMins <= lagnamStartOfDay)) {
@@ -2111,79 +2410,79 @@ public class VedicCalendar extends Calendar {
      *
      * @return An array of codes that represent a list of "vishesham"(s) for the given calendar day.
      */
-    public List<Integer> getDinaVishesham(int queryType) {
-        int dinaAnkam = getDinaAnkam(queryType);
-        String thithiStr = getThithi(queryType);
-        String maasam = getMaasam(queryType);
-        String paksham = getPaksham();
-        String natchathiram = getNakshatram(queryType);
-        String vaasaram = getVaasaram(queryType);
+    public List<Integer> whatIsSpecialToday(int queryType) {
+        String locale = "En";
+        String maasam = getMaasam(locale, queryType);
+        String paksham = getPaksham(locale);
+        String natchathiram = getNakshatram(locale, queryType);
+        String thithiStr = getThithi(locale, queryType);
+        String vaasaram = getVaasaram(locale, queryType);
+        int dinaankham = getDhinaAnkham(queryType);
         List<Integer> dhinaSpecialCode = new ArrayList<>();
         Integer val;
 
-        //System.out.println("getDinaVishesham: For: " + refCalendar.get(Calendar.DATE) + "/" +
+        //System.out.println("whatIsSpecialToday: For: " + refCalendar.get(Calendar.DATE) + "/" +
         //        (refCalendar.get(Calendar.MONTH) + 1) + "/" + refCalendar.get(Calendar.YEAR));
 
         // 1) Match for repeating thithis first
         //    Type-1 - Match for {Thithi}
-        String[] thithiList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_THITHI);
-        if (thithiStr.equalsIgnoreCase(thithiList[29]) ||       // Ammavasai
-                thithiStr.equalsIgnoreCase(thithiList[14]) ||   // Pournami
-                thithiStr.equalsIgnoreCase(thithiList[3]) ||    // Chathurthi
-                thithiStr.equalsIgnoreCase(thithiList[5]) ||    // Sashti
-                thithiStr.equalsIgnoreCase(thithiList[10]) ||   // Ekadasi
-                thithiStr.equalsIgnoreCase(thithiList[12])) {   // Thrayodasi
+        if (thithiStr.equalsIgnoreCase(thithiTable[29][0]) ||       // Ammavasai
+                thithiStr.equalsIgnoreCase(thithiTable[14][0]) ||   // Pournami
+                thithiStr.equalsIgnoreCase(thithiTable[3][0]) ||    // Chathurthi
+                thithiStr.equalsIgnoreCase(thithiTable[5][0]) ||    // Sashti
+                thithiStr.equalsIgnoreCase(thithiTable[10][0]) ||   // Ekadasi
+                thithiStr.equalsIgnoreCase(thithiTable[12][0])) {   // Thrayodasi
             val = dhinaVisheshamList.get(thithiStr);
             if (val != null) {
-                //System.out.println("getDinaVishesham: Type-1 MATCH!!! Value = " + val);
+                //System.out.println("whatIsSpecialToday: Type-1 MATCH!!! Value = " + val);
                 dhinaSpecialCode.add(val);
             }
         }
 
         // 2) Match any of all of the below tuples in the same order:
-        //    Type-2  - Match for Three tuples {Maasam, DinaAnkam}
+        //    Type-2  - Match for Three tuples {Maasam, Dinaankham}
         //    Type-3A - Match for Three tuples {Maasam, Paksham, Thithi} (or)
         //    Type-3B - Match for Three tuples {Maasam, Paksham, Nakshatram} (or)
         //    Type-4  - Match for four tuples {Maasam, Paksham, Thithi, Nakshatram} (or)
         //    Type-5  - Match for 2 tuples {Paksham, Thithi}
         //    Type-6  - Match for 2 tuples {Maasam, Vaasaram}
         //    Type-7  - Match for 2 tuples {Maasam, Nakshatram}
-        //System.out.println("getDinaVishesham: Keys: " + dhinaVisheshamList.keySet());
-        //System.out.println("getDinaVishesham: Values: " + dhinaVisheshamList.values());
+        //System.out.println("whatIsSpecialToday: Keys: " + dhinaVisheshamList.keySet());
+        //System.out.println("whatIsSpecialToday: Values: " + dhinaVisheshamList.values());
 
         //    Type-4 - Match for four tuples {Maasam, Paksham, Thithi, Nakshatram} (or)
         if ((val = dhinaVisheshamList.get(maasam + paksham + thithiStr + natchathiram)) != null) {
-            //System.out.println("getDinaVishesham: Type-4 MATCH!!! Value = " + val);
+            //System.out.println("whatIsSpecialToday: Type-4 MATCH!!! Value = " + val);
             dhinaSpecialCode.add(val);
         }
 
         //    Type-3A - Match for Three tuples {Maasam, Paksham, Thithi} (or)
         if ((val = dhinaVisheshamList.get(maasam + paksham + thithiStr)) != null) {
-            //System.out.println("getDinaVishesham: Type-3A MATCH!!! Value = " + val);
+            //System.out.println("whatIsSpecialToday: Type-3A MATCH!!! Value = " + val);
             dhinaSpecialCode.add(val);
         }
 
         //    Type-3B - Match for Three tuples {Maasam, Paksham, Nakshatram} (or)
         if ((val = dhinaVisheshamList.get(maasam + paksham + natchathiram)) != null) {
-            //System.out.println("getDinaVishesham: Type-3B MATCH!!! Value = " + val);
+            //System.out.println("whatIsSpecialToday: Type-3B MATCH!!! Value = " + val);
             dhinaSpecialCode.add(val);
         }
 
-        //    Type-2 - Match for Three tuples {Maasam, DinaAnkam}
-        if ((val = dhinaVisheshamList.get(maasam + dinaAnkam)) != null) {
-            //System.out.println("getDinaVishesham: Type-2 MATCH!!! Value = " + val);
+        //    Type-2 - Match for Three tuples {Maasam, Dinaankham}
+        if ((val = dhinaVisheshamList.get(maasam + dinaankham)) != null) {
+            //System.out.println("whatIsSpecialToday: Type-2 MATCH!!! Value = " + val);
             dhinaSpecialCode.add(val);
         }
 
         //    Type-5 - Match for Two tuples {Paksham, Thithi}
         if ((val = dhinaVisheshamList.get(paksham + thithiStr)) != null) {
-            //System.out.println("getDinaVishesham: Type-5 MATCH!!! Value = " + val);
+            //System.out.println("whatIsSpecialToday: Type-5 MATCH!!! Value = " + val);
             dhinaSpecialCode.add(val);
         }
 
         //    Type-6  - Match for 2 tuples {Maasam, Vaasaram}
         if ((val = dhinaVisheshamList.get(maasam + vaasaram)) != null) {
-            //System.out.println("getDinaVishesham: Type-6 MATCH!!! Value = " + val);
+            //System.out.println("whatIsSpecialToday: Type-6 MATCH!!! Value = " + val);
 
             // For Varalakshmi Vratham, thithi needs to be last friday before
             // pournami (8 < thithi < 15)
@@ -2195,7 +2494,7 @@ public class VedicCalendar extends Calendar {
 
         //    Type-7  - Match for 2 tuples {Maasam, Nakshatram}
         if ((val = dhinaVisheshamList.get(maasam + natchathiram)) != null) {
-            //System.out.println("getDinaVishesham: Type-7 MATCH!!! Value = " + val);
+            //System.out.println("whatIsSpecialToday: Type-7 MATCH!!! Value = " + val);
             dhinaSpecialCode.add(val);
         }
 
@@ -2203,70 +2502,17 @@ public class VedicCalendar extends Calendar {
     }
 
     /**
-     * Use this utility function to validate if vcLocaleList contains the required Panchangam
-     * fields & values. These are extremely critical for the smooth functioning of this Class.
-     *
-     * @param vcLocaleList    List of panchangam fields & values as per the locale of choice.
-     *
-     * @return  Returns true if all panchangam fields & values are correct, false otherwise.
+     * Utility function to create a hashmap of "Dhina Visheshams"
      */
-    private static boolean isVCLocaleListValid(HashMap<String, String[]> vcLocaleList) {
-        boolean isValid = false;
-
-        if ((vcLocaleList != null) && (vcLocaleList.size() == MAX_PANCHANGAM_FIELDS)) {
-            String[] samvatsaramList = vcLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_SAMVATSARAM);
-            String[] ayanamList = vcLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_AYANAM);
-            String[] rithuList = vcLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_RITHU);
-            String[] maasamList = vcLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_MAASAM);
-            String[] pakshamList = vcLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_PAKSHAM);
-            String[] thithiList = vcLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_THITHI);
-            String[] sankalpaThithiList =
-                    vcLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_THITHI);
-            String[] raasiList = vcLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_RAASI);
-            String[] nakshatramList = vcLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_NAKSHATHRAM);
-            String[] sankalpaNakshatramList =
-                    vcLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_NAKSHATHRAM);
-            String[] yogamList = vcLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_YOGAM);
-            String[] karanamList = vcLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_KARANAM);
-            String[] vaasaramList = vcLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_VAASARAM);
-            String[] dhinamList = vcLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_DHINAM);
-            String[] horaiList = vcLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_HORAI);
-            String[] ayogamList =
-                    vcLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_AMRUTATHI_YOGAM);
-            if (((samvatsaramList != null) && (samvatsaramList.length == SAMVATSARAM_NUM_YEARS)) &&
-                ((ayanamList != null) && (ayanamList.length == MAX_AYANAMS)) &&
-                ((rithuList != null) && (rithuList.length == MAX_RITHUS)) &&
-                ((maasamList != null) && (maasamList.length == MAX_RAASIS)) &&
-                ((pakshamList != null) && (pakshamList.length == MAX_PAKSHAMS)) &&
-                ((thithiList != null) && (thithiList.length == MAX_THITHIS)) &&
-                ((sankalpaThithiList != null) && (sankalpaThithiList.length == MAX_THITHIS)) &&
-                ((raasiList != null) && (raasiList.length == MAX_RAASIS)) &&
-                ((nakshatramList != null) && (nakshatramList.length == MAX_NAKSHATHRAMS)) &&
-                ((sankalpaNakshatramList != null) && (sankalpaNakshatramList.length == MAX_NAKSHATHRAMS)) &&
-                ((yogamList != null) && (yogamList.length == MAX_NAKSHATHRAMS)) &&
-                ((karanamList != null) && (karanamList.length == MAX_KARANAMS)) &&
-                ((vaasaramList != null) && (vaasaramList.length == MAX_VAASARAMS)) &&
-                ((dhinamList != null) && (dhinamList.length == MAX_VAASARAMS)) &&
-                ((horaiList != null) && (horaiList.length == MAX_VAASARAMS)) &&
-                ((ayogamList != null) && (ayogamList.length == MAX_AMRUTHATHI_YOGAMS))) {
-                isValid = true;
-            }
-        }
-        return isValid;
-    }
-
-    /**
-     * Utility function to create a hashmap of "Dina Visheshams"
-     */
-    private void createDinaVisheshamsList () {
+    private static void createDhinaVisheshamsList () {
         // Table to find the speciality of the given date.
         // Design considerations:
         //  - Create a hashMap based on one or more of the following as the keys:
-        //  - {Ayanam, Maasam, Paksham, Thithi, Dina-Ankham, Nakshatram}
+        //  - {Ayanam, Maasam, Paksham, Thithi, Dhina-Ankham, Nakshatram}
         //
         // Add Match criteria as per following match options:
         //    Type-1 - Match for {Thithi}
-        //    Type-2  - Match for Three tuples {Maasam, DinaAnkam}
+        //    Type-2  - Match for Three tuples {Maasam, Dinaankham}
         //    Type-3A - Match for Three tuples {Maasam, Paksham, Thithi} (or)
         //    Type-3B - Match for Three tuples {Maasam, Paksham, Nakshatram} (or)
         //    Type-4  - Match for four tuples {Maasam, Paksham, Thithi, Nakshatram} (or)
@@ -2274,330 +2520,321 @@ public class VedicCalendar extends Calendar {
         //    Type-6  - Match for 2 tuples {Maasam, Vaasaram}
         //    Type-7  - Match for 2 tuples {Maasam, Nakshatram}
         if (dhinaVisheshamList == null) {
-            String[] maasamList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_MAASAM);
-            String[] pakshamList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_PAKSHAM);
-            String[] thithiList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_THITHI);
-            String[] natchathiramList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_NAKSHATHRAM);
-            String[] vaasaramList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_VAASARAM);
-            String shuklaPaksham = pakshamList[0];
-            String krishnaPaksham = pakshamList[1];
-
             dhinaVisheshamList = new HashMap<>();
 
             // Regular repeating Ammavasai -
             // {Thithi - Ammavasai}
             // (Type-1 match)
-            dhinaVisheshamList.put(thithiList[29], PANCHANGAM_DHINA_VISHESHAM_AMAVAASAI);
+            dhinaVisheshamList.put(thithiTable[29][0], PANCHANGAM_DHINA_VISHESHAM_AMAVAASAI);
 
             // Regular repeating Pournami -
             // {Thithi - Pournami}
             // (Type-1 match)
-            dhinaVisheshamList.put(thithiList[14], PANCHANGAM_DHINA_VISHESHAM_POURNAMI);
+            dhinaVisheshamList.put(thithiTable[14][0], PANCHANGAM_DHINA_VISHESHAM_POURNAMI);
 
             // Sankata Hara Chathurti -
             // {Paksham - Krishna, Thithi - Chathurthi}
             // (Type-5 match)
-            dhinaVisheshamList.put(krishnaPaksham + thithiList[3],
+            dhinaVisheshamList.put(pakshamTable[1][0] + thithiTable[3][0],
                     PANCHANGAM_DHINA_VISHESHAM_SANKATA_HARA_CHATHURTHI);
 
             // Regular repeating Sashti -
             // {Thithi - Sashti}
             // (Type-1 match)
-            dhinaVisheshamList.put(thithiList[5], PANCHANGAM_DHINA_VISHESHAM_SASHTI);
+            dhinaVisheshamList.put(thithiTable[5][0], PANCHANGAM_DHINA_VISHESHAM_SASHTI);
 
             // Regular repeating Ekadasi -
             // {Thithi - Ekadasi}
             // (Type-1 match)
-            dhinaVisheshamList.put(thithiList[10], PANCHANGAM_DHINA_VISHESHAM_EKADASI);
+            dhinaVisheshamList.put(thithiTable[10][0], PANCHANGAM_DHINA_VISHESHAM_EKADASI);
 
             // Regular repeating Thrayodasi -
             // {Thithi - Thrayodasi}
             // (Type-1 match)
-            dhinaVisheshamList.put(thithiList[12], PANCHANGAM_DHINA_VISHESHAM_PRADOSHAM);
+            dhinaVisheshamList.put(thithiTable[12][0], PANCHANGAM_DHINA_VISHESHAM_PRADOSHAM);
 
             // Pongal/Makara Sankaranthi -
-            // {Maasam - Makara, Dina-Ankham - 1}
-            // (Type-2 match) --- Perfect!
-            dhinaVisheshamList.put(maasamList[9] + "1", PANCHANGAM_DHINA_VISHESHAM_MAKARA_SANKARANTHI);
+            // {Maasam - Makara, Dhina-Ankham - 1}
+            // (Type-2 match)
+            dhinaVisheshamList.put(maasamTable[9][0] + "1", PANCHANGAM_DHINA_VISHESHAM_MAKARA_SANKARANTHI);
 
             // Thai Poosam -
             // {Maasam - Makara, Paksham - Shukla, Nakshatram - Poosam}
-            // (Type-3B match) --- TODO - Not Working!
-            dhinaVisheshamList.put(maasamList[9] + shuklaPaksham +
-                    natchathiramList[7], PANCHANGAM_DHINA_VISHESHAM_THAI_POOSAM);
+            // (Type-3B match)
+            dhinaVisheshamList.put(maasamTable[9][0] + pakshamTable[0][0] +
+                            natchathiramTable[7][0], PANCHANGAM_DHINA_VISHESHAM_THAI_POOSAM);
 
             // Vasantha Panchami -
             // {Maasam - Makara, Paksham - Shukla, Thithi - Panchami}
-            // (Type-3A match) --- TODO - Not Working!
-            dhinaVisheshamList.put(maasamList[10] + shuklaPaksham + thithiList[4],
+            // (Type-3A match)
+            dhinaVisheshamList.put(maasamTable[10][0] + pakshamTable[0][0] + thithiTable[4][0],
                     PANCHANGAM_DHINA_VISHESHAM_VASANTHA_PANCHAMI);
 
             // Ratha Sapthami -
             // {Maasam - Kumbha, Paksham - Shukla, Thithi - Sapthami}
-            // (Type-3A match) --- TODO - Not Working!
-            dhinaVisheshamList.put(maasamList[10] + shuklaPaksham + thithiList[6],
+            // (Type-3A match)
+            dhinaVisheshamList.put(maasamTable[10][0] + pakshamTable[0][0] + thithiTable[6][0],
                     PANCHANGAM_DHINA_VISHESHAM_RATHA_SAPTHAMI);
 
             // Bhishma Ashtami -
             // {Maasam - Kumbha, Paksham - Shukla, Thithi - Ashtami}
-            // (Type-3A match) --- TODO - Not Working!
-            dhinaVisheshamList.put(maasamList[10] + shuklaPaksham + thithiList[7],
+            // (Type-3A match)
+            dhinaVisheshamList.put(maasamTable[10][0] + pakshamTable[0][0] + thithiTable[7][0],
                     PANCHANGAM_DHINA_VISHESHAM_BHISHMA_ASHTAMI);
 
             // Maasi Magam -
             // {Maasam - Kumbha, Paksham - Shukla, Nakshatram - Magam}
-            // (Type-3B match) --- TODO - Not Working!
-            dhinaVisheshamList.put(maasamList[10] + shuklaPaksham +
-                    natchathiramList[9], PANCHANGAM_DHINA_VISHESHAM_MAASI_MAGAM);
+            // (Type-3B match)
+            dhinaVisheshamList.put(maasamTable[10][0] + pakshamTable[0][0] +
+                    natchathiramTable[9][0], PANCHANGAM_DHINA_VISHESHAM_MAASI_MAGAM);
 
             // Bala Periyava Jayanthi -
             // {Maasam - Kumbha, Paksham - Krishna, Nakshatram - Uthiradam}
             // (Type-3B match)
-            dhinaVisheshamList.put(maasamList[10] + krishnaPaksham + natchathiramList[20],
+            dhinaVisheshamList.put(maasamTable[10][0] + pakshamTable[1][0] + natchathiramTable[20][0],
                     PANCHANGAM_DHINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
 
             // Maha Sivarathiri -
             // {Maasam - Kumbha, Paksham - Krishna, Thithi - Chathurdasi}
-            // (Type-3A match) --- Working! Some days, Pradosham & Maha Sivarathiri on same day? Check!
-            dhinaVisheshamList.put(maasamList[10] + krishnaPaksham + thithiList[13],
+            // (Type-3A match)
+            dhinaVisheshamList.put(maasamTable[10][0] + pakshamTable[1][0] + thithiTable[13][0],
                     PANCHANGAM_DHINA_VISHESHAM_MAHA_SIVARATHIRI);
 
             // Karadaiyan Nombu -
-            // {Maasam - Meena, Dina-Ankham - 1}
+            // {Maasam - Meena, Dhina-Ankham - 1}
             // (Type-2 match)
-            dhinaVisheshamList.put(maasamList[11] + "1", PANCHANGAM_DHINA_VISHESHAM_KARADAIYAN_NOMBHU);
+            dhinaVisheshamList.put(maasamTable[11][0] + "1", PANCHANGAM_DHINA_VISHESHAM_KARADAIYAN_NOMBHU);
 
             // Sringeri Periyava Jayanthi -
             // {Maasam - Meena, Paksham - Shukla, Nakshatram - Mrigashirisham}
             // (Type-3B match)
-            dhinaVisheshamList.put(maasamList[11] + shuklaPaksham +
-                    natchathiramList[4], PANCHANGAM_DHINA_VISHESHAM_SRINGERI_PERIYAVA_JAYANTHI);
+            dhinaVisheshamList.put(maasamTable[11][0] + pakshamTable[0][0] +
+                    natchathiramTable[4][0], PANCHANGAM_DHINA_VISHESHAM_SRINGERI_PERIYAVA_JAYANTHI);
 
             // Panguni Uthiram -
             // {Maasam - Meena, Paksham - Shukla, Thithi - Pournami, Nakshatram - Uthiram}
             // (Type-4 match)
-            dhinaVisheshamList.put(maasamList[11] + shuklaPaksham + thithiList[14] +
-                    natchathiramList[11], PANCHANGAM_DHINA_VISHESHAM_PANGUNI_UTHIRAM);
+            dhinaVisheshamList.put(maasamTable[11][0] + pakshamTable[0][0] + thithiTable[14][0] +
+                            natchathiramTable[11][0], PANCHANGAM_DHINA_VISHESHAM_PANGUNI_UTHIRAM);
 
             // Ugadi -
-            // {Maasam - Meena, Dina-Ankham - 31}
+            // {Maasam - Meena, Dhina-Ankham - 31}
             // (Type-2 match)
-            dhinaVisheshamList.put(maasamList[11] + "31", PANCHANGAM_DHINA_VISHESHAM_UGADI);
+            dhinaVisheshamList.put(maasamTable[11][0] + "31", PANCHANGAM_DHINA_VISHESHAM_UGADI);
 
             // Tamil Puthandu -
-            // {Maasam - Mesha, Dina-Ankham - 1}
-            // (Type-2 match) --- Perfect!
-            dhinaVisheshamList.put(maasamList[0] + "1", PANCHANGAM_DHINA_VISHESHAM_TAMIL_PUTHANDU);
+            // {Maasam - Mesha, Dhina-Ankham - 1}
+            // (Type-2 match)
+            dhinaVisheshamList.put(maasamTable[0][0] + "1", PANCHANGAM_DHINA_VISHESHAM_TAMIL_PUTHANDU);
 
             // Ramanuja Jayanti -
             // {Maasam - Mesha, Paksham - Shukla, Nakshatram - Arthra}
             // (Type-3B match)
-            dhinaVisheshamList.put(maasamList[0] + shuklaPaksham +
-                    natchathiramList[5], PANCHANGAM_DHINA_VISHESHAM_RAMANUJA_JAYANTHI);
+            dhinaVisheshamList.put(maasamTable[0][0] + pakshamTable[0][0] +
+                            natchathiramTable[5][0], PANCHANGAM_DHINA_VISHESHAM_RAMANUJA_JAYANTHI);
 
             // Sri Rama Navami -
             // {Maasam - Mesha, Paksham - Shukla, Thithi - Navami}
             // (Type-3A match)
-            dhinaVisheshamList.put(maasamList[0] + shuklaPaksham + thithiList[8],
+            dhinaVisheshamList.put(maasamTable[0][0] + pakshamTable[0][0] + thithiTable[8][0],
                     PANCHANGAM_DHINA_VISHESHAM_SRI_RAMA_NAVAMI);
 
             // Chithra Pournami -
             // {Maasam - Mesha, Paksham - Shukla, Thithi - Pournami}
             // (Type-3A match)
-            dhinaVisheshamList.put(maasamList[0] + shuklaPaksham + thithiList[14],
+            dhinaVisheshamList.put(maasamTable[0][0] + pakshamTable[0][0] + thithiTable[14][0],
                     PANCHANGAM_DHINA_VISHESHAM_CHITHRA_POURNAMI);
 
             // Akshaya Thrithiyai -
             // {Maasam - Mesha, Paksham - Shukla, Thithi - Thrithiyai}
             // (Type-3A match)
-            dhinaVisheshamList.put(maasamList[0] + shuklaPaksham + thithiList[2],
+            dhinaVisheshamList.put(maasamTable[0][0] + pakshamTable[0][0] + thithiTable[2][0],
                     PANCHANGAM_DHINA_VISHESHAM_AKSHAYA_THRITHIYAI);
 
             // Agni Nakshatram Begins -
-            // {Maasam - Mesha, Dina-Ankham - 21}
+            // {Maasam - Mesha, Dhina-Ankham - 21}
             // (Type-2 match)
-            dhinaVisheshamList.put(maasamList[0] + "21",
-                    PANCHANGAM_DHINA_VISHESHAM_AGNI_NAKSHATHRAM_BEGIN);
+            dhinaVisheshamList.put(maasamTable[0][0] + "21",
+                    PANCHANGAM_DHINA_VISHESHAM_AGNI_NATCHATHIRAM_BEGIN);
 
             // Agni Nakshatram Begins -
-            // {Maasam - Rishabha, Dina-Ankham - 14}
+            // {Maasam - Rishabha, Dhina-Ankham - 15}
             // (Type-2 match)
-            dhinaVisheshamList.put(maasamList[1] + "14",
-                    PANCHANGAM_DHINA_VISHESHAM_AGNI_NAKSHATHRAM_END);
+            dhinaVisheshamList.put(maasamTable[1][0] + "15",
+                    PANCHANGAM_DHINA_VISHESHAM_AGNI_NATCHATHIRAM_END);
 
             // Sankara Jayanthi -
             // {Maasam - Rishabha, Paksham - Shukla, Thithi - Panchami}
             // (Type-3A match)
-            dhinaVisheshamList.put(maasamList[1] + shuklaPaksham + thithiList[4],
+            dhinaVisheshamList.put(maasamTable[1][0] + pakshamTable[0][0] + thithiTable[4][0],
                     PANCHANGAM_DHINA_VISHESHAM_ADI_SANKARA_JAYANTHI);
 
             // Vaikasi Visakam -
             // {Maasam - Rishabha, Paksham - Shukla, Nakshatram - Visaka}
             // (Type-3B match)
-            dhinaVisheshamList.put(maasamList[1] + shuklaPaksham +
-                    natchathiramList[15], PANCHANGAM_DHINA_VISHESHAM_VAIKASI_VISHAKAM);
+            dhinaVisheshamList.put(maasamTable[1][0] + pakshamTable[0][0] +
+                            natchathiramTable[15][0], PANCHANGAM_DHINA_VISHESHAM_VAIKASI_VISHAKAM);
 
             // Maha Periyava Jayanthi -
             // {Maasam - Rishabha, Paksham - Shukla, Nakshatram - Anusham}
             // (Type-3B match)
-            dhinaVisheshamList.put(maasamList[1] + shuklaPaksham +
-                    natchathiramList[16], PANCHANGAM_DHINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
+            dhinaVisheshamList.put(maasamTable[1][0] + pakshamTable[0][0] +
+                    natchathiramTable[16][0], PANCHANGAM_DHINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
 
             // Puthu Periyava Jayanthi -
             // {Maasam - Kataka, Paksham - Krishna, Nakshatram - Avittam}
             // (Type-3B match)
-            dhinaVisheshamList.put(maasamList[3] + krishnaPaksham +
-                    natchathiramList[22], PANCHANGAM_DHINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
+            dhinaVisheshamList.put(maasamTable[3][0] + pakshamTable[1][0] +
+                    natchathiramTable[22][0], PANCHANGAM_DHINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
 
             // Aadi Perukku -
-            // {Maasam - Kataka, Dina-Ankham - 18}
+            // {Maasam - Kataka, Dhina-Ankham - 18}
             // (Type-2 match)
-            dhinaVisheshamList.put(maasamList[3] + "18", PANCHANGAM_DHINA_VISHESHAM_AADI_PERUKKU);
+            dhinaVisheshamList.put(maasamTable[3][0] + "18", PANCHANGAM_DHINA_VISHESHAM_AADI_PERUKKU);
 
             // Aadi Pooram -
             // {Maasam - Kataka, Paksham - Shukla, Nakshatram - Pooram}
             // (Type-3B match)
-            dhinaVisheshamList.put(maasamList[3] + shuklaPaksham +
-                    natchathiramList[10], PANCHANGAM_DHINA_VISHESHAM_AADI_POORAM);
+            dhinaVisheshamList.put(maasamTable[3][0] + pakshamTable[0][0] +
+                            natchathiramTable[10][0], PANCHANGAM_DHINA_VISHESHAM_AADI_POORAM);
 
             // Garuda Panchami -
             // {Maasam - Kataka, Paksham - Shukla, Thithi - Panchami}
             // (Type-3A match)
-            dhinaVisheshamList.put(maasamList[3] + shuklaPaksham + thithiList[4],
+            dhinaVisheshamList.put(maasamTable[3][0] + pakshamTable[0][0] + thithiTable[4][0],
                     PANCHANGAM_DHINA_VISHESHAM_GARUDA_PANCHAMI);
 
             // Varalakshmi Vratam -
             // {Maasam - Simha, Vaasaram - Brughu, Friday before Pournami}
             // (Type-6 match)
-            dhinaVisheshamList.put(maasamList[4] + vaasaramList[5],
+            dhinaVisheshamList.put(maasamTable[4][0] + vaasaramTable[5][0],
                     PANCHANGAM_DHINA_VISHESHAM_VARALAKSHMI_VRATHAM);
 
             // Avani Avittam(Yajur)
             // {Maasam - Simha, Paksham - Shukla, Thithi - Pournami}
             // (Type-3A match)
-            dhinaVisheshamList.put(maasamList[4] + shuklaPaksham + thithiList[14],
-                    PANCHANGAM_DHINA_VISHESHAM_AVANI_AVITTAM_YAJUR);
+            dhinaVisheshamList.put(maasamTable[4][0] + pakshamTable[0][0] + thithiTable[14][0],
+                            PANCHANGAM_DHINA_VISHESHAM_AVANI_AVITTAM_YAJUR);
 
             // Avani Avittam(Rig)
             // {Maasam - Simha, Paksham - Shukla, Nakshatram - Thiruvonam}
             // (Type-3B match)
-            dhinaVisheshamList.put(maasamList[4] + shuklaPaksham +
-                    natchathiramList[21], PANCHANGAM_DHINA_VISHESHAM_AVANI_AVITTAM_RIG);
+            dhinaVisheshamList.put(maasamTable[4][0] + pakshamTable[0][0] +
+                            natchathiramTable[21][0], PANCHANGAM_DHINA_VISHESHAM_AVANI_AVITTAM_RIG);
 
             // Onam
             // {Maasam - Simha, Nakshatram - Thiruvonam}
             // (Type-7 match)
-            dhinaVisheshamList.put(maasamList[4] + natchathiramList[21],
+            dhinaVisheshamList.put(maasamTable[4][0] + natchathiramTable[21][0],
                     PANCHANGAM_DHINA_VISHESHAM_ONAM);
 
             // Maha Sankata Hara Chathurti -
             // {Maasam - Simha, Paksham - Krishna, Thithi - Chathurthi}
             // (Type-3A match)
-            dhinaVisheshamList.put(maasamList[4] + krishnaPaksham + thithiList[3],
+            dhinaVisheshamList.put(maasamTable[4][0] + pakshamTable[1][0] + thithiTable[3][0],
                     PANCHANGAM_DHINA_VISHESHAM_MAHA_SANKATA_HARA_CHATHURTHI);
 
             // Gokulashtami -
             // {Maasam - Simha, Paksham - Krishna, Thithi - Ashtami}
             // (Type-3A match)
-            dhinaVisheshamList.put(maasamList[4] + krishnaPaksham + thithiList[7],
+            dhinaVisheshamList.put(maasamTable[4][0] + pakshamTable[1][0] + thithiTable[7][0],
                     PANCHANGAM_DHINA_VISHESHAM_GOKULASHTAMI);
 
             // Avani Avittam(Sam) -
             // {Maasam - Simha, Paksham - Shukla, Nakshatram - Hastha}
             // (Type-3B match)
-            dhinaVisheshamList.put(maasamList[4] + shuklaPaksham +
-                    natchathiramList[12], PANCHANGAM_DHINA_VISHESHAM_AVANI_AVITTAM_SAM);
+            dhinaVisheshamList.put(maasamTable[4][0] + pakshamTable[0][0] +
+                    natchathiramTable[12][0], PANCHANGAM_DHINA_VISHESHAM_AVANI_AVITTAM_SAM);
 
             // Vinayagar Chathurthi -
             // {Maasam - Simha, Paksham - Shukla, Thithi - Chathurthi}
             // (Type-3A match)
-            dhinaVisheshamList.put(maasamList[4] + shuklaPaksham + thithiList[3],
+            dhinaVisheshamList.put(maasamTable[4][0] + pakshamTable[0][0] + thithiTable[3][0],
                     PANCHANGAM_DHINA_VISHESHAM_VINAYAGAR_CHATHURTHI);
 
             // Maha Bharani -
             // {Maasam - Kanni, Paksham - Krishna, Nakshatram - Apabharani}
             // (Type-3B match)
-            dhinaVisheshamList.put(maasamList[5] + krishnaPaksham +
-                    natchathiramList[1], PANCHANGAM_DHINA_VISHESHAM_MAHA_BHARANI);
+            dhinaVisheshamList.put(maasamTable[5][0] + pakshamTable[1][0] +
+                    natchathiramTable[1][0], PANCHANGAM_DHINA_VISHESHAM_MAHA_BHARANI);
 
             // Appayya Dikshitar Jayanthi -
             // {Maasam - Kanni, Paksham - Krishna, Thithi - Prathama}
             // (Type-3A match)
-            // TODO - Multiple matches on same key/value. Fix this!
-            dhinaVisheshamList.put(maasamList[5] + krishnaPaksham +
-                    thithiList[15], PANCHANGAM_DHINA_VISHESHAM_APPAIYA_DIKSHITAR_JAYANTHI);
+            dhinaVisheshamList.put(maasamTable[5][0] + pakshamTable[1][0] +
+                    thithiTable[15][0], PANCHANGAM_DHINA_VISHESHAM_APPAIYA_DIKSHITAR_JAYANTHI);
 
             // Mahalayam Start -
             // {Maasam - Kanni, Paksham - Krishna, Thithi - Prathama}
             // (Type-3A match)
             // TODO - Multiple matches on same key/value. Fix this!
-            dhinaVisheshamList.put(maasamList[5] + krishnaPaksham + thithiList[15],
+            dhinaVisheshamList.put(maasamTable[5][0] + pakshamTable[1][0] + thithiTable[15][0],
                     PANCHANGAM_DHINA_VISHESHAM_MAHALAYA_START);
 
             // Mahalaya Amavasai -
             // {Maasam - Kanni, Paksham - Shukla, Thithi - Ammavasai}
             // (Type-3A match)
-            dhinaVisheshamList.put(maasamList[5] + krishnaPaksham + thithiList[29],
+            dhinaVisheshamList.put(maasamTable[5][0] + pakshamTable[1][0] + thithiTable[29][0],
                     PANCHANGAM_DHINA_VISHESHAM_MAHALAYA_AMMAVASAI);
 
             // Navarathiri -
             // {Maasam - Kanni, Paksham - Shukla, Thithi - Prathama}
             // (Type-3A match)
-            dhinaVisheshamList.put(maasamList[5] + shuklaPaksham + thithiList[0],
+            dhinaVisheshamList.put(maasamTable[5][0] + pakshamTable[0][0] + thithiTable[0][0],
                     PANCHANGAM_DHINA_VISHESHAM_NAVARATHRI);
 
             // Saraswati Poojai -
             // {Maasam - Kanni, Paksham - Shukla, Thithi - Navami}
             // (Type-3A match)
-            dhinaVisheshamList.put(maasamList[5] + shuklaPaksham + thithiList[8],
+            dhinaVisheshamList.put(maasamTable[5][0] + pakshamTable[0][0] + thithiTable[8][0],
                     PANCHANGAM_DHINA_VISHESHAM_SARASWATHI_POOJAI);
 
             // Vijaya Dashami -
             // {Maasam - Kanni, Paksham - Shukla, Thithi - Dasami}
             // (Type-3A match)
-            dhinaVisheshamList.put(maasamList[5] + shuklaPaksham + thithiList[9],
+            dhinaVisheshamList.put(maasamTable[5][0] + pakshamTable[0][0] + thithiTable[9][0],
                     PANCHANGAM_DHINA_VISHESHAM_VIJAYA_DASHAMI);
 
             // Naraka Chathurdasi -
             // {Maasam - Thula, Paksham - Krishna, Thithi - Chathurdasi}
             // (Type-3A match)
-            dhinaVisheshamList.put(maasamList[6] + krishnaPaksham + thithiList[13],
+            dhinaVisheshamList.put(maasamTable[6][0] + pakshamTable[1][0] + thithiTable[13][0],
                     PANCHANGAM_DHINA_VISHESHAM_NARAKA_CHATHURDASI);
 
             // Deepavali -
             // {Maasam - Thula, Paksham - Krishna, Thithi - Ammavasai}
             // (Type-3A match)
-            dhinaVisheshamList.put(maasamList[6] + krishnaPaksham + thithiList[29],
+            dhinaVisheshamList.put(maasamTable[6][0] + pakshamTable[1][0] + thithiTable[29][0],
                     PANCHANGAM_DHINA_VISHESHAM_DEEPAVALI);
 
             // Soora Samharam -
             // {Maasam - Thula, Paksham - Shukla, Thithi - Sashti}
             // (Type-3A match)
-            dhinaVisheshamList.put(maasamList[6] + shuklaPaksham + thithiList[5],
+            dhinaVisheshamList.put(maasamTable[6][0] + pakshamTable[0][0] + thithiTable[5][0],
                     PANCHANGAM_DHINA_VISHESHAM_SOORA_SAMHAARAM);
 
             // Karthigai Deepam -
             // {Maasam - Vrichiga, Paksham - Shukla, Thithi - Pournami}
             // (Type-3A match)
-            dhinaVisheshamList.put(maasamList[7] + shuklaPaksham + thithiList[14],
+            dhinaVisheshamList.put(maasamTable[7][0] + pakshamTable[0][0] + thithiTable[14][0],
                     PANCHANGAM_DHINA_VISHESHAM_KARTHIGAI_DEEPAM);
 
             // Sashti Vratham -
             // {Maasam - Vrichiga, Paksham - Shukla, Thithi - Sashti}
             // (Type-3A match)
-            dhinaVisheshamList.put(maasamList[7] + shuklaPaksham + thithiList[5],
+            dhinaVisheshamList.put(maasamTable[7][0] + pakshamTable[0][0] + thithiTable[5][0],
                     PANCHANGAM_DHINA_VISHESHAM_SASHTI_VRATHAM);
 
             // Arudra Darshan -
             // {Maasam - Dhanusu, Nakshatram - Arthra}
             // (Type-7 match)
-            dhinaVisheshamList.put(maasamList[8] + natchathiramList[5],
+            dhinaVisheshamList.put(maasamTable[8][0] + natchathiramTable[5][0],
                     PANCHANGAM_DHINA_VISHESHAM_ARUDHRA_DARSHAN);
 
             // Hanuman Jayanthi -
             // {Maasam - Dhanusu, Paksham - Krishna, Thithi - Amavasai}
             // (Type-3A match)
-            dhinaVisheshamList.put(maasamList[8] + krishnaPaksham + thithiList[29],
+            dhinaVisheshamList.put(maasamTable[8][0] + pakshamTable[1][0] + thithiTable[29][0],
                     PANCHANGAM_DHINA_VISHESHAM_HANUMAN_JAYANTHI);
         }
     }
@@ -2618,7 +2855,7 @@ public class VedicCalendar extends Calendar {
         //         A sample representation of longitude - 343deg 22’ 44".
         //         Each degree has 60 mins, 1 min has 60 secs
         //         So, 343deg 22’ 44" can be represented as 20602.73 (in minutes)
-        // Step 2: Divide Ravi's longitude (R) by MAX_NAKSHATHRAM_MINUTES to
+        // Step 2: Divide Ravi's longitude (R) by MAX_NATCHATHIRAM_MINUTES to
         //         calculate natchathiramIndex
         //         Each natchathiram's span(MAX_RAASI_MINUTES) is 30deg (1800 mins)
         // Step 3: To calculate maasamIndex
@@ -2627,39 +2864,26 @@ public class VedicCalendar extends Calendar {
         //               of maasam minutes left in the given calendar day.
 
         // 1) Calculate the Raasi index(current) & mapping string for the given calendar day
-        int maasamIndex = (int) (refRaviAyanamAtDayStart / MAX_RAASI_MINUTES);
+        int maasamIndex = (int) (refRaviAyanam / MAX_RAASI_MINUTES);
         double raasiSpan;
         int raasiSpanHour;
 
         // Get Sunrise & Sunset timings
         calcSunrise(queryType);
-        calcSunset(queryType);
 
-        double raviAyanamAtSunset = dailyRaviMotion / MAX_MINS_IN_DAY;
-        raviAyanamAtSunset = refRaviAyanamAtDayStart + (raviAyanamAtSunset * sunSetTotalMins);
-
-        // This is important!
-        // Align this to given timezone.
-        double earthMinFor1CelMin = (MAX_MINS_IN_DAY / dailyRaviMotion);
-        raviAyanamAtSunset -= ((defTimezone * MAX_MINS_IN_HOUR) / earthMinFor1CelMin);
-        int maasamIndexAtSunset = (int) (raviAyanamAtSunset / MAX_RAASI_MINUTES);
-        if (maasamIndex != maasamIndexAtSunset) {
-            maasamIndex = maasamIndexAtSunset;
-        }
-
-        /*if ((queryType == MATCH_SANKALPAM_EXACT) || (queryType == MATCH_PANCHANGAM_FULLDAY)) {
+        if ((queryType == MATCH_SANKALPAM_EXACT) || (queryType == MATCH_PANCHANGAM_FULLDAY)) {
             // 2) Get 1st Raasi span for the given calendar day
             //long startTime = System.nanoTime();
             raasiSpan = getRaasiSpan(maasamIndex, SweConst.SE_SUN, false);
             //long endTime = System.nanoTime();
-            //System.out.println("VedicCalendar:","getMaasamIndex() getRaasiSpan... Time Taken: " + VedicCalendar.getTimeTaken(startTime, endTime));
+            //Log.d("VedicCalendar:","getMaasamIndex() getRaasiSpan... Time Taken: " + VedicCalendar.getTimeTaken(startTime, endTime));
             raasiSpanHour = (int) (raasiSpan / MAX_MINS_IN_HOUR);
         } else {
             // 1) Calculate the thithi span within the day
             // This is a rough calculation
-            double raasiRef = Math.ceil(refRaviAyanamAtDayStart / MAX_RAASI_MINUTES);
+            double raasiRef = Math.ceil(refRaviAyanam / MAX_RAASI_MINUTES);
             raasiRef *= MAX_RAASI_MINUTES;
-            raasiSpan = raasiRef - refRaviAyanamAtDayStart;
+            raasiSpan = raasiRef - refRaviAyanam;
 
             // 2) Find the Earth Hours during the day based on daily motion of Ravi & Chandra.
             raasiSpan /= dailyRaviMotion;
@@ -2686,9 +2910,9 @@ public class VedicCalendar extends Calendar {
             } else if (raasiSpan < SUNSET_TOTAL_MINS){
                 maasamIndex += 1;
             }
-        }*/
+        }
 
-        //System.out.println("VedicCalendar", "getMaasamIndex: Ravi: " + refRaviAyanamAtDayStart +
+        //System.out.println("VedicCalendar", "getMaasamIndex: Ravi: " + refRaviAyanam +
         //        " mins " + " DRM: " + dailyRaviMotion +
         //        " Maasam => " + maasamIndex + " Span: " + raasiSpanHour + ":" + raasiSpanMin);
 
@@ -2715,18 +2939,18 @@ public class VedicCalendar extends Calendar {
         int diffYears = currYear - REF_YEAR;
         diffYears %= SAMVATSARAM_NUM_YEARS;
 
-        // Scenario 1: If diffMonths < 0, it means we are in the same year but current month is
+        // Scenario 1: If diff_months < 0, it means we are in the same year but current month is
         //             prior to reference month
-        // Scenario 2: If diffMonths == 0, then it means we are in the same month but current date
+        // Scenario 2: If diff_months == 0, then it means we are in the same month but current date
         //             is prior to reference date
         // In both above scenarios, reduce a year so that number of years calculation is accurate
         // Don't take action in all other scenarios.
-        int diffMonths = currMonth - REF_MONTH;
-        int diffDays = currDate - REF_DATE;
-        if (diffMonths < 0) {
+        int diff_months = currMonth - REF_MONTH;
+        int diff_days = currDate - REF_DATE;
+        if (diff_months < 0) {
             diffYears -= 1;
-        } else if (diffMonths == 0) {
-            if (diffDays < 0) {
+        } else if (diff_months == 0) {
+            if (diff_days < 0) {
                 diffYears -= 1;
             }
         }
@@ -2744,12 +2968,35 @@ public class VedicCalendar extends Calendar {
     /**
      * Utility function to get the locale index given a locale string.
      *
+     * @param locale Language as per locale settings (case insensitive)
+     *        Note: Currently only 3 locales are supported. (English, Tamil, Sanskrit)
+     *              If an unsupported locale is given as input, then by default "English" is
+     *              assumed instead of return ERROR.
+     *
+     * @return locale index as a number (Range: 0 to 2)
+     */
+    private static int getLocaleIndex(String locale) {
+        // Logic:
+        // Return index into localeList array which represents the preferred locale
+        // By default return 0
+        for (int arrIndex = 0; arrIndex < localeList.length; arrIndex++) {
+            if (localeList[arrIndex].equalsIgnoreCase(locale)) {
+                return arrIndex;
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Utility function to get the locale index given a locale string.
+     *
      * @param natchathiramIndex Index into natchathiram table
      * @param vaasaramIndex Index into vaasaram table
+     * @param localeIndex Index into locale table
      *
      * @return amruthathi yogam as a string
      */
-    private String getAyogamStr (int natchathiramIndex, int vaasaramIndex) {
+    private String get_ayogamStr (int natchathiramIndex, int vaasaramIndex, int localeIndex) {
         // Logic:
         // There are is a need to do multi-D lookup to find the correct amruthathi yogam.
         // {Nakshatram}{Vaasaram}{Yogam}{locale involving strings for supported languages}
@@ -2762,14 +3009,13 @@ public class VedicCalendar extends Calendar {
         //  - Using the index fetched in 1st level lookup {index, locale}, lookup in
         //    amruthathiYogamTable table and fetch the correct amruthathi yogam.
         // Note: This table mapping is as per Pambu Panchangam
-        String ayogamNatchathiramMap = amruthathiYogamMapTable[natchathiramIndex];
-        char cVal = ayogamNatchathiramMap.charAt(vaasaramIndex);
+        String ayogam_natchathiram_map = amruthathiYogamMapTable[natchathiramIndex];
+        char cVal = ayogam_natchathiram_map.charAt(vaasaramIndex);
         int ayogamIndex = Integer.parseInt(String.valueOf(cVal));
 
-        //System.out.println("VedicCalendar", "getAyogamStr: Yogam => " + ayogamStr);
+        //System.out.println("VedicCalendar", "get_ayogamStr: Yogam => " + ayogamStr);
 
-        String[] yogamList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_AMRUTATHI_YOGAM);
-        return yogamList[(ayogamIndex % MAX_AMRUTHATHI_YOGAMS)];
+        return amruthathiYogamTable[ayogamIndex][localeIndex];
     }
 
     /**
@@ -2782,53 +3028,53 @@ public class VedicCalendar extends Calendar {
         // Logic:
         // Using SWEDate Library, get sunrise of the given day with the following inputs:
         // { Longitude, Latitude, calendar Date}
+        double totalMins = 0;
 
-        // Retrieve Sunrise timings only once as it is performance-intensive to do this repeatedly.
-        if (sunRiseTotalMins == 0) {
-            //if ((queryType != MATCH_PANCHANGAM_PROMINENT) && (sunRiseTotalMins == 0)) {
-            if (queryType != MATCH_PANCHANGAM_PROMINENT) {
-                StringBuffer serr = new StringBuffer();
-                double[] geoPos = new double[]{DEF_LONGITUDE, DEF_LATITUDE, 0}; // Chennai
-                DblObj ddlObj = new DblObj();
+        if ((queryType != MATCH_PANCHANGAM_PROMINENT) && (sunRiseTotalMins == 0)) {
+            StringBuffer serr = new StringBuffer();
+            double[] geoPos = new double[] {defLongitude, defLatitude, 0}; // Chennai
+            DblObj ddlObj = new DblObj();
 
-                int flags = SweConst.SE_CALC_RISE | SweConst.SE_BIT_NO_REFRACTION |
-                        SweConst.SE_BIT_DISC_CENTER;
+            int flags = SweConst.SE_CALC_RISE | SweConst.SE_BIT_NO_REFRACTION |
+                    SweConst.SE_BIT_DISC_CENTER;
 
-                double tjd = SweDate.getJulDay(refYear, refMonth, refDate, 0, SweDate.SE_GREG_CAL);
+            double tjd = SweDate.getJulDay(refYear, refMonth, refDate, 0, SweDate.SE_GREG_CAL);
 
-                //System.out.println("VedicCalendar", "tjd: " + tjd);
-                double dt = geoPos[0] / 360.0;
-                tjd = tjd - dt;
-                //System.out.println("VedicCalendar", "tjd-dt: " + tjd);
+            //Log.d("VedicCalendar", "tjd: " + tjd);
+            double dt = geoPos[0] / 360.0;
+            tjd = tjd - dt;
+            //Log.d("VedicCalendar", "tjd-dt: " + tjd);
 
-                int retVal = swissEphInst.swe_rise_trans(tjd, SweConst.SE_SUN, null,
-                        SweConst.SEFLG_SWIEPH, flags, geoPos, 0, 0, ddlObj, serr);
-                if (retVal == 0) {
-                    SweDate sd = new SweDate();
-                    sd.setJulDay(ddlObj.val);
-
-                    // Calculate given day's sunrise timings (Hour & Mins)
-                    String sunRiseTimeStr = getSDTime(sd.getJulDay() + defTimezone / 24.);
-                    if (!sunRiseTimeStr.equals("")) {
-                        String[] sunRiseTimeArr = sunRiseTimeStr.split(":");
-                        if (sunRiseTimeArr.length >= 2) {
-                            int hours = Integer.parseInt(sunRiseTimeArr[0]);
-                            int mins = Integer.parseInt(sunRiseTimeArr[1]);
-                            sunRiseTotalMins = (hours * MAX_MINS_IN_HOUR) + mins;
-                        }
-                    }
+            int retVal = swissEphInst.swe_rise_trans(tjd, SweConst.SE_SUN, null,
+                    SweConst.SEFLG_SWIEPH, flags, geoPos, 0, 0, ddlObj, serr);
+            if (retVal != 0) {
+                if (serr.length() > 0) {
+                    System.out.println("VedicCalendar, Warning: " + serr);
                 } else {
-                    if (serr.length() > 0) {
-                        System.out.println("VedicCalendar, Warning: " + serr);
-                    } else {
-                        System.out.println("VedicCalendar" +
-                                String.format("Warning, different flags used (0x%x)", retVal));
-                    }
-                    sunRiseTotalMins = SUNRISE_TOTAL_MINS;
+                    System.out.println("VedicCalendar" +
+                            String.format("Warning, different flags used (0x%x)", retVal));
                 }
             } else {
-                sunRiseTotalMins = SUNRISE_TOTAL_MINS;
+                SweDate sd = new SweDate();
+                sd.setJulDay(ddlObj.val);
+
+                // Calculate given day's sunrise timings (Hour & Mins)
+                String sunRiseTimeStr = getSDTime(sd.getJulDay() + defTimezone / 24.);
+                if (!sunRiseTimeStr.equals("")) {
+                    String[] sunRiseTimeArr = sunRiseTimeStr.split(":");
+                    if (sunRiseTimeArr.length >= 2) {
+                        int hours = Integer.parseInt(sunRiseTimeArr[0]);
+                        int mins = Integer.parseInt(sunRiseTimeArr[1]);
+                        totalMins = (hours * MAX_MINS_IN_HOUR) + mins;
+                    }
+                }
             }
+        } else if (queryType == MATCH_PANCHANGAM_PROMINENT) {
+            totalMins = SUNRISE_TOTAL_MINS;
+        }
+
+        if (totalMins > 0) {
+            sunRiseTotalMins = totalMins;
         }
     }
 
@@ -2842,50 +3088,52 @@ public class VedicCalendar extends Calendar {
         // Logic:
         // Using SWEDate Library, get sunrise of the given day with the following inputs:
         // { Longitude, Latitude, calendar Date}
+        double totalMins = 0;
 
-        // Retrieve Sunset timings only once as it is performance-intensive to do this repeatedly.
-        if (sunSetTotalMins == 0) {
-        //if ((queryType != MATCH_PANCHANGAM_PROMINENT) && (sunSetTotalMins == 0)) {
-            if (queryType != MATCH_PANCHANGAM_PROMINENT) {
-                StringBuffer serr = new StringBuffer();
-                double[] geoPos = new double[]{DEF_LONGITUDE, DEF_LATITUDE, 0}; // Chennai
-                DblObj ddlObj = new DblObj();
+        if ((queryType != MATCH_PANCHANGAM_PROMINENT) && (sunSetTotalMins == 0)) {
+            StringBuffer serr = new StringBuffer();
+            double[] geoPos = new double[] {defLongitude, defLatitude, 0}; // Chennai
+            DblObj ddlObj = new DblObj();
 
-                int flags = SweConst.SE_CALC_SET | SweConst.SE_BIT_NO_REFRACTION |
-                        SweConst.SE_BIT_DISC_CENTER;
+            int flags = SweConst.SE_CALC_SET | SweConst.SE_BIT_NO_REFRACTION |
+                    SweConst.SE_BIT_DISC_CENTER;
 
-                double tjd = SweDate.getJulDay(refYear, refMonth, refDate, 0, SweDate.SE_GREG_CAL);
-                double dt = geoPos[0] / 360.0;
-                tjd = tjd - dt;
+            double tjd = SweDate.getJulDay(refYear, refMonth, refDate, 0, SweDate.SE_GREG_CAL);
+            //Log.d("VedicCalendar", "tjd: " + tjd);
+            double dt = geoPos[0] / 360.0;
+            tjd = tjd - dt;
+            //Log.d("VedicCalendar", "tjd-dt: " + tjd);
 
-                int retVal = swissEphInst.swe_rise_trans(tjd, SweConst.SE_SUN, null,
-                        SweConst.SEFLG_SWIEPH, flags, geoPos, 0, 0, ddlObj, serr);
-                if (retVal == 0) {
-                    SweDate sd = new SweDate();
-                    sd.setJulDay(ddlObj.val);
-
-                    // Calculate given day's Sunset timings (Hour & Mins)
-                    String sunSetTimeStr = getSDTime(sd.getJulDay() + defTimezone / 24.);
-                    if (!sunSetTimeStr.equals("")) {
-                        String[] sunSetTimeArr = sunSetTimeStr.split(":");
-                        if (sunSetTimeArr.length >= 2) {
-                            int hours = Integer.parseInt(sunSetTimeArr[0]);
-                            int mins = Integer.parseInt(sunSetTimeArr[1]);
-                            sunSetTotalMins = (hours * MAX_MINS_IN_HOUR) + mins;
-                        }
-                    }
+            int retVal = swissEphInst.swe_rise_trans(tjd, SweConst.SE_SUN, null,
+                    SweConst.SEFLG_SWIEPH, flags, geoPos, 0, 0, ddlObj, serr);
+            if (retVal != 0) {
+                if (serr.length() > 0) {
+                    System.out.println("VedicCalendar, Warning: " + serr);
                 } else {
-                    if (serr.length() > 0) {
-                        System.out.println("VedicCalendar, Warning: " + serr);
-                    } else {
-                        System.out.println("VedicCalendar" +
-                                String.format("Warning, different flags used (0x%x)", retVal));
-                    }
-                    sunSetTotalMins = SUNSET_TOTAL_MINS;
+                    System.out.println("VedicCalendar" +
+                            String.format("Warning, different flags used (0x%x)", retVal));
                 }
             } else {
-                sunSetTotalMins = SUNSET_TOTAL_MINS;
+                SweDate sd = new SweDate();
+                sd.setJulDay(ddlObj.val);
+
+                // Calculate given day's Sunset timings (Hour & Mins)
+                String sunSetTimeStr = getSDTime(sd.getJulDay() + defTimezone / 24.);
+                if (!sunSetTimeStr.equals("")) {
+                    String[] sunSetTimeArr = sunSetTimeStr.split(":");
+                    if (sunSetTimeArr.length >= 2) {
+                        int hours = Integer.parseInt(sunSetTimeArr[0]);
+                        int mins = Integer.parseInt(sunSetTimeArr[1]);
+                        totalMins = (hours * MAX_MINS_IN_HOUR) + mins;
+                    }
+                }
             }
+        } else if (queryType == MATCH_PANCHANGAM_PROMINENT) {
+            totalMins = SUNSET_TOTAL_MINS;
+        }
+
+        if (totalMins > 0) {
+            sunSetTotalMins = totalMins;
         }
     }
 
@@ -2901,17 +3149,17 @@ public class VedicCalendar extends Calendar {
         SweDate sd = new SweDate(refYear, refMonth, refDate, 0);
         swissEphInst.swe_houses(sd.getJulDay(),
                 flags,
-                DEF_LATITUDE,
-                DEF_LONGITUDE,
+                defLatitude,
+                defLongitude,
                 'P',
                 cusps,
                 acsc);
-        int ayanamDeg = (int) (acsc[0]);
-        double ayanamMin = (acsc[0]) - ayanamDeg;
-        double refLagnamMins = (ayanamDeg * 60);
-        refLagnamMins += ((ayanamMin) * 60);
+        int ayanam_deg = (int) (acsc[0]);
+        double ayanam_min = (acsc[0]) - ayanam_deg;
+        double refLagnamMins = (ayanam_deg * 60);
+        refLagnamMins += ((ayanam_min) * 60);
 
-        //System.out.println("VedicCalendar", "Ascendant: " + toDMS(acsc[0]) +
+        //Log.d("VedicCalendar", "Ascendant: " + toDMS(acsc[0]) +
         //        " : " + toHMS(acsc[0]) + "\n");
 
         return refLagnamMins;
@@ -2931,7 +3179,7 @@ public class VedicCalendar extends Calendar {
         int currDate = refCalendar.get(Calendar.DATE);
         int currHour = 0;//refCalendar.get(Calendar.HOUR_OF_DAY);
 
-        //System.out.println("VedicCalendar", "calcPlanetLongitude(): " + currDate + "/" +
+        //Log.d("VedicCalendar", "calcPlanetLongitude(): " + currDate + "/" +
         //        currMonth + "/" + currYear);
 
         // Use ... new SwissEph("/path/to/your/ephemeris/data/files"); when
@@ -2962,13 +3210,13 @@ public class VedicCalendar extends Calendar {
             }
         }
 
-        int ayanamDeg = (int) (xp[0]);
-        double ayanamMin = (xp[0]) - ayanamDeg;
-        double refAyanamMins = (ayanamDeg * 60);
-        refAyanamMins += ((ayanamMin) * 60);
-        //System.out.println("VedicCalendar", "calcPlanetLongitude(): Ayanam Minutes: " +
-        //        refAyanamMins + " Deg: " + toDMS(xp[0]));
-        return refAyanamMins;
+        int ayanam_deg = (int) (xp[0]);
+        double ayanam_min = (xp[0]) - ayanam_deg;
+        double ref_ayanam_mins = (ayanam_deg * 60);
+        ref_ayanam_mins += ((ayanam_min) * 60);
+        //Log.d("VedicCalendar", "calcPlanetLongitude(): Ayanam Minutes: " +
+        //        ref_ayanam_mins + " Deg: " + toDMS(xp[0]));
+        return ref_ayanam_mins;
     }
 
     /**
@@ -2989,9 +3237,9 @@ public class VedicCalendar extends Calendar {
                 flags, 0);
         //long endTime = System.nanoTime();
         //System.out.println("VedicCalendar TCPlanetPlanet()... Time Taken: " + VedicCalendar.getTimeTaken(startTime, endTime));
-        double tithiDeg = 0;
-        tithiDeg += (thithiIndex * deg); // 12 deg is one thithi (or) 6 deg for karanam
-        tcEnd.setOffset(tithiDeg);
+        double tithi_deg = 0;
+        tithi_deg += (thithiIndex * deg); // 12 deg is one thithi (or) 6 deg for karanam
+        tcEnd.setOffset(tithi_deg);
 
         return getSDTimeZone(sd.getJulDay(),
                 swissEphInst.getTransitUT(tcEnd, sd.getJulDay(), false));
@@ -3040,19 +3288,19 @@ public class VedicCalendar extends Calendar {
 
         if (calcLocal) {
             double chandraAyanamAtSunset = dailyChandraMotion / MAX_MINS_IN_DAY;
-            chandraAyanamAtSunset = refChandraAyanamAtDayStart + (chandraAyanamAtSunset * sunSetTotalMins);
+            chandraAyanamAtSunset = refChandraAyanam + (chandraAyanamAtSunset * sunSetTotalMins);
 
-            //double natchathiramRef = Math.ceil(refChandraAyanamAtDayStart / MAX_NAKSHATHRAM_MINUTES);
-            double natchathiramRef = Math.ceil(chandraAyanamAtSunset / MAX_NAKSHATHRAM_MINUTES);
-            natchathiramRef *= MAX_NAKSHATHRAM_MINUTES;
-            natSpan = natchathiramRef - refChandraAyanamAtDayStart;
+            //double natchathiramRef = Math.ceil(refChandraAyanam / MAX_NATCHATHIRAM_MINUTES);
+            double natchathiramRef = Math.ceil(chandraAyanamAtSunset / MAX_NATCHATHIRAM_MINUTES);
+            natchathiramRef *= MAX_NATCHATHIRAM_MINUTES;
+            natSpan = natchathiramRef - refChandraAyanam;
 
             // 2) Find the Earth Hours during the day based on daily motion of Ravi & Chandra.
             natSpan /= dailyChandraMotion;
             natSpan *= MAX_24HOURS;
             natSpan += defTimezone;
         } else {
-            double natOffset = ((natchathiramIndex + 1) % MAX_NAKSHATHRAMS) * (360. / 27.);
+            double natOffset = ((natchathiramIndex + 1) % MAX_NATCHATHIRAMS) * (360. / 27.);
 
             SweDate sd = new SweDate(refYear, refMonth, refDate, 0);
             int flags = SweConst.SEFLG_SWIEPH | SweConst.SEFLG_SIDEREAL |
@@ -3083,9 +3331,9 @@ public class VedicCalendar extends Calendar {
                 flags, 0);
         //long endTime = System.nanoTime();
         //System.out.println("VedicCalendar getYogamSpan()... Time Taken: " + VedicCalendar.getTimeTaken(startTime, endTime));
-        double yogamDeg = 0;
-        yogamDeg += ((yogamIndex + 1) * (360. / 27.)); // 12 deg is one thithi (or) 6 deg for karanam
-        tcEnd.setOffset(yogamDeg);
+        double yogam_deg = 0;
+        yogam_deg += ((yogamIndex + 1) * (360. / 27.)); // 12 deg is one thithi (or) 6 deg for karanam
+        tcEnd.setOffset(yogam_deg);
 
         return getSDTimeZone(sd.getJulDay(),
                 swissEphInst.getTransitUT(tcEnd, sd.getJulDay(), false));

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Nithya Panchangam</string>
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="nithya_panchangam_header">
         "Nithya Panchangam"
     </string>
@@ -28,29 +29,18 @@
     <string name="pref_def_location_val" translatable="false">Varanasi, India</string>
     <string name="pref_sankalpam_type_key" translatable="false">PREF_SANKALPAM_TYPE_KEY</string>
     <string name="pref_sankalpam" translatable="false">Sankalpam</string>
-    <string name="pref_sankalpam_details" translatable="false">Sankalpam Type</string>
+    <string name="pref_sankalpam_details" translatable="false">Sankalpam Details</string>
     <string name="pref_sankalpam_type_shubam" translatable="false">Shubham</string>
     <string name="pref_sankalpam_type_srardham" translatable="false">Shraaddham</string>
     <string name="pref_def_sankalpam_type" translatable="false">Shubham</string>
     <string name="pref_location_gps" translatable="false">GPS Location (Permissions Required)</string>
-    <string name="pref_ayanamsa_chitrapaksha" translatable="false">Chitrapaksha</string>
-    <string name="pref_ayanamsa_lahiri" translatable="false">Lahiri</string>
     <string-array name="locale_list">
         <item>Tamil</item>
         <item>Sanskrit</item>
-        <item>IAST</item>
-        <item>Telugu</item>
-        <item>Malayalam</item>
-        <item>Kannada</item>
-        <item>Hindi</item>
         <item>English</item>
     </string-array>
     <string-array name="pref_allowed_panchangam_list">
         <item>@string/pref_panchangam_drik</item>
-    </string-array>
-    <string-array name="pref_allowed_ayanamsa_list">
-        <item>@string/pref_ayanamsa_chitrapaksha</item>
-        <item>@string/pref_ayanamsa_lahiri</item>
     </string-array>
     <string-array name="pref_location_settings">
         <item>Manual Selection (Recommended)</item>
@@ -87,7 +77,7 @@
     <string name="sankalpam_nakshatra_yukhtayaam">nakshatra yuktaayaam</string>
     <string name="sankalpam_yoga_yukhtayaam">yoga yukhtayaam</string>
     <string name="sankalpam_karana_yukhtayaam">karana yukhtayaam</string>
-    <string name="chandrashtama_nakshathram_heading">Chandrashtama Nakshatram (Star)</string>
+    <string name="chandrashtama_natchathiram_heading">Chandrashtama Nakshatram (Star)</string>
     <string name="lagnam_heading">Lagnam</string>
     <string name="horai_heading">Horai</string>
     <string name="sankalpam_srardham_begin">Mamo patha, samastha duritha kshyadwara Shri Parameshwara preethyartham, apavithra pavithrova sarvavastham gathopiva | yassmareth pundarikaksham sa baahyaa abhyantharaha suchihi || maanasam vaachikam paapam karmanaa samupaarjitham | Shri Rama smaranenaiva vyapohathi na samshayaha ||  Shri Rama Rama Rama | Thithirvishnuhu thathaa vaaraha nakshathram Vishnu revacha | yogashcha karanam chaiva sarvam Vishnu mayam Jagat || Shri Govinda Govinda Govinda || Adya Shri Bhagavathaha maha purushasya Vishnoho aajnayaa pravarthamaanasya adya brahmanaha dwithiya paraardhe shwetha varaha kalpe vaivasvatha manvanthare ashtaavimshathi thame kaliyuge prathame pade jambudweepe bhaaratha varshe bharatha khande meroho dakshine parshwe shakabde asmin varthamane vyavahaarike prabhavadinaam shashtyaaha samvatsaranaam madhye</string>
@@ -207,8 +197,8 @@
     <string name="bala_periyava_jayanthi">Shri Shankara Vijayendra Saraswathi Swamigal Jayanthi</string>
     <string name="sringeri_periyava_jayanthi">Shri Bharathi Theertha Swaminaha Vardhanthi</string>
     <string name="appayya_dikshitar_jayanthi">Shri Appayya Dikshitar Jayanthi</string>
-    <string name="lagnam_details">Dina Lagnams</string>
-    <string name="horai_details">Dina Horai(s)</string>
+    <string name="lagnam_details">Dhina Lagnams</string>
+    <string name="horai_details">Dhina Horai(s)</string>
     <string name="start_time">Start Time</string>
     <string name="end_time">End Time</string>
     <string name="cancel">Cancel</string>
@@ -216,395 +206,8 @@
     <string name="vedic_reminder_is_on">Reminder is ON</string>
     <string name="select_year">Select Year</string>
     <string name="ugadi">Ugadi</string>
-    <string name="agni_nakshathiram_begin">Agni Nakshathiran Begins</string>
-    <string name="agni_nakshathiram_end">Agni Nakshathiram Ends</string>
+    <string name="agni_nakshathiram_begin">Agni Nakshatram Begins</string>
+    <string name="agni_nakshathiram_end">Agni Nakshatram Ends</string>
     <string name="onam">Onam</string>
     <string name="mahalayam_start">Mahalayam Begins</string>
-    <string name="pref_ayanamsa" translatable="false">Ayanamsa</string>
-    <string name="pref_ayanamsa_options" translatable="false">Ayanamsa Modes</string>
-    <string name="pref_def_ayanamsa" translatable="false">Chitrapaksha</string>
-    <string name="pref_ayanamsa_key" translatable="false">PREF_AYANAMSA_KEY</string>
-
-    <!-- Samvatsaram (Year) -->
-    <string-array name="samvatsaram_list">
-        <item>Prabhava</item>
-        <item>Vibhava</item>
-        <item>Sukla</item>
-        <item>Pramodoota</item>
-        <item>Prachorpaththi</item>
-        <item>Aangirasa</item>
-        <item>Srimukha</item>
-        <item>Bhava</item>
-        <item>Yuva</item>
-        <item>Dhaatu</item>
-        <item>Eeswara</item>
-        <item>Vehudhanya</item>
-        <item>Pramathi</item>
-        <item>Vikrama</item>
-        <item>Vishu</item>
-        <item>Chithrabhaanu</item>
-        <item>Subhaanu</item>
-        <item>Dhaarana</item>
-        <item>Paarthiba</item>
-        <item>Viya</item>
-        <item>Sarvajith</item>
-        <item>Sarvadhari</item>
-        <item>Virodhi</item>
-        <item>Vikruthi</item>
-        <item>Kara</item>
-        <item>Nandhana</item>
-        <item>Vijaya</item>
-        <item>Jaya</item>
-        <item>Manmatha</item>
-        <item>Dhunmukhi</item>
-        <item>Hevalambhi</item>
-        <item>Vilambhi</item>
-        <item>Vikari</item>
-        <item>Saarvari</item>
-        <item>Plava</item>
-        <item>Subakrith</item>
-        <item>Sobakrith</item>
-        <item>Krodhi</item>
-        <item>Visuvaasuva</item>
-        <item>Parabhaava</item>
-        <item>Plavanga</item>
-        <item>Keelaka</item>
-        <item>Saumya</item>
-        <item>Sadharana</item>
-        <item>Virodhikrithu</item>
-        <item>Paridhaabi</item>
-        <item>Paramaadhisa</item>
-        <item>Aanandha</item>
-        <item>Rakshasa</item>
-        <item>Nala</item>
-        <item>Pingala</item>
-        <item>Kalayukthi</item>
-        <item>Siddharthi</item>
-        <item>Raudhri</item>
-        <item>Dunmathi</item>
-        <item>Dhundubhi</item>
-        <item>Rudhrodhgaari</item>
-        <item>Raktakshi</item>
-        <item>Krodhana</item>
-        <item>Akshaya</item>
-    </string-array>
-
-    <!-- Ayanam (6-month) period -->
-    <string-array name="ayanam_list">
-        <item>Utharayinam</item>
-        <item>Dhakshinayinam</item>
-    </string-array>
-
-    <!-- Rithu (Season) 2-month period -->
-    <string-array name="rithu_list">
-        <item>Vasantharithu</item>
-        <item>Greeshmarithu</item>
-        <item>Varsharithu</item>
-        <item>Sharadarithu</item>
-        <item>Hemantharithu</item>
-        <item>Shishirarithu</item>
-    </string-array>
-
-    <!-- Maasam (month) -->
-    <string-array name="maasam_list">
-        <item>Mesha</item>
-        <item>Rishabha</item>
-        <item>Mithuna</item>
-        <item>Kataka</item>
-        <item>Simha</item>
-        <item>Kanni</item>
-        <item>Thula</item>
-        <item>Vrichiga</item>
-        <item>Dhanusu</item>
-        <item>Makara</item>
-        <item>Kumbha</item>
-        <item>Meena</item>
-    </string-array>
-
-    <!-- Paksham (15-day) period -->
-    <string-array name="paksham_list">
-        <item>Shukla</item>
-        <item>Krishna</item>
-    </string-array>
-
-    <!-- Thithi (Lunar Day) -->
-    <string-array name="thithi_list">
-        <item>Prathama</item>
-        <item>Dvithiya</item>
-        <item>Thrithiya</item>
-        <item>Chathurthi</item>
-        <item>Panchami</item>
-        <item>Sashti</item>
-        <item>Sapthami</item>
-        <item>Ashtami</item>
-        <item>Navami</item>
-        <item>Dashami</item>
-        <item>Ekadashi</item>
-        <item>Dvadashi</item>
-        <item>Thrayodashi</item>
-        <item>Chathurdashi</item>
-        <item>Pournami</item>
-        <item>Prathama</item>
-        <item>Dvithiya</item>
-        <item>Thrithiya</item>
-        <item>Chathurthi</item>
-        <item>Panchami</item>
-        <item>Sashti</item>
-        <item>Sapthami</item>
-        <item>Ashtami</item>
-        <item>Navami</item>
-        <item>Dashami</item>
-        <item>Ekadashi</item>
-        <item>Dvadashi</item>
-        <item>Thrayodashi</item>
-        <item>Chathurdashi</item>
-        <item>Amavasya</item>
-    </string-array>
-
-    <!-- Sankalpa Thithi (Lunar Day) with grammar suffix -->
-    <string-array name="sankalpa_thithi_list">
-        <item>Prathamayam</item>
-        <item>Dvithiyayam</item>
-        <item>Thrithiyayam</item>
-        <item>Chathurthyam</item>
-        <item>Panchamyam</item>
-        <item>Sashtyam</item>
-        <item>Sapthamyam</item>
-        <item>Ashtamyam</item>
-        <item>Navamyam</item>
-        <item>Dashamyam</item>
-        <item>Ekadashyam</item>
-        <item>Dvadashyam</item>
-        <item>Thrayodashyam</item>
-        <item>Chathurdashyam</item>
-        <item>Pournamyam</item>
-        <item>Prathamayam</item>
-        <item>Dvithiyayam</item>
-        <item>Thrithiyayam</item>
-        <item>Chathurthyam</item>
-        <item>Panchamyam</item>
-        <item>Sashtyam</item>
-        <item>Sapthamyam</item>
-        <item>Ashtamyam</item>
-        <item>Navamyam</item>
-        <item>Dashamyam</item>
-        <item>Ekadashyam</item>
-        <item>Dvadashyam</item>
-        <item>Thrayodashyam</item>
-        <item>Chathurdashyam</item>
-        <item>Amavasyayam</item>
-    </string-array>
-
-    <!-- Raasi (Planet) -->
-    <string-array name="raasi_list">
-        <item>Mesha</item>
-        <item>Rishabha</item>
-        <item>Mithuna</item>
-        <item>Kataka</item>
-        <item>Simha</item>
-        <item>Kanni</item>
-        <item>Thula</item>
-        <item>Vrichiga</item>
-        <item>Dhanusu</item>
-        <item>Makara</item>
-        <item>Kumbha</item>
-        <item>Meena</item>
-    </string-array>
-
-    <!-- Nakshatram (Star) used for Panchangam purposes -->
-    <string-array name="nakshathram_list">
-        <item>Ashwini</item>
-        <item>Bharani</item>
-        <item>Karthikai</item>
-        <item>Rohini</item>
-        <item>Mrigashirisham</item>
-        <item>Thiruvathirai</item>
-        <item>Punarpoosam</item>
-        <item>Poosam</item>
-        <item>Ayilyam</item>
-        <item>Magam</item>
-        <item>Pooram</item>
-        <item>Uthiram</item>
-        <item>Hastham</item>
-        <item>Chithirai</item>
-        <item>Swathi</item>
-        <item>Visaka</item>
-        <item>Anusham</item>
-        <item>Kettai</item>
-        <item>Moolam</item>
-        <item>Pooradam</item>
-        <item>Uthiradam</item>
-        <item>Thiruvonam</item>
-        <item>Avittam</item>
-        <item>Sadhayam</item>
-        <item>Poorattathi</item>
-        <item>Uthirattathi</item>
-        <item>Revathi</item>
-    </string-array>
-
-    <!-- Sankalpa Nakshatram (Star) used for Sankapalpam Purposes with grammar suffix -->
-    <string-array name="sankalpa_nakshathram_list">
-        <item>Ashwini</item>
-        <item>Apabharani</item>
-        <item>Kruthika</item>
-        <item>Rohini</item>
-        <item>Mrigashiro</item>
-        <item>Arthra</item>
-        <item>Punarvasu</item>
-        <item>Pushya</item>
-        <item>Aslesha</item>
-        <item>Maga</item>
-        <item>Purva Palguni</item>
-        <item>Uthira Palguni</item>
-        <item>Hastha</item>
-        <item>Chithirai</item>
-        <item>Swathi</item>
-        <item>Visaka</item>
-        <item>Anuradha</item>
-        <item>Jyeshta</item>
-        <item>Moola</item>
-        <item>Purvashada</item>
-        <item>Uthirashada</item>
-        <item>Sravana</item>
-        <item>Sravishta</item>
-        <item>Sadhabhishaka</item>
-        <item>Purva Proshtapadha</item>
-        <item>Uthira Proshtapadha</item>
-        <item>Revathi</item>
-    </string-array>
-
-    <!-- Yogam used to indicate yogam of the Day -->
-    <string-array name="yogam_list">
-        <item>Vishkambam</item>
-        <item>Preethi</item>
-        <item>Ayushmaan</item>
-        <item>Sowbhagyam</item>
-        <item>Shobanam</item>
-        <item>Athikandam</item>
-        <item>Sukarmam</item>
-        <item>Thruthi</item>
-        <item>Soolam</item>
-        <item>Kandam</item>
-        <item>Vruddhi</item>
-        <item>Duruvam</item>
-        <item>Vyakadam</item>
-        <item>Arisanam</item>
-        <item>Vachiram</item>
-        <item>Siddhi</item>
-        <item>Vyathipaadam</item>
-        <item>Variyaam</item>
-        <item>Parikam</item>
-        <item>Sivam</item>
-        <item>Sittham</item>
-        <item>Saththyam</item>
-        <item>Subham</item>
-        <item>Suppiram</item>
-        <item>Bramyam</item>
-        <item>Ainthiram</item>
-        <item>Vaithruthi</item>
-    </string-array>
-
-    <!-- Karanam (half-thithi) -->
-    <string-array name="karanam_list">
-        <item>Kimsthuknam</item>
-        <item>Bava</item>
-        <item>Baalava</item>
-        <item>Koulava</item>
-        <item>Thaithila</item>
-        <item>Gara</item>
-        <item>Vanija</item>
-        <item>Vishti</item>
-        <item>Bava</item>
-        <item>Baalava</item>
-        <item>Koulava</item>
-        <item>Thaithila</item>
-        <item>Gara</item>
-        <item>Vanija</item>
-        <item>Vishti</item>
-        <item>Bava</item>
-        <item>Baalava</item>
-        <item>Koulava</item>
-        <item>Thaithila</item>
-        <item>Gara</item>
-        <item>Vanija</item>
-        <item>Vishti</item>
-        <item>Bava</item>
-        <item>Baalava</item>
-        <item>Koulava</item>
-        <item>Thaithila</item>
-        <item>Gara</item>
-        <item>Vanija</item>
-        <item>Vishti</item>
-        <item>Bava</item>
-        <item>Baalava</item>
-        <item>Koulava</item>
-        <item>Thaithila</item>
-        <item>Gara</item>
-        <item>Vanija</item>
-        <item>Vishti</item>
-        <item>Bava</item>
-        <item>Baalava</item>
-        <item>Koulava</item>
-        <item>Thaithila</item>
-        <item>Gara</item>
-        <item>Vanija</item>
-        <item>Vishti</item>
-        <item>Bava</item>
-        <item>Baalava</item>
-        <item>Koulava</item>
-        <item>Thaithila</item>
-        <item>Gara</item>
-        <item>Vanija</item>
-        <item>Vishti</item>
-        <item>Bava</item>
-        <item>Baalava</item>
-        <item>Koulava</item>
-        <item>Thaithila</item>
-        <item>Gara</item>
-        <item>Vanija</item>
-        <item>Vishti</item>
-        <item>Shakuni</item>
-        <item>Chatushpaada</item>
-        <item>Naga</item>
-    </string-array>
-
-    <!-- Vaasaram (weekday) -->
-    <string-array name="vaasaram_list">
-        <item>Bhanu</item>
-        <item>Indhu</item>
-        <item>Bhouma</item>
-        <item>Soumya</item>
-        <item>Guru</item>
-        <item>Brughu</item>
-        <item>Sthira</item>
-    </string-array>
-
-    <!-- Dhinam (Day) -->
-    <string-array name="dhinam_list">
-        <item>Bhanu</item>
-        <item>Indhu</item>
-        <item>Bhouma</item>
-        <item>Soumya</item>
-        <item>Guru</item>
-        <item>Brughu</item>
-        <item>Sthira</item>
-    </string-array>
-
-    <!-- Horai (Auspicious Hour of the Day) -->
-    <string-array name="horai_list">
-        <item>Sooriya</item>
-        <item>Chandra</item>
-        <item>Mangal</item>
-        <item>Budh</item>
-        <item>Guru</item>
-        <item>Sukra</item>
-        <item>Shani</item>
-    </string-array>
-
-    <!-- Amruthathi Yogam used to indicate auspiciousness of the Day -->
-    <string-array name="amruthathi_yogam_list">
-        <item>Amruthayogam</item>
-        <item>Siddhayogam</item>
-        <item>Maranayogam</item>
-    </string-array>
 </resources>

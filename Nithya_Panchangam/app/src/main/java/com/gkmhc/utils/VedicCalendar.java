@@ -139,58 +139,58 @@ public class VedicCalendar extends Calendar {
             {"Sukla", "சுக்ல", "शुक्ल"},
             {"Pramodoota", "பிரமோதூத", "प्रमोद"},
             {"Prachorpaththi", "பிரசோற்பத்தி", "प्रजापति"},
-            {"Aangirasa", "ஆங்கீரச", "अंगिरस"},
+            {"Aangirasa", "ஆங்கீரச", "आङ्गिरस"},
             {"Srimukha", "ஸ்ரீமுக", "श्रीमुख"},
             {"Bhava", "பவ", "भाव"},
             {"Yuva", "யுவ", "युव"},
-            {"Dhaatu", "தாது", "धाता"},
+            {"Dhaatu", "தாது", "धातृ"},
             {"Eeswara", "ஈஸ்வர", "ईश्वर"},
             {"Vehudhanya", "வெகுதானிய", "बहुधान्य"},
-            {"Pramathi", "பிரமாதி", "प्रमाथी"},
+            {"Pramathi", "பிரமாதி", "प्रमाधि"},
             {"Vikrama", "விக்கிரம", "विक्रम"},
-            {"Vishu", "விஷு", "वृषप्रजा"},
+            {"Vishu", "விஷு", "वृष"},
             {"Chithrabhaanu", "சித்திரபானு", "चित्रभानु"},
             {"Subhaanu", "சுபானு", "स्वभानु"},
             {"Dhaarana", "தாரண", "तारण"},
             {"Paarthiba", "பார்த்திப", "पार्थिव"},
-            {"Viya", "விய", "अव्यय"},
-            {"Sarvajith", "சர்வசித்து", "सर्वजीत"},
+            {"Viya", "விய", "व्यय"},
+            {"Sarvajith", "சர்வசித்து", "सर्वजित्"},
             {"Sarvadhari", "சர்வதாரி", "सर्वधारी"},
             {"Virodhi", "விரோதி", "विरोधी"},
             {"Vikruthi", "விக்ருதி", "विकृति"},
             {"Kara", "கர", "खर"},
-            {"Nandhana", "நந்தன", "नंदन"},
+            {"Nandhana", "நந்தன", "नन्दन"},
             {"Vijaya", "விஜய", "विजय"},
             {"Jaya", "ஜய", "जय"},
             {"Manmatha", "மன்மத", "मन्मथ"},
-            {"Dhunmukhi", "துற்முகி", "दुर्मुख"},
-            {"Hevalambhi", "ஹேவிளம்பி", "हेविळंबि"},
-            {"Vilambhi", "விளம்பி", "विळंबि"},
+            {"Dhunmukhi", "துற்முகி", "दुर्मुखी"},
+            {"Hevalambhi", "ஹேவிளம்பி", "हेविलम्बी"},
+            {"Vilambhi", "விளம்பி", "विलम्बी"},
             {"Vikari", "விகாரி", "विकारी"},
             {"Saarvari", "சார்வரி", "शार्वरी"},
             {"Plava", "பிலவ", "प्लव"},
-            {"Subakrith", "சுபகிருது", "शुभकृत"},
-            {"Sobakrith", "சோபகிருது", "शोभकृत"},
+            {"Subakrith", "சுபகிருது", "शुभकृत्"},
+            {"Sobakrith", "சோபகிருது", "शोभकृत्"},
             {"Krodhi", "குரோதி", "क्रोधी"},
             {"Visuvaasuva", "விசுவாசுவ", "विश्वावसु"},
             {"Parabhaava", "பரபாவ", "पराभव"},
-            {"Plavanga", "பிலவங்க", "प्लवंग"},
+            {"Plavanga", "பிலவங்க", "प्लवङ्ग"},
             {"Keelaka", "கீலக", "कीलक"},
             {"Saumya", "சௌமிய", "सौम्य"},
             {"Sadharana", "சாதாரண", "साधारण"},
-            {"Virodhikrithu", "விரோதகிருது", "विरोधकृत"},
+            {"Virodhikrithu", "விரோதகிருது", "विरोधिकृति"},
             {"Paridhaabi", "பரிதாபி", "परिधावी"},
-            {"Paramaadhisa", "பிரமாதீச", "प्रमादी"},
-            {"Aanandha", "ஆனந்த", "आनंद"},
+            {"Paramaadhisa", "பிரமாதீச", "प्रमादीच"},
+            {"Aanandha", "ஆனந்த", "आनन्द"},
             {"Rakshasa", "ராட்சச", "राक्षस"},
-            {"Nala", "நள", "आनल"},
-            {"Pingala", "பிங்கள", "पिंगल"},
-            {"Kalayukthi", "காளயுக்தி", "कालयुक्त"},
+            {"Nala", "நள", "नल"},
+            {"Pingala", "பிங்கள", "पिङ्गल"},
+            {"Kalayukthi", "காளயுக்தி", "कालयुक्ति"},
             {"Siddharthi", "சித்தார்த்தி", "सिद्धार्थी"},
             {"Raudhri", "ரௌத்திரி", "रौद्र"},
             {"Dunmathi", "துன்மதி", "दुर्मति"},
-            {"Dhundubhi", "துந்துபி", "दुन्दुभी"},
-            {"Rudhrodhgaari", "ருத்ரோத்காரி", "रूधिरोद्गारी"},
+            {"Dhundubhi", "துந்துபி", "दुन्दुभि"},
+            {"Rudhrodhgaari", "ருத்ரோத்காரி", "रुधिरोद्गारी"},
             {"Raktakshi", "ரக்தாட்சி", "रक्ताक्षी"},
             {"Krodhana", "குரோதன", "क्रोधन"},
             {"Akshaya", "அட்சய", "अक्षय"},
@@ -207,7 +207,7 @@ public class VedicCalendar extends Calendar {
     //    performance efficient.
     private static final String[][] ayanamTable = {
             {"Utharayinam", "உத்தராயணம்", "उत्तरायणम्"},
-            {"Dhakshinayinam", "தட்சிணாயணம்", "दक्षिणायणम्"},
+            {"Dhakshinayinam", "தட்சிணாயணம்", "दक्षिणायनम्"},
     };
 
     // 2D table of maasam to facilitate 2-tuple lookup {maasamIndex, locale}
@@ -220,18 +220,18 @@ public class VedicCalendar extends Calendar {
     //  - String arrays is simple to use & maintain and in this particular case is quite
     //    performance efficient.
     private static final String[][] maasamTable = {
-            {"Mesha", "சித்திரை", "मेष"},
-            {"Rishabha", "வைகாசி", "वृषभ"},
-            {"Mithuna", "ஆனி", "मिथुन"},
-            {"Kataka", "ஆடி", "कटक"},
-            {"Simha", "ஆவணி", "सिंह"},
+            {"Mesha", "சித்திரை", "मेषः"},
+            {"Rishabha", "வைகாசி", "वृषभः"},
+            {"Mithuna", "ஆனி", "मिथुनम्"},
+            {"Kataka", "ஆடி", "कटकः"},
+            {"Simha", "ஆவணி", "सिंहः"},
             {"Kanni", "புரட்டாசி", "कन्या"},
             {"Thula", "ஐப்பசி", "तुला"},
-            {"Vrichiga", "கார்த்திகை", "वृश्चिक"},
-            {"Dhanusu", "மார்கழி", "धनु"},
-            {"Makara", "தை", "मकर"},
-            {"Kumbha", "மாசி", "कुम्भ"},
-            {"Meena", "பங்குனி", "मीन"}
+            {"Vrichiga", "கார்த்திகை", "वृश्चिकः"},
+            {"Dhanusu", "மார்கழி", "धनुः"},
+            {"Makara", "தை", "मकरः"},
+            {"Kumbha", "மாசி", "कुम्भः"},
+            {"Meena", "பங்குனி", "मीनः"}
     };
 
     // Same as maasam table to facilitate 2-tuple lookup {maasamIndex, locale}
@@ -241,18 +241,18 @@ public class VedicCalendar extends Calendar {
     // For Sankalpam - Irrespective of locale, show the transliteration of Sanskrit
     //                 raasi / maasam only.
     private static final String[][] raasiTable = {
-            {"Mesha", "மேஷ", "मेष"},
-            {"Rishabha", "ரிஷப", "वृषभ"},
-            {"Mithuna", "மிதுன", "मिथुन"},
-            {"Kataka", "கடக", "कटक"},
-            {"Simha", "சிம்ம", "सिंह"},
+            {"Mesha", "மேஷ", "मेषः"},
+            {"Rishabha", "ரிஷப", "वृषभः"},
+            {"Mithuna", "மிதுன", "मिथुनम्"},
+            {"Kataka", "கடக", "कटकः"},
+            {"Simha", "சிம்ம", "सिंहः"},
             {"Kanni", "கன்னி", "कन्या"},
             {"Thula", "துலா", "तुला"},
-            {"Vrichiga", "விருச்சிக", "वृश्चिक"},
-            {"Dhanusu", "தனுசு", "धनु"},
-            {"Makara", "மகர", "मकर"},
-            {"Kumbha", "கும்ப", "कुम्भ"},
-            {"Meena", "மீன", "मीन"}
+            {"Vrichiga", "விருச்சிக", "वृश्चिकः"},
+            {"Dhanusu", "தனுசு", "धनुः"},
+            {"Makara", "மகர", "मकरः"},
+            {"Kumbha", "கும்ப", "कुम्भः"},
+            {"Meena", "மீன", "मीनः"}
     };
 
     // 2D table of rithu to facilitate 2-tuple lookup {rithuIndex, locale}
@@ -266,11 +266,11 @@ public class VedicCalendar extends Calendar {
     //    performance efficient.
     private static final String[][] RithuTable = {
             {"Vasantharithu", "வசந்தரிது", "वसन्तऋतुः"},
-            {"Greeshmarithu", "க்ரீஷ்மரிது", "ग्रीष्मऋतु"},
-            {"Varsharithu", "வர்ஷரிது", "वर्षऋतु"},
-            {"Sharadarithu", "ஷரத்ரிது", "शरद्ऋतु"},
-            {"Hemantharithu", "ஹேமந்தரிது", "हेमन्तऋतु"},
-            {"Shishirarithu", "ஷிஷிரரிது", "शिशिरऋतु"}
+            {"Greeshmarithu", "க்ரீஷ்மரிது", "ग्रीष्मऋतुः"},
+            {"Varsharithu", "வர்ஷரிது", "वर्षऋतुः"},
+            {"Sharadarithu", "ஷரத்ரிது", "शरद्ऋतुः"},
+            {"Hemantharithu", "ஹேமந்தரிது", "हेमन्तऋतुः"},
+            {"Shishirarithu", "ஷிஷிரரிது", "शिशिरऋतुः"}
     };
 
     // 2D table of paksham to facilitate 2-tuple lookup {pakshamIndex, locale}
@@ -283,8 +283,8 @@ public class VedicCalendar extends Calendar {
     //  - String arrays is simple to use & maintain and in this particular case is quite
     //    performance efficient.
     private static final String[][] pakshamTable = {
-            {"Shukla", "சுக்ல", "शुक्ल"},
-            {"Krishna", "கிருஷ்ண", "कृष्ण"}
+            {"Shukla", "ஶுக்ல", "शुक्ल"},
+            {"Krishna", "க்ருஷ்ண", "कृष्ण"}
     };
 
     // 2D table of thithi to facilitate 2-tuple lookup {thithiIndex, locale}
@@ -326,7 +326,7 @@ public class VedicCalendar extends Calendar {
             {"Dvadasi", "த்வாதசி", "द्वादशी"},
             {"Thrayodasi", "த்ரயோதசி", "त्रयोदशी"},
             {"Chathurdasi", "சதுர்தசி", "चतुर्दशी"},
-            {"Amavasya", "அமாவாசை", "अमावस्य"}
+            {"Amavasya", "அமாவாசை", "अमावस्या"}
     };
 
     // 2D table of vaasaram to facilitate 2-tuple lookup {vaasaramIndex, locale}
@@ -339,13 +339,13 @@ public class VedicCalendar extends Calendar {
     //  - String arrays is simple to use & maintain and in this particular case is quite
     //    performance efficient.
     private static final String[][] vaasaramTable = {
-            {"Bhanu", "பானு", "भानु"},
-            {"Indhu", "இந்து", "इन्दु"},
-            {"Bhouma", "பௌம", "भौम"},
-            {"Soumya", "ஸௌம்ய", "सौम्य"},
-            {"Guru", "குரு", "गुरु"},
-            {"Brughu", "ப்ருகு", "भृगु"},
-            {"Sthira", "ஸ்திர", "स्थिर"}
+            {"Bhanu", "பானு", "भानुः"},
+            {"Indhu", "இந்து", "इन्दुः"},
+            {"Bhouma", "பௌம", "भौमः"},
+            {"Soumya", "ஸௌம்ய", "सौम्यः"},
+            {"Guru", "குரு", "गुरुः"},
+            {"Brughu", "ப்ருகு", "भृगुः"},
+            {"Sthira", "ஸ்திர", "स्थिरः"}
     };
 
     // Same as vaasaram table to facilitate 2-tuple lookup {vaasaramIndex, locale}
@@ -355,13 +355,13 @@ public class VedicCalendar extends Calendar {
     // For Sankalpam - Irrespective of locale, show the transliteration of Sanskrit
     //                 raasi / maasam only.
     private static final String[][] dhinaTable = {
-            {"Bhanu", "ஞாயிறு", "भानु"},
-            {"Indhu", "திங்கள்", "इन्दु"},
-            {"Bhouma", "செவ்வாய்", "भौम"},
-            {"Soumya", "புதன்", "सौम्य"},
-            {"Guru", "வியாழன்", "गुरु"},
-            {"Brughu", "வெள்ளி", "भृगु"},
-            {"Sthira", "சனி", "स्थिर"}
+            {"Bhanu", "ஞாயிறு", "भानुः"},
+            {"Indhu", "திங்கள்", "इन्दुः"},
+            {"Bhouma", "செவ்வாய்", "भौमः"},
+            {"Soumya", "புதன்", "सौम्यः"},
+            {"Guru", "வியாழன்", "गुरुः"},
+            {"Brughu", "வெள்ளி", "भृगुः"},
+            {"Sthira", "சனி", "स्थिरः"}
     };
 
     // 2D table of horai to facilitate 2-tuple lookup {horaiIndex, locale}
@@ -374,13 +374,13 @@ public class VedicCalendar extends Calendar {
     //  - String arrays is simple to use & maintain and in this particular case is quite
     //    performance efficient.
     private static final String[][] horaiTable = {
-            {"Sooriya", "சூரிய", "सूर्य"},
-            {"Chandra", "சந்", "चन्द्र"},
-            {"Mangal", "அங்", "मङ्गल"},
-            {"Budh", "புத", "बुध"},
-            {"Guru", "குரு", "गुरु"},
-            {"Sukra", "சுக்", "शुक्र"},
-            {"Shani", "சனி", "शनि"}
+            {"Sooriya", "சூரிய", "सूर्यः"},
+            {"Chandra", "சந்", "चन्द्रः"},
+            {"Mangal", "அங்", "मङ्गलः"},
+            {"Budh", "புத", "बुधः"},
+            {"Guru", "குரு", "गुरुः"},
+            {"Sukra", "சுக்", "शुक्रः"},
+            {"Shani", "சனி", "शनिः"}
     };
 
     private static final int HORAI_ASUBHAM = 0;
@@ -439,31 +439,31 @@ public class VedicCalendar extends Calendar {
     //    performance efficient.
     private static final String[][] natchathiramTable = {
             {"Ashwini", "அஸ்வினி", "अश्विनी"},
-            {"Bharani", "பரணி", "भरणी"},
+            {"Bharani", "பரணி", "अपभरणी"},
             {"Karthikai", "கிருத்திகை", "कृत्तिका"},
             {"Rohini", "ரோஹினி", "रोहिणी"},
-            {"Mrigashirisham", "ம்ருகசிரீஷம்", "मृगशीर्ष"},
+            {"Mrigashirisham", "ம்ருகசிரீஷம்", "मृगशीर्षम्"},
             {"Thiruvathirai", "திருவாதிரை", "आर्द्रा"},
-            {"Punarpoosam", "புனர்பூசம்", "पुनर्वसु"},
-            {"Poosam", "பூசம்", "पुष्य"},
-            {"Ayilyam", "ஆயில்யம்", "आश्लेषा"},
+            {"Punarpoosam", "புனர்பூசம்", "पुनर्वसुः"},
+            {"Poosam", "பூசம்", "पुष्यः"},
+            {"Ayilyam", "ஆயில்யம்", "आश्रेषा"},
             {"Magam", "மகம்", "मघा"},
-            {"Pooram", "பூரம்", "पूर्व फल्गुनी"},
-            {"Uthiram", "உத்திரம்", "उत्तर फल्गुनी"},
-            {"Hastham", "ஹஸ்தம்", "हस्त"},
+            {"Pooram", "பூரம்", "पूर्वफल्गुनी"},
+            {"Uthiram", "உத்திரம்", "उत्तरफल्गुनी"},
+            {"Hastham", "ஹஸ்தம்", "हस्तः"},
             {"Chithirai", "சித்திரை", "चित्रा"},
-            {"Swathi", "சுவாதி", "स्वाति"},
+            {"Swathi", "சுவாதி", "स्वाती"},
             {"Visaka", "விசாகம்", "विशाखा"},
-            {"Anusham", "அனுஷம்", "अनुराधा"},
+            {"Anusham", "அனுஷம்", "अनूराधा"},
             {"Kettai", "கேட்டை", "ज्येष्ठा"},
-            {"Moolam", "மூலம்", "मूल"},
-            {"Pooradam", "பூராடம்", "पूर्वाषाढ़ा"},
-            {"Uthiradam", "உத்திராடம்", "उत्तराषाढ़ा"},
-            {"Thiruvonam", "திருவோணம்", "श्रवण"},
+            {"Moolam", "மூலம்", "मूला"},
+            {"Pooradam", "பூராடம்", "पूर्वाषाढा"},
+            {"Uthiradam", "உத்திராடம்", "उत्तराषाढा"},
+            {"Thiruvonam", "திருவோணம்", "श्रवणम्"},
             {"Avittam", "அவிட்டம்", "श्रविष्ठा"},
-            {"Sadhayam", "சதயம்", "शतभिषा"},
-            {"Poorattathi", "பூரட்டாதி", "पूर्व भाद्रपद"},
-            {"Uthirattathi", "உத்திரட்டாதி", "उत्तर भाद्रपद"},
+            {"Sadhayam", "சதயம்", "शतभिषक्"},
+            {"Poorattathi", "பூரட்டாதி", "पूर्वप्रोष्ठपदा"},
+            {"Uthirattathi", "உத்திரட்டாதி", "उत्तरप्रोष्ठपदा"},
             {"Revathi", "ரேவதி", "रेवती"}
     };
 
@@ -478,28 +478,28 @@ public class VedicCalendar extends Calendar {
             {"Apabharani", "அபபரனீ", "अपभरणी"},
             {"Kruthika", "கிருத்திகா", "कृत्तिका"},
             {"Rohini", "ரோஹினீ", "रोहिणी"},
-            {"Mrigashiro", "ம்ருகசீரோ", "मृगशीरो"},
-            {"Arthra", "ஆர்த்ரா", "अर्थ्रा"},
-            {"Punarvasu", "புனர்வசு", "पुनर्वसु"},
-            {"Pushya", "புஷ்ய", "पुष्य"},
-            {"Aslesha", "ஆஸ்லேஷா", "आश्लेषा"},
+            {"Mrigashiro", "ம்ருகசீரோ", "मृगशीर्षम्"},
+            {"Arthra", "ஆர்த்ரா", "आर्द्रा"},
+            {"Punarvasu", "புனர்வசு", "पुनर्वसुः"},
+            {"Pushya", "புஷ்ய", "पुष्यः"},
+            {"Aslesha", "ஆஸ்லேஷா", "आश्रेषा"},
             {"Maga", "மக", "मघा"},
-            {"Purva Palguni", "பூர்வ பல்குனீ", "पूर्व फल्गुनी"},
-            {"Uthira Palguni", "உத்திர பல்குனீ", "उत्तर फल्गुनी"},
-            {"Hastha", "ஹஸ்த", "हस्त"},
+            {"Purva Palguni", "பூர்வ பல்குனீ", "पूर्वफल्गुनी"},
+            {"Uthira Palguni", "உத்திர பல்குனீ", "उत्तरफल्गुनी"},
+            {"Hastha", "ஹஸ்த", "हस्तः"},
             {"Chithirai", "சித்திரா", "चित्रा"},
-            {"Swathi", "ஸ்வாதீ", "स्वाति"},
+            {"Swathi", "ஸ்வாதீ", "स्वाती"},
             {"Visaka", "விசாகா", "विशाखा"},
-            {"Anuradha", "அனுராதா", "अनुराधा"},
+            {"Anuradha", "அனுராதா", "अनूराधा"},
             {"Jyeshta", "ஜ்யேஷ்டா", "ज्येष्ठा"},
-            {"Moola", "மூல", "मूल"},
+            {"Moola", "மூல", "मूला"},
             {"Purvashada", "பூர்வாஷாடா", "पूर्वाषाढा"},
-            {"Uthirashada", "உத்திராஷாடா", "उत्तरषाढ़ा"},
-            {"Sravana", "ச்ரவண", "श्रवण"},
+            {"Uthirashada", "உத்திராஷாடா", "उत्तराषाढा"},
+            {"Sravana", "ச்ரவண", "श्रवणम्"},
             {"Sravishta", "ச்ரவிஷ்டா", "श्रविष्ठा"},
-            {"Sadhabhishaka", "சதாபிஷக", "शतभिषा"},
-            {"Purva Proshtapadha", "பூரவ ப்ரோஷ்டபதா", "पूर्व भाद्रपद"},
-            {"Uthira Proshtapadha", "உத்திர ப்ரோஷ்டபதா", "उत्तर भाद्रपद"},
+            {"Sadhabhishaka", "சதாபிஷக", "शतभिषक्"},
+            {"Purva Proshtapadha", "பூரவ ப்ரோஷ்டபதா", "पूर्वप्रोष्ठपदा"},
+            {"Uthira Proshtapadha", "உத்திர ப்ரோஷ்டபதா", "उत्तरप्रोष्ठपदा"},
             {"Revathi", "ரேவதீ", "रेवती"}
     };
 
@@ -513,9 +513,9 @@ public class VedicCalendar extends Calendar {
     //  - String arrays is simple to use & maintain and in this particular case is quite
     //    performance efficient.
     private static final String[][] amruthathiYogamTable = {
-            {"Amruthayogam", "அம்ருதயோகம்", "अमृतयोगं"},
-            {"Siddhayogam", "சித்தயோகம்", "सिद्धयोगं"},
-            {"Maranayogam", "மரணயோகம்", "मरणयोगं"}
+            {"Amruthayogam", "அம்ருதயோகம்", "अमृतयोगः"},
+            {"Siddhayogam", "சித்தயோகம்", "सिद्धयोगः"},
+            {"Maranayogam", "மரணயோகம்", "मरणयोगः"}
     };
 
     // Index into amruthathiYogamTable
@@ -566,33 +566,33 @@ public class VedicCalendar extends Calendar {
     //  - String arrays is simple to use & maintain and in this particular case is quite
     //    performance efficient.
     private static final String[][] yogamTable = {
-            {"Vishkambam", "விஷ்கம்பம்", "विष्कम्भ"},
-            {"Preethi", "பிரீதி", "प्रीति"},
+            {"Vishkambam", "விஷ்கம்பம்", "विष्कम्भः"},
+            {"Preethi", "பிரீதி", "प्रीतिः"},
             {"Ayushmaan", "ஆயுஷ்மான்", "आयुष्मान्"},
-            {"Sowbhagyam", "சௌபாக்கியம்", "सौभाग्य"},
-            {"Shobanam", "சோபனம்", "शोभन"},
-            {"Athikandam", "அதிகண்டம்", "अतिगण्ड"},
+            {"Sowbhagyam", "சௌபாக்கியம்", "सौभाग्यः"},
+            {"Shobanam", "சோபனம்", "शोभनः"},
+            {"Athikandam", "அதிகண்டம்", "अतिगण्डः"},
             {"Sukarmam", "சுகர்மம்", "सुकर्म"},
-            {"Thruthi", "திருதி", "धृति"},
-            {"Soolam", "சூலம்", "शूल"},
-            {"Kandam", "கண்டம்", "गण्ड"},
-            {"Vruddhi", "விருதி", "वृद्धि"},
-            {"Duruvam", "துருவம்", "ध्रुव"},
-            {"Vyakadam", "வியாகதம்", "व्याघात"},
-            {"Arisanam", "அரிசணம்", "हर्षण"},
+            {"Thruthi", "திருதி", "धृतिः"},
+            {"Soolam", "சூலம்", "शूलः"},
+            {"Kandam", "கண்டம்", "गण्डः"},
+            {"Vruddhi", "விருதி", "वृद्धिः"},
+            {"Duruvam", "துருவம்", "ध्रुवः"},
+            {"Vyakadam", "வியாகதம்", "व्याघातः"},
+            {"Arisanam", "அரிசணம்", "हर्षणः"},
             {"Vachiram", "வச்சிரம்", "वज्रम्"},
-            {"Siddhi", "சித்தி", "सिद्धि"},
-            {"Vyathipaadam", "வியதிபாதம்", "व्यतीपात"},
+            {"Siddhi", "சித்தி", "सिद्धिः"},
+            {"Vyathipaadam", "வியதிபாதம்", "व्यतीपातः"},
             {"Variyaam", "வரியான்", "वरीयान्"},
-            {"Parikam", "பரிகம்", "परिघ"},
-            {"Sivam", "சிவம்", "शिव"},
-            {"Sittham", "சித்தம்", "सिद्ध"},
-            {"Saththyam", "சாத்தீயம்", "साध्य"},
-            {"Subham", "சுபம்", "शुभ"},
-            {"Suppiram", "சுப்பிரம்", "शुक्ल"},
+            {"Parikam", "பரிகம்", "परिघः"},
+            {"Sivam", "சிவம்", "शिवः"},
+            {"Sittham", "சித்தம்", "सिद्धिः"},
+            {"Saththyam", "சாத்தீயம்", "साध्यः"},
+            {"Subham", "சுபம்", "शुभः"},
+            {"Suppiram", "சுப்பிரம்", "शुक्लः"},
             {"Bramyam", "பிராமியம்", "ब्रह्म"},
-            {"Ainthiram", "ஐந்திரம்", "इन्द्र"},
-            {"Vaithruthi", "வைதிருதி", "वैधृति"}
+            {"Ainthiram", "ஐந்திரம்", "इन्द्रः"},
+            {"Vaithruthi", "வைதிருதி", "वैधृतिः"}
     };
 
     // 2D table of karanam to facilitate 2-tuple lookup {karanamIndex, locale}
@@ -605,64 +605,64 @@ public class VedicCalendar extends Calendar {
     //  - String arrays is simple to use & maintain and in this particular case is quite
     //    performance efficient.
     private static final String[][] karanamTable = {
-            {"Kimsthuknam", "கிம்ஸ்துக்னம்", "किंस्तुघ्न"},  // FIXED
-            {"Bava", "பவ", "बव"},
-            {"Baalava", "பாலவ", "बालव"},
-            {"Koulava", "கௌலவ", "कौलव"},
-            {"Thaithila", "தைதூலை", "तैतिल"},
-            {"Gara", "கரசை", "गर"},
-            {"Vanija", "வணிசை", "वणिज"},
-            {"Vishti", "விஷ்டி", "विष्टि"},
-            {"Bava", "பவ", "बव"},
-            {"Baalava", "பாலவ", "बालव"},
-            {"Koulava", "கௌலவ", "कौलव"},
-            {"Thaithila", "தைதூலை", "तैतिल"},
-            {"Gara", "கரசை", "गर"},
-            {"Vanija", "வணிசை", "वणिज"},
-            {"Vishti", "விஷ்டி", "विष्टि"},
-            {"Bava", "பவ", "बव"},
-            {"Baalava", "பாலவ", "बालव"},
-            {"Koulava", "கௌலவ", "कौलव"},
-            {"Thaithila", "தைதூலை", "तैतिल"},
-            {"Gara", "கரசை", "गर"},
-            {"Vanija", "வணிசை", "वणिज"},
-            {"Vishti", "விஷ்டி", "विष्टि"},
-            {"Bava", "பவ", "बव"},
-            {"Baalava", "பாலவ", "बालव"},
-            {"Koulava", "கௌலவ", "कौलव"},
-            {"Thaithila", "தைதூலை", "तैतिल"},
-            {"Gara", "கரசை", "गर"},
-            {"Vanija", "வணிசை", "वणिज"},
-            {"Vishti", "விஷ்டி", "विष्टि"},
-            {"Bava", "பவ", "बव"},
-            {"Baalava", "பாலவ", "बालव"},
-            {"Koulava", "கௌலவ", "कौलव"},
-            {"Thaithila", "தைதூலை", "तैतिल"},
-            {"Gara", "கரசை", "गर"},
-            {"Vanija", "வணிசை", "वणिज"},
-            {"Vishti", "விஷ்டி", "विष्टि"},
-            {"Bava", "பவ", "बव"},
-            {"Baalava", "பாலவ", "बालव"},
-            {"Koulava", "கௌலவ", "कौलव"},
-            {"Thaithila", "தைதூலை", "तैतिल"},
-            {"Gara", "கரசை", "गर"},
-            {"Vanija", "வணிசை", "वणिज"},
-            {"Vishti", "விஷ்டி", "विष्टि"},
-            {"Bava", "பவ", "बव"},
-            {"Baalava", "பாலவ", "बालव"},
-            {"Koulava", "கௌலவ", "कौलव"},
-            {"Thaithila", "தைதூலை", "तैतिल"},
-            {"Gara", "கரசை", "गर"},
-            {"Vanija", "வணிசை", "वणिज"},
-            {"Vishti", "விஷ்டி", "विष्टि"},
-            {"Bava", "பவ", "बव"},
-            {"Baalava", "பாலவ", "बालव"},
-            {"Koulava", "கௌலவ", "कौलव"},
-            {"Thaithila", "தைதூலை", "तैतिल"},
-            {"Gara", "கரசை", "गर"},
-            {"Vanija", "வணிசை", "वणिज"},
-            {"Vishti", "விஷ்டி", "विष्टि"},
-            {"Shakuni", "சகுனி", "शकुनि"},  // FIXED
+            {"Kimsthuknam", "கிம்ஸ்துக்னம்", "किंस्तुघ्नः"},  // FIXED
+            {"Bava", "பவ", "बवः"},
+            {"Baalava", "பாலவ", "बालवः"},
+            {"Koulava", "கௌலவ", "कौलवः"},
+            {"Thaithila", "தைதூலை", "तैतिलः"},
+            {"Gara", "கரசை", "गरः"},
+            {"Vanija", "வணிசை", "वणिजः"},
+            {"Vishti", "விஷ்டி", "विष्टिः"},
+            {"Bava", "பவ", "बवः"},
+            {"Baalava", "பாலவ", "बालवः"},
+            {"Koulava", "கௌலவ", "कौलवः"},
+            {"Thaithila", "தைதூலை", "तैतिलः"},
+            {"Gara", "கரசை", "गरः"},
+            {"Vanija", "வணிசை", "वणिजः"},
+            {"Vishti", "விஷ்டி", "विष्टिः"},
+            {"Bava", "பவ", "बवः"},
+            {"Baalava", "பாலவ", "बालवः"},
+            {"Koulava", "கௌலவ", "कौलवः"},
+            {"Thaithila", "தைதூலை", "तैतिलः"},
+            {"Gara", "கரசை", "गरः"},
+            {"Vanija", "வணிசை", "वणिजः"},
+            {"Vishti", "விஷ்டி", "विष्टिः"},
+            {"Bava", "பவ", "बवः"},
+            {"Baalava", "பாலவ", "बालवः"},
+            {"Koulava", "கௌலவ", "कौलवः"},
+            {"Thaithila", "தைதூலை", "तैतिलः"},
+            {"Gara", "கரசை", "गरः"},
+            {"Vanija", "வணிசை", "वणिजः"},
+            {"Vishti", "விஷ்டி", "विष्टिः"},
+            {"Bava", "பவ", "बवः"},
+            {"Baalava", "பாலவ", "बालवः"},
+            {"Koulava", "கௌலவ", "कौलवः"},
+            {"Thaithila", "தைதூலை", "तैतिलः"},
+            {"Gara", "கரசை", "गरः"},
+            {"Vanija", "வணிசை", "वणिजः"},
+            {"Vishti", "விஷ்டி", "विष्टिः"},
+            {"Bava", "பவ", "बवः"},
+            {"Baalava", "பாலவ", "बालवः"},
+            {"Koulava", "கௌலவ", "कौलवः"},
+            {"Thaithila", "தைதூலை", "तैतिलः"},
+            {"Gara", "கரசை", "गरः"},
+            {"Vanija", "வணிசை", "वणिजः"},
+            {"Vishti", "விஷ்டி", "विष्टिः"},
+            {"Bava", "பவ", "बवः"},
+            {"Baalava", "பாலவ", "बालवः"},
+            {"Koulava", "கௌலவ", "कौलवः"},
+            {"Thaithila", "தைதூலை", "तैतिलः"},
+            {"Gara", "கரசை", "गरः"},
+            {"Vanija", "வணிசை", "वणिजः"},
+            {"Vishti", "விஷ்டி", "विष्टिः"},
+            {"Bava", "பவ", "बवः"},
+            {"Baalava", "பாலவ", "बालवः"},
+            {"Koulava", "கௌலவ", "कौलवः"},
+            {"Thaithila", "தைதூலை", "तैतिलः"},
+            {"Gara", "கரசை", "गरः"},
+            {"Vanija", "வணிசை", "वणिजः"},
+            {"Vishti", "விஷ்டி", "विष्टिः"},
+            {"Shakuni", "சகுனி", "शकुनिः"},  // FIXED
             {"Chatushpaada", "சதுஷ்பாதம்", "चतुष्पात्"},  // FIXED
             {"Naga", "நாகவம்", "नाग"}         // FIXED
     };

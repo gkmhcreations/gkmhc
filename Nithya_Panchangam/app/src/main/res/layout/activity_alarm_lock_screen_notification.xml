@@ -1,64 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:keepScreenOn="true"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/default_background"
-    tools:context=".AlarmLockScreenNotification">
-
-    <TextView
-        android:id="@+id/lockscreen_text"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center_horizontal"
-        android:text="@string/splash_screen_banner"
-        android:textColor="#0000FF"
-        android:maxLines="5" />
-
-    <ImageView
-        android:id="@+id/lockscreen_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="400dp"
-        android:layout_below="@+id/lockscreen_text"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/swamy_ayyappan_circle"
-        android:contentDescription="@string/splash_logo" />
+    android:fillViewport="true">
 
     <LinearLayout
-        android:layout_below="@id/lockscreen_logo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/lockscreen_snooze_button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@color/transparent"
-            android:text="@string/snooze_alarm"
-            android:textAlignment="center"
-            android:textColor="@color/blue"
+        <TextView
+            android:id="@+id/lockscreen_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_horizontal"
             android:maxLines="5"
-            android:textStyle="bold" />
-        <Button
-            android:id="@+id/lockscreen_dismiss_button"
-            android:text="@string/dismiss_alarm"
-            android:textStyle="bold"
-            android:textColor="@color/blue"
-            android:textAlignment="center"
-            android:maxLines="5"
-            android:background="@color/transparent"
-            android:layout_marginHorizontal="5dp"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
+            android:text="@string/splash_screen_banner"
+            android:textColor="#0000FF"
+            android:textSize="24sp" />
+
+        <ImageView
+            android:id="@+id/lockscreen_logo"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:src="@drawable/swamy_ayyappan_circle"
+            android:contentDescription="@string/splash_logo" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"/>
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/lockscreen_snooze_button"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:text="@string/snooze_alarm"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:textSize="24sp"
+                android:maxLines="5"
+                android:textStyle="bold" />
+            <Button
+                android:id="@+id/lockscreen_dismiss_button"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:text="@string/dismiss_alarm"
+                android:textStyle="bold"
+                android:textColor="@color/blue"
+                android:textSize="24sp"
+                android:textAlignment="center"
+                android:maxLines="5"
+                android:background="@color/transparent"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"/>
+        </LinearLayout>
     </LinearLayout>
-</RelativeLayout>
+</ScrollView>

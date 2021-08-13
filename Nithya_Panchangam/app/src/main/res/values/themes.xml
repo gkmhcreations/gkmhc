@@ -13,6 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="android:textSize">14sp</item>
+        <item name="android:textViewStyle">@style/NPTextViewStyle</item>
     </style>
     <style name="ThemeOverlay.Nithya_Panchangam.SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>>
@@ -42,5 +43,8 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/blue</item>
         <item name="textAllCaps">true</item>
+    </style>
+    <style name="NPTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/noto_serif</item>
     </style>
 </resources>

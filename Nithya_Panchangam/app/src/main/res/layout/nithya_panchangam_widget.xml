@@ -11,12 +11,13 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@color/white"
-        android:maxLines="1"
+        android:textStyle="normal"
+        android:textSize="40sp"
+        android:maxLines="2"
         android:timeZone="GMT+0530"
         android:format24Hour="kk:mm"
         android:format12Hour="kk:mm"
         android:fontFamily="Calibri"
-        android:textStyle="normal"
         tools:targetApi="jelly_bean_mr1" />
 
     <TextView
@@ -25,6 +26,7 @@
         android:layout_height="wrap_content"
         android:text=""
         android:textColor="@color/white"
-        android:maxLines="1"
+        android:textSize="14sp"
+        android:maxLines="2"
         android:textStyle="normal" />
 </LinearLayout>

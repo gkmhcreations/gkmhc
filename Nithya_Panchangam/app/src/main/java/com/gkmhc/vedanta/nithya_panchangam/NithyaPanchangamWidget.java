@@ -10,7 +10,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.location.Address;
 import android.location.Geocoder;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.TypedValue;
@@ -20,6 +19,7 @@ import com.gkmhc.utils.VedicCalendar;
 
 import java.io.File;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -47,23 +47,26 @@ public class NithyaPanchangamWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId, String selLocale, Calendar currCalendar,
-                                double longitude, double latitude) {
+                                double longitude, double latitude,
+                                HashMap<String, String[]> vedicCalendarLocaleList) {
         // For Widget, following fields are good enough to be displayed:
         // 1) Thithi
         // 2) Vaasaram
         // 3) Maasam
         // Form display string as, "Thithi, Vaasaram-Maasam"
         String location = MainActivity.readDefLocationSetting(context);
+        int ayanamsaMode = MainActivity.readPrefAyanamsaSelection(context);
         VedicCalendar vedicCalendar = VedicCalendar.getInstance(
                 VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM, currCalendar, longitude,
-                latitude, MainActivity.getLocationTimeZone(location));
+                latitude, MainActivity.getLocationTimeZone(location), ayanamsaMode,
+                vedicCalendarLocaleList);
         if (vedicCalendar != null) {
             int refDinaangam =
-                    vedicCalendar.getDhinaAnkham(VedicCalendar.MATCH_SANKALPAM_EXACT);
+                    vedicCalendar.getDinaAnkam(VedicCalendar.MATCH_SANKALPAM_EXACT);
             String vaasaramStr =
-                    vedicCalendar.getVaasaram(selLocale, VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
+                    vedicCalendar.getVaasaram(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
             String maasamStr =
-                    vedicCalendar.getMaasam(selLocale, VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
+                    vedicCalendar.getMaasam(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
             float textSize = 12f;
 
             // Increase font size for Sanskrit alone but keep default for Tamil & English
@@ -88,23 +91,14 @@ public class NithyaPanchangamWidget extends AppWidgetProvider {
 
     public void update(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String sellocale;
-        try {
-            String prefLang = sharedPreferences.getString(PREF_NP_LOCALE_KEY, "");
-            sellocale = prefLang.substring(0,2);
-        } catch (Exception e) {
-            // Fallback to default language preference
-            sellocale = "en";
-        }
-        Locale locale = new Locale(sellocale);
+        String prefLang = readLocaleSettings(context);
+        String selLocale = MainActivity.getLocale2Chars(prefLang);
+        Locale locale = new Locale(selLocale);
+        Locale.setDefault(locale);
         Resources resources = context.getResources();
-        Configuration configuration = resources.getConfiguration();
-        configuration.setLocale(locale);
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N){
-            context.getApplicationContext().createConfigurationContext(configuration);
-        } else {
-            resources.updateConfiguration(configuration,resources.getDisplayMetrics());
-        }
+        Configuration config = resources.getConfiguration();
+        config.locale = locale;
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
 
         Calendar currCalendar = Calendar.getInstance();
         long startTime = System.nanoTime();
@@ -120,10 +114,13 @@ public class NithyaPanchangamWidget extends AppWidgetProvider {
         }
         getLocationCoords(curLocationCity, context);
 
+        HashMap<String, String[]> vedicCalendarLocaleList =
+                MainActivity.buildVedicCalendarLocaleList(context);
+
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId, sellocale, currCalendar,
-                            curLocationLongitude, curLocationLatitude);
+            updateAppWidget(context, appWidgetManager, appWidgetId, selLocale, currCalendar,
+                            curLocationLongitude, curLocationLatitude, vedicCalendarLocaleList);
         }
     }
 
@@ -169,5 +166,13 @@ public class NithyaPanchangamWidget extends AppWidgetProvider {
             // Nothing to do here.
             Log.d("MainActivity","Exception in initManualLocation()");
         }
+    }
+
+    private String readLocaleSettings(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        if (sharedPreferences != null) {
+            return sharedPreferences.getString(PREF_NP_LOCALE_KEY, "En");
+        }
+        return "En";
     }
 }

@@ -1,36 +1,41 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/default_background">
+    android:background="@drawable/default_background"
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/splash_text_top"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center_horizontal|bottom"
-        android:text="@string/splash_screen_banner"
-        android:textColor="#0000FF"
-        android:textSize="24sp"
-        android:maxLines="3" />
-
-    <ImageView
-        android:id="@+id/splash_logo"
-        android:layout_width="363dp"
-        android:layout_height="419dp"
-        android:layout_weight="1"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:src="@drawable/swamy_ayyappan_circle"
-        android:contentDescription="@string/splash_logo" />
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center_horizontal|top"
-        android:text="@string/gkm_copyright"
-        android:textColor="#0000FF"
-        android:textSize="20sp"
-        android:maxLines="3" />
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+        <TextView
+            android:id="@+id/splash_text_top"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|bottom"
+            android:text="@string/splash_screen_banner"
+            android:textColor="#0000FF"
+            android:textSize="24sp"
+            android:maxLines="3" />
+
+        <ImageView
+            android:id="@+id/splash_logo"
+            android:layout_width="363dp"
+            android:layout_height="419dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:src="@drawable/swamy_ayyappan_circle"
+            android:contentDescription="@string/splash_logo" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|top"
+            android:text="@string/gkm_copyright"
+            android:textColor="#0000FF"
+            android:textSize="20sp"
+            android:maxLines="3" />
+    </LinearLayout>
+</ScrollView>

@@ -25,8 +25,7 @@ import java.util.stream.Collectors;
  * {AlarmID, AlarmStatus, AlarmHour, AlarmMinute, AlarmRingTone, AlarmVibrate, AlarmRepeat, Label}
  *
  * 2) Reminder Information:
- * {ReminderID, AlarmStatus, AlarmHour, AlarmMinute, AlarmRingTone, AlarmVibrate, AlarmRepeat,
- *  Label, iconID}
+ * {ReminderID, AlarmStatus, AlarmHour, AlarmMinute, AlarmRingTone, AlarmVibrate, AlarmRepeat, Label}
  *
  * Three options to store in persistent DB:
  * 1) SQLite
@@ -77,7 +76,6 @@ public class NPDB extends SQLiteOpenHelper {
     private static final String COLUMN_ALARM_VIBRATE    = "VIBRATE";
     private static final String COLUMN_ALARM_REPEAT     = "REPEAT";
     private static final String COLUMN_ALARM_LABEL      = "LABEL";
-    private static final String COLUMN_ALARM_ICON_ID    = "ICON";
     private static final int NP_ALARM_DB_VER            = 1;
     private static final String NP_DB_NAME              = "gkmhc_np.db";
 
@@ -105,8 +103,7 @@ public class NPDB extends SQLiteOpenHelper {
                     COLUMN_ALARM_RINGTONE   + " TEXT NOT NULL, " +
                     COLUMN_ALARM_VIBRATE    + " BIT, " +
                     COLUMN_ALARM_REPEAT     + " INTEGER, " +
-                    COLUMN_ALARM_LABEL      + " TEXT, " +
-                    COLUMN_ALARM_ICON_ID    + " INTEGER);";
+                    COLUMN_ALARM_LABEL      + " TEXT);";
 
     public NPDB(@Nullable Context context) {
         super(context, NP_DB_NAME, null, NP_ALARM_DB_VER);
@@ -115,7 +112,7 @@ public class NPDB extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.i("NPDB","Creating Table(" + NP_ALARM_TABLE + " & " +
-                NP_REMINDERS_TABLE_CREATE + ")!");
+                NP_ALARMS_TABLE_CREATE + ")!");
         db.execSQL(NP_ALARMS_TABLE_CREATE);
         db.execSQL(NP_REMINDERS_TABLE_CREATE);
     }
@@ -123,9 +120,10 @@ public class NPDB extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + NP_ALARM_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + NP_REMINDER_TABLE);
         onCreate(db);
         Log.i("NPDB","Upgrading Tables(" + NP_ALARM_TABLE + " & " +
-                NP_REMINDERS_TABLE_CREATE + ") to new ver(" + NP_ALARM_DB_VER + ")!");
+                NP_ALARMS_TABLE_CREATE + ") to new ver(" + NP_ALARM_DB_VER + ")!");
     }
 
     public static class AlarmInfo {
@@ -153,22 +151,11 @@ public class NPDB extends SQLiteOpenHelper {
         }
     }
 
-    public static class ReminderInfo extends AlarmInfo {
-        public final int iconID;
-
-        ReminderInfo(int alarmID, boolean alarmType, boolean isAlarmOn, int hour, int min,
-                     String ringTonePath, boolean vibrateOption, int repeatOption, String label,
-                     int iconID) {
-            super(alarmID, alarmType, isAlarmOn, hour, min, ringTonePath, vibrateOption,
-                  repeatOption, label);
-            this.iconID = iconID;
-        }
-    }
-
     /**
      * Use this API to add Alarm information to persistent DB.
      *
      * @param context           App Context
+     * @param alarmType         Alarm Type (Standard / Vedic)
      * @param alarmID           Alarm ID
      * @param isAlarmOn         On/Off
      * @param alarmHourOfDay    Alarm Hour of Day (24-hour format)
@@ -192,8 +179,8 @@ public class NPDB extends SQLiteOpenHelper {
         // Value: {AlarmStatus, AlarmHour, AlarmMinute, AlarmRingTone, AlarmVibrate, AlarmRepeat, AlarmLabel}
         // All above Value fields delimited by "---"
         try {
-            NPDB NPDBInstance = new NPDB(context);
-            SQLiteDatabase db = NPDBInstance.getWritableDatabase();
+            NPDB npDBInstance = new NPDB(context);
+            SQLiteDatabase db = npDBInstance.getWritableDatabase();
             ContentValues alarmRow = new ContentValues();
             alarmRow.put(COLUMN_ALARM_ID, alarmID);
             alarmRow.put(COLUMN_ALARM_TYPE, alarmType);
@@ -204,7 +191,12 @@ public class NPDB extends SQLiteOpenHelper {
             alarmRow.put(COLUMN_ALARM_VIBRATE, toVibrate);
             alarmRow.put(COLUMN_ALARM_REPEAT, repeatOption);
             alarmRow.put(COLUMN_ALARM_LABEL, label);
-            long dbResult = db.insert(NP_ALARM_TABLE, null, alarmRow);
+
+            if (alarmType == Alarm.ALARM_TYPE_STANDARD) {
+                db.insert(NP_ALARM_TABLE, null, alarmRow);
+            } else {
+                db.insert(NP_REMINDER_TABLE, null, alarmRow);
+            }
             db.close();
 
             /*if (dbResult != DB_RESULT_FAILURE) {
@@ -225,6 +217,7 @@ public class NPDB extends SQLiteOpenHelper {
      * Use this API to update Alarm information in persistent DB.
      *
      * @param context           App Context
+     * @param alarmType         Alarm Type (Standard / Vedic)
      * @param alarmID           Alarm ID
      * @param isAlarmOn         On/Off
      * @param alarmHourOfDay    Alarm Hour of Day (24-hour format)
@@ -244,8 +237,8 @@ public class NPDB extends SQLiteOpenHelper {
         //Log.i("NPDB","Updating Alarm(" + alarmID + ") Info in DB!");
 
         try {
-            NPDB NPDBInstance = new NPDB(context);
-            SQLiteDatabase db = NPDBInstance.getWritableDatabase();
+            NPDB npDBInstance = new NPDB(context);
+            SQLiteDatabase db = npDBInstance.getWritableDatabase();
             ContentValues alarmRow = new ContentValues();
             alarmRow.put(COLUMN_ALARM_ID, alarmID);
             alarmRow.put(COLUMN_ALARM_TYPE, alarmType);
@@ -256,8 +249,13 @@ public class NPDB extends SQLiteOpenHelper {
             alarmRow.put(COLUMN_ALARM_VIBRATE, toVibrate);
             alarmRow.put(COLUMN_ALARM_REPEAT, repeatOption);
             alarmRow.put(COLUMN_ALARM_LABEL, label);
-            long dbResult = db.update(NP_ALARM_TABLE, alarmRow,
-                    COLUMN_ALARM_ID + "=" + alarmID, null);
+            if (alarmType == Alarm.ALARM_TYPE_STANDARD) {
+                db.update(NP_ALARM_TABLE, alarmRow,
+                        COLUMN_ALARM_ID + "=" + alarmID, null);
+            } else {
+                db.update(NP_REMINDER_TABLE, alarmRow,
+                        COLUMN_ALARM_ID + "=" + alarmID, null);
+            }
             db.close();
 
             /*if (dbResult != DB_RESULT_FAILURE) {
@@ -278,21 +276,28 @@ public class NPDB extends SQLiteOpenHelper {
      * Use this API to update Alarm state in persistent DB.
      *
      * @param context     App Context
+     * @param alarmType   Alarm Type (Standard / Vedic)
      * @param alarmID     Alarm ID
      * @param isAlarmOn   On/Off
      */
-    public static void updateAlarmStateInDB(Context context, int alarmID, boolean isAlarmOn) {
+    public static void updateAlarmStateInDB(Context context, boolean alarmType, int alarmID,
+                                            boolean isAlarmOn) {
         //long startTime = System.nanoTime();
         //Log.i("NPDB","Updating Alarm(" + alarmID + ") state to DB!");
 
         try {
-            NPDB NPDBInstance = new NPDB(context);
-            SQLiteDatabase db = NPDBInstance.getWritableDatabase();
+            NPDB npDBInstance = new NPDB(context);
+            SQLiteDatabase db = npDBInstance.getWritableDatabase();
             ContentValues alarmRow = new ContentValues();
             alarmRow.put(COLUMN_ALARM_ID, alarmID);
             alarmRow.put(COLUMN_ALARM_STATE, isAlarmOn);
-            long dbResult = db.update(NP_ALARM_TABLE, alarmRow,
-                    COLUMN_ALARM_ID + "=" + alarmID, null);
+            if (alarmType == Alarm.ALARM_TYPE_STANDARD) {
+                db.update(NP_ALARM_TABLE, alarmRow,
+                        COLUMN_ALARM_ID + "=" + alarmID, null);
+            } else {
+                db.update(NP_REMINDER_TABLE, alarmRow,
+                        COLUMN_ALARM_ID + "=" + alarmID, null);
+            }
             db.close();
 
             /*if (dbResult != DB_RESULT_FAILURE) {
@@ -313,16 +318,21 @@ public class NPDB extends SQLiteOpenHelper {
      * Use this API to remove Alarm information from persistent DB.
      *
      * @param context     App Context
+     * @param alarmType   Alarm Type (Standard / Vedic)
      * @param alarmID     Alarm ID
      */
-    public static void removeAlarmFromDB(Context context, int alarmID) {
+    public static void removeAlarmFromDB(Context context, boolean alarmType, int alarmID) {
         //long startTime = System.nanoTime();
         //Log.i("NPDB","Removing Alarm(" + alarmID + ") from DB!");
 
         try {
-            NPDB NPDBInstance = new NPDB(context);
-            SQLiteDatabase db = NPDBInstance.getWritableDatabase();
-            long dbResult = db.delete(NP_ALARM_TABLE, COLUMN_ALARM_ID + "=" + alarmID, null);
+            NPDB npDBInstance = new NPDB(context);
+            SQLiteDatabase db = npDBInstance.getWritableDatabase();
+            if (alarmType == Alarm.ALARM_TYPE_STANDARD) {
+                db.delete(NP_ALARM_TABLE, COLUMN_ALARM_ID + "=" + alarmID, null);
+            } else {
+                db.delete(NP_REMINDER_TABLE, COLUMN_ALARM_ID + "=" + alarmID, null);
+            }
             db.close();
 
             /*if (dbResult != DB_RESULT_FAILURE) {
@@ -344,22 +354,27 @@ public class NPDB extends SQLiteOpenHelper {
      * Use this API to read Alarm information from persistent DB & return a hasmap of list of Alarms.
      *
      * @param context    App Context
+     * @param alarmType  Alarm Type (Standard / Vedic)
      *
      * @return  Hashmap of List of Alarm Information.
      */
-    public static HashMap<Integer, AlarmInfo> readAlarmsFromDB (Context context) {
+    public static HashMap<Integer, AlarmInfo> readAlarmsFromDB (Context context, boolean alarmType) {
         //long startTime = System.nanoTime();
         HashMap<Integer, AlarmInfo> alarmsHashList = new HashMap<>();
         int numAlarms = 0;
 
         try {
-            NPDB NPDBInstance = new NPDB(context);
-            SQLiteDatabase db = NPDBInstance.getReadableDatabase();
-            Cursor cursor = db.rawQuery("select * from NP_ALARM_TABLE", null);
+            NPDB npDBInstance = new NPDB(context);
+            SQLiteDatabase db = npDBInstance.getReadableDatabase();
+            Cursor cursor;
+            if (alarmType == Alarm.ALARM_TYPE_STANDARD) {
+                cursor = db.rawQuery("select * from NP_ALARM_TABLE", null);
+            } else {
+                cursor = db.rawQuery("select * from NP_REMINDER_TABLE", null);
+            }
             if (cursor.moveToFirst()) {
                 while (!cursor.isAfterLast()) {
                     int alarmID = cursor.getInt(cursor.getColumnIndex(COLUMN_ALARM_ID));
-                    boolean alarmType = Alarm.ALARM_TYPE_STANDARD;
                     boolean isAlarmOn = false;
                     if (cursor.getInt(cursor.getColumnIndex(COLUMN_ALARM_STATE)) == 1) {
                         isAlarmOn = true;
@@ -389,14 +404,18 @@ public class NPDB extends SQLiteOpenHelper {
             //Log.i("NPDB","ERROR: Alarms NOT READ FROM DB!");
         }
 
-        HashMap<Integer, AlarmInfo> alarmsDB = sortAlarms(alarmsHashList);
-        if (alarmsDB == null) {
-            alarmsDB = alarmsHashList;
+        if (numAlarms > 0) {
+            HashMap<Integer, AlarmInfo> alarmsDB = sortAlarms(alarmsHashList);
+            if (alarmsDB == null) {
+                alarmsDB = alarmsHashList;
+            }
+
+            //long endTime = System.nanoTime();
+            //Log.d("AlarmDB","readAlarmsFromDB(): Time Taken: " + calcTimeDiff(startTime, endTime));
+            return alarmsDB;
         }
 
-        //long endTime = System.nanoTime();
-        //Log.d("AlarmDB","readAlarmsFromDB(): Time Taken: " + calcTimeDiff(startTime, endTime));
-        return alarmsDB;
+        return alarmsHashList;
     }
 
     /**
@@ -417,271 +436,20 @@ public class NPDB extends SQLiteOpenHelper {
     /**
      * Use this API to check if an Alarm is present in persistent DB.
      *
-     * @param context           App Context
-     * @param alarmID           Alarm ID
+     * @param context       App Context
+     * @param alarmType     Alarm Type (Standard / Vedic)
+     * @param alarmID       Alarm ID
      *
      * @return True - if present, False - otherwise.
      */
-    public static boolean isAlarmInDB(Context context, int alarmID) {
+    public static boolean isAlarmInDB(Context context, boolean alarmType, int alarmID) {
         //Log.i("NPDB","Checking if alarm(" + alarmID + ") is present in DB!");
-        HashMap<Integer, AlarmInfo> alarmsDB = readAlarmsFromDB(context);
+        HashMap<Integer, AlarmInfo> alarmsDB = readAlarmsFromDB(context.getApplicationContext(),
+                alarmType);
         if (alarmsDB.size() > 0) {
             return (alarmsDB.get(alarmID) != null);
         }
         return false;
-    }
-
-    /**
-     * Use this API to add Alarm information to persistent DB.
-     *
-     * @param context           App Context
-     * @param reminderID        Reminder ID
-     * @param isAlarmOn         On/Off
-     * @param alarmHourOfDay    Alarm Hour of Day (24-hour format)
-     * @param alarmMin          Alarm Minutes
-     * @param ringTone          Full path to Ringtone
-     * @param toVibrate         True - Vibrate, False - Do NOT Vibrate
-     * @param repeatOption      Once   - Buzz Alarm one-time
-     *                          Daily  - Buzz Alarm daily at the Alarm Hour & Minute
-     *                          Custom - Buzz Alarm at the Alarm Hour & Minute on selected days
-     * @param label             Alarm Label
-     */
-    public static void addReminderToDB(Context context, boolean alarmType, int reminderID,
-                                       boolean isAlarmOn, int alarmHourOfDay, int alarmMin,
-                                       String ringTone, boolean toVibrate, int repeatOption,
-                                       String label, int iconID) {
-        //long startTime = System.nanoTime();
-        //Log.i("NPDB","Adding Reminder(" + reminderID + ") to DB!");
-
-        // Alarm DB Record:
-        // Key: {AlarmID}
-        // Value: {AlarmStatus, AlarmHour, AlarmMinute, AlarmRingTone, AlarmVibrate, AlarmRepeat, AlarmLabel}
-        // All above Value fields delimited by "---"
-        try {
-            NPDB NPDBInstance = new NPDB(context);
-            SQLiteDatabase db = NPDBInstance.getWritableDatabase();
-            ContentValues reminderRow = new ContentValues();
-            reminderRow.put(COLUMN_ALARM_ID, reminderID);
-            reminderRow.put(COLUMN_ALARM_TYPE, alarmType);
-            reminderRow.put(COLUMN_ALARM_STATE, isAlarmOn);
-            reminderRow.put(COLUMN_ALARM_HOUROFDAY, alarmHourOfDay);
-            reminderRow.put(COLUMN_ALARM_MINUTE, alarmMin);
-            reminderRow.put(COLUMN_ALARM_RINGTONE, ringTone);
-            reminderRow.put(COLUMN_ALARM_VIBRATE, toVibrate);
-            reminderRow.put(COLUMN_ALARM_REPEAT, repeatOption);
-            reminderRow.put(COLUMN_ALARM_LABEL, label);
-            reminderRow.put(COLUMN_ALARM_ICON_ID, iconID);
-            long dbResult = db.insertWithOnConflict(NP_REMINDER_TABLE, null,
-                                                    reminderRow, SQLiteDatabase.CONFLICT_IGNORE);
-            db.close();
-
-            /*if (dbResult != DB_RESULT_FAILURE) {
-                Log.i("NPDB", "Reminder(" + reminderID + ") ADDED to DB!");
-            } else {
-                Log.i("NPDB", "Reminder(" + reminderID + ") FAILED to ADD to DB!" +
-                        "Result Code: " + dbResult);
-            }*/
-        } catch (Exception e) {
-            e.printStackTrace();
-            //Log.i("NPDB","ERROR: Reminder(" + reminderID + ") NOT ADDED to DB!");
-        }
-        //long endTime = System.nanoTime();
-        //Log.d("AlarmDB","addReminderToDB(): Time Taken: " + calcTimeDiff(startTime, endTime));
-    }
-
-    /**
-     * Use this API to update Reminder information in persistent DB.
-     *
-     * @param context           App Context
-     * @param reminderID        Reminder ID
-     * @param isAlarmOn         On/Off
-     * @param alarmHourOfDay    Alarm Hour of Day (24-hour format)
-     * @param alarmMin          Alarm Minutes
-     * @param ringTone          Full path to Ringtone
-     * @param toVibrate         True - Vibrate, False - Do NOT Vibrate
-     * @param repeatOption      Once   - Buzz Alarm one-time
-     *                          Daily  - Buzz Alarm daily at the Alarm Hour & Minute
-     *                          Custom - Buzz Alarm at the Alarm Hour & Minute on selected days
-     * @param label             Alarm Label
-     */
-    public static void updateReminderInfoInDB(Context context, boolean alarmType, int reminderID,
-                                              boolean isAlarmOn, int alarmHourOfDay, int alarmMin,
-                                              String ringTone, boolean toVibrate,
-                                              int repeatOption, String label, int iconID) {
-        //long startTime = System.nanoTime();
-        //Log.i("NPDB","Updating Reminder(" + reminderID + ") Info in DB!");
-
-        try {
-            NPDB NPDBInstance = new NPDB(context);
-            SQLiteDatabase db = NPDBInstance.getWritableDatabase();
-            ContentValues reminderRow = new ContentValues();
-            reminderRow.put(COLUMN_ALARM_ID, reminderID);
-            reminderRow.put(COLUMN_ALARM_TYPE, alarmType);
-            reminderRow.put(COLUMN_ALARM_STATE, isAlarmOn);
-            reminderRow.put(COLUMN_ALARM_HOUROFDAY, alarmHourOfDay);
-            reminderRow.put(COLUMN_ALARM_MINUTE, alarmMin);
-            reminderRow.put(COLUMN_ALARM_RINGTONE, ringTone);
-            reminderRow.put(COLUMN_ALARM_VIBRATE, toVibrate);
-            reminderRow.put(COLUMN_ALARM_REPEAT, repeatOption);
-            reminderRow.put(COLUMN_ALARM_LABEL, label);
-            reminderRow.put(COLUMN_ALARM_ICON_ID, iconID);
-            long dbResult = db.update(NP_REMINDER_TABLE, reminderRow,
-                    COLUMN_ALARM_ID + "=" + reminderID, null);
-            db.close();
-
-            /*if (dbResult != DB_RESULT_FAILURE) {
-                //Log.i("NPDB","Reminder(" + reminderID + ") UPDATED in DB!");
-            } else {
-                //Log.i("NPDB", "Reminder(" + reminderID + ") FAILED to UPDATE to DB!" +
-                        "Result Code: " + dbResult);
-            }*/
-        } catch (Exception e) {
-            e.printStackTrace();
-            //Log.i("NPDB","ERROR: Reminder(" + reminderID + ") NOT UPDATED in DB!");
-        }
-        //long endTime = System.nanoTime();
-        //Log.d("AlarmDB","updateReminderInfoInDB(): Time Taken: " + calcTimeDiff(startTime, endTime));
-    }
-
-    /**
-     * Use this API to update Reminder state in persistent DB.
-     *
-     * @param context       App Context
-     * @param reminderID    Reminder ID
-     * @param isAlarmOn     On/Off
-     */
-    public static void updateReminderStateInDB(Context context, int reminderID, boolean isAlarmOn) {
-        //long startTime = System.nanoTime();
-        //Log.i("NPDB","Updating Reminder(" + reminderID + ") state to DB!");
-
-        try {
-            NPDB NPDBInstance = new NPDB(context);
-            SQLiteDatabase db = NPDBInstance.getWritableDatabase();
-            ContentValues reminderRow = new ContentValues();
-            reminderRow.put(COLUMN_ALARM_ID, reminderID);
-            reminderRow.put(COLUMN_ALARM_STATE, isAlarmOn);
-            long dbResult = db.update(NP_REMINDER_TABLE, reminderRow,
-                    COLUMN_ALARM_ID + "=" + reminderID, null);
-            db.close();
-            /*if (dbResult != DB_RESULT_FAILURE) {
-                //Log.i("NPDB","Reminder(" + reminderID + ") UPDATED in DB!");
-            } else {
-                //Log.i("NPDB", "Reminder(" + reminderID + ") FAILED to UPDATE to DB!" +
-                        "Result Code: " + dbResult);
-            }*/
-        } catch (Exception e) {
-            e.printStackTrace();
-            //Log.i("NPDB","ERROR: Reminder(" + reminderID + ") NOT UPDATED in DB!");
-        }
-        //long endTime = System.nanoTime();
-        //Log.d("AlarmDB","updateReminderStateInDB(): Time Taken: " + calcTimeDiff(startTime, endTime));
-    }
-
-    /**
-     * Use this API to remove Reminder information from persistent DB.
-     *
-     * @param context       App Context
-     * @param reminderID    Alarm ID
-     */
-    public static void removeReminderFromDB(Context context, int reminderID) {
-        //long startTime = System.nanoTime();
-        //Log.i("NPDB","Removing Reminder(" + reminderID + ") from DB!");
-
-        try {
-            NPDB NPDBInstance = new NPDB(context);
-            SQLiteDatabase db = NPDBInstance.getWritableDatabase();
-            long dbResult = db.delete(NP_REMINDER_TABLE,
-                    COLUMN_ALARM_ID + "=" + reminderID, null);
-            db.close();
-            /*if (dbResult != DB_RESULT_FAILURE) {
-                //Log.i("NPDB","Reminder(" + reminderID + ") DELETED from DB!");
-            } else {
-                //Log.i("NPDB", "Reminder(" + reminderID + ") FAILED to DELETE from DB!" +
-                        "Result Code: " + dbResult);
-            }*/
-            //Log.i("NPDB","Reminder(" + reminderID + ") REMOVED from DB!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            //Log.i("NPDB","ERROR: Reminder(" + reminderID + ") NOT REMOVED from DB!");
-        }
-        //long endTime = System.nanoTime();
-        //Log.d("AlarmDB","removeReminderFromDB(): Time Taken: " + calcTimeDiff(startTime, endTime));
-    }
-
-    /**
-     * Use this API to read Reminder information from persistent DB & return a list of Reminders.
-     *
-     * @param context           App Context
-     *
-     * @return  Hashmap of List of Alarm Information.
-     */
-    public static HashMap<Integer, ReminderInfo> readRemindersFromDB(Context context) {
-        //long startTime = System.nanoTime();
-        HashMap<Integer, ReminderInfo> remindersHashList = new HashMap<>();
-        int numReminders = 0;
-
-        try {
-            NPDB NPDBInstance = new NPDB(context);
-            SQLiteDatabase db = NPDBInstance.getReadableDatabase();
-            Cursor cursor = db.rawQuery("select * from NP_REMINDER_TABLE", null);
-            if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
-                    int alarmID = cursor.getInt(cursor.getColumnIndex(COLUMN_ALARM_ID));
-                    boolean alarmType = Alarm.ALARM_ALARM_TYPE_VEDIC;
-                    boolean isAlarmOn = false;
-                    if (cursor.getInt(cursor.getColumnIndex(COLUMN_ALARM_STATE)) == 1) {
-                        isAlarmOn = true;
-                    }
-                    int alarmHourOfDay = cursor.getInt(cursor.getColumnIndex(COLUMN_ALARM_HOUROFDAY));
-                    int alarmMin = cursor.getInt(cursor.getColumnIndex(COLUMN_ALARM_MINUTE));
-                    String ringTone = cursor.getString(cursor.getColumnIndex(COLUMN_ALARM_RINGTONE));
-                    boolean toVibrate = false;
-                    if (cursor.getInt(cursor.getColumnIndex(COLUMN_ALARM_VIBRATE)) == 1) {
-                        toVibrate = true;
-                    }
-                    int repeatOption = cursor.getInt(cursor.getColumnIndex(COLUMN_ALARM_REPEAT));
-                    String label = cursor.getString(cursor.getColumnIndex(COLUMN_ALARM_LABEL));
-                    int iconID = cursor.getInt(cursor.getColumnIndex(COLUMN_ALARM_ICON_ID));
-
-                    remindersHashList.put(alarmID, new ReminderInfo(alarmID, alarmType, isAlarmOn,
-                                          alarmHourOfDay, alarmMin, ringTone, toVibrate,
-                                          repeatOption, label, iconID));
-                    numReminders += 1;
-                    cursor.moveToNext();
-                }
-            }
-            cursor.close();
-            db.close();
-            //Log.i("NPDB", "(" + numReminders + ") Reminders READ FROM DB!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-            //Log.i("NPDB","ERROR: Reminders NOT READ FROM DB!");
-        }
-
-        HashMap<Integer, ReminderInfo> remindersDB = sortReminders(remindersHashList);
-        if (remindersDB == null) {
-            remindersDB = remindersHashList;
-        }
-
-        //long endTime = System.nanoTime();
-        //Log.d("AlarmDB","readRemindersFromDB(): Time Taken: " + calcTimeDiff(startTime, endTime));
-        return remindersDB;
-    }
-
-    /**
-     * Use this API to retrieve list of Reminder IDs from persistent DB.
-     *
-     * @param remindersListMap     Hashmap of list of Reminder Information
-     *
-     * @return Hashmap of List of Alarm IDs.
-     */
-    public static ArrayList<Integer> getReminderIDs(HashMap<Integer, ReminderInfo> remindersListMap){
-        ArrayList<Integer> arrayList = new ArrayList<>(remindersListMap.keySet());
-        if (arrayList.size() > 0) {
-            return arrayList;
-        }
-        return null;
     }
 
     /**
@@ -715,7 +483,7 @@ public class NPDB extends SQLiteOpenHelper {
             return Integer.compare(leftMin, rightMin);
         }
 
-        return -1;
+        return DB_RESULT_FAILURE;
     }
 
     /**
@@ -745,9 +513,9 @@ public class NPDB extends SQLiteOpenHelper {
      *
      * @return Return a list of alarms sorted in ascending order (or) null upon failure.
      */
-    private static LinkedHashMap<Integer, ReminderInfo> sortReminders(HashMap<Integer, ReminderInfo> alarmsListMap) {
-        Set<Map.Entry<Integer, ReminderInfo>> set = alarmsListMap.entrySet();
-        List<Map.Entry<Integer, ReminderInfo>> list = new ArrayList<>(set);
+    private static LinkedHashMap<Integer, AlarmInfo> sortReminders(HashMap<Integer, AlarmInfo> alarmsListMap) {
+        Set<Map.Entry<Integer, AlarmInfo>> set = alarmsListMap.entrySet();
+        List<Map.Entry<Integer, AlarmInfo>> list = new ArrayList<>(set);
         Collections.sort(list, (o1, o2) -> compareAlarmTimes(o1.getValue(), o2.getValue()));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

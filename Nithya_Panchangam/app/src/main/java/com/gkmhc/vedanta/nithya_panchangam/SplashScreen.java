@@ -1,15 +1,16 @@
 package com.gkmhc.vedanta.nithya_panchangam;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.WindowManager;
+import android.preference.PreferenceManager;
 
-import java.util.Objects;
+import java.util.Locale;
 
 /**
  * Activity to display splash screen when App/Widget comes up.
@@ -23,11 +24,20 @@ import java.util.Objects;
  * accordance with terms & conditions in GNU GPL license.
  */
 public class SplashScreen extends AppCompatActivity {
+    private static final String PREF_NP_LOCALE_KEY = "PREF_NP_LOCALE_KEY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Step 1: Read selected locale from shared preferences
-        MainActivity.updateSelLocale(this);
+        String prefLang = readLocaleSettings();
+        String selLocale = MainActivity.getLocale2Chars(prefLang);
+        Locale locale = new Locale(selLocale);
+        Locale.setDefault(locale);
+        Resources resources = getResources();
+        Configuration config = resources.getConfiguration();
+        config.locale = locale;
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
@@ -37,5 +47,13 @@ public class SplashScreen extends AppCompatActivity {
             startActivity(spIntent);
             finish();
         }, 2000);
+    }
+
+    private String readLocaleSettings() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPreferences != null) {
+            return sharedPreferences.getString(PREF_NP_LOCALE_KEY, "En");
+        }
+        return "En";
     }
 }

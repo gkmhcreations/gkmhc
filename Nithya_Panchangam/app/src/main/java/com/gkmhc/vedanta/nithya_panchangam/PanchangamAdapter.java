@@ -118,11 +118,11 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             panchangamViewHolder = (PanchangamViewHolder) convertView.getTag();
         }
 
-        String selLocale = MainActivity.updateSelLocale(context);
         float defTextSize = 16f;
+        /*String selLocale = MainActivity.updateSelLocale(context.getApplicationContext());
         if (selLocale.equalsIgnoreCase("Sa")) {
             defTextSize = 18f;
-        }
+        }*/
 
         panchangamViewHolder.panchangamField.setText(panchangamFields.get(position));
         panchangamViewHolder.panchangamField.setTextSize(defTextSize);

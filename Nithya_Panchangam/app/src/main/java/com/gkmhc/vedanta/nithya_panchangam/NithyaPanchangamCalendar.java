@@ -32,6 +32,7 @@ import com.gkmhc.utils.VedicCalendar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -57,15 +58,15 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
     private int npDate;
     private int refDate;
     private int selPosition = -1;
-    private String sellocale;
+    private String selLocale;
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
     private static final int npCalendarRequestCode = 2102;
     private ArrayList<String> gregDaysInMonth = null;
     private ArrayList<String> drikDaysInMonth = null;
     private ArrayList<List<Integer>> drikImgIDOfMonth = null;
-    private ArrayList<String> drikDhinam = null;
-    private ArrayList<String> drikDhinaVishesham = null;
+    private ArrayList<String> drikDinam = null;
+    private ArrayList<String> drikDinaVishesham = null;
     private ArrayList<String> drikMaasam = null;
     private ArrayList<String> drikNatchathiram = null;
     private String[] gregYearList = null;
@@ -74,30 +75,21 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
     private static final String PREF_NP_LOCALE_KEY = "PREF_NP_LOCALE_KEY";
     public static final String PREF_LOCATION_DEF_VAL_KEY = "PREF_LOCATION_DEF_VAL_KEY";
     private Menu menu;
+    private HashMap<String, String[]> vedicCalendarLocaleList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        try {
-            String prefLang = sharedPreferences.getString(PREF_NP_LOCALE_KEY, "");
-            sellocale = prefLang.substring(0,2);
-        } catch (Exception e) {
-            // Fallback to default language preference
-            sellocale = "en";
-        }
-        Locale locale = new Locale(sellocale);
+        String prefLang = readLocaleSettings();
+        selLocale = MainActivity.getLocale2Chars(prefLang);
+        Locale locale = new Locale(selLocale);
+        Locale.setDefault(locale);
         Resources resources = getResources();
-        Configuration configuration = resources.getConfiguration();
-        configuration.locale = locale;
-        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+        Configuration config = resources.getConfiguration();
+        config.locale = locale;
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
 
-        configuration.setLocale(locale);
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
-            getApplicationContext().createConfigurationContext(configuration);
-        } else {
-            resources.updateConfiguration(configuration, resources.getDisplayMetrics());
-        }
-
+        vedicCalendarLocaleList = MainActivity.buildVedicCalendarLocaleList(this);
         try {
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
             getSupportActionBar().setIcon(R.mipmap.ic_launcher_round);
@@ -257,8 +249,8 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
         gregDaysInMonth = new ArrayList<>();
         drikDaysInMonth = new ArrayList<>();
         drikImgIDOfMonth = new ArrayList<>();
-        drikDhinam = new ArrayList<>();
-        drikDhinaVishesham = new ArrayList<>();
+        drikDinam = new ArrayList<>();
+        drikDinaVishesham = new ArrayList<>();
         drikMaasam = new ArrayList<>();
         drikNatchathiram = new ArrayList<>();
 
@@ -273,8 +265,8 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
                 gregDaysInMonth.add("");
                 drikDaysInMonth.add("");
                 drikImgIDOfMonth.add(null);
-                drikDhinam.add("");
-                drikDhinaVishesham.add("");
+                drikDinam.add("");
+                drikDinaVishesham.add("");
                 drikMaasam.add("");
                 drikNatchathiram.add("");
             } else {
@@ -282,82 +274,88 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
 
                 //long startTime = System.nanoTime();
                 String location = MainActivity.readDefLocationSetting(getApplicationContext());
+                int ayanamsaMode = MainActivity.readPrefAyanamsaSelection(getApplicationContext());
                 VedicCalendar vedicCalendar = VedicCalendar.getInstance(
                         VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM, calendarIter,
                         curLocationLongitude, curLocationLatitude,
-                        MainActivity.getLocationTimeZone(location));
+                        MainActivity.getLocationTimeZone(location), ayanamsaMode,
+                        vedicCalendarLocaleList);
                 if (vedicCalendar != null) {
                     //long endTime = System.nanoTime();
-                    //Log.d("NPCalendar","VedicCalendar()... Time Taken: " +
+                    //Log.d("NPCalProfiler","VedicCalendar()... Time Taken: " +
                     //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-                    // 1) Get Thithi
+                    // 1) Add Dinaankham
                     //startTime = System.nanoTime();
-                    String strMsg =
-                            vedicCalendar.getThithi(sellocale, VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
+                    int dinaAnkham =
+                                vedicCalendar.getDinaAnkam(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
                     //endTime = System.nanoTime();
-                    //Log.d("NPCalendar","getThithi()... Time Taken: " +
+                    //Log.d("NPCalProfiler","getDinaankham()... Time Taken: " +
                     //        VedicCalendar.getTimeTaken(startTime, endTime));
-                    drikDhinam.add(strMsg);
+                    drikDaysInMonth.add(String.valueOf(dinaAnkham));
 
-                    // 2) Add Dhinaankham
+                    // 2) Get Thithi
                     //startTime = System.nanoTime();
-                    int dhinaAnkham =
-                            vedicCalendar.getDhinaAnkham(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
+                    String strThithi =
+                            vedicCalendar.getThithi(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
                     //endTime = System.nanoTime();
-                    //Log.d("NPCalendar","getDinaankham()... Time Taken: " +
+                    //Log.d("NPCalProfiler","getThithi()... Time Taken: " +
                     //        VedicCalendar.getTimeTaken(startTime, endTime));
-                    drikDaysInMonth.add(String.valueOf(dhinaAnkham));
+                    drikDinam.add(strThithi);
 
                     // 3) Get Maasam
                     //startTime = System.nanoTime();
-                    strMsg =
-                            vedicCalendar.getMaasam(sellocale, VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
+                    String strMaasam =
+                            vedicCalendar.getMaasam(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
                     //endTime = System.nanoTime();
-                    //Log.d("NPCalendar","getMaasam()... Time Taken: " +
+                    //Log.d("NPCalProfiler","getMaasam()... Time Taken: " +
                     //        VedicCalendar.getTimeTaken(startTime, endTime));
-                    drikMaasam.add(strMsg);
+                    drikMaasam.add(strMaasam);
 
                     // 4) Get Natchathiram
                     //startTime = System.nanoTime();
-                    strMsg =
-                            vedicCalendar.getNakshatram(sellocale, VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
+                    String strNakshatram =
+                            vedicCalendar.getNakshatram(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
                     //endTime = System.nanoTime();
-                    //Log.d("NPCalendar","getNatchathiram()... Time Taken: " +
+                    //Log.d("NPCalProfiler","getNatchathiram()... Time Taken: " +
                     //        VedicCalendar.getTimeTaken(startTime, endTime));
-                    drikNatchathiram.add(strMsg);
+                    drikNatchathiram.add(strNakshatram);
 
-                    // 5) Get a list of dhina vishesham(s)
+                    // 5) Get a list of dina vishesham(s)
                     //    Add list of strings & icons associated with each vishesham for the given
                     //    calendar day.
                     //startTime = System.nanoTime();
-                    List<Integer> dhinaVisheshamCodeList =
-                            vedicCalendar.whatIsSpecialToday(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
-                    List<String> dhinaVisheshamStrList = new ArrayList<>();
-                    List<Integer> dhinaVisheshamImgList = new ArrayList<>();
-                    for (int code = 0;code < dhinaVisheshamCodeList.size();code++) {
-                        int visheshamCode = dhinaVisheshamCodeList.get(code);
-                        int labelID = Reminder.getDhinaVisheshamLabel(visheshamCode);
-                        int iconID = Reminder.getDhinaVisheshamImg(visheshamCode);
-                        dhinaVisheshamStrList.add(getString(labelID));
-                        dhinaVisheshamImgList.add(iconID);
+                    List<Integer> dinaVisheshamCodeList =
+                            vedicCalendar.getDinaVishesham(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
+                    List<String> dinaVisheshamStrList = new ArrayList<>();
+                    List<Integer> dinaVisheshamImgList = new ArrayList<>();
+                    for (int code = 0;code < dinaVisheshamCodeList.size();code++) {
+                        int visheshamCode = dinaVisheshamCodeList.get(code);
+                        int labelID = Reminder.getDinaVisheshamLabel(visheshamCode);
+                        int iconID = Reminder.getDinaVisheshamImg(visheshamCode);
+                        dinaVisheshamStrList.add(getString(labelID));
+                        dinaVisheshamImgList.add(iconID);
                     }
-                    drikImgIDOfMonth.add(dhinaVisheshamImgList);
-                    String dhinaSpecialStr = dhinaVisheshamStrList.toString();
-                    dhinaSpecialStr = dhinaSpecialStr.substring(1, dhinaSpecialStr.length() - 1);
-                    drikDhinaVishesham.add(dhinaSpecialStr);
+                    drikImgIDOfMonth.add(dinaVisheshamImgList);
+                    String dinaSpecialStr = dinaVisheshamStrList.toString();
+                    dinaSpecialStr = dinaSpecialStr.substring(1, dinaSpecialStr.length() - 1);
+                    drikDinaVishesham.add(dinaSpecialStr);
                     //endTime = System.nanoTime();
-                    //Log.d("NPCalendar","whatIsSpecialToday()... Time Taken: " +
+                    //Log.d("NPCalProfiler","getDinaVishesham()... Time Taken: " +
                     //        VedicCalendar.getTimeTaken(startTime, endTime));
+
+                    //int date = calendarIter.get(Calendar.DATE);
+                    //Log.d("NPCalProfiler", date + "/" + npMonth + "/" + npYear + " " +
+                    //        strThithi + " " + dinaSpecialStr);
                     calendarIter.add(Calendar.DATE, 1);
                 }
             }
             //long mEndTime = System.nanoTime();
-            //Log.d("NPCalendar","Iter[" + index + "]" + " Time Taken: " +
+            //Log.d("NPCalProfiler","Iter[" + index + "]" + " Time Taken: " +
             //        VedicCalendar.getTimeTaken(mStartTime, mEndTime));
         }
         long dEndTime = System.nanoTime();
-        Log.d("NPCalendar","getDrikDaysInMonth()... Time Taken: " +
+        Log.d("NPCalProfiler","getDrikDaysInMonth()... Time Taken: " +
                 VedicCalendar.getTimeTaken(dStartTime, dEndTime));
 
         return firstDate;
@@ -391,10 +389,12 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
             npDate = Integer.parseInt(dayText);
             Calendar calendar = Calendar.getInstance();
             calendar.set(npYear, npMonth, npDate);
-            String strVaasaram = VedicCalendar.getVaasaram(calendar, sellocale,
-                                                           VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
+            int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
-            Locale locale = new Locale(sellocale);
+            String[] arrayList = getResources().getStringArray(R.array.dhinam_list);
+            String strVaasaram = arrayList[dayOfWeek - 1];
+
+            Locale locale = new Locale(selLocale);
             Locale.setDefault(locale);
             Resources resources = getResources();
             Configuration configuration = resources.getConfiguration();
@@ -410,17 +410,17 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
                         Locale.ENGLISH) + "-" + npYear +
                     ")";
             textView.setText(dayVal);
-            textView = npCalendarCellView.findViewById(R.id.dhina_vishesham);
-            textView.setText(drikDhinaVishesham.get(position));
+            textView = npCalendarCellView.findViewById(R.id.dina_vishesham);
+            textView.setText(drikDinaVishesham.get(position));
             textView = npCalendarCellView.findViewById(R.id.np_cell_maasam);
             textView.setText(drikMaasam.get(position));
             textView = npCalendarCellView.findViewById(R.id.np_cell_thithi);
-            textView.setText(drikDhinam.get(position));
+            textView.setText(drikDinam.get(position));
             textView = npCalendarCellView.findViewById(R.id.np_cell_natchathiram);
             textView.setText(drikNatchathiram.get(position));
 
             // Set Image Icon(s)
-            // Currently 3 dhina visheshams(i.e icons) are supported.
+            // Currently 3 dina visheshams(i.e icons) are supported.
             List<Integer> resID = drikImgIDOfMonth.get(position);
             if (resID != null) {
                 ImageView imageView1 = npCalendarCellView.findViewById(R.id.np_calendar_icon1);
@@ -432,17 +432,17 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
                 }
 
                 if (resID.size() == 4) {
-                    // Load 3 more icons if dhina visheshams is 3
+                    // Load 3 more icons if dina visheshams is 3
                     imageView2.setImageResource(resID.get(1));
                     imageView3.setImageResource(resID.get(2));
                     imageView4.setImageResource(resID.get(3));
                 } else if (resID.size() == 3) {
-                    // Load 2 more icons if dhina visheshams is 3
+                    // Load 2 more icons if dina visheshams is 3
                     imageView2.setImageResource(resID.get(1));
                     imageView3.setImageResource(resID.get(2));
                     imageView4.setImageResource(resID.get(2));
                 } else if (resID.size() == 2) {
-                    // Load 2nd icon for 2nd imageview if dhina visheshams is 2
+                    // Load 2nd icon for 2nd imageview if dina visheshams is 2
                     imageView2.setImageResource(resID.get(1));
 
                     // Load 2nd icon for 3rd imageview as well as this may show empty icon
@@ -490,5 +490,13 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
             }
             updateVisbilityForMenuItem(false);
         }).show();
+    }
+
+    private String readLocaleSettings() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPreferences != null) {
+            return sharedPreferences.getString(PREF_NP_LOCALE_KEY, "En");
+        }
+        return "En";
     }
 }

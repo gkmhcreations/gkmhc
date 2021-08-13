@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -48,20 +49,23 @@ public class Reminder extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         context = getContext();
-        MainActivity.updateSelLocale(context);
+        MainActivity mainActivity = (MainActivity) getActivity();
+        if (mainActivity != null) {
+            mainActivity.updateAppLocale();
+        }
 
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_reminder, container, false);
         reminderListView = root.findViewById(R.id.reminder_table);
 
-        initReminders();
+        refreshReminders();
         return root;
     }
 
-    public void initReminders() {
+    public void refreshReminders() {
         new Thread() {
             @Override
             public void run() {
@@ -97,12 +101,12 @@ public class Reminder extends Fragment {
                 int iconID = data.getIntExtra(Alarm.EXTRA_ALARM_ICON_ID, Alarm.DEF_ICON_ID);
                 Log.i("Reminder", "Reminder Code: " + " Reminder Time: " + alarmHourOfDay + ":" + alarmMin);
 
-                if (alarmType == Alarm.ALARM_TYPE_PANCHANGAM) {
+                if (alarmType == Alarm.ALARM_TYPE_VEDIC) {
                     // Scenario: Modify existing alarm
                     if (reminderID != Alarm.INVALID_VALUE) {
-                        NPDB.updateReminderInfoInDB(context, Alarm.ALARM_TYPE_PANCHANGAM,
+                        NPDB.updateAlarmInfoInDB(context, Alarm.ALARM_TYPE_VEDIC,
                                 reminderID, Alarm.ALARM_STATE_ON, alarmHourOfDay, alarmMin,
-                                ringTone, toVibrate, repeatOption, label, iconID);
+                                ringTone, toVibrate, repeatOption, label);
                         Alarm.restartAlarm(context, alarmType, reminderID, alarmHourOfDay,
                                            alarmMin, ringTone, toVibrate, repeatOption, label,
                                            iconID);
@@ -115,47 +119,43 @@ public class Reminder extends Fragment {
         }
     }
 
-    public void updateRemindersListView() {
+    private void updateRemindersListView() {
         boolean addToDB = true;
         long pStartTime = System.nanoTime();
-        int iconID;
         int labelID;
 
-        HashMap<Integer, NPDB.ReminderInfo> remindersDB = NPDB.readRemindersFromDB(context);
-        if (remindersDB != null) {
+        HashMap<Integer, NPDB.AlarmInfo> remindersDB = NPDB.readAlarmsFromDB(
+                context.getApplicationContext(), Alarm.ALARM_TYPE_VEDIC);
 
-            // If there are ZERO reminders in DB, then create DB first-time ONLY! Skip rest of the times.
-            if (remindersDB.size() >= VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_RANGE_END) {
-                addToDB = false;
-            }
-            ArrayList<Integer> reminderAlarmIDList = new ArrayList<>();
-            for (int festivalEventCode = VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_RANGE_START;
-                 festivalEventCode < VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_RANGE_END;
-                 festivalEventCode += 1) {
-                reminderAlarmIDList.add(festivalEventCode);
-                iconID = getDhinaVisheshamImg(festivalEventCode);
-                labelID = getDhinaVisheshamLabel(festivalEventCode);
-
-                if (addToDB) {
-                    NPDB.addReminderToDB(context, Alarm.ALARM_TYPE_PANCHANGAM, festivalEventCode,
-                            Alarm.ALARM_STATE_OFF, DEFAULT_REMINDER_HOUR_OF_DAY, DEFAULT_REMINDER_MIN,
-                            "Default", false, Alarm.ALARM_REPEAT_EVERY_OCCURRENCE,
-                            getString(labelID), iconID);
-                }
-            }
-            long pEndTime = System.nanoTime();
-            Log.d("Reminder:", "Overall Time Taken: " +
-                    VedicCalendar.getTimeTaken(pStartTime, pEndTime));
+        // If there are ZERO reminders in DB, then create DB first-time ONLY! Skip rest of the times.
+        if (remindersDB.size() >= VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_RANGE_END) {
+            addToDB = false;
+        }
+        ArrayList<Integer> reminderAlarmIDList = new ArrayList<>();
+        for (int festivalEventCode = VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_RANGE_START;
+             festivalEventCode < VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_RANGE_END;
+             festivalEventCode += 1) {
+            reminderAlarmIDList.add(festivalEventCode);
+            labelID = getDinaVisheshamLabel(festivalEventCode);
 
             if (addToDB) {
-                remindersDB = NPDB.readRemindersFromDB(context);
-            }
-            if (remindersDB != null) {
-                ReminderAdapter reminderAdapter = new ReminderAdapter(context, reminderAlarmIDList,
-                        remindersDB, this);
-                reminderListView.setAdapter(reminderAdapter);
+                NPDB.addAlarmToDB(context, Alarm.ALARM_TYPE_VEDIC, festivalEventCode,
+                        Alarm.ALARM_STATE_OFF, DEFAULT_REMINDER_HOUR_OF_DAY, DEFAULT_REMINDER_MIN,
+                        "Default", false, Alarm.ALARM_REPEAT_EVERY_OCCURRENCE,
+                        getString(labelID));
             }
         }
+        long pEndTime = System.nanoTime();
+        Log.d("Reminder:", "Overall Time Taken: " +
+                VedicCalendar.getTimeTaken(pStartTime, pEndTime));
+
+        if (addToDB) {
+            remindersDB = NPDB.readAlarmsFromDB(context.getApplicationContext(),
+                                                Alarm.ALARM_TYPE_VEDIC);
+        }
+        ReminderAdapter reminderAdapter = new ReminderAdapter(context, reminderAlarmIDList,
+                remindersDB, this);
+        reminderListView.setAdapter(reminderAdapter);
     }
 
     /**
@@ -163,7 +163,7 @@ public class Reminder extends Fragment {
      *
      * @return User-readable string in the selected language.
      */
-    public static int getDhinaVisheshamLabel (int festivalEventCode) {
+    public static int getDinaVisheshamLabel (int festivalEventCode) {
         int dhinaVishesham;
         switch (festivalEventCode) {
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_AMAVAASAI:
@@ -226,10 +226,10 @@ public class Reminder extends Fragment {
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_TAMIL_PUTHANDU:
                 dhinaVishesham = R.string.tamil_puthandu;
                 break;
-            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_AGNI_NATCHATHIRAM_BEGIN:
+            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_AGNI_NAKSHATHRAM_BEGIN:
                 dhinaVishesham = R.string.agni_nakshathiram_begin;
                 break;
-            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_AGNI_NATCHATHIRAM_END:
+            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_AGNI_NAKSHATHRAM_END:
                 dhinaVishesham = R.string.agni_nakshathiram_end;
                 break;
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_RAMANUJA_JAYANTHI:
@@ -341,7 +341,7 @@ public class Reminder extends Fragment {
      *
      * @return User-readable string in the selected language.
      */
-    public static int getDhinaVisheshamImg(int festivalEventCode) {
+    public static int getDinaVisheshamImg(int festivalEventCode) {
         int dhinaVisheshamCode;
         switch (festivalEventCode) {
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_AMAVAASAI:
@@ -411,9 +411,9 @@ public class Reminder extends Fragment {
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_TAMIL_PUTHANDU:
                 dhinaVisheshamCode = R.drawable.tamil_puthandu;
                 break;
-            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_AGNI_NATCHATHIRAM_BEGIN:
-            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_AGNI_NATCHATHIRAM_END:
-                dhinaVisheshamCode = R.drawable.agni_nakchathiram;
+            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_AGNI_NAKSHATHRAM_BEGIN:
+            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_AGNI_NAKSHATHRAM_END:
+                dhinaVisheshamCode = R.drawable.agni_nakshathram;
                 break;
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_RAMANUJA_JAYANTHI:
                 dhinaVisheshamCode = R.drawable.sri_ramanujacharya;

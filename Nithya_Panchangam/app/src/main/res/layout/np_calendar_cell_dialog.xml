@@ -11,7 +11,7 @@
         android:id="@+id/drikCalendarFlipImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:flipInterval="2000">
+        android:flipInterval="1000">
         <ImageView
             android:id="@+id/np_calendar_icon1"
             android:contentDescription="@string/nothing_special"
@@ -79,7 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/dhina_vishesham_hdr"
+                android:id="@+id/dina_vishesham_hdr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
@@ -90,7 +90,7 @@
                 android:text="@string/festivals_events"
                 android:layout_marginStart="1dp" />
             <TextView
-                android:id="@+id/dhina_vishesham"
+                android:id="@+id/dina_vishesham"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"

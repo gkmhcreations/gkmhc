@@ -25,7 +25,6 @@
         </activity>
 
         <activity android:name="com.gkmhc.vedanta.nithya_panchangam.NithyaPanchangamCalendar"
-            android:configChanges="screenSize|keyboardHidden|orientation|locale"
             android:theme="@style/Theme.Nithya_Panchangam">
         </activity>
 
@@ -33,10 +32,11 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="com.gkmhc.vedanta.nithya_panchangam" />
 
-        <activity
-            android:name="com.gkmhc.vedanta.nithya_panchangam.AboutActivity"
+        <activity android:name="com.gkmhc.vedanta.nithya_panchangam.AboutActivity"
             android:theme="@style/ThemeOverlay.Nithya_Panchangam.SplashScreen" />
+
         <activity android:name="com.gkmhc.vedanta.nithya_panchangam.NithyaPanchangamSettings" />
+
         <activity android:name="com.gkmhc.vedanta.nithya_panchangam.HandleAlarmReminderActivity" />
 
         <receiver
@@ -52,8 +52,7 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name="com.gkmhc.vedanta.nithya_panchangam.SplashScreen"
+        <activity android:name="com.gkmhc.vedanta.nithya_panchangam.SplashScreen"
             android:theme="@style/ThemeOverlay.Nithya_Panchangam.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -77,8 +76,7 @@
                 android:resource="@xml/nithya_panchangam_widget_info" />
         </receiver>
 
-        <activity
-            android:name="com.gkmhc.vedanta.nithya_panchangam.MainActivity"
+        <activity android:name="com.gkmhc.vedanta.nithya_panchangam.MainActivity"
             android:configChanges="screenSize|keyboardHidden|orientation|locale"
             android:theme="@style/Theme.Nithya_Panchangam">
             <intent-filter>

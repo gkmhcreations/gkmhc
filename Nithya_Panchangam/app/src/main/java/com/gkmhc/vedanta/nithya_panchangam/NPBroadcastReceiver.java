@@ -164,25 +164,25 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
                                                           Alarm.INVALID_VALUE);
 
                     Log.i("NPBroadcastReceiver", "NPAlarm: " + action + "(" + alarmID + ") received!");
-                    if (alarmType == Alarm.ALARM_TYPE_PANCHANGAM) {
-                        List<Integer> dhinaVisheshamCodeList = findDhinaVishesham(context);
+                    if (alarmType == Alarm.ALARM_TYPE_VEDIC) {
+                        List<Integer> dhinaVisheshamCodeList = findDinaVishesham(context);
 
-                        // There is a possibility of more than one Dhina Vishesham(s) occurring
+                        // There is a possibility of more than one Dina Vishesham(s) occurring
                         // in a particular calendar day.
                         if (dhinaVisheshamCodeList != null) {
-                            // If alarmID is present in the list of Dhina Vishesham(s) for the day,
+                            // If alarmID is present in the list of Dina Vishesham(s) for the day,
                             // then trigger Alarm.
                             // Else, restart Alarm.
                             if (dhinaVisheshamCodeList.contains(alarmID)) {
                                 Log.i("NPBcastReceiver",
                                         "NPAlarm: Triggering Alarm(" + alarmID + ") for " +
-                                                "Dhina Vishesham: " + alarmID +
+                                                "Dina Vishesham: " + alarmID +
                                                 " with repeat option: " + repeatOption + " !");
                                 triggerAlarm(context, intent, alarmID);
                             } else {
                                 Log.i("NPBcastReceiver",
                                         "NPAlarm: Skipping Alarm(" + alarmID + ") as " +
-                                                "Dhina Vishesham: " + alarmID +
+                                                "Dina Vishesham: " + alarmID +
                                                 " does not match!");
                                 cancelAlarm(context, intent, alarmID, true);
                             }
@@ -375,12 +375,7 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
                                 alarmHourOfDay + ":" + alarmMin + " for " + alarmDuration +
                                 " ms, with Ringtone: " + ringTone + " Repeat: " +
                                 repeatOption + " !");
-
-                if (alarmType == Alarm.ALARM_TYPE_STANDARD) {
-                    NPDB.updateAlarmStateInDB(context, alarmID, Alarm.ALARM_STATE_ON);
-                } else {
-                    NPDB.updateReminderStateInDB(context, alarmID, Alarm.ALARM_STATE_ON);
-                }
+                NPDB.updateAlarmStateInDB(context, alarmType, alarmID, Alarm.ALARM_STATE_ON);
             }
         }
     }
@@ -439,11 +434,11 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
 
                 // This is needed so that Alarm texts & notifications display texts in the
                 // preferred language.
-                MainActivity.updateSelLocale(context);
+                MainActivity.updateSelLocale(context.getApplicationContext());
 
                 // Retrieve the "Reminder" label as per latest locale selection!
-                if (alarmType == Alarm.ALARM_ALARM_TYPE_VEDIC) {
-                    label = context.getString(Reminder.getDhinaVisheshamLabel(alarmID));
+                if (alarmType == Alarm.ALARM_TYPE_VEDIC) {
+                    label = context.getString(Reminder.getDinaVisheshamLabel(alarmID));
                 }
 
                 //    - 1st to launch MainActivity when tapped
@@ -584,11 +579,7 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
             }
 
             if (isAlarmOff(context, alarmID)) {
-                if (alarmType == Alarm.ALARM_TYPE_STANDARD) {
-                    NPDB.updateAlarmStateInDB(context, alarmID, Alarm.ALARM_STATE_OFF);
-                } else {
-                    NPDB.updateReminderStateInDB(context, alarmID, Alarm.ALARM_STATE_OFF);
-                }
+                NPDB.updateAlarmStateInDB(context, alarmType, alarmID, Alarm.ALARM_STATE_OFF);
                 Log.i("NPBroadcastReceiver",
                         "NPAlarm: Alarm(" + alarmID + ") STOPPED SUCCESSFULLY!");
             }
@@ -606,7 +597,7 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
                         // Start Another alarm in case of repeat options (Daily/Custom)
                         SnoozeAlarmFor24hrs(context, recvdIntent);
                     }
-                } else if (alarmType == Alarm.ALARM_TYPE_PANCHANGAM) {
+                } else if (alarmType == Alarm.ALARM_TYPE_VEDIC) {
                     Log.i("NPBcastReceiver", "NPAlarm: Reminder(" + alarmID +
                             ") cancelled but RESTARTING PANCHANGAM reminder!");
                     // Start Another alarm in case of repeat options (Every Occurrence)
@@ -679,7 +670,8 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
      * @param context  App Context
      */
     private void recreateAlarmsFromPersistentDB(Context context) {
-        HashMap<Integer, NPDB.AlarmInfo> alarmsDB = NPDB.readAlarmsFromDB(context);
+        HashMap<Integer, NPDB.AlarmInfo> alarmsDB = NPDB.readAlarmsFromDB(
+                context.getApplicationContext(), Alarm.ALARM_TYPE_STANDARD);
         ArrayList<Integer> alarmsList = NPDB.getAlarmIDs(alarmsDB);
         if (alarmsList != null) {
             int alarmIter = 0;
@@ -717,32 +709,33 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
      * @param context  App Context
      */
     private void recreateRemindersFromPersistentDB(Context context) {
-        HashMap<Integer, NPDB.ReminderInfo> remindersDB = NPDB.readRemindersFromDB(context);
+        HashMap<Integer, NPDB.AlarmInfo> remindersDB = NPDB.readAlarmsFromDB(
+                context.getApplicationContext(), Alarm.ALARM_TYPE_VEDIC);
         if (remindersDB != null) {
-            ArrayList<Integer> remindersList = NPDB.getReminderIDs(remindersDB);
+            ArrayList<Integer> remindersList = NPDB.getAlarmIDs(remindersDB);
             if (remindersList != null) {
                 int reminderIter = 0;
                 int numReminders = remindersList.size();
 
                 while (reminderIter < numReminders) {
                     int reminderID = remindersList.get(reminderIter);
-                    NPDB.ReminderInfo reminderInfo = remindersDB.get(reminderID);
+                    NPDB.AlarmInfo reminderInfo = remindersDB.get(reminderID);
 
                     if (reminderInfo != null) {
-                        boolean alarmType = reminderInfo.alarmType;
-                        boolean isAlarmOn = reminderInfo.isAlarmOn;
-                        int alarmHourOfDay = reminderInfo.alarmHourOfDay;
-                        int alarmMin = reminderInfo.alarmMin;
+                        boolean reminderType = reminderInfo.alarmType;
+                        boolean isReminderOn = reminderInfo.isAlarmOn;
+                        int reminderHourOfDay = reminderInfo.alarmHourOfDay;
+                        int reminderMin = reminderInfo.alarmMin;
                         String ringTone = reminderInfo.ringTone;
                         boolean toVibrate = reminderInfo.toVibrate;
                         int repeatOption = reminderInfo.repeatOption;
                         String label = reminderInfo.label;
-                        int iconID = reminderInfo.iconID;
+                        int iconID = Reminder.getDinaVisheshamImg(reminderID);
 
                         // Recreate Reminder with the parsed fields only if Alarm State is "On"
-                        if (isAlarmOn == Alarm.ALARM_STATE_ON) {
-                            notifyBroadcastReceiver(context, START_ALARM, alarmType, reminderID,
-                                    alarmHourOfDay, alarmMin, ringTone, toVibrate, repeatOption,
+                        if (isReminderOn == Alarm.ALARM_STATE_ON) {
+                            notifyBroadcastReceiver(context, START_ALARM, reminderType, reminderID,
+                                    reminderHourOfDay, reminderMin, ringTone, toVibrate, repeatOption,
                                     label, iconID);
                         }
                     }
@@ -900,13 +893,13 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
     }
 
     /**
-     * Use this utility function to find the dhina vishesham code(s) for the given calendar day.
+     * Use this utility function to find the Dina Vishesham code(s) for the given calendar day.
      *
      * @param context           App Context
      *
-     * @return List of Dhina Vishesham code(s) for the given calendar day.
+     * @return List of Dina Vishesham code(s) for the given calendar day.
      */
-    private List<Integer> findDhinaVishesham(Context context) {
+    private List<Integer> findDinaVishesham(Context context) {
         Calendar currCalendar = Calendar.getInstance();
         String location = MainActivity.readDefLocationSetting(context);
         double curLocationLongitude = 0;
@@ -931,16 +924,21 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
         List<Integer> dhinaSpecialCodeList = null;
         String localpath = context.getFilesDir() + File.separator + "/ephe";
         VedicCalendar.initSwissEph(localpath);
+        HashMap<String, String[]> vedicCalendarLocaleList =
+                MainActivity.buildVedicCalendarLocaleList(context);
+        int ayanamsaMode = MainActivity.readPrefAyanamsaSelection(context);
         VedicCalendar vedicCalendar = VedicCalendar.getInstance(
                 VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM, currCalendar, curLocationLongitude,
-                curLocationLatitude, MainActivity.getLocationTimeZone(location));
+                curLocationLatitude, MainActivity.getLocationTimeZone(location), ayanamsaMode,
+                vedicCalendarLocaleList);
         if (vedicCalendar != null) {
+            vedicCalendar.getThithi(VedicCalendar.MATCH_SANKALPAM_EXACT);
             dhinaSpecialCodeList =
-                    vedicCalendar.whatIsSpecialToday(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
+                    vedicCalendar.getDinaVishesham(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
         }
 
         if (dhinaSpecialCodeList != null) {
-            Log.d("NPBcastReceiver", "Dhina Vishesham: " + dhinaSpecialCodeList.toString() + " for " +
+            Log.d("NPBcastReceiver", "Dina Vishesham: " + dhinaSpecialCodeList.toString() + " for " +
                     location + " Longitude: " + curLocationLongitude + " Latitude: " +
                     curLocationLatitude);
         }
@@ -963,7 +961,7 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
             notifText = context.getString(R.string.vedic);
         }
 
-        if (alarmType == Alarm.ALARM_TYPE_PANCHANGAM) {
+        if (alarmType == Alarm.ALARM_TYPE_VEDIC) {
             notifText += label + " " + context.getString(R.string.vedic_reminder_is_on);
         } else {
             notifText += label + " " + context.getString(R.string.vedic_alarm_is_on);

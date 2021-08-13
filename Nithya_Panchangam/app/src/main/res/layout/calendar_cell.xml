@@ -35,7 +35,7 @@
         android:id="@+id/drikCalendarFlipImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:flipInterval="2000"
+        android:flipInterval="1000"
         app:layout_constraintBottom_toBottomOf="@id/gregCalendarDay"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

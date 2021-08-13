@@ -1,59 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/default_background"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/alarmTimeValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/blue"
-        android:textStyle="bold"
-        android:maxLines="5"
-        android:text="@string/alarm_time"/>
-
-    <TextView
-        android:id="@+id/alarmTypeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:textColor="@color/blue"
-        android:textStyle="bold"
-        android:maxLines="5"
-        android:text=""/>
+    android:fillViewport="true">
 
     <LinearLayout
-        android:id="@+id/timeLayout"
-        android:layout_below="@id/alarmTimeValue"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/alarm_header_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/alarmTimeValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue"
+                android:textStyle="bold"
+                android:maxLines="5"
+                android:text="@string/alarm_time"/>
 
-        <TimePicker
-            android:id="@+id/alarmSetTime"
+            <TextView
+                android:id="@+id/alarmTypeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/alarmTimeValue"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/blue"
+                android:textStyle="bold"
+                android:gravity="center_vertical|end"
+                android:maxLines="5"
+                android:text=""/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/alarm_time_layout"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal"
-            android:numbersBackgroundColor="@color/white"
-            android:numbersSelectorColor="@color/blue"
-            android:numbersTextColor="@color/black"
-            android:padding="5dp"
-            android:textAlignment="center"
-            android:timePickerMode="spinner" />
-    </LinearLayout>
+            android:layout_height="wrap_content">
 
-    <ScrollView
-        android:id="@+id/alarmFieldsLayout"
-        android:layout_below="@id/timeLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+            <TimePicker
+                android:id="@+id/alarmSetTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:numbersBackgroundColor="@color/white"
+                android:numbersSelectorColor="@color/blue"
+                android:numbersTextColor="@color/black"
+                android:padding="5dp"
+                android:textAlignment="center"
+                android:timePickerMode="spinner" />
+        </LinearLayout>
 
         <LinearLayout
             android:background="@drawable/layout_bg"
             android:orientation="vertical"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
@@ -142,35 +148,23 @@
                     android:layout_centerVertical="true" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/ringtone_hdr"
+                    android:id="@+id/ringtone_settings"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="8dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:textColor="@color/blue"
                     android:maxLines="5"
-                    android:text="@string/ringtone" />
-
-                <ImageView
-                    android:id="@+id/ringtone_settings"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="150dp"
+                    android:text="@string/ringtone"
                     android:layout_marginEnd="16dp"
-                    android:background="@drawable/ringtone_button_bg"
-                    android:layout_toEndOf="@id/ringtone_hdr"
-                    android:gravity="center_horizontal"
-                    android:src="@drawable/ic_ringtone"
-                    android:contentDescription="@string/ringtone_image" />
-            </RelativeLayout>
+                    app:drawableEndCompat="@drawable/ringtone" />
+            </LinearLayout>
 
             <RelativeLayout
                 android:paddingTop="20dp"
@@ -197,13 +191,13 @@
                     android:layout_height="50dp"
                     android:layout_alignParentEnd="true"
                     android:layout_toEndOf="@id/label_hdr"
-                    android:gravity="center_vertical"
                     android:textColor="@color/blue"
                     android:textSize="18sp"
+                    android:gravity="center_vertical|end"
                     android:maxLines="5"
                     android:autofillHints="AlarmLabel"
-                    android:inputType="text"/>
+                    android:inputType="textAutoCorrect"/>
             </RelativeLayout>
         </LinearLayout>
-    </ScrollView>
-</RelativeLayout>
+    </LinearLayout>
+</ScrollView>

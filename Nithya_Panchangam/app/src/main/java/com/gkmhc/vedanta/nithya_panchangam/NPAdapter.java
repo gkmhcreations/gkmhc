@@ -24,15 +24,15 @@ import androidx.fragment.app.FragmentPagerAdapter;
 public class NPAdapter extends FragmentPagerAdapter {
     public static final int NP_TAB_PANCHANGAM = 0;
     public static final int NP_TAB_SANKALPAM = 1;
-    public static final int NP_TAB_ALARM = 2;
-    public static final int NP_TAB_REMINDER = 3;
+    public static final int NP_TAB_REMINDER = 2;
+    public static final int NP_TAB_ALARM = 3;
     public static final int NP_TAB_STOPWATCH = 4;
 
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.panchangam_tab_heading,
                                                       R.string.sankalpam_tab_heading,
-                                                      R.string.alarm_tab_heading,
                                                       R.string.reminder_tab_heading,
+                                                      R.string.alarm_tab_heading,
                                                       R.string.stopwatch_tab_heading};
     private final Context mContext;
     private Fragment panchangamFragment = null;
@@ -95,8 +95,9 @@ public class NPAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         // Tab 0 - Panchangam Tab Title
         // Tab 1 - Sankalpam Tab Title
-        // Tab 2 - Alarm Tab Title
-        // Tab 3 - Stopwatch Tab Title
+        // Tab 2 - Reminder Tab Title
+        // Tab 3 - Alarm Tab Title
+        // Tab 4 - Stopwatch Tab Title
         switch (position) {
             case NP_TAB_PANCHANGAM:
                 return mContext.getResources().getString(R.string.panchangam_tab_heading);

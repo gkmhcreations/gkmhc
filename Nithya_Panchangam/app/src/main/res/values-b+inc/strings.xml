@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sankalpam_shubam_begin">mamopātta-samasta-duritakṣayadvārā śrī parameśvara-prītyarthaṃ śubhe śobhane muhūrte adya brahmaṇaḥ dvitīyaparārdhe śvetavarāhakalpe vaivasvata-manvantare aṣṭāviṃśatitame kaliyuge prathame pāde jambūdvīpe bhāratavarṣe bharatakhaṇḍe meroḥ dakṣiṇe pārśve śakābde asmin vartamāne vyāvahārike prabhavādīnāṃ ṣaṣṭyāḥ saṃvatsarāṇāṃ madhye</string>
+    <string name="app_name">nitya pañcāṅgaṃ</string>
+    <string name="nithya_panchangam_header">nitya pañcāṅgaḥ</string>
+    <string name="samvatsaram_heading">saṃvatsaraḥ</string>
+    <string name="aayanam_heading">ayanam</string>
+    <string name="rithou_heading">ṛtuḥ</string>
+    <string name="maasam_heading">māsaḥ</string>
+    <string name="paksham_heading">pakṣaḥ</string>
+    <string name="thithi_heading">tithiḥ</string>
+    <string name="vaasaram_heading">vāsaraḥ</string>
+    <string name="raasi_heading">rāśiḥ</string>
+    <string name="nakshatram_heading">nakṣatram</string>
+    <string name="yogam_heading">yogaḥ</string>
+    <string name="karanam_heading">karaṇam</string>
+    <string name="good_time_heading">śubhakālaḥ</string>
+    <string name="raahu_kaalam_heading">rāhukālaḥ</string>
+    <string name="emakandam_heading">yamaghaṇṭaḥ</string>
+    <string name="kuligai_heading">gulikakālaḥ</string>
+    <string name="panchangam_tab_heading">pañcāṅgaḥ</string>
+    <string name="sankalpam_tab_heading">saṅkalpaḥ</string>
+    <string name="alarm_tab_heading">stara saṅketadhvaniḥ</string>
+    <string name="stopwatch_tab_heading">virāmaghaṭī</string>
+    <string name="splash_screen_banner">svāmiye śaraṇaṃ ayyappā</string>
+
+    <string name="sankalpam_shubam_end">evaṃ guṇa viśeṣaṇa viśiṣṭāyām asyām śubhatithau asmākam sarveṣāṃ sahakuṭumbāṇām kṣema, sthairya, vīrya, vijaya, āyuḥ ārogya abhivṛddhyartham, mama gṛhe mahālakṣmī nitya nivāsa siddhyartham, mama iṣṭa kāmya phala siddhyartham, mama vyāpāra, vyavahāra, udyoga abhivṛddhi siddhyartham, samasta maṅgala avāptyartham, śarīre vartamāna kāla vartiṣyamāna sakala roga parihāra dvārā kṣipra ārogya saukhyam siddhyartham</string>
+    <string name="sankalpam_nama_samvathsare">nāma saṃvatsare</string>
+    <string name="sankalpam_maase">māse</string>
+    <string name="sankalpam_subha_thithou">śubhatithau</string>
+    <string name="sankalpam_yukhtayaam">yuktāyāṃ</string>
+    <string name="sankalpam_nakshatra_yukhtayaam">nakṣatra yuktāyāṃ</string>
+    <string name="sankalpam_yoga_yukhtayaam">yoga yuktāyāṃ</string>
+    <string name="sankalpam_karana_yukhtayaam">karaṇa yuktāyāṃ</string>
+    <string name="chandrashtama_nakshathram_heading">candrāṣṭama nakṣatram</string>
+    <string name="lagnam_heading">lagnaḥ</string>
+    <string name="horai_heading">horā</string>
+    <string name="sankalpam_srardham_begin">mamopātta samasta duritakṣayadvārā śrī parameśvara-prītyarthaṃ apavitraḥ pavitro vā sarvāvasthāgato\'pi vā| yaḥ smaretpuṇḍarīkākṣaṃ sa bāhyābhyantaraḥ śuciḥ|| mānasaṃ vācikaṃ pāpaṃ karmaṇā samupārjitam ||śrīrāmasmaraṇenaiva vyapohati na saṃśayaḥ|| śrī rāma rāma rāma| tithirviṣṇuḥ tathā vāraḥ nakṣatraṃ viṣṇureva ca| yogaśca karaṇaṃ caiva sarvaṃ viṣṇumayaṃ jagat| śrī govinda govinda govinda| adya śrī bhagavataḥ mahāpuruṣasya viṣṇorājñayā pravartamānasya adya brahmaṇaḥ dvitīyaparārdhe śvetavarāhakalpe vaivasvata-manvantare aṣṭāviṃśatitame kaliyuge prathame pāde jambūdvīpe bhāratavarṣe bharatakhaṇḍe meroḥ dakṣiṇe pārśve śakābde asmin vartamāne vyāvahārike prabhavādīnāṃ ṣaṣṭyāḥ saṃvatsarāṇāṃ madhye</string>
+    <string name="sankalpam_punya_thithou">puṇya tithau</string>
+    <string name="sankalpam_srardham_end_1">viṣṇu yoga viṣṇu karaṇa evaṃ guṇa viśeṣaṇa viśiṣṭāyāṃ asyāṃ</string>
+    <string name="sankalpam_srardham_end_2">(prācīnāvīti) ............ gotrāṇām, vasurudra āditya svarūpāṇām asmad pitṛ pitāmaha prapitāmahānām --- (mātā asti cet) pitāmahī pituḥ pitāmahī pituḥ prapitāmahī (no cet) mātṛ, pitāmahī pituḥ prapitāmahīnām (mātuḥ janma gotram vadatu) ............ gotrāṇām sapatnīka, mātāmaha, mātuḥ pitāmaha, mātuḥ prapitāmahānām ubhaya vaṃśa pitṝṇām akṣayya tṛptayartham</string>
+    <string name="amruthathi_yogam_heading">amṛtādi yogaṃ</string>
+    <string name="vaasaram_suffix">vāsaraḥ</string>
+    <string name="solar_calendar">sauramānam</string>
+    <string name="sunrise_heading">sūryodayaḥ</string>
+    <string name="sunset_heading">suryāstamayaḥ</string>
+    <string name="festivals_events">dina viśeṣāḥ</string>
+    <string name="akshaya_thrithiyai">akṣayya tṛtīyā</string>
+    <string name="planet_sun">bhānuḥ</string>
+    <string name="planet_mon">induḥ</string>
+    <string name="planet_tue">bhaumaḥ</string>
+    <string name="planet_wed">saumyaḥ</string>
+    <string name="planet_thu">guruḥ</string>
+    <string name="planet_fri">bhṛguḥ</string>
+    <string name="planet_sat">sthiraḥ</string>
+    <string name="ammavasai">amāvasyā</string>
+    <string name="pournami">paurṇamāsī</string>
+    <string name="sri_rama_navami">śrīrāmanavamī</string>
+    <string name="sashti">ṣaṣṭhī</string>
+    <string name="ekadasi">ekādaśī</string>
+    <string name="pradosham">pradoṣaḥ</string>
+    <string name="makara_sankaranthi">makara saṅkrāntiḥ, poṅgal</string>
+    <string name="sankara_jayanthi">śrī ādi śaṃkara jayantī</string>
+    <string name="vaikasi_visakam">vaikāśī viśākaṃ</string>
+    <string name="aadi_perukku">kaṭaka pūrva phalgunī (āṣāḍha aṣṭādaśī)</string>
+    <string name="aadi_pooram">kaṭaka pūrva phalgunī (āṣāḍha pūraṃ), āṇḍāl jayantī</string>
+    <string name="garuda_panchami">garuḍa pañcamī</string>
+    <string name="varalakshmi_vratham">varalakṣmī vrataṃ</string>
+    <string name="avani_avittam_yajur">yajurveda upakarmā</string>
+    <string name="avani_avittam_rig">ṛgveda upakarmā</string>
+    <string name="avani_avittam_sam">sāma upakarmā</string>
+    <string name="maha_sankata_hara_chaturthi">mahā saṅkaṭahara caturthī</string>
+    <string name="gokulashtami">gokulāṣṭamī</string>
+    <string name="vinayagar_chaturthi">gaṇeśa caturthī</string>
+    <string name="maha_bharani">mahābharaṇī</string>
+    <string name="mahalaya_ammavasai">mahālaya ammāvasya</string>
+    <string name="navarathiri">navarātra-ārambhaḥ</string>
+    <string name="saraswathi_pooja">sarasvatī pūjā</string>
+    <string name="vijaya_dasami">vijaya daśamī</string>
+    <string name="deepavali">dīpāvalī</string>
+    <string name="soora_samharam">sūra saṃhāraṃ</string>
+    <string name="karthigai_deepam">kṛttikā dīpaṃ</string>
+    <string name="sashti_vratham">ṣaṣṭhī vratam</string>
+    <string name="arudhra_darshan">ārdrā darśanam</string>
+    <string name="sri_ramanuja_jayanthi">śrī rāmānuja jayantī</string>
+    <string name="tamil_puthandu">tamila nūtana saṃvatsaraḥ</string>
+    <string name="panguni_uthiram">mīna uttara phalgunī (phālguna uttaraṃ)</string>
+    <string name="karadaiyan_nombu">kāraḍayān nombu</string>
+    <string name="maasi_magam">kumbha maghā (māsi magaṃ)</string>
+    <string name="bheeshmashtami">bhīṣmāṣṭamī</string>
+    <string name="ratha_saptami">ratha saptamī</string>
+    <string name="vasantha_panchami">vasanta pañcamī</string>
+    <string name="thai_poosam">makara puṣya (tai pūsaṃ)</string>
+    <string name="maha_sivarathiri">mahāśivarātriḥ</string>
+    <string name="naraka_chathurdasi">narakacaturdaśī</string>
+    <string name="Day">dinaṃ</string>
+    <string name="enter_preferred_location">icchānusāraṃ sthalaṃ praveśayatu</string>
+    <string name="channel_name">Nithya Panchangam</string>
+    <string name="channel_description">Nithya Panchangam Events</string>
+    <string name="label">sañjika</string>
+    <string name="no_reminders">smāraṇaṃ nāsti!</string>
+    <string name="no_alarms">stara saṃketadhvani na kṛtaṃ!</string>
+    <string name="delete_reminder">Delete Reminder</string>
+    <string name="add_alarm">stara saṃketadhvani</string>
+    <string name="reminder_tab_heading">smāraṇaṃ</string>
+    <string name="chithra_pournami">citrā paurṇamāsī</string>
+    <string name="select_repeat_option">cayana anuvāda vikalpa</string>
+    <string name="repeat_custom">icchānusāraṃ</string>
+    <string name="repeat_arrow">Repeat Arrow</string>
+    <string name="ringtone_image">Ringtone Image</string>
+    <string name="vedic_alarm_is_on">stara saṃketadhvani calati</string>
+    <string name="location_selection">Location Selection!</string>
+    <string name="hh_mm">HH:MM</string>
+    <string name="sankata_hara_chathurthi">saṅkaṭahara caturthī</string>
+    <string name="nothing_special">Nothing Special!</string>
+    <string name="hanuman_jayanthi">śrī hanumat jayantī</string>
+    <string name="maha_periyava_jayanthi">śrī candraśekharendra sarasvatī mahāsvāminaḥ jayantī</string>
+    <string name="puthu_periyava_jayanthi">śrī jayendra sarasvatī svāminaḥ jayantī</string>
+    <string name="bala_periyava_jayanthi">śrī śaṃkara vijayendra sarasvatī svāminaḥ jayantī</string>
+    <string name="sringeri_periyava_jayanthi">śrī bhārati tīrtha svāminaḥ vardhanti</string>
+    <string name="appayya_dikshitar_jayanthi">śrī appayya dīkṣita jayantī</string>
+    <string name="lagnam_details">nitya lagnaḥ</string>
+    <string name="horai_details">nitya horā</string>
+    <string name="start_time">ārambhaḥ</string>
+    <string name="end_time">samāptiḥ</string>
+    <string name="gkm_copyright">© GKM paramparā kṛti, 2021</string>
+    <string name="snooze_alarm">svāpa</string>
+    <string name="dismiss_alarm">muñca</string>
+    <string name="sankalpam_srardham_end_3">puṇya kāle darśaśrāddham hiraṇyarūpeṇa adya kariṣye</string>
+    <string name="vedic">vaidika</string>
+    <string name="alarm_time">stara saṃketadhvani samayaṃ - </string>
+    <string name="vibrate_when_alarm_sounds">vepati</string>
+    <string name="ringtone">nādadhvani</string>
+    <string name="cancel">nirasanaṃ karotu</string>
+    <string name="select">cinotu</string>
+    <string name="vedic_reminder_is_on">smāraṇaṃ calati</string>
+    <string name="repeat_monday">induvāsaraḥ</string>
+    <string name="repeat_sunday">bhānuvāsaraḥ</string>
+    <string name="repeat_tuesday">bhaumavāsaraḥ</string>
+    <string name="repeat_wednesday">saumyavāsaraḥ</string>
+    <string name="repeat_thursday">guruvāsaraḥ</string>
+    <string name="repeat_friday">bhṛguvāsaraḥ</string>
+    <string name="repeat_saturday">sthiravāsaraḥ</string>
+    <string name="repeat_once">ekavāraṃ</string>
+    <string name="details">vivaraṇaṃ</string>
+    <string name="repeat_daily">pratidinaṃ</string>
+    <string name="repeat_every_occurrence">prativāraṃ</string>
+    <string name="repeat">anukaraṇam</string>
+    <string name="select_year">saṃvatsaraḥ cinotu</string>
+    <string name="ugadi">yugādiḥ</string>
+    <string name="agni_nakshathiram_begin">agninakṣatra-ārambhaḥ</string>
+    <string name="agni_nakshathiram_end">agninakṣatra-samāptaḥ</string>
+    <string name="onam">oṇam</string>
+    <string name="mahalayam_start">mahālaya-ārambhaḥ</string>
+
+    <!-- Samvatsaram (Year) -->
+    <string-array name="samvatsaram_list">
+        <item>prabhava</item>
+        <item>vibhava</item>
+        <item>śukla</item>
+        <item>pramoda</item>
+        <item>prajāpati</item>
+        <item>āṅgirasa</item>
+        <item>śrīmukha</item>
+        <item>bhāva</item>
+        <item>yuva</item>
+        <item>dhātṛ</item>
+        <item>īśvara</item>
+        <item>bahudhānya</item>
+        <item>pramādhi</item>
+        <item>vikrama</item>
+        <item>vṛṣa</item>
+        <item>citrabhānu</item>
+        <item>svabhānu</item>
+        <item>tāraṇa</item>
+        <item>pārthiva</item>
+        <item>vyaya</item>
+        <item>sarvajit</item>
+        <item>sarvadhārī</item>
+        <item>virodhī</item>
+        <item>vikṛti</item>
+        <item>khara</item>
+        <item>nandana</item>
+        <item>vijaya</item>
+        <item>jaya</item>
+        <item>manmatha</item>
+        <item>durmukhī</item>
+        <item>hevilambī</item>
+        <item>vilambī</item>
+        <item>vikārī</item>
+        <item>śārvarī</item>
+        <item>plava</item>
+        <item>śubhakṛt</item>
+        <item>śobhakṛt</item>
+        <item>krodhī</item>
+        <item>viśvāvasu</item>
+        <item>parābhava</item>
+        <item>plavaṅga</item>
+        <item>kīlaka</item>
+        <item>saumya</item>
+        <item>sādhāraṇa</item>
+        <item>virodhikṛti</item>
+        <item>paridhāvī</item>
+        <item>pramādīca</item>
+        <item>ānanda</item>
+        <item>rākṣasa</item>
+        <item>nala</item>
+        <item>piṅgala</item>
+        <item>kālayukti</item>
+        <item>siddhārthī</item>
+        <item>raudra</item>
+        <item>durmati</item>
+        <item>dundubhi</item>
+        <item>rudhirodgārī</item>
+        <item>raktākṣī</item>
+        <item>krodhana</item>
+        <item>akṣaya</item>
+    </string-array>
+
+    <!-- Ayanam (6-month) period -->
+    <string-array name="ayanam_list">
+        <item>uttarāyaṇam</item>
+        <item>dakṣiṇāyanam</item>
+    </string-array>
+
+    <!-- Rithu (Season) 2-month period -->
+    <string-array name="rithu_list">
+        <item>vasantaṛtuḥ</item>
+        <item>grīṣmaṛtuḥ</item>
+        <item>varṣaṛtuḥ</item>
+        <item>śaradṛtuḥ</item>
+        <item>hemantaṛtuḥ</item>
+        <item>śiśiraṛtuḥ</item>
+    </string-array>
+
+    <!-- Maasam (month) -->
+    <string-array name="maasam_list">
+        <item>meṣaḥ</item>
+        <item>vṛṣabhaḥ</item>
+        <item>mithunam</item>
+        <item>kaṭakaḥ</item>
+        <item>siṃhaḥ</item>
+        <item>kanyā</item>
+        <item>tulā</item>
+        <item>vṛścikaḥ</item>
+        <item>dhanuḥ</item>
+        <item>makaraḥ</item>
+        <item>kumbhaḥ</item>
+        <item>mīnaḥ</item>
+    </string-array>
+
+    <!-- Paksham (15-day) period -->
+    <string-array name="paksham_list">
+        <item>śukla</item>
+        <item>kṛṣṇa</item>
+    </string-array>
+
+    <!-- Thithi (Lunar Day) -->
+    <string-array name="thithi_list">
+        <item>prathamā</item>
+        <item>dvitīyā</item>
+        <item>tṛtīyā</item>
+        <item>caturthī</item>
+        <item>pañcamī</item>
+        <item>ṣaṣṭhī</item>
+        <item>saptamī</item>
+        <item>aṣṭamī</item>
+        <item>navamī</item>
+        <item>daśamī</item>
+        <item>ekādaśī</item>
+        <item>dvādaśī</item>
+        <item>trayodaśī</item>
+        <item>caturdaśī</item>
+        <item>paurṇamāsī</item>
+        <item>prathamā</item>
+        <item>dvitīyā</item>
+        <item>tṛtīyā</item>
+        <item>caturthī</item>
+        <item>pañcamī</item>
+        <item>ṣaṣṭhī</item>
+        <item>saptamī</item>
+        <item>aṣṭamī</item>
+        <item>navamī</item>
+        <item>daśamī</item>
+        <item>ekādaśī</item>
+        <item>dvādaśī</item>
+        <item>trayodaśī</item>
+        <item>caturdaśī</item>
+        <item>amāvasyā</item>
+    </string-array>
+
+    <!-- Sankalpa Thithi (Lunar Day) with grammar suffix -->
+    <string-array name="sankalpa_thithi_list">
+        <item>prathamāyāṃ</item>
+        <item>dvitīyāyāṃ</item>
+        <item>tṛtīyāyāṃ</item>
+        <item>caturthyāṃ</item>
+        <item>pañcamyāṃ</item>
+        <item>ṣaṣṭhyām</item>
+        <item>saptamyāṃ</item>
+        <item>aṣṭamyāṃ</item>
+        <item>navamyāṃ</item>
+        <item>daśamyāṃ</item>
+        <item>ekādaśyāṃ</item>
+        <item>dvādaśyāṃ</item>
+        <item>trayodaśyāṃ</item>
+        <item>caturdaśyāṃ</item>
+        <item>paurṇamyāṃ</item>
+        <item>prathamāyāṃ</item>
+        <item>dvitīyāyāṃ</item>
+        <item>tṛtīyāyāṃ</item>
+        <item>caturthyāṃ</item>
+        <item>pañcamyāṃ</item>
+        <item>ṣaṣṭhyāṃ</item>
+        <item>saptamyāṃ</item>
+        <item>aṣṭamyāṃ</item>
+        <item>navamyāṃ</item>
+        <item>daśamyāṃ</item>
+        <item>ekādaśyāṃ</item>
+        <item>dvādaśyāṃ</item>
+        <item>trayodaśyāṃ</item>
+        <item>caturdaśyāṃ</item>
+        <item>amāvāsyāyāṃ"</item>
+    </string-array>
+
+    <!-- Raasi (Planet) -->
+    <string-array name="raasi_list">
+        <item>meṣaḥ</item>
+        <item>vṛṣabhaḥ</item>
+        <item>mithunam</item>
+        <item>kaṭakaḥ</item>
+        <item>siṃhaḥ</item>
+        <item>kanyā</item>
+        <item>tulā</item>
+        <item>vṛścikaḥ</item>
+        <item>dhanuḥ</item>
+        <item>makaraḥ</item>
+        <item>kumbhaḥ</item>
+        <item>mīnaḥ</item>
+    </string-array>
+
+    <!-- Natchathiram (Star) used for Panchangam purposes -->
+    <string-array name="nakshathram_list">
+        <item>aśvinī</item>
+        <item>apabharaṇī</item>
+        <item>kṛttikā</item>
+        <item>rohiṇī</item>
+        <item>mṛgaśīrṣam</item>
+        <item>ārdrā</item>
+        <item>punarvasuḥ</item>
+        <item>puṣyaḥ</item>
+        <item>āśreṣā</item>
+        <item>maghā</item>
+        <item>pūrvaphalgunī</item>
+        <item>uttaraphalgunī</item>
+        <item>hastaḥ</item>
+        <item>citrā</item>
+        <item>svātī</item>
+        <item>viśākhā</item>
+        <item>anūrādhā</item>
+        <item>jyeṣṭhā</item>
+        <item>mūlā</item>
+        <item>pūrvāṣāḍhā</item>
+        <item>uttarāṣāḍhā</item>
+        <item>śravaṇam</item>
+        <item>śraviṣṭhā</item>
+        <item>śatabhiṣak</item>
+        <item>pūrvaproṣṭhapadā</item>
+        <item>uttaraproṣṭhapadā</item>
+        <item>revatī</item>
+    </string-array>
+
+    <!-- Sankalpa Natchathiram (Star) used for Sankapalpam Purposes with grammar suffix -->
+    <string-array name="sankalpa_nakshathram_list">
+        <item>aśvinī</item>
+        <item>apabharaṇī</item>
+        <item>kṛttikā</item>
+        <item>rohiṇī</item>
+        <item>mṛgaśīro</item>
+        <item>ārdrā</item>
+        <item>punarvasuḥ</item>
+        <item>puṣyaḥ</item>
+        <item>āśreṣā</item>
+        <item>maghā</item>
+        <item>pūrvaphalgunī</item>
+        <item>uttaraphalgunī</item>
+        <item>hastaḥ</item>
+        <item>citrā</item>
+        <item>svātī</item>
+        <item>viśākhā</item>
+        <item>anūrādhā</item>
+        <item>jyeṣṭhā</item>
+        <item>mūlā</item>
+        <item>pūrvāṣāḍhā</item>
+        <item>uttarāṣāḍhā</item>
+        <item>śravaṇam</item>
+        <item>śraviṣṭhā</item>
+        <item>śatabhiṣak</item>
+        <item>pūrvaproṣṭhapadā</item>
+        <item>uttaraproṣṭhapadā</item>
+        <item>revatī</item>
+    </string-array>
+
+    <!-- Yogam used to indicate yogam of the Day -->
+    <string-array name="yogam_list">
+        <item>viṣkambhaḥ</item>
+        <item>prītiḥ</item>
+        <item>āyuṣmān</item>
+        <item>saubhāgyaḥ</item>
+        <item>śobhanaḥ</item>
+        <item>atigaṇḍaḥ</item>
+        <item>sukarma</item>
+        <item>dhṛtiḥ</item>
+        <item>śūlaḥ</item>
+        <item>gaṇḍaḥ</item>
+        <item>vṛddhiḥ</item>
+        <item>dhruvaḥ</item>
+        <item>vyāghātaḥ</item>
+        <item>harṣaṇaḥ</item>
+        <item>vajram</item>
+        <item>siddhiḥ</item>
+        <item>vyatīpātaḥ</item>
+        <item>varīyān</item>
+        <item>parighaḥ</item>
+        <item>śivaḥ</item>
+        <item>siddhaḥ</item>
+        <item>sādhyaḥ</item>
+        <item>śubhaḥ</item>
+        <item>śuklaḥ</item>
+        <item>brahma</item>
+        <item>indraḥ</item>
+        <item>vaidhṛtiḥ</item>
+    </string-array>
+
+    <!-- Karanam (half-thithi) -->
+    <string-array name="karanam_list">
+        <item>kiṃstughnaḥ</item>
+        <item>bavaḥ</item>
+        <item>bālavaḥ</item>
+        <item>kaulavaḥ</item>
+        <item>taitilaḥ</item>
+        <item>garaḥ</item>
+        <item>vaṇijaḥ</item>
+        <item>viṣṭiḥ</item>
+        <item>bavaḥ</item>
+        <item>bālavaḥ</item>
+        <item>kaulavaḥ</item>
+        <item>taitilaḥ</item>
+        <item>garaḥ</item>
+        <item>vaṇijaḥ</item>
+        <item>viṣṭiḥ</item>
+        <item>bavaḥ</item>
+        <item>bālavaḥ</item>
+        <item>kaulavaḥ</item>
+        <item>taitilaḥ</item>
+        <item>garaḥ</item>
+        <item>vaṇijaḥ</item>
+        <item>viṣṭiḥ</item>
+        <item>bavaḥ</item>
+        <item>bālavaḥ</item>
+        <item>kaulavaḥ</item>
+        <item>taitilaḥ</item>
+        <item>garaḥ</item>
+        <item>vaṇijaḥ</item>
+        <item>viṣṭiḥ</item>
+        <item>bavaḥ</item>
+        <item>bālavaḥ</item>
+        <item>kaulavaḥ</item>
+        <item>taitilaḥ</item>
+        <item>garaḥ</item>
+        <item>vaṇijaḥ</item>
+        <item>viṣṭiḥ</item>
+        <item>bavaḥ</item>
+        <item>bālavaḥ</item>
+        <item>kaulavaḥ</item>
+        <item>taitilaḥ</item>
+        <item>garaḥ</item>
+        <item>vaṇijaḥ</item>
+        <item>viṣṭiḥ</item>
+        <item>bavaḥ</item>
+        <item>bālavaḥ</item>
+        <item>kaulavaḥ</item>
+        <item>taitilaḥ</item>
+        <item>garaḥ</item>
+        <item>vaṇijaḥ</item>
+        <item>viṣṭiḥ</item>
+        <item>bavaḥ</item>
+        <item>bālavaḥ</item>
+        <item>kaulavaḥ</item>
+        <item>taitilaḥ</item>
+        <item>garaḥ</item>
+        <item>vaṇijaḥ</item>
+        <item>viṣṭiḥ</item>
+        <item>śakuniḥ</item>
+        <item>catuṣpāt</item>
+        <item>nāga</item>
+    </string-array>
+
+    <!-- Vaasaram (weekday) -->
+    <string-array name="vaasaram_list">
+        <item>bhānuḥ</item>
+        <item>induḥ</item>
+        <item>bhaumaḥ</item>
+        <item>saumyaḥ</item>
+        <item>guruḥ</item>
+        <item>bhṛguḥ</item>
+        <item>sthiraḥ</item>
+    </string-array>
+
+    <!-- Dhinam (Day) -->
+    <string-array name="dhinam_list">
+        <item>bhānuḥ</item>
+        <item>induḥ</item>
+        <item>bhaumaḥ</item>
+        <item>saumyaḥ</item>
+        <item>guruḥ</item>
+        <item>bhṛguḥ</item>
+        <item>sthiraḥ</item>
+    </string-array>
+
+    <!-- Horai (Auspicious Hour of the Day) -->
+    <string-array name="horai_list">
+        <item>sūryaḥ</item>
+        <item>candraḥ</item>
+        <item>maṅgalaḥ</item>
+        <item>budhaḥ</item>
+        <item>guruḥ</item>
+        <item>śukraḥ</item>
+        <item>śaniḥ</item>
+    </string-array>
+
+    <!-- Amruthathi Yogam used to indicate auspiciousness of the Day -->
+    <string-array name="amruthathi_yogam_list">
+        <item>amṛtayogaḥ</item>
+        <item>siddhayogaḥ</item>
+        <item>maraṇayogaḥ</item>
+    </string-array>
+</resources>

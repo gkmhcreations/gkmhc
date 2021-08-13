@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -45,11 +47,9 @@ public class Alarm extends Fragment {
     public static final int ALARM_REQUEST_CODE = 3456;
     public static final int ALARM_TYPE_STANDARD_ID_START = 500;
     public static final boolean ALARM_TYPE_STANDARD = false;
-    public static final boolean ALARM_TYPE_PANCHANGAM = true;
+    public static final boolean ALARM_TYPE_VEDIC = true;
     public static final boolean ALARM_STATE_ON = true;
     public static final boolean ALARM_STATE_OFF = false;
-    public static final boolean ALARM_ALARM_TYPE_STANDARD = false;
-    public static final boolean ALARM_ALARM_TYPE_VEDIC = true;
 
     // Repeat options ranges from 0 to 9
     public static final int ALARM_REPEAT_SUN = 0;
@@ -73,14 +73,16 @@ public class Alarm extends Fragment {
     public static final String EXTRA_ALARM_ICON_ID = "Alarm_Extra_Alarm_Icon_ID";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         context = getContext();
-        MainActivity.updateSelLocale(context);
+        MainActivity mainActivity = (MainActivity) getActivity();
+        if (mainActivity != null) {
+            mainActivity.updateAppLocale();
+        }
 
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_alarm, container, false);
-
         alarmListView = root.findViewById(R.id.alarm_table);
 
         // Add a new Alarm
@@ -93,7 +95,9 @@ public class Alarm extends Fragment {
         fabDel = root.findViewById(R.id.btn_delete_alarm);
         fabDel.setVisibility(View.GONE);
         fabDel.setOnClickListener(view -> {
-            HashMap<Integer, NPDB.AlarmInfo> alarmsDB = NPDB.readAlarmsFromDB(context);
+            HashMap<Integer, NPDB.AlarmInfo> alarmsDB = NPDB.readAlarmsFromDB(
+                    context.getApplicationContext(),
+                    Alarm.ALARM_TYPE_STANDARD);
             ArrayList<Integer> alarmsList = NPDB.getAlarmIDs(alarmsDB);
 
             // TODO: Is there a way to find out all the selected rows in a ListView?
@@ -121,7 +125,7 @@ public class Alarm extends Fragment {
                     Log.i("AlarmAdapter", "Deleting Alarm(" + alarmID + ")!");
 
                     alarmsList.remove(alarmPosToDel);
-                    NPDB.removeAlarmFromDB(context, alarmID);
+                    NPDB.removeAlarmFromDB(context, alarmType, alarmID);
 
                     delAlarmPos = INVALID_VALUE;
                     selectedAlarmItem = null;
@@ -133,11 +137,11 @@ public class Alarm extends Fragment {
             }
         });
 
-        initAlarms();
+        refreshAlarms();
         return root;
     }
 
-    public void initAlarms() {
+    public void refreshAlarms() {
         new Thread() {
             @Override
             public void run() {
@@ -165,7 +169,7 @@ public class Alarm extends Fragment {
                 int alarmID = data.getIntExtra(EXTRA_ALARM_ALARM_ID, INVALID_VALUE);
                 int alarmHourOfDay = data.getIntExtra(EXTRA_ALARM_ALARM_HOUR_OF_DAY, 0);
                 int alarmMin = data.getIntExtra(EXTRA_ALARM_ALARM_MIN, 0);
-                boolean alarmType = data.getBooleanExtra(EXTRA_ALARM_TYPE, Alarm.ALARM_ALARM_TYPE_STANDARD);
+                boolean alarmType = data.getBooleanExtra(EXTRA_ALARM_TYPE, Alarm.ALARM_TYPE_STANDARD);
                 boolean toVibrate = data.getBooleanExtra(EXTRA_ALARM_VIBRATE, false);
                 int repeatOption = data.getIntExtra(EXTRA_ALARM_REPEAT, ALARM_REPEAT_ONCE);
                 String ringTone = data.getStringExtra(EXTRA_ALARM_RINGTONE);
@@ -206,7 +210,8 @@ public class Alarm extends Fragment {
      * @return Return a unique Alarm ID
      */
     public static int generateNewAlarmID(Context context) {
-        HashMap<Integer, NPDB.AlarmInfo> alarmsDB = NPDB.readAlarmsFromDB(context);
+        HashMap<Integer, NPDB.AlarmInfo> alarmsDB = NPDB.readAlarmsFromDB(
+                context.getApplicationContext(), Alarm.ALARM_TYPE_STANDARD);
 
         // Get the first available Alarm ID
         // Range is from 0 to 2147483647.
@@ -242,7 +247,7 @@ public class Alarm extends Fragment {
                                          int alarmHourOfDay, int alarmMin, String ringTone,
                                          boolean toVibrate, int repeatOption, String label) {
         // Start Alarm by default
-        if (NPDB.isAlarmInDB(context, alarmID)) {
+        if (NPDB.isAlarmInDB(context, alarmType, alarmID)) {
             NPDB.updateAlarmInfoInDB(context, alarmType, alarmID, Alarm.ALARM_STATE_ON,
                     alarmHourOfDay, alarmMin, ringTone, toVibrate, repeatOption, label);
 
@@ -263,11 +268,12 @@ public class Alarm extends Fragment {
     /**
      * Use this API to update the listview in Alarm fragment with the retrieved list of Alarms.
      */
-    public void updateAlarmsListView() {
+    private void updateAlarmsListView() {
         TextView noAlarmsView = root.findViewById(R.id.no_alarms);
         noAlarmsView.setText(R.string.no_alarms);
 
-        HashMap<Integer, NPDB.AlarmInfo> alarmsDB = NPDB.readAlarmsFromDB(context);
+        HashMap<Integer, NPDB.AlarmInfo> alarmsDB = NPDB.readAlarmsFromDB(
+                context.getApplicationContext(), Alarm.ALARM_TYPE_STANDARD);
         ArrayList<Integer> alarmsList = NPDB.getAlarmIDs(alarmsDB);
         if (alarmsList != null) {
             if (alarmsList.size() == 0) {
@@ -451,7 +457,7 @@ public class Alarm extends Fragment {
                 NPBroadcastReceiver.notifyBroadcastReceiver(context,
                         NPBroadcastReceiver.DELETE_ALARM, alarmType, alarmID,
                         alarmHourOfDay, alarmMin, ringTone, toVibrate, repeatOption, label, iconID);
-                NPDB.removeAlarmFromDB(context, alarmID);
+                NPDB.removeAlarmFromDB(context, alarmType, alarmID);
             } else {
                 NPBroadcastReceiver.notifyBroadcastReceiver(context,
                         NPBroadcastReceiver.STOP_ALARM, alarmType, alarmID,

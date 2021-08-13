@@ -29,10 +29,10 @@ public class ReminderAdapter extends ArrayAdapter<Integer> {
     private final Fragment reminderFragment;
     private final Context context;
     private final ArrayList<Integer> reminderAlarmIDList;
-    private final HashMap<Integer, NPDB.ReminderInfo> remindersDB;
+    private final HashMap<Integer, NPDB.AlarmInfo> remindersDB;
 
     public ReminderAdapter(@NonNull Context context, ArrayList<Integer> reminderAlarmIDList,
-                           HashMap<Integer, NPDB.ReminderInfo> remindersDB,
+                           HashMap<Integer, NPDB.AlarmInfo> remindersDB,
                            Fragment reminderFragment) {
         super(context, R.layout.reminder_row, R.id.reminder_icon, reminderAlarmIDList);
         this.context = context;
@@ -92,8 +92,8 @@ public class ReminderAdapter extends ArrayAdapter<Integer> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         ReminderViewHolder reminderHolder;
-        int alarmID = reminderAlarmIDList.get(position);
-        NPDB.ReminderInfo reminderInfo = remindersDB.get(alarmID);
+        int reminderID = reminderAlarmIDList.get(position);
+        NPDB.AlarmInfo reminderInfo = remindersDB.get(reminderID);
 
         // Parse Reminder Info to retrieve Reminder ID information.
         // Key: {ReminderID}
@@ -101,26 +101,27 @@ public class ReminderAdapter extends ArrayAdapter<Integer> {
         //         AlarmRepeat, AlarmLabel, iconID}
         // All above Value fields delimited by "---"
         if (reminderInfo != null) {
-            boolean alarmType = reminderInfo.alarmType;
-            int alarmHourOfDay = reminderInfo.alarmHourOfDay;
-            int alarmMin = reminderInfo.alarmMin;
+            boolean reminderType = reminderInfo.alarmType;
+            int reminderHourOfDay = reminderInfo.alarmHourOfDay;
+            int reminderMin = reminderInfo.alarmMin;
             int repeatOption = reminderInfo.repeatOption;
             String ringTone = reminderInfo.ringTone;
-            boolean isAlarmOn = reminderInfo.isAlarmOn;
+            boolean isReminderOn = reminderInfo.isAlarmOn;
             String label = reminderInfo.label;
             boolean toVibrate = reminderInfo.toVibrate;
-            int iconID = reminderInfo.iconID;
+            //int iconID = reminderInfo.iconID;
+            int iconID = Reminder.getDinaVisheshamImg(reminderID);
 
             //Log.d("ReminderAdapter","getView(" + position + ")!");
             if (convertView == null) {
                 convertView = View.inflate(context, R.layout.reminder_row, null);
                 reminderHolder = new ReminderViewHolder(convertView);
                 convertView.setTag(reminderHolder);
-                //Log.d("ReminderAdapter","Reminder(" + alarmID + ") state: " + alarmState + " !");
-                reminderHolder.reminderState.setChecked(isAlarmOn == Alarm.ALARM_STATE_ON);
-                if (isAlarmOn == Alarm.ALARM_STATE_ON) {
-                    Log.i("ReminderAdapter", "Triggering Reminder(" + alarmID + ")!");
-                    Alarm.startAlarm(context, alarmType, alarmID, alarmHourOfDay, alarmMin, ringTone,
+                //Log.d("ReminderAdapter","Reminder(" + reminderID + ") state: " + reminderState + " !");
+                reminderHolder.reminderState.setChecked(isReminderOn == Alarm.ALARM_STATE_ON);
+                if (isReminderOn == Alarm.ALARM_STATE_ON) {
+                    Log.i("ReminderAdapter", "Triggering Reminder(" + reminderID + ")!");
+                    Alarm.startAlarm(context, reminderType, reminderID, reminderHourOfDay, reminderMin, ringTone,
                             toVibrate, repeatOption, label, iconID);
                 }
             } else {
@@ -142,29 +143,29 @@ public class ReminderAdapter extends ArrayAdapter<Integer> {
             // 2) Change only display and disregard locale stored in Reminder DB
             //    Pros: Simple, Scalable
             //    Cons: May not be extensible. Then why store label in DB? Redundant?
-            int resID = Reminder.getDhinaVisheshamLabel(alarmID);
+            int resID = Reminder.getDinaVisheshamLabel(reminderID);
             if (resID != -1) {
                 label = reminderFragment.getString(resID);
             }
             String finalLabel = label;
             reminderHolder.reminderLabel.setText(label);
-            reminderHolder.reminderDateTime.setText(String.format("%02d:%02d", alarmHourOfDay, alarmMin));
+            reminderHolder.reminderDateTime.setText(String.format("%02d:%02d", reminderHourOfDay, reminderMin));
             reminderHolder.reminderAddlSettings.setText(Alarm.getRepeatOptionText(context, repeatOption));
 
             reminderHolder.reminderState.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {
-                    Log.i("ReminderAdapter", "Start Reminder(" + alarmID + " position: " +
-                            position + ") Reminder Time: " + alarmHourOfDay + ":" + alarmMin);
+                    Log.i("ReminderAdapter", "Start Reminder(" + reminderID + " position: " +
+                            position + ") Reminder Time: " + reminderHourOfDay + ":" + reminderMin);
                     reminderInfo.isAlarmOn = Alarm.ALARM_STATE_ON;
-                    remindersDB.put(alarmID, reminderInfo);
-                    Alarm.startAlarm(context, alarmType, alarmID, alarmHourOfDay, alarmMin, ringTone,
+                    remindersDB.put(reminderID, reminderInfo);
+                    Alarm.startAlarm(context, reminderType, reminderID, reminderHourOfDay, reminderMin, ringTone,
                             toVibrate, repeatOption, finalLabel, iconID);
                 } else {
-                    Log.i("ReminderAdapter", "Stop Reminder(" + alarmID + " position: " +
-                            position + ") Reminder Time: " + alarmHourOfDay + ":" + alarmMin);
+                    Log.i("ReminderAdapter", "Stop Reminder(" + reminderID + " position: " +
+                            position + ") Reminder Time: " + reminderHourOfDay + ":" + reminderMin);
                     reminderInfo.isAlarmOn = Alarm.ALARM_STATE_OFF;
-                    remindersDB.put(alarmID, reminderInfo);
-                    Alarm.stopAlarm(context, alarmType, alarmID, alarmHourOfDay, alarmMin, ringTone,
+                    remindersDB.put(reminderID, reminderInfo);
+                    Alarm.stopAlarm(context, reminderType, reminderID, reminderHourOfDay, reminderMin, ringTone,
                             toVibrate, repeatOption, finalLabel, iconID, false);
                 }
             });
@@ -173,18 +174,18 @@ public class ReminderAdapter extends ArrayAdapter<Integer> {
             // AlarmType shall decide what options to display to the user.
             convertView.setOnClickListener(view -> {
                 Intent intent = new Intent(view.getContext(), HandleAlarmReminderActivity.class);
-                intent.putExtra(Alarm.EXTRA_ALARM_ALARM_ID, alarmID);
-                intent.putExtra(Alarm.EXTRA_ALARM_ALARM_HOUR_OF_DAY, alarmHourOfDay);
-                intent.putExtra(Alarm.EXTRA_ALARM_ALARM_MIN, alarmMin);
+                intent.putExtra(Alarm.EXTRA_ALARM_ALARM_ID, reminderID);
+                intent.putExtra(Alarm.EXTRA_ALARM_ALARM_HOUR_OF_DAY, reminderHourOfDay);
+                intent.putExtra(Alarm.EXTRA_ALARM_ALARM_MIN, reminderMin);
                 intent.putExtra(Alarm.EXTRA_ALARM_VIBRATE, toVibrate);
                 intent.putExtra(Alarm.EXTRA_ALARM_REPEAT, repeatOption);
                 intent.putExtra(Alarm.EXTRA_ALARM_RINGTONE, ringTone);
                 intent.putExtra(Alarm.EXTRA_ALARM_LABEL, finalLabel);
-                intent.putExtra(Alarm.EXTRA_ALARM_TYPE, alarmType);
+                intent.putExtra(Alarm.EXTRA_ALARM_TYPE, reminderType);
                 intent.putExtra(Alarm.EXTRA_ALARM_ICON_ID, iconID);
                 reminderFragment.startActivityForResult(intent, Reminder.REMINDER_REQUEST_CODE);
             /*Log.d("ReminderAdapter","onItemClick(Position: " + position +
-                    " ReminderID: " + alarmID + ")!");*/
+                    " ReminderID: " + reminderID + ")!");*/
             });
         }
 

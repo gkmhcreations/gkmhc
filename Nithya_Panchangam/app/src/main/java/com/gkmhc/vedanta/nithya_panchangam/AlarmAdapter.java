@@ -169,8 +169,6 @@ public class AlarmAdapter extends ArrayAdapter<Integer> {
                 intent.putExtra(Alarm.EXTRA_ALARM_RINGTONE, ringTone);
                 intent.putExtra(Alarm.EXTRA_ALARM_LABEL, label);
                 alarmFragment.startActivityForResult(intent, Alarm.ALARM_REQUEST_CODE);
-            /*Log.d("AlarmAdapter","onItemClick(Position: " + position + " AlarmID: " +
-                    alarmID + ")!");*/
             });
         }
 

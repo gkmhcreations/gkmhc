@@ -23,12 +23,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
-
 import java.util.Calendar;
 
 /**
@@ -56,7 +55,7 @@ public class HandleAlarmReminderActivity extends AppCompatActivity {
     private int iconID = R.drawable.swamy_ayyappan_circle;
     private int daysSelected = 0;
     private boolean isAlarmUpdate = false;
-    private boolean alarmType = Alarm.ALARM_ALARM_TYPE_STANDARD;
+    private boolean alarmType = Alarm.ALARM_TYPE_STANDARD;
     private static final int RINGTONE_ACTIVITY_CODE = 2021;
     private static final int TOTAL_DAYS_IN_WEEK = 7;
 
@@ -69,6 +68,7 @@ public class HandleAlarmReminderActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         MainActivity.updateSelLocale(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_alarm);
 
@@ -77,7 +77,7 @@ public class HandleAlarmReminderActivity extends AppCompatActivity {
 
         if (recvdIntent.hasExtra(Alarm.EXTRA_ALARM_TYPE)) {
             alarmType = recvdIntent.getBooleanExtra(Alarm.EXTRA_ALARM_TYPE,
-                                                    Alarm.ALARM_ALARM_TYPE_STANDARD);
+                                                    Alarm.ALARM_TYPE_STANDARD);
         }
 
         // If Alarm Hour is valid then it means an existing alarm/reminder is being modified.
@@ -118,7 +118,7 @@ public class HandleAlarmReminderActivity extends AppCompatActivity {
         });
 
         // Use this to launch a Android page to allow user to select a ringtone of his/her choice.
-        ImageView selectRingTone = findViewById(R.id.ringtone_settings);
+        TextView selectRingTone = findViewById(R.id.ringtone_settings);
         selectRingTone.setOnClickListener(v -> {
             Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
             intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM);
@@ -158,14 +158,13 @@ public class HandleAlarmReminderActivity extends AppCompatActivity {
             alarmHourOfDay = hourOfDay;
             alarmMin = minute;
             updateVisbilityForMenuItem(true);
-            alarmTimeVal.setText(getString(R.string.alarm_time) +
-                    String.format("%02d:%02d", hourOfDay, minute));
+            alarmTimeVal.setText(getString(R.string.alarm_time) + String.format("%02d:%02d", hourOfDay, minute));
         });
 
         RelativeLayout layout = findViewById(R.id.repeatLayout);
         layout.setOnClickListener(v -> showRepeatOptionSelectDialog());
 
-        if (alarmType == Alarm.ALARM_TYPE_PANCHANGAM) {
+        if (alarmType == Alarm.ALARM_TYPE_VEDIC) {
             labelText.setEnabled(false);
             TextView textView = findViewById(R.id.alarmTypeText);
             textView.setText(R.string.vedic);
@@ -177,7 +176,8 @@ public class HandleAlarmReminderActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result of the activity after user ringtone selection or cancellation
-        if ((resultCode == Activity.RESULT_OK) && (requestCode == RINGTONE_ACTIVITY_CODE)) {
+        if ((resultCode == Activity.RESULT_OK) && (requestCode == RINGTONE_ACTIVITY_CODE) &&
+            (data != null)) {
             Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
             if (uri != null) {
                 ringTone = uri.toString();
@@ -304,7 +304,13 @@ public class HandleAlarmReminderActivity extends AppCompatActivity {
         CheckBox repeatEveryOccurCheckBox = repeatOptionsSelectView.findViewById(R.id.repeat_every_occurrence);
         RelativeLayout repeatInputLayout = repeatOptionsSelectView.findViewById(R.id.repeat_custom_suboptions);
 
-        if (alarmType == Alarm.ALARM_TYPE_PANCHANGAM) {
+        // This activity would be used for both Alarms & Reminders.
+        // Options supported are:
+        // Alarms - Once, Daily, Custom (Sun-Sat)
+        // Reminders - Once, Every Occurrence
+        // Hence, display Once, Daily, Custom (Sun-Sat) checkboxes for Alarms and
+        // Once, Every Occurrence check boxes for Reminders.
+        if (alarmType == Alarm.ALARM_TYPE_VEDIC) {
             repeatEveryOccurCheckBox.setVisibility(View.VISIBLE);
             repeatDailyCheckBox.setVisibility(View.GONE);
             repeatCustomCheckBox.setVisibility(View.GONE);
@@ -321,6 +327,18 @@ public class HandleAlarmReminderActivity extends AppCompatActivity {
                 repeatDailyCheckBox.setChecked(false);
                 repeatCustomCheckBox.setChecked(false);
                 repeatInputLayout.setVisibility(View.GONE);
+            } else {
+                // Disable self uncheck!
+                if (alarmType == Alarm.ALARM_TYPE_STANDARD) {
+                    if (!repeatOnceCheckBox.isChecked() && !repeatDailyCheckBox.isChecked() &&
+                        !repeatCustomCheckBox.isChecked()) {
+                        repeatOnceCheckBox.setChecked(true);
+                    }
+                } else {
+                    if (!repeatOnceCheckBox.isChecked() && !repeatEveryOccurCheckBox.isChecked()) {
+                        repeatOnceCheckBox.setChecked(true);
+                    }
+                }
             }
         });
         repeatDailyCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -328,6 +346,12 @@ public class HandleAlarmReminderActivity extends AppCompatActivity {
                 repeatOnceCheckBox.setChecked(false);
                 repeatCustomCheckBox.setChecked(false);
                 repeatInputLayout.setVisibility(View.GONE);
+            } else {
+                // Disable self uncheck!
+                if (!repeatDailyCheckBox.isChecked() && !repeatCustomCheckBox.isChecked() &&
+                    !repeatOnceCheckBox.isChecked()) {
+                    repeatDailyCheckBox.setChecked(true);
+                }
             }
         });
         repeatCustomCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -335,11 +359,22 @@ public class HandleAlarmReminderActivity extends AppCompatActivity {
                 repeatDailyCheckBox.setChecked(false);
                 repeatOnceCheckBox.setChecked(false);
                 repeatInputLayout.setVisibility(View.VISIBLE);
+            } else {
+                // Disable self uncheck!
+                if (!repeatDailyCheckBox.isChecked() && !repeatCustomCheckBox.isChecked() &&
+                    !repeatOnceCheckBox.isChecked()) {
+                    repeatCustomCheckBox.setChecked(true);
+                }
             }
         });
         repeatEveryOccurCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 repeatOnceCheckBox.setChecked(false);
+            } else {
+                // Disable self uncheck!
+                if (!repeatEveryOccurCheckBox.isChecked() && !repeatOnceCheckBox.isChecked()) {
+                    repeatEveryOccurCheckBox.setChecked(true);
+                }
             }
         });
         CheckBox repeatCustomSunCheckBox =
@@ -356,6 +391,69 @@ public class HandleAlarmReminderActivity extends AppCompatActivity {
                 repeatOptionsSelectView.findViewById(R.id.repeat_custom_friday);
         CheckBox repeatCustomSatCheckBox =
                 repeatOptionsSelectView.findViewById(R.id.repeat_custom_saturday);
+        repeatCustomSunCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!isChecked) {
+                if(!isAnyCustomOptionsSelected(repeatCustomSunCheckBox, repeatCustomMonCheckBox,
+                    repeatCustomTueCheckBox, repeatCustomWedCheckBox, repeatCustomThuCheckBox,
+                    repeatCustomFriCheckBox, repeatCustomSatCheckBox)) {
+                    repeatCustomSunCheckBox.setChecked(true);
+                }
+            }
+        });
+        repeatCustomMonCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!isChecked) {
+                if(!isAnyCustomOptionsSelected(repeatCustomSunCheckBox, repeatCustomMonCheckBox,
+                    repeatCustomTueCheckBox, repeatCustomWedCheckBox, repeatCustomThuCheckBox,
+                    repeatCustomFriCheckBox, repeatCustomSatCheckBox)) {
+                    repeatCustomMonCheckBox.setChecked(true);
+                }
+            }
+        });
+        repeatCustomTueCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!isChecked) {
+                if(!isAnyCustomOptionsSelected(repeatCustomSunCheckBox, repeatCustomMonCheckBox,
+                    repeatCustomTueCheckBox, repeatCustomWedCheckBox, repeatCustomThuCheckBox,
+                    repeatCustomFriCheckBox, repeatCustomSatCheckBox)) {
+                    repeatCustomTueCheckBox.setChecked(true);
+                }
+            }
+        });
+        repeatCustomWedCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!isChecked) {
+                if(!isAnyCustomOptionsSelected(repeatCustomSunCheckBox, repeatCustomMonCheckBox,
+                    repeatCustomTueCheckBox, repeatCustomWedCheckBox, repeatCustomThuCheckBox,
+                    repeatCustomFriCheckBox, repeatCustomSatCheckBox)) {
+                    repeatCustomWedCheckBox.setChecked(true);
+                }
+            }
+        });
+        repeatCustomThuCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!isChecked) {
+                if(!isAnyCustomOptionsSelected(repeatCustomSunCheckBox, repeatCustomMonCheckBox,
+                    repeatCustomTueCheckBox, repeatCustomWedCheckBox, repeatCustomThuCheckBox,
+                    repeatCustomFriCheckBox, repeatCustomSatCheckBox)) {
+                    repeatCustomThuCheckBox.setChecked(true);
+                }
+            }
+        });
+        repeatCustomFriCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!isChecked) {
+                if(!isAnyCustomOptionsSelected(repeatCustomSunCheckBox, repeatCustomMonCheckBox,
+                    repeatCustomTueCheckBox, repeatCustomWedCheckBox, repeatCustomThuCheckBox,
+                    repeatCustomFriCheckBox, repeatCustomSatCheckBox)) {
+                    repeatCustomFriCheckBox.setChecked(true);
+                }
+            }
+        });
+        repeatCustomSatCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!isChecked) {
+                if(!isAnyCustomOptionsSelected(repeatCustomSunCheckBox, repeatCustomMonCheckBox,
+                    repeatCustomTueCheckBox, repeatCustomWedCheckBox, repeatCustomThuCheckBox,
+                    repeatCustomFriCheckBox, repeatCustomSatCheckBox)) {
+                    repeatCustomSatCheckBox.setChecked(true);
+                }
+            }
+        });
 
         // User below logic to populate the checkbox with right values when Alarm/Reminder are
         // being modified
@@ -485,5 +583,15 @@ public class HandleAlarmReminderActivity extends AppCompatActivity {
                         .setView(repeatOptionsSelectView).create();
         alertDialog.getWindow().setBackgroundDrawableResource(R.color.lightSaffron);
         alertDialog.show();
+    }
+
+    private boolean isAnyCustomOptionsSelected(CheckBox custSunCheckbox, CheckBox custMonCheckbox,
+                                               CheckBox custTueCheckbox, CheckBox custWedCheckbox,
+                                               CheckBox custThuCheckbox, CheckBox custFriCheckbox,
+                                               CheckBox custSatCheckbox) {
+        return (custSunCheckbox.isChecked() || custMonCheckbox.isChecked() ||
+                custTueCheckbox.isChecked() || custWedCheckbox.isChecked() ||
+                custThuCheckbox.isChecked() || custFriCheckbox.isChecked() ||
+                custSatCheckbox.isChecked());
     }
 }

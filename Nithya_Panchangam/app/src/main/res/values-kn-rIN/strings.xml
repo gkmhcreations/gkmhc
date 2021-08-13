@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sankalpam_shubam_begin">ಮಮೋಪಾತ್ತ-ಸಮಸ್ತ-ದುರಿತಕ್ಷಯದ್ವಾರಾ ಶ್ರೀ ಪರಮೇಶ್ವರ-ಪ್ರೀತ್ಯರ್ಥಂ ಶುಭೇ ಶೋಭನೇ ಮುಹೂರ್ತೇ ಅದ್ಯ ಬ್ರಹ್ಮಣಃ ದ್ವಿತೀಯಪರಾರ್ಧೇ ಶ್ವೇತವರಾಹಕಲ್ಪೇ ವೈವಸ್ವತ-ಮನ್ವಂತರೇ ಅಷ್ಟಾವಿಂಶತಿತಮೇ ಕಲಿಯುಗೇ ಪ್ರಥಮೇ ಪಾದೇ ಜಂಬೂದ್ವೀಪೇ ಭಾರತವರ್ಷೇ ಭರತಖಂಡೇ ಮೇರೋಃ ದಕ್ಷಿಣೇ ಪಾರ್ಶ್ವೇ ಶಕಾಬ್ದೇ ಅಸ್ಮಿನ್ ವರ್ತಮಾನೇ ವ್ಯಾವಹಾರಿಕೇ ಪ್ರಭವಾದೀನಾಂ ಷಷ್ಟ್ಯಾಃ ಸಂವತ್ಸರಾಣಾಂ ಮಧ್ಯೇ</string>
+    <string name="app_name">ನಿತ್ಯ ಪಂಚಾಂಗಂ</string>
+    <string name="nithya_panchangam_header">ನಿತ್ಯ ಪಂಚಾಂಗಃ</string>
+    <string name="samvatsaram_heading">ಸಂವತ್ಸರಃ</string>
+    <string name="aayanam_heading">ಅಯನಮ್</string>
+    <string name="rithou_heading">ಋತುಃ</string>
+    <string name="maasam_heading">ಮಾಸಃ</string>
+    <string name="paksham_heading">ಪಕ್ಷಃ</string>
+    <string name="thithi_heading">ತಿಥಿಃ</string>
+    <string name="vaasaram_heading">ವಾಸರಃ</string>
+    <string name="raasi_heading">ರಾಶಿಃ</string>
+    <string name="nakshatram_heading">ನಕ್ಷತ್ರಮ್</string>
+    <string name="yogam_heading">ಯೋಗಃ</string>
+    <string name="karanam_heading">ಕರಣಮ್</string>
+    <string name="good_time_heading">ಶುಭಕಾಲಃ</string>
+    <string name="raahu_kaalam_heading">ರಾಹುಕಾಲಃ</string>
+    <string name="emakandam_heading">ಯಮಘಂಟಃ</string>
+    <string name="kuligai_heading">ಗುಲಿಕಕಾಲಃ</string>
+    <string name="panchangam_tab_heading">ಪಂಚಾಂಗಃ</string>
+    <string name="sankalpam_tab_heading">ಸಂಕಲ್ಪಃ</string>
+    <string name="alarm_tab_heading">ಸ್ತರ ಸಂಕೇತಧ್ವನಿಃ</string>
+    <string name="stopwatch_tab_heading">ವಿರಾಮಘಟೀ</string>
+    <string name="splash_screen_banner">ಸ್ವಾಮಿಯೇ ಶರಣಂ ಅಯ್ಯಪ್ಪಾ</string>
+
+    <string name="sankalpam_shubam_end">ಏವಂ ಗುಣ ವಿಶೇಷಣ ವಿಶಿಷ್ಟಾಯಾಮ್ ಅಸ್ಯಾಮ್ ಶುಭತಿಥೌ ಅಸ್ಮಾಕಮ್ ಸರ್ವೇಷಾಂ ಸಹಕುಟುಂಬಾಣಾಮ್ ಕ್ಷೇಮ, ಸ್ಥೈರ್ಯ, ವೀರ್ಯ, ವಿಜಯ, ಆಯುಃ ಆರೋಗ್ಯ ಅಭಿವೃದ್ಧ್ಯರ್ಥಮ್, ಮಮ ಗೃಹೇ ಮಹಾಲಕ್ಷ್ಮೀ ನಿತ್ಯ ನಿವಾಸ ಸಿದ್ಧ್ಯರ್ಥಮ್, ಮಮ ಇಷ್ಟ ಕಾಮ್ಯ ಫಲ ಸಿದ್ಧ್ಯರ್ಥಮ್, ಮಮ ವ್ಯಾಪಾರ, ವ್ಯವಹಾರ, ಉದ್ಯೋಗ ಅಭಿವೃದ್ಧಿ ಸಿದ್ಧ್ಯರ್ಥಮ್, ಸಮಸ್ತ ಮಂಗಲ ಅವಾಪ್ತ್ಯರ್ಥಮ್, ಶರೀರೇ ವರ್ತಮಾನ ಕಾಲ ವರ್ತಿಷ್ಯಮಾನ ಸಕಲ ರೋಗ ಪರಿಹಾರ ದ್ವಾರಾ ಕ್ಷಿಪ್ರ ಆರೋಗ್ಯ ಸೌಖ್ಯಮ್ ಸಿದ್ಧ್ಯರ್ಥಮ್</string>
+    <string name="sankalpam_nama_samvathsare">ನಾಮ ಸಂವತ್ಸರೇ</string>
+    <string name="sankalpam_maase">ಮಾಸೇ</string>
+    <string name="sankalpam_subha_thithou">ಶುಭತಿಥೌ</string>
+    <string name="sankalpam_yukhtayaam">ಯುಕ್ತಾಯಾಂ</string>
+    <string name="sankalpam_nakshatra_yukhtayaam">ನಕ್ಷತ್ರ ಯುಕ್ತಾಯಾಂ</string>
+    <string name="sankalpam_yoga_yukhtayaam">ಯೋಗ ಯುಕ್ತಾಯಾಂ</string>
+    <string name="sankalpam_karana_yukhtayaam">ಕರಣ ಯುಕ್ತಾಯಾಂ</string>
+    <string name="chandrashtama_nakshathram_heading">ಚಂದ್ರಾಷ್ಟಮ ನಕ್ಷತ್ರಮ್</string>
+    <string name="lagnam_heading">ಲಗ್ನಃ</string>
+    <string name="horai_heading">ಹೋರಾ</string>
+    <string name="sankalpam_srardham_begin">ಮಮೋಪಾತ್ತ ಸಮಸ್ತ ದುರಿತಕ್ಷಯದ್ವಾರಾ ಶ್ರೀ ಪರಮೇಶ್ವರ-ಪ್ರೀತ್ಯರ್ಥಂ ಅಪವಿತ್ರಃ ಪವಿತ್ರೋ ವಾ ಸರ್ವಾವಸ್ಥಾಗತೋऽಪಿ ವಾ। ಯಃ ಸ್ಮರೇತ್ಪುಂಡರೀಕಾಕ್ಷಂ ಸ ಬಾಹ್ಯಾಭ್ಯಂತರಃ ಶುಚಿಃ॥ ಮಾನಸಂ ವಾಚಿಕಂ ಪಾಪಂ ಕರ್ಮಣಾ ಸಮುಪಾರ್ಜಿತಮ್ ॥ಶ್ರೀರಾಮಸ್ಮರಣೇನೈವ ವ್ಯಪೋಹತಿ ನ ಸಂಶಯಃ॥ ಶ್ರೀ ರಾಮ ರಾಮ ರಾಮ। ತಿಥಿರ್ವಿಷ್ಣುಃ ತಥಾ ವಾರಃ ನಕ್ಷತ್ರಂ ವಿಷ್ಣುರೇವ ಚ। ಯೋಗಶ್ಚ ಕರಣಂ ಚೈವ ಸರ್ವಂ ವಿಷ್ಣುಮಯಂ ಜಗತ್। ಶ್ರೀ ಗೋವಿಂದ ಗೋವಿಂದ ಗೋವಿಂದ| ಅದ್ಯ ಶ್ರೀ ಭಗವತಃ ಮಹಾಪುರುಷಸ್ಯ ವಿಷ್ಣೋರಾಜ್ಞಯಾ ಪ್ರವರ್ತಮಾನಸ್ಯ ಅದ್ಯ ಬ್ರಹ್ಮಣಃ ದ್ವಿತೀಯಪರಾರ್ಧೇ ಶ್ವೇತವರಾಹಕಲ್ಪೇ ವೈವಸ್ವತ-ಮನ್ವಂತರೇ ಅಷ್ಟಾವಿಂಶತಿತಮೇ ಕಲಿಯುಗೇ ಪ್ರಥಮೇ ಪಾದೇ ಜಂಬೂದ್ವೀಪೇ ಭಾರತವರ್ಷೇ ಭರತಖಂಡೇ ಮೇರೋಃ ದಕ್ಷಿಣೇ ಪಾರ್ಶ್ವೇ ಶಕಾಬ್ದೇ ಅಸ್ಮಿನ್ ವರ್ತಮಾನೇ ವ್ಯಾವಹಾರಿಕೇ ಪ್ರಭವಾದೀನಾಂ ಷಷ್ಟ್ಯಾಃ ಸಂವತ್ಸರಾಣಾಂ ಮಧ್ಯೇ</string>
+    <string name="sankalpam_punya_thithou">ಪುಣ್ಯ ತಿಥೌ</string>
+    <string name="sankalpam_srardham_end_1">ವಿಷ್ಣು ಯೋಗ ವಿಷ್ಣು ಕರಣ ಏವಂ ಗುಣ ವಿಶೇಷಣ ವಿಶಿಷ್ಟಾಯಾಂ ಅಸ್ಯಾಂ</string>
+    <string name="sankalpam_srardham_end_2">(ಪ್ರಾಚೀನಾವೀತಿ) ............ ಗೋತ್ರಾಣಾಮ್, ವಸುರುದ್ರ ಆದಿತ್ಯ ಸ್ವರೂಪಾಣಾಮ್ ಅಸ್ಮದ್ ಪಿತೃ ಪಿತಾಮಹ ಪ್ರಪಿತಾಮಹಾನಾಮ್ --- (ಮಾತಾ ಅಸ್ತಿ ಚೇತ್) ಪಿತಾಮಹೀ ಪಿತುಃ ಪಿತಾಮಹೀ ಪಿತುಃ ಪ್ರಪಿತಾಮಹೀ (ನೋ ಚೇತ್) ಮಾತೃ, ಪಿತಾಮಹೀ ಪಿತುಃ ಪ್ರಪಿತಾಮಹೀನಾಮ್ (ಮಾತುಃ ಜನ್ಮ ಗೋತ್ರಮ್ ವದತು) ............ ಗೋತ್ರಾಣಾಮ್ ಸಪತ್ನೀಕ, ಮಾತಾಮಹ, ಮಾತುಃ ಪಿತಾಮಹ, ಮಾತುಃ ಪ್ರಪಿತಾಮಹಾನಾಮ್ ಉಭಯ ವಂಶ ಪಿತೄಣಾಮ್ ಅಕ್ಷಯ್ಯ ತೃಪ್ತಯರ್ಥಮ್</string>
+    <string name="amruthathi_yogam_heading">ಅಮೃತಾದಿ ಯೋಗಂ</string>
+    <string name="vaasaram_suffix">ವಾಸರಃ</string>
+    <string name="solar_calendar">ಸೌರಮಾನಮ್</string>
+    <string name="sunrise_heading">ಸೂರ್ಯೋದಯಃ</string>
+    <string name="sunset_heading">ಸುರ್ಯಾಸ್ತಮಯಃ</string>
+    <string name="festivals_events">ದಿನ ವಿಶೇಷಾಃ</string>
+    <string name="akshaya_thrithiyai">ಅಕ್ಷಯ್ಯ ತೃತೀಯಾ</string>
+    <string name="planet_sun">ಭಾನುಃ</string>
+    <string name="planet_mon">ಇಂದುಃ</string>
+    <string name="planet_tue">ಭೌಮಃ</string>
+    <string name="planet_wed">ಸೌಮ್ಯಃ</string>
+    <string name="planet_thu">ಗುರುಃ</string>
+    <string name="planet_fri">ಭೃಗುಃ</string>
+    <string name="planet_sat">ಸ್ಥಿರಃ</string>
+    <string name="ammavasai">ಅಮಾವಸ್ಯಾ</string>
+    <string name="pournami">ಪೌರ್ಣಮಾಸೀ</string>
+    <string name="sri_rama_navami">ಶ್ರೀರಾಮನವಮೀ</string>
+    <string name="sashti">ಷಷ್ಠೀ</string>
+    <string name="ekadasi">ಏಕಾದಶೀ</string>
+    <string name="pradosham">ಪ್ರದೋಷಃ</string>
+    <string name="makara_sankaranthi">ಮಕರ ಸಂಕ್ರಾಂತಿಃ, ಪೋಂಗಲ್</string>
+    <string name="sankara_jayanthi">ಶ್ರೀ ಆದಿ ಶಂಕರ ಜಯಂತೀ</string>
+    <string name="vaikasi_visakam">ವೈಕಾಶೀ ವಿಶಾಕಂ</string>
+    <string name="aadi_perukku">ಕಟಕ ಪೂರ್ವ ಫಲ್ಗುನೀ (ಆಷಾಢ ಅಷ್ಟಾದಶೀ)</string>
+    <string name="aadi_pooram">ಕಟಕ ಪೂರ್ವ ಫಲ್ಗುನೀ (ಆಷಾಢ ಪೂರಂ), ಆಂಡಾಲ್ ಜಯಂತೀ</string>
+    <string name="garuda_panchami">ಗರುಡ ಪಂಚಮೀ</string>
+    <string name="varalakshmi_vratham">ವರಲಕ್ಷ್ಮೀ ವ್ರತಂ</string>
+    <string name="avani_avittam_yajur">ಯಜುರ್ವೇದ ಉಪಕರ್ಮಾ</string>
+    <string name="avani_avittam_rig">ಋಗ್ವೇದ ಉಪಕರ್ಮಾ</string>
+    <string name="avani_avittam_sam">ಸಾಮ ಉಪಕರ್ಮಾ</string>
+    <string name="maha_sankata_hara_chaturthi">ಮಹಾ ಸಂಕಟಹರ ಚತುರ್ಥೀ</string>
+    <string name="gokulashtami">ಗೋಕುಲಾಷ್ಟಮೀ</string>
+    <string name="vinayagar_chaturthi">ಗಣೇಶ ಚತುರ್ಥೀ</string>
+    <string name="maha_bharani">ಮಹಾಭರಣೀ</string>
+    <string name="mahalaya_ammavasai">ಮಹಾಲಯ ಅಮ್ಮಾವಸ್ಯ</string>
+    <string name="navarathiri">ನವರಾತ್ರ-ಆರಂಭಃ</string>
+    <string name="saraswathi_pooja">ಸರಸ್ವತೀ ಪೂಜಾ</string>
+    <string name="vijaya_dasami">ವಿಜಯ ದಶಮೀ</string>
+    <string name="deepavali">ದೀಪಾವಲೀ</string>
+    <string name="soora_samharam">ಸೂರ ಸಂಹಾರಂ</string>
+    <string name="karthigai_deepam">ಕೃತ್ತಿಕಾ ದೀಪಂ</string>
+    <string name="sashti_vratham">ಷಷ್ಠೀ ವ್ರತಮ್</string>
+    <string name="arudhra_darshan">ಆರ್ದ್ರಾ ದರ್ಶನಮ್</string>
+    <string name="sri_ramanuja_jayanthi">ಶ್ರೀ ರಾಮಾನುಜ ಜಯಂತೀ</string>
+    <string name="tamil_puthandu">ತಮಿಲ ನೂತನ ಸಂವತ್ಸರಃ</string>
+    <string name="panguni_uthiram">ಮೀನ ಉತ್ತರ ಫಲ್ಗುನೀ (ಫಾಲ್ಗುನ ಉತ್ತರಂ)</string>
+    <string name="karadaiyan_nombu">ಕಾರಡಯಾನ್ ನೋಂಬು</string>
+    <string name="maasi_magam">ಕುಂಭ ಮಘಾ (ಮಾಸಿ ಮಗಂ)</string>
+    <string name="bheeshmashtami">ಭೀಷ್ಮಾಷ್ಟಮೀ</string>
+    <string name="ratha_saptami">ರಥ ಸಪ್ತಮೀ</string>
+    <string name="vasantha_panchami">ವಸಂತ ಪಂಚಮೀ</string>
+    <string name="thai_poosam">ಮಕರ ಪುಷ್ಯ (ತೈ ಪೂಸಂ)</string>
+    <string name="maha_sivarathiri">ಮಹಾಶಿವರಾತ್ರಿಃ</string>
+    <string name="naraka_chathurdasi">ನರಕಚತುರ್ದಶೀ</string>
+    <string name="Day">ದಿನಂ</string>
+    <string name="enter_preferred_location">ಇಚ್ಛಾನುಸಾರಂ ಸ್ಥಲಂ ಪ್ರವೇಶಯತು</string>
+    <string name="channel_name">Nithya Panchangam</string>
+    <string name="channel_description">Nithya Panchangam Events</string>
+    <string name="label">ಸಂಜಿಕ</string>
+    <string name="no_reminders">ಸ್ಮಾರಣಂ ನಾಸ್ತಿ!</string>
+    <string name="no_alarms">ಸ್ತರ ಸಂಕೇತಧ್ವನಿ ನ ಕೃತಂ!</string>
+    <string name="delete_reminder">Delete Reminder</string>
+    <string name="add_alarm">ಸ್ತರ ಸಂಕೇತಧ್ವನಿ</string>
+    <string name="reminder_tab_heading">ಸ್ಮಾರಣಂ</string>
+    <string name="chithra_pournami">ಚಿತ್ರಾ ಪೌರ್ಣಮಾಸೀ</string>
+    <string name="select_repeat_option">ಚಯನ ಅನುವಾದ ವಿಕಲ್ಪ</string>
+    <string name="repeat_custom">ಇಚ್ಛಾನುಸಾರಂ</string>
+    <string name="repeat_arrow">Repeat Arrow</string>
+    <string name="ringtone_image">Ringtone Image</string>
+    <string name="vedic_alarm_is_on">ಸ್ತರ ಸಂಕೇತಧ್ವನಿ ಚಲತಿ</string>
+    <string name="location_selection">Location Selection!</string>
+    <string name="hh_mm">HH:MM</string>
+    <string name="sankata_hara_chathurthi">ಸಂಕಟಹರ ಚತುರ್ಥೀ</string>
+    <string name="nothing_special">Nothing Special!</string>
+    <string name="hanuman_jayanthi">ಶ್ರೀ ಹನುಮತ್ ಜಯಂತೀ</string>
+    <string name="maha_periyava_jayanthi">ಶ್ರೀ ಚಂದ್ರಶೇಖರೇಂದ್ರ ಸರಸ್ವತೀ ಮಹಾಸ್ವಾಮಿನಃ ಜಯಂತೀ</string>
+    <string name="puthu_periyava_jayanthi">ಶ್ರೀ ಜಯೇಂದ್ರ ಸರಸ್ವತೀ ಸ್ವಾಮಿನಃ ಜಯಂತೀ</string>
+    <string name="bala_periyava_jayanthi">ಶ್ರೀ ಶಂಕರ ವಿಜಯೇಂದ್ರ ಸರಸ್ವತೀ ಸ್ವಾಮಿನಃ ಜಯಂತೀ</string>
+    <string name="sringeri_periyava_jayanthi">ಶ್ರೀ ಭಾರತಿ ತೀರ್ಥ ಸ್ವಾಮಿನಃ ವರ್ಧಂತಿ</string>
+    <string name="appayya_dikshitar_jayanthi">ಶ್ರೀ ಅಪ್ಪಯ್ಯ ದೀಕ್ಷಿತ ಜಯಂತೀ</string>
+    <string name="lagnam_details">ನಿತ್ಯ ಲಗ್ನಃ</string>
+    <string name="horai_details">ನಿತ್ಯ ಹೋರಾ</string>
+    <string name="start_time">ಆರಂಭಃ</string>
+    <string name="end_time">ಸಮಾಪ್ತಿಃ</string>
+    <string name="gkm_copyright">© GKM ಪರಂಪರಾ ಕೃತಿ, 2021</string>
+    <string name="snooze_alarm">ಸ್ವಾಪ</string>
+    <string name="dismiss_alarm">ಮುಂಚ</string>
+    <string name="sankalpam_srardham_end_3">ಪುಣ್ಯ ಕಾಲೇ ದರ್ಶಶ್ರಾದ್ಧಮ್ ಹಿರಣ್ಯರೂಪೇಣ ಅದ್ಯ ಕರಿಷ್ಯೇ</string>
+    <string name="vedic">ವೈದಿಕ</string>
+    <string name="alarm_time">ಸ್ತರ ಸಂಕೇತಧ್ವನಿ ಸಮಯಂ - </string>
+    <string name="vibrate_when_alarm_sounds">ವೇಪತಿ</string>
+    <string name="ringtone">ನಾದಧ್ವನಿ</string>
+    <string name="cancel">ನಿರಸನಂ ಕರೋತು</string>
+    <string name="select">ಚಿನೋತು</string>
+    <string name="vedic_reminder_is_on">ಸ್ಮಾರಣಂ ಚಲತಿ</string>
+    <string name="repeat_monday">ಇಂದುವಾಸರಃ</string>
+    <string name="repeat_sunday">ಭಾನುವಾಸರಃ</string>
+    <string name="repeat_tuesday">ಭೌಮವಾಸರಃ</string>
+    <string name="repeat_wednesday">ಸೌಮ್ಯವಾಸರಃ</string>
+    <string name="repeat_thursday">ಗುರುವಾಸರಃ</string>
+    <string name="repeat_friday">ಭೃಗುವಾಸರಃ</string>
+    <string name="repeat_saturday">ಸ್ಥಿರವಾಸರಃ</string>
+    <string name="repeat_once">ಏಕವಾರಂ</string>
+    <string name="details">ವಿವರಣಂ</string>
+    <string name="repeat_daily">ಪ್ರತಿದಿನಂ</string>
+    <string name="repeat_every_occurrence">ಪ್ರತಿವಾರಂ</string>
+    <string name="repeat">ಅನುಕರಣಮ್</string>
+    <string name="select_year">ಸಂವತ್ಸರಃ ಚಿನೋತು</string>
+    <string name="ugadi">ಯುಗಾದಿಃ</string>
+    <string name="agni_nakshathiram_begin">ಅಗ್ನಿನಕ್ಷತ್ರ-ಆರಂಭಃ</string>
+    <string name="agni_nakshathiram_end">ಅಗ್ನಿನಕ್ಷತ್ರ-ಸಮಾಪ್ತಃ</string>
+    <string name="onam">ಓಣಮ್</string>
+    <string name="mahalayam_start">ಮಹಾಲಯ-ಆರಂಭಃ</string>
+
+    <!-- Samvatsaram (Year) -->
+    <string-array name="samvatsaram_list">
+        <item>ಪ್ರಭವ</item>
+        <item>ವಿಭವ</item>
+        <item>ಶುಕ್ಲ</item>
+        <item>ಪ್ರಮೋದ</item>
+        <item>ಪ್ರಜಾಪತಿ</item>
+        <item>ಆಂಗಿರಸ</item>
+        <item>ಶ್ರೀಮುಖ</item>
+        <item>ಭಾವ</item>
+        <item>ಯುವ</item>
+        <item>ಧಾತೃ</item>
+        <item>ಈಶ್ವರ</item>
+        <item>ಬಹುಧಾನ್ಯ</item>
+        <item>ಪ್ರಮಾಧಿ</item>
+        <item>ವಿಕ್ರಮ</item>
+        <item>ವೃಷ</item>
+        <item>ಚಿತ್ರಭಾನು</item>
+        <item>ಸ್ವಭಾನು</item>
+        <item>ತಾರಣ</item>
+        <item>ಪಾರ್ಥಿವ</item>
+        <item>ವ್ಯಯ</item>
+        <item>ಸರ್ವಜಿತ್</item>
+        <item>ಸರ್ವಧಾರೀ</item>
+        <item>ವಿರೋಧೀ</item>
+        <item>ವಿಕೃತಿ</item>
+        <item>ಖರ</item>
+        <item>ನಂದನ</item>
+        <item>ವಿಜಯ</item>
+        <item>ಜಯ</item>
+        <item>ಮನ್ಮಥ</item>
+        <item>ದುರ್ಮುಖೀ</item>
+        <item>ಹೇವಿಲಂಬೀ</item>
+        <item>ವಿಲಂಬೀ</item>
+        <item>ವಿಕಾರೀ</item>
+        <item>ಶಾರ್ವರೀ</item>
+        <item>ಪ್ಲವ</item>
+        <item>ಶುಭಕೃತ್</item>
+        <item>ಶೋಭಕೃತ್</item>
+        <item>ಕ್ರೋಧೀ</item>
+        <item>ವಿಶ್ವಾವಸು</item>
+        <item>ಪರಾಭವ</item>
+        <item>ಪ್ಲವಂಗ</item>
+        <item>ಕೀಲಕ</item>
+        <item>ಸೌಮ್ಯ</item>
+        <item>ಸಾಧಾರಣ</item>
+        <item>ವಿರೋಧಿಕೃತಿ</item>
+        <item>ಪರಿಧಾವೀ</item>
+        <item>ಪ್ರಮಾದೀಚ</item>
+        <item>ಆನಂದ</item>
+        <item>ರಾಕ್ಷಸ</item>
+        <item>ನಲ</item>
+        <item>ಪಿಂಗಲ</item>
+        <item>ಕಾಲಯುಕ್ತಿ</item>
+        <item>ಸಿದ್ಧಾರ್ಥೀ</item>
+        <item>ರೌದ್ರ</item>
+        <item>ದುರ್ಮತಿ</item>
+        <item>ದುಂದುಭಿ</item>
+        <item>ರುಧಿರೋದ್ಗಾರೀ</item>
+        <item>ರಕ್ತಾಕ್ಷೀ</item>
+        <item>ಕ್ರೋಧನ</item>
+        <item>ಅಕ್ಷಯ</item>
+    </string-array>
+
+    <!-- Ayanam (6-month) period -->
+    <string-array name="ayanam_list">
+        <item>ಉತ್ತರಾಯಣಮ್</item>
+        <item>ದಕ್ಷಿಣಾಯನಮ್</item>
+    </string-array>
+
+    <!-- Rithu (Season) 2-month period -->
+    <string-array name="rithu_list">
+        <item>ವಸಂತಋತುಃ</item>
+        <item>ಗ್ರೀಷ್ಮಋತುಃ</item>
+        <item>ವರ್ಷಋತುಃ</item>
+        <item>ಶರದ್ಋತುಃ</item>
+        <item>ಹೇಮಂತಋತುಃ</item>
+        <item>ಶಿಶಿರಋತುಃ</item>
+    </string-array>
+
+    <!-- Maasam (month) -->
+    <string-array name="maasam_list">
+        <item>ಮೇಷಃ</item>
+        <item>ವೃಷಭಃ</item>
+        <item>ಮಿಥುನಮ್</item>
+        <item>ಕಟಕಃ</item>
+        <item>ಸಿಂಹಃ</item>
+        <item>ಕನ್ಯಾ</item>
+        <item>ತುಲಾ</item>
+        <item>ವೃಶ್ಚಿಕಃ</item>
+        <item>ಧನುಃ</item>
+        <item>ಮಕರಃ</item>
+        <item>ಕುಂಭಃ</item>
+        <item>ಮೀನಃ</item>
+    </string-array>
+
+    <!-- Paksham (15-day) period -->
+    <string-array name="paksham_list">
+        <item>ಶುಕ್ಲ</item>
+        <item>ಕೃಷ್ಣ</item>
+    </string-array>
+
+    <!-- Thithi (Lunar Day) -->
+    <string-array name="thithi_list">
+        <item>ಪ್ರಥಮಾ</item>
+        <item>ದ್ವಿತೀಯಾ</item>
+        <item>ತೃತೀಯಾ</item>
+        <item>ಚತುರ್ಥೀ</item>
+        <item>ಪಂಚಮೀ</item>
+        <item>ಷಷ್ಠೀ</item>
+        <item>ಸಪ್ತಮೀ</item>
+        <item>ಅಷ್ಟಮೀ</item>
+        <item>ನವಮೀ</item>
+        <item>ದಶಮೀ</item>
+        <item>ಏಕಾದಶೀ</item>
+        <item>ದ್ವಾದಶೀ</item>
+        <item>ತ್ರಯೋದಶೀ</item>
+        <item>ಚತುರ್ದಶೀ</item>
+        <item>ಪೌರ್ಣಮಾಸೀ</item>
+        <item>ಪ್ರಥಮಾ</item>
+        <item>ದ್ವಿತೀಯಾ</item>
+        <item>ತೃತೀಯಾ</item>
+        <item>ಚತುರ್ಥೀ</item>
+        <item>ಪಂಚಮೀ</item>
+        <item>ಷಷ್ಠೀ</item>
+        <item>ಸಪ್ತಮೀ</item>
+        <item>ಅಷ್ಟಮೀ</item>
+        <item>ನವಮೀ</item>
+        <item>ದಶಮೀ</item>
+        <item>ಏಕಾದಶೀ</item>
+        <item>ದ್ವಾದಶೀ</item>
+        <item>ತ್ರಯೋದಶೀ</item>
+        <item>ಚತುರ್ದಶೀ</item>
+        <item>ಅಮಾವಸ್ಯಾ</item>
+    </string-array>
+
+    <!-- Sankalpa Thithi (Lunar Day) with grammar suffix -->
+    <string-array name="sankalpa_thithi_list">
+        <item>ಪ್ರಥಮಾಯಾಂ</item>
+        <item>ದ್ವಿತೀಯಾಯಾಂ</item>
+        <item>ತೃತೀಯಾಯಾಂ</item>
+        <item>ಚತುರ್ಥ್ಯಾಂ</item>
+        <item>ಪಂಚಮ್ಯಾಂ</item>
+        <item>ಷಷ್ಠ್ಯಾಮ್</item>
+        <item>ಸಪ್ತಮ್ಯಾಂ</item>
+        <item>ಅಷ್ಟಮ್ಯಾಂ</item>
+        <item>ನವಮ್ಯಾಂ</item>
+        <item>ದಶಮ್ಯಾಂ</item>
+        <item>ಏಕಾದಶ್ಯಾಂ</item>
+        <item>ದ್ವಾದಶ್ಯಾಂ</item>
+        <item>ತ್ರಯೋದಶ್ಯಾಂ</item>
+        <item>ಚತುರ್ದಶ್ಯಾಂ</item>
+        <item>ಪೌರ್ಣಮ್ಯಾಂ</item>
+        <item>ಪ್ರಥಮಾಯಾಂ</item>
+        <item>ದ್ವಿತೀಯಾಯಾಂ</item>
+        <item>ತೃತೀಯಾಯಾಂ</item>
+        <item>ಚತುರ್ಥ್ಯಾಂ</item>
+        <item>ಪಂಚಮ್ಯಾಂ</item>
+        <item>ಷಷ್ಠ್ಯಾಂ</item>
+        <item>ಸಪ್ತಮ್ಯಾಂ</item>
+        <item>ಅಷ್ಟಮ್ಯಾಂ</item>
+        <item>ನವಮ್ಯಾಂ</item>
+        <item>ದಶಮ್ಯಾಂ</item>
+        <item>ಏಕಾದಶ್ಯಾಂ</item>
+        <item>ದ್ವಾದಶ್ಯಾಂ</item>
+        <item>ತ್ರಯೋದಶ್ಯಾಂ</item>
+        <item>ಚತುರ್ದಶ್ಯಾಂ</item>
+        <item>ಅಮಾವಾಸ್ಯಾಯಾಂ"</item>
+    </string-array>
+
+    <!-- Raasi (Planet) -->
+    <string-array name="raasi_list">
+        <item>ಮೇಷಃ</item>
+        <item>ವೃಷಭಃ</item>
+        <item>ಮಿಥುನಮ್</item>
+        <item>ಕಟಕಃ</item>
+        <item>ಸಿಂಹಃ</item>
+        <item>ಕನ್ಯಾ</item>
+        <item>ತುಲಾ</item>
+        <item>ವೃಶ್ಚಿಕಃ</item>
+        <item>ಧನುಃ</item>
+        <item>ಮಕರಃ</item>
+        <item>ಕುಂಭಃ</item>
+        <item>ಮೀನಃ</item>
+    </string-array>
+
+    <!-- Natchathiram (Star) used for Panchangam purposes -->
+    <string-array name="nakshathram_list">
+        <item>ಅಶ್ವಿನೀ</item>
+        <item>ಅಪಭರಣೀ</item>
+        <item>ಕೃತ್ತಿಕಾ</item>
+        <item>ರೋಹಿಣೀ</item>
+        <item>ಮೃಗಶೀರ್ಷಮ್</item>
+        <item>ಆರ್ದ್ರಾ</item>
+        <item>ಪುನರ್ವಸುಃ</item>
+        <item>ಪುಷ್ಯಃ</item>
+        <item>ಆಶ್ರೇಷಾ</item>
+        <item>ಮಘಾ</item>
+        <item>ಪೂರ್ವಫಲ್ಗುನೀ</item>
+        <item>ಉತ್ತರಫಲ್ಗುನೀ</item>
+        <item>ಹಸ್ತಃ</item>
+        <item>ಚಿತ್ರಾ</item>
+        <item>ಸ್ವಾತೀ</item>
+        <item>ವಿಶಾಖಾ</item>
+        <item>ಅನೂರಾಧಾ</item>
+        <item>ಜ್ಯೇಷ್ಠಾ</item>
+        <item>ಮೂಲಾ</item>
+        <item>ಪೂರ್ವಾಷಾಢಾ</item>
+        <item>ಉತ್ತರಾಷಾಢಾ</item>
+        <item>ಶ್ರವಣಮ್</item>
+        <item>ಶ್ರವಿಷ್ಠಾ</item>
+        <item>ಶತಭಿಷಕ್</item>
+        <item>ಪೂರ್ವಪ್ರೋಷ್ಠಪದಾ</item>
+        <item>ಉತ್ತರಪ್ರೋಷ್ಠಪದಾ</item>
+        <item>ರೇವತೀ</item>
+    </string-array>
+
+    <!-- Sankalpa Natchathiram (Star) used for Sankapalpam Purposes with grammar suffix -->
+    <string-array name="sankalpa_nakshathram_list">
+        <item>ಅಶ್ವಿನೀ</item>
+        <item>ಅಪಭರಣೀ</item>
+        <item>ಕೃತ್ತಿಕಾ</item>
+        <item>ರೋಹಿಣೀ</item>
+        <item>ಮೃಗಶೀರೋ</item>
+        <item>ಆರ್ದ್ರಾ</item>
+        <item>ಪುನರ್ವಸುಃ</item>
+        <item>ಪುಷ್ಯಃ</item>
+        <item>ಆಶ್ರೇಷಾ</item>
+        <item>ಮಘಾ</item>
+        <item>ಪೂರ್ವಫಲ್ಗುನೀ</item>
+        <item>ಉತ್ತರಫಲ್ಗುನೀ</item>
+        <item>ಹಸ್ತಃ</item>
+        <item>ಚಿತ್ರಾ</item>
+        <item>ಸ್ವಾತೀ</item>
+        <item>ವಿಶಾಖಾ</item>
+        <item>ಅನೂರಾಧಾ</item>
+        <item>ಜ್ಯೇಷ್ಠಾ</item>
+        <item>ಮೂಲಾ</item>
+        <item>ಪೂರ್ವಾಷಾಢಾ</item>
+        <item>ಉತ್ತರಾಷಾಢಾ</item>
+        <item>ಶ್ರವಣಮ್</item>
+        <item>ಶ್ರವಿಷ್ಠಾ</item>
+        <item>ಶತಭಿಷಕ್</item>
+        <item>ಪೂರ್ವಪ್ರೋಷ್ಠಪದಾ</item>
+        <item>ಉತ್ತರಪ್ರೋಷ್ಠಪದಾ</item>
+        <item>ರೇವತೀ</item>
+    </string-array>
+
+    <!-- Yogam used to indicate yogam of the Day -->
+    <string-array name="yogam_list">
+        <item>ವಿಷ್ಕಂಭಃ</item>
+        <item>ಪ್ರೀತಿಃ</item>
+        <item>ಆಯುಷ್ಮಾನ್</item>
+        <item>ಸೌಭಾಗ್ಯಃ</item>
+        <item>ಶೋಭನಃ</item>
+        <item>ಅತಿಗಂಡಃ</item>
+        <item>ಸುಕರ್ಮ</item>
+        <item>ಧೃತಿಃ</item>
+        <item>ಶೂಲಃ</item>
+        <item>ಗಂಡಃ</item>
+        <item>ವೃದ್ಧಿಃ</item>
+        <item>ಧ್ರುವಃ</item>
+        <item>ವ್ಯಾಘಾತಃ</item>
+        <item>ಹರ್ಷಣಃ</item>
+        <item>ವಜ್ರಮ್</item>
+        <item>ಸಿದ್ಧಿಃ</item>
+        <item>ವ್ಯತೀಪಾತಃ</item>
+        <item>ವರೀಯಾನ್</item>
+        <item>ಪರಿಘಃ</item>
+        <item>ಶಿವಃ</item>
+        <item>ಸಿದ್ಧಃ</item>
+        <item>ಸಾಧ್ಯಃ</item>
+        <item>ಶುಭಃ</item>
+        <item>ಶುಕ್ಲಃ</item>
+        <item>ಬ್ರಹ್ಮ</item>
+        <item>ಇಂದ್ರಃ</item>
+        <item>ವೈಧೃತಿಃ</item>
+    </string-array>
+
+    <!-- Karanam (half-thithi) -->
+    <string-array name="karanam_list">
+        <item>ಕಿಂಸ್ತುಘ್ನಃ</item>
+        <item>ಬವಃ</item>
+        <item>ಬಾಲವಃ</item>
+        <item>ಕೌಲವಃ</item>
+        <item>ತೈತಿಲಃ</item>
+        <item>ಗರಃ</item>
+        <item>ವಣಿಜಃ</item>
+        <item>ವಿಷ್ಟಿಃ</item>
+        <item>ಬವಃ</item>
+        <item>ಬಾಲವಃ</item>
+        <item>ಕೌಲವಃ</item>
+        <item>ತೈತಿಲಃ</item>
+        <item>ಗರಃ</item>
+        <item>ವಣಿಜಃ</item>
+        <item>ವಿಷ್ಟಿಃ</item>
+        <item>ಬವಃ</item>
+        <item>ಬಾಲವಃ</item>
+        <item>ಕೌಲವಃ</item>
+        <item>ತೈತಿಲಃ</item>
+        <item>ಗರಃ</item>
+        <item>ವಣಿಜಃ</item>
+        <item>ವಿಷ್ಟಿಃ</item>
+        <item>ಬವಃ</item>
+        <item>ಬಾಲವಃ</item>
+        <item>ಕೌಲವಃ</item>
+        <item>ತೈತಿಲಃ</item>
+        <item>ಗರಃ</item>
+        <item>ವಣಿಜಃ</item>
+        <item>ವಿಷ್ಟಿಃ</item>
+        <item>ಬವಃ</item>
+        <item>ಬಾಲವಃ</item>
+        <item>ಕೌಲವಃ</item>
+        <item>ತೈತಿಲಃ</item>
+        <item>ಗರಃ</item>
+        <item>ವಣಿಜಃ</item>
+        <item>ವಿಷ್ಟಿಃ</item>
+        <item>ಬವಃ</item>
+        <item>ಬಾಲವಃ</item>
+        <item>ಕೌಲವಃ</item>
+        <item>ತೈತಿಲಃ</item>
+        <item>ಗರಃ</item>
+        <item>ವಣಿಜಃ</item>
+        <item>ವಿಷ್ಟಿಃ</item>
+        <item>ಬವಃ</item>
+        <item>ಬಾಲವಃ</item>
+        <item>ಕೌಲವಃ</item>
+        <item>ತೈತಿಲಃ</item>
+        <item>ಗರಃ</item>
+        <item>ವಣಿಜಃ</item>
+        <item>ವಿಷ್ಟಿಃ</item>
+        <item>ಬವಃ</item>
+        <item>ಬಾಲವಃ</item>
+        <item>ಕೌಲವಃ</item>
+        <item>ತೈತಿಲಃ</item>
+        <item>ಗರಃ</item>
+        <item>ವಣಿಜಃ</item>
+        <item>ವಿಷ್ಟಿಃ</item>
+        <item>ಶಕುನಿಃ</item>
+        <item>ಚತುಷ್ಪಾತ್</item>
+        <item>ನಾಗ</item>
+    </string-array>
+
+    <!-- Vaasaram (weekday) -->
+    <string-array name="vaasaram_list">
+        <item>ಭಾನುಃ</item>
+        <item>ಇಂದುಃ</item>
+        <item>ಭೌಮಃ</item>
+        <item>ಸೌಮ್ಯಃ</item>
+        <item>ಗುರುಃ</item>
+        <item>ಭೃಗುಃ</item>
+        <item>ಸ್ಥಿರಃ</item>
+    </string-array>
+
+    <!-- Dhinam (Day) -->
+    <string-array name="dhinam_list">
+        <item>ಭಾನುಃ</item>
+        <item>ಇಂದುಃ</item>
+        <item>ಭೌಮಃ</item>
+        <item>ಸೌಮ್ಯಃ</item>
+        <item>ಗುರುಃ</item>
+        <item>ಭೃಗುಃ</item>
+        <item>ಸ್ಥಿರಃ</item>
+    </string-array>
+
+    <!-- Horai (Auspicious Hour of the Day) -->
+    <string-array name="horai_list">
+        <item>ಸೂರ್ಯಃ</item>
+        <item>ಚಂದ್ರಃ</item>
+        <item>ಮಂಗಲಃ</item>
+        <item>ಬುಧಃ</item>
+        <item>ಗುರುಃ</item>
+        <item>ಶುಕ್ರಃ</item>
+        <item>ಶನಿಃ</item>
+    </string-array>
+
+    <!-- Amruthathi Yogam used to indicate auspiciousness of the Day -->
+    <string-array name="amruthathi_yogam_list">
+        <item>ಅಮೃತಯೋಗಃ</item>
+        <item>ಸಿದ್ಧಯೋಗಃ</item>
+        <item>ಮರಣಯೋಗಃ</item>
+    </string-array>
+</resources>

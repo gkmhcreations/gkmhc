@@ -9,7 +9,7 @@
             android:entries="@array/locale_list"
             android:entryValues="@array/locale_list"
             android:defaultValue="@string/pref_def_locale"
-            android:summary="Choose preferred display language"/>
+            android:summary="Choose Preferred Display Language"/>
 
     <PreferenceCategory
         android:title="@string/pref_location"/>
@@ -19,7 +19,7 @@
             android:entries="@array/pref_location_settings"
             android:entryValues="@array/pref_location_settings"
             android:defaultValue="@string/pref_def_location_type"
-            android:summary="Choose location settings"/>
+            android:summary="Choose Location Settings"/>
 
     <PreferenceCategory
         android:title="@string/pref_sankalpam"/>
@@ -29,7 +29,7 @@
             android:entries="@array/pref_sankalpam_type_list"
             android:entryValues="@array/pref_sankalpam_type_list"
             android:defaultValue="@string/pref_def_sankalpam_type"
-            android:summary="Choose preferred sankalpam Type"/>
+            android:summary="Choose Preferred Sankalpam Type"/>
 
     <PreferenceCategory
         android:title="@string/pref_panchangam"/>
@@ -39,6 +39,16 @@
             android:entries="@array/pref_allowed_panchangam_list"
             android:entryValues="@array/pref_allowed_panchangam_list"
             android:defaultValue="@string/pref_def_panchangam"
-            android:summary="Choose preferred panchangam type"/>
+            android:summary="Choose Preferred Panchangam type"/>
+
+    <PreferenceCategory
+        android:title="@string/pref_ayanamsa"/>
+    <ListPreference
+        android:key="@string/pref_ayanamsa_key"
+        android:title="@string/pref_ayanamsa_options"
+        android:entries="@array/pref_allowed_ayanamsa_list"
+        android:entryValues="@array/pref_allowed_ayanamsa_list"
+        android:defaultValue="@string/pref_def_ayanamsa"
+        android:summary="Choose Preferred Ayanamsa type"/>
 
 </PreferenceScreen>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sankalpam_shubam_begin">"மமோபாத்த ஸமஸ்த துரித க்ஷயத்வாரா ஶ்ரீபரமேஶ்வர ப்ரீத்யர்தம்  ஶுபே ஶோபநே முஹூர்தே ஆத்யப்ரஹ்மண: | த்விதீய பரார்தே ஶ்வேதவராஹகல்பே வைவஸ்வத மன்வந்தரே அஷ்டாவிம்ஶதிதமே கலியுகே ப்ரதமேபாதே ஜம்பூத்வீபே பாரதவர்ஷே பரதகண்டே மேரோ: தக்ஷிணேபார்ஶ்வே ஶகாப்தே அஸ்மின் வர்தமானே வ்யாவஹாரிகே ப்ரபவாதீனாம் ஷஷ்ட்யா: ஸம்வத்ஸராணாம் மத்யே "</string>
+    <string name="sankalpam_shubam_begin">"மமோபாத்த ஸமஸ்த துரித க்ஷயத்வாரா ஶ்ரீபரமேஶ்வர ப்ரீத்யர்தம்  ஶுபே ஶோபநே முஹூர்தே ஆத்யப்ரஹ்மண: | த்விதீய பரார்தே ஶ்வேதவராஹகல்பே வைவஸ்வத மன்வந்தரே அஷ்டாவீம்ஶதிதமே கலியுகே ப்ரதமேபாதே ஜம்பூத்வீபே பாரதவர்ஷே பரதகண்டே மேரோ: தக்ஷிணேபார்ஶ்வே ஸகாப்தே அஸ்மின் வர்தமானே வ்யாவஹாரிகே ப்ரபவாதீனாம் ஷஷ்ட்யா: ஸம்வத்ஸராணாம் மத்யே "</string>
     <string name="app_name">நித்ய பஞ்சாங்கம்</string>
     <string name="nithya_panchangam_header">நித்ய பஞ்சாங்கம்</string>
     <string name="samvatsaram_heading">ஸம்வத்ஸரம்</string>
@@ -14,9 +14,9 @@
     <string name="yogam_heading">யோகம்</string>
     <string name="karanam_heading">கரணம்</string>
     <string name="good_time_heading">நல்ல நேரம்</string>
-    <string name="raahu_kaalam_heading">ராஹு காலம்</string>
+    <string name="raahu_kaalam_heading">ராஹுகாலம்</string>
     <string name="emakandam_heading">யமகண்டம்</string>
-    <string name="kuligai_heading">குளிகை</string>
+    <string name="kuligai_heading">குலிககாலம்</string>
     <string name="panchangam_tab_heading">பஞ்சாங்கம்</string>
     <string name="sankalpam_tab_heading">ஸங்கல்பம்</string>
     <string name="alarm_tab_heading">அலாரம்</string>
@@ -31,11 +31,11 @@
     <string name="sankalpam_nakshatra_yukhtayaam">நக்ஷத்ர யுக்தாயாம்</string>
     <string name="sankalpam_yoga_yukhtayaam">யோக யுக்தாயாம்</string>
     <string name="sankalpam_karana_yukhtayaam">கரண யுக்தாயாம்</string>
-    <string name="sankalpam_shubam_end">ஏவம் குண விசேஷண விஶிஷ்டாயாம் அஸ்யாம் **** ஶுப திதெள அஸ்மாகம் ஸர்வேஷாம் ஸஹகுடும்பானாம் க்ஷேம, ஸ்தைர்ய, வீரய, விஜய, ஆயுர், ஆரோக்ய, அபிவ்ருத்யர்த்தம் மம க்ருஹே மஹாலக்ஷ்மி நிவாஸ ஸித்யர்த்தம், மம இஷ்ட காம்ய பல ஸித்யர்த்தம், மம வ்யாபார, வ்யவஹார, உத்யோக அபிவ்ருத்தி ஸித்யர்த்தம், ஸமஸ்த மங்கள அவாப்த்யர்த்தம், ஶரீரே வர்தமானகால வர்திஷ்யமான சகல ரோக பரிஹார துவார ஷிப்ர ஆரோக்ய சௌக்கியம் சித்யர்த்தம்</string>
-    <string name="chandrashtama_natchathiram_heading">சந்திராஷ்டம நட்சத்திரம்</string>
+    <string name="sankalpam_shubam_end">ஏவம் குண விசேஷண விஶிஷ்டாயாம் அஸ்யாம் ஶுப திதெள அஸ்மாகம் ஸர்வேஷாம் ஸஹகுடும்பானாம் க்ஷேம, ஸ்தைர்ய, வீரய, விஜய, ஆயுர், ஆரோக்ய, அபிவ்ருத்யர்த்தம் மம க்ருஹே மஹாலக்ஷ்மி நிவாஸ ஸித்யர்த்தம், மம இஷ்ட காம்ய பல ஸித்யர்த்தம், மம வ்யாபார, வ்யவஹார, உத்யோக அபிவ்ருத்தி ஸித்யர்த்தம், ஸமஸ்த மங்கள அவாப்த்யர்த்தம், ஶரீரே வர்தமானகால வர்திஷ்யமான சகல ரோக பரிஹார துவார ஷிப்ர ஆரோக்ய சௌக்கியம் சித்யர்த்தம்</string>
+    <string name="chandrashtama_nakshathram_heading">சந்திராஷ்டம நட்சத்திரம்</string>
     <string name="lagnam_heading">லக்னம்</string>
     <string name="horai_heading">ஹோரை</string>
-    <string name="sankalpam_srardham_begin">மமோபாத்த ஸமஸ்த துரித க்ஷயத்வாரா ஶ்ரீபரமேஶ்வர ப்ரீத்யர்தம்  அபவித்ர: பவித்ரோவா ஸர்வாவஸ்தாகதோபிவா | யஸ்ஸ்மரேத் புண்டரீகாக்ஷம் ஸ பாஹ்யாப்யந்தர: சுசி: || மானஸம் வாசிகம் பாபம் கர்மணா ஸமுபார்ஜிதம் | ஶ்ரீ ராம ஸ்மரணேனைவ வ்யபோஹதி ந ஸம்சய: || ஸ்ரீ ராம ராம ராம || திதிர்விஷ்ணு: ததா வார: நக்ஷத்ரம் விஷ்ணுரேவ ச | யோகஶ்ச கரணம் சைவ ஸர்வம் விஷ்ணுமயம் ஜகத் || ஸ்ரீ கோவிந்த கோவிந்த கோவிந்த || அத்ய ஸ்ரீ பகவத: மஹா புருஷஸ்ய விஷ்ணோராக்ஞயா ப்ரவர்தமானஸ்ய அத்யப்ரஹ்மண: | த்விதீய பரார்தே ஶ்வேதவராஹகல்பே வைவஸ்வத மன்வந்தரே அஷ்டாவிம்ஶதிதமே கலியுகே ப்ரதமேபாதே ஜம்பூத்வீபே பாரதவர்ஷே பரதகண்டே மேரோ: தக்ஷிணே பார்ஶ்வே ஶகாப்தே அஸ்மின் வர்தமானே வ்யாவஹாரிகே ப்ரபவாதீனாம் ஷஷ்ட்யா: ஸம்வத்ஸராணாம் மத்யே</string>
+    <string name="sankalpam_srardham_begin">மமோபாத்த ஸமஸ்த துரித க்ஷயத்வாரா ஶ்ரீபரமேஶ்வர ப்ரீத்யர்தம்  அபவித்ர: பவித்ரோவா ஸர்வாவஸ்தாகதோபிவா | யஸ்ஸ்மரேத் புண்டரீகாக்ஷம் ஸ பாஹ்யாப்யந்தர: சுசி: || மானஸம் வாசிகம் பாபம் கர்மணா ஸமுபார்ஜிதம் | ஶ்ரீ ராம ஸ்மரணேனைவ வ்யபோஹதி ந ஸம்சய: || ஸ்ரீ ராம ராம ராம || திதிர்விஷ்ணு: ததா வார: நக்ஷத்ரம் விஷ்ணுரேவ ச | யோகஶ்ச கரணம் சைவ ஸர்வம் விஷ்ணுமயம் ஜகத்: || ஸ்ரீ கோவிந்த கோவிந்த கோவிந்த || அத்ய ஸ்ரீ பகவத: மஹா புருஷஸ்ய விஷ்ணோராக்ஞயா ப்ரவர்தமானஸ்ய அத்யப்ரஹ்மண: | த்விதீய பரார்தே ஶ்வேதவராஹகல்பே வைவஸ்வத மன்வந்தரே அஷ்டாவிம்ஶதிதமே கலியுகே ப்ரதமேபாதே ஜம்பூத்வீபே பாரதவர்ஷே பரதகண்டே மேரோ: தக்ஷிணே பார்ஶ்வே ஶகாப்தே அஸ்மின் வர்தமானே வ்யாவஹாரிகே ப்ரபவாதீனாம் ஷஷ்ட்யா: ஸம்வத்ஸராணாம் மத்யே</string>
     <string name="sankalpam_punya_thithou">புண்ய திதெள</string>
     <string name="sankalpam_srardham_end_1">விஷ்ணு யோக விஷ்ணு கரன ஏவம் குண விஷேஷன விஶிஷ்டாயாம் அஸ்யாம்</string>
     <string name="sankalpam_srardham_end_2">(பூணல் இடம்) ............  கோத்ராணாம், வஸுருத்ரதித்யஸ்வரூபாணாம் அஸ்மத் பித்ரு பிதாமஹ ப்ரபிதாமஹானாம் --- (தாயார் இருப்பவர்கள்) பிதாமஹீ, பிது: பிதாமஹீ, பிது: ப்ரபிதாமஹீனாம் (அல்லது) (தாயார் இல்லாதவர்கள்) மாத்ரு, பிதாமஹீ, ப்ரபிதாமஹீனாம் (தாயார் பிறந்த கோத்ரம் சொல்லவும்) ............ கோத்ராணாம், ஸபத்னீக, மாதாமஹ, மாது: பிதாமஹ:, மாது: ப்ரபிதாமஹானாம் உபயவம்ஸ பித்ரூணாம் அக்ஷய்ய த்ருப்த்யர்தம்</string>
@@ -152,4 +152,387 @@
     <string name="agni_nakshathiram_end">அக்னி நட்சத்திரம் முடிவு</string>
     <string name="onam">ஓணம்</string>
     <string name="mahalayam_start">மஹாளயம் ஆரம்பம்</string>
+
+    <!-- Samvatsaram (Year) -->
+    <string-array name="samvatsaram_list">
+        <item>பிரபவ</item>
+        <item>விபவ</item>
+        <item>சுக்ல</item>
+        <item>பிரமோதூத</item>
+        <item>பிரசோற்பத்தி</item>
+        <item>ஆங்கீரச</item>
+        <item>ஸ்ரீமுக</item>
+        <item>பவ</item>
+        <item>யுவ</item>
+        <item>தாது</item>
+        <item>ஈஸ்வர</item>
+        <item>வெகுதானிய</item>
+        <item>பிரமாதி</item>
+        <item>விக்கிரம</item>
+        <item>விஷு</item>
+        <item>சித்திரபானு</item>
+        <item>சுபானு</item>
+        <item>தாரண</item>
+        <item>பார்த்திப</item>
+        <item>விய</item>
+        <item>சர்வசித்து</item>
+        <item>சர்வதாரி</item>
+        <item>விரோதி</item>
+        <item>விக்ருதி</item>
+        <item>கர</item>
+        <item>நந்தன</item>
+        <item>விஜய</item>
+        <item>ஜய</item>
+        <item>மன்மத</item>
+        <item>துற்முகி</item>
+        <item>ஹேவிளம்பி</item>
+        <item>விளம்பி</item>
+        <item>விகாரி</item>
+        <item>சார்வரி</item>
+        <item>பிலவ</item>
+        <item>சுபகிருது</item>
+        <item>சோபகிருது</item>
+        <item>குரோதி</item>
+        <item>விசுவாசுவ</item>
+        <item>பரபாவ</item>
+        <item>பிலவங்க</item>
+        <item>கீலக</item>
+        <item>சௌமிய</item>
+        <item>சாதாரண</item>
+        <item>விரோதகிருது</item>
+        <item>பரிதாபி</item>
+        <item>பிரமாதீச</item>
+        <item>ஆனந்த</item>
+        <item>ராட்சச</item>
+        <item>நள</item>
+        <item>பிங்கள</item>
+        <item>காளயுக்தி</item>
+        <item>சித்தார்த்தி</item>
+        <item>ரௌத்திரி</item>
+        <item>துன்மதி</item>
+        <item>துந்துபி</item>
+        <item>ருத்ரோத்காரி</item>
+        <item>ரக்தாட்சி</item>
+        <item>குரோதன</item>
+        <item>அட்சய</item>
+    </string-array>
+
+    <!-- Ayanam (6-month) period -->
+    <string-array name="ayanam_list">
+        <item>உத்தராயணம்</item>
+        <item>தட்சிணாயணம்</item>
+    </string-array>
+
+    <!-- Rithu (Season) 2-month period -->
+    <string-array name="rithu_list">
+        <item>வசந்தரிது</item>
+        <item>க்ரீஷ்மரிது</item>
+        <item>வர்ஷரிது</item>
+        <item>ஷரத்ரிது</item>
+        <item>ஹேமந்தரிது</item>
+        <item>ஷிஷிரரிது</item>
+    </string-array>
+
+    <!-- Maasam (month) -->
+    <string-array name="maasam_list">
+        <item>சித்திரை</item>
+        <item>வைகாசி</item>
+        <item>ஆனி</item>
+        <item>ஆடி</item>
+        <item>ஆவணி</item>
+        <item>புரட்டாசி</item>
+        <item>ஐப்பசி</item>
+        <item>கார்த்திகை</item>
+        <item>மார்கழி</item>
+        <item>தை</item>
+        <item>மாசி</item>
+        <item>பங்குனி</item>
+    </string-array>
+
+    <!-- Paksham (15-day) period -->
+    <string-array name="paksham_list">
+        <item>ஶுக்ல</item>
+        <item>க்ருஷ்ண</item>
+    </string-array>
+
+    <!-- Thithi (Lunar Day) -->
+    <string-array name="thithi_list">
+        <item>ப்ரதமா</item>
+        <item>த்விதீயா</item>
+        <item>த்ருதீயா</item>
+        <item>சதுர்தீ</item>
+        <item>பஞ்சமீ</item>
+        <item>ஷஷ்டீ</item>
+        <item>ஸப்தமீ</item>
+        <item>அஷ்டமீ</item>
+        <item>நவமீ</item>
+        <item>தசமீ</item>
+        <item>ஏகாதசி</item>
+        <item>த்வாதசி</item>
+        <item>த்ரயோதசி</item>
+        <item>சதுர்தசி</item>
+        <item>பௌர்ணமீ</item>
+        <item>ப்ரதமா</item>
+        <item>த்விதீயா</item>
+        <item>த்ருதீயா</item>
+        <item>சதுர்தீ</item>
+        <item>பஞ்சமீ</item>
+        <item>ஷஷ்டீ</item>
+        <item>ஸப்தமீ</item>
+        <item>அஷ்டமீ</item>
+        <item>நவமீ</item>
+        <item>தசமீ</item>
+        <item>ஏகாதசி</item>
+        <item>த்வாதசி</item>
+        <item>த்ரயோதசி</item>
+        <item>சதுர்தசி</item>
+        <item>அமாவாசை</item>
+    </string-array>
+
+    <!-- Sankalpa Thithi (Lunar Day) with grammar suffix -->
+    <string-array name="sankalpa_thithi_list">
+        <item>ப்ரதமாயாம்</item>
+        <item>த்விதீயாயாம்</item>
+        <item>த்ருதீயாயாம்</item>
+        <item>சதுர்த்யாம்</item>
+        <item>பஞ்சம்யாம்</item>
+        <item>ஷஷ்ட்யாம்</item>
+        <item>ஸப்தம்யாம்</item>
+        <item>அஷ்டம்யாம்</item>
+        <item>நவம்யாம்</item>
+        <item>தசம்யாம்</item>
+        <item>ஏகாதஸ்யாம்</item>
+        <item>த்வாதஸ்யாம்</item>
+        <item>த்ரயோதஸ்யாம்</item>
+        <item>சதுர்தஸ்யாம்</item>
+        <item>பௌர்ணம்யாம்</item>
+        <item>ப்ரதமாயாம்</item>
+        <item>த்விதீயாயாம்</item>
+        <item>த்ருதீயாயாம்</item>
+        <item>சதுர்த்யாம்</item>
+        <item>பஞ்சம்யாம்</item>
+        <item>ஷஷ்ட்யாம்</item>
+        <item>ஸப்தம்யாம்</item>
+        <item>அஷ்டம்யாம்</item>
+        <item>நவம்யாம்</item>
+        <item>தசம்யாம்</item>
+        <item>ஏகாதஸ்யாம்</item>
+        <item>த்வாதஸ்யாம்</item>
+        <item>த்ரயோதஸ்யாம்</item>
+        <item>சதுர்தஸ்யாம்</item>
+        <item>அமாவாஸ்யாயாம்</item>
+    </string-array>
+
+    <!-- Raasi (Planet) -->
+    <string-array name="raasi_list">
+        <item>மேஷ</item>
+        <item>ரிஷப</item>
+        <item>மிதுன</item>
+        <item>கடக</item>
+        <item>சிம்ம</item>
+        <item>கன்னி</item>
+        <item>துலா</item>
+        <item>விருச்சிக</item>
+        <item>தனுசு</item>
+        <item>மகர</item>
+        <item>கும்ப</item>
+        <item>மீன</item>
+    </string-array>
+
+    <!-- Natchathiram (Star) used for Panchangam purposes -->
+    <string-array name="nakshathram_list">
+        <item>அஸ்வினி</item>
+        <item>பரணி</item>
+        <item>கிருத்திகை</item>
+        <item>ரோஹினி</item>
+        <item>ம்ருகசிரீஷம்</item>
+        <item>திருவாதிரை</item>
+        <item>புனர்பூசம்</item>
+        <item>பூசம்</item>
+        <item>ஆயில்யம்</item>
+        <item>மகம்</item>
+        <item>பூரம்</item>
+        <item>உத்திரம்</item>
+        <item>ஹஸ்தம்</item>
+        <item>சித்திரை</item>
+        <item>சுவாதி</item>
+        <item>விசாகம்</item>
+        <item>அனுஷம்</item>
+        <item>கேட்டை</item>
+        <item>மூலம்</item>
+        <item>பூராடம்</item>
+        <item>உத்திராடம்</item>
+        <item>திருவோணம்</item>
+        <item>அவிட்டம்</item>
+        <item>சதயம்</item>
+        <item>பூரட்டாதி</item>
+        <item>உத்திரட்டாதி</item>
+        <item>ரேவதி</item>
+    </string-array>
+
+    <!-- Sankalpa Natchathiram (Star) used for Sankapalpam Purposes with grammar suffix -->
+    <string-array name="sankalpa_nakshathram_list">
+        <item>அஸ்வினீ</item>
+        <item>அபபரனீ</item>
+        <item>கிருத்திகா</item>
+        <item>ரோஹினீ</item>
+        <item>ம்ருகசீரோ</item>
+        <item>ஆர்த்ரா</item>
+        <item>புனர்வசு</item>
+        <item>புஷ்ய</item>
+        <item>ஆஸ்லேஷா</item>
+        <item>மக</item>
+        <item>பூர்வ பல்குனீ</item>
+        <item>உத்திர பல்குனீ</item>
+        <item>ஹஸ்த</item>
+        <item>சித்திரா</item>
+        <item>ஸ்வாதீ</item>
+        <item>விசாகா</item>
+        <item>அனுராதா</item>
+        <item>ஜ்யேஷ்டா</item>
+        <item>மூல</item>
+        <item>பூர்வாஷாடா</item>
+        <item>உத்திராஷாடா</item>
+        <item>ச்ரவண</item>
+        <item>ச்ரவிஷ்டா</item>
+        <item>சதாபிஷக</item>
+        <item>பூரவ ப்ரோஷ்டபதா</item>
+        <item>உத்திர ப்ரோஷ்டபதா</item>
+        <item>ரேவதீ</item>
+    </string-array>
+
+    <!-- Yogam used to indicate yogam of the Day -->
+    <string-array name="yogam_list">
+        <item>விஷ்கம்பம்</item>
+        <item>பிரீதி</item>
+        <item>ஆயுஷ்மான்</item>
+        <item>சௌபாக்கியம்</item>
+        <item>சோபனம்</item>
+        <item>அதிகண்டம்</item>
+        <item>சுகர்மம்</item>
+        <item>திருதி</item>
+        <item>சூலம்</item>
+        <item>கண்டம்</item>
+        <item>விருதி</item>
+        <item>துருவம்</item>
+        <item>வியாகதம்</item>
+        <item>அரிசணம்</item>
+        <item>வச்சிரம்</item>
+        <item>சித்தி</item>
+        <item>வியதிபாதம்</item>
+        <item>வரியான்</item>
+        <item>பரிகம்</item>
+        <item>சிவம்</item>
+        <item>சித்தம்</item>
+        <item>சாத்தீயம்</item>
+        <item>சுபம்</item>
+        <item>சுப்பிரம்</item>
+        <item>பிராமியம்</item>
+        <item>ஐந்திரம்</item>
+        <item>வைதிருதி</item>
+    </string-array>
+
+    <!-- Karanam (half-thithi) -->
+    <string-array name="karanam_list">
+        <item>கிம்ஸ்துக்னம்</item>
+        <item>பவ</item>
+        <item>பாலவ</item>
+        <item>கௌலவ</item>
+        <item>தைதூலை</item>
+        <item>கரசை</item>
+        <item>வணிசை</item>
+        <item>விஷ்டி</item>
+        <item>பவ</item>
+        <item>பாலவ</item>
+        <item>கௌலவ</item>
+        <item>தைதூலை</item>
+        <item>கரசை</item>
+        <item>வணிசை</item>
+        <item>விஷ்டி</item>
+        <item>பவ</item>
+        <item>பாலவ</item>
+        <item>கௌலவ</item>
+        <item>தைதூலை</item>
+        <item>கரசை</item>
+        <item>வணிசை</item>
+        <item>விஷ்டி</item>
+        <item>பவ</item>
+        <item>பாலவ</item>
+        <item>கௌலவ</item>
+        <item>தைதூலை</item>
+        <item>கரசை</item>
+        <item>வணிசை</item>
+        <item>விஷ்டி</item>
+        <item>பவ</item>
+        <item>பாலவ</item>
+        <item>கௌலவ</item>
+        <item>தைதூலை</item>
+        <item>கரசை</item>
+        <item>வணிசை</item>
+        <item>விஷ்டி</item>
+        <item>பவ</item>
+        <item>பாலவ</item>
+        <item>கௌலவ</item>
+        <item>தைதூலை</item>
+        <item>கரசை</item>
+        <item>வணிசை</item>
+        <item>விஷ்டி</item>
+        <item>பவ</item>
+        <item>பாலவ</item>
+        <item>கௌலவ</item>
+        <item>தைதூலை</item>
+        <item>கரசை</item>
+        <item>வணிசை</item>
+        <item>விஷ்டி</item>
+        <item>பவ</item>
+        <item>பாலவ</item>
+        <item>கௌலவ</item>
+        <item>தைதூலை</item>
+        <item>கரசை</item>
+        <item>வணிசை</item>
+        <item>விஷ்டி</item>
+        <item>சகுனி</item>
+        <item>சதுஷ்பாதம்</item>
+        <item>நாகவம்</item>
+    </string-array>
+
+    <!-- Vaasaram (weekday) -->
+    <string-array name="vaasaram_list">
+        <item>பானு</item>
+        <item>இந்து</item>
+        <item>பௌம</item>
+        <item>ஸௌம்ய</item>
+        <item>குரு</item>
+        <item>ப்ருகு</item>
+        <item>ஸ்திர</item>
+    </string-array>
+
+    <!-- Dhinam (Day) -->
+    <string-array name="dhinam_list">
+        <item>ஞாயிறு</item>
+        <item>திங்கள்</item>
+        <item>செவ்வாய்</item>
+        <item>புதன்</item>
+        <item>வியாழன்</item>
+        <item>வெள்ளி</item>
+        <item>சனி</item>
+    </string-array>
+
+    <!-- Horai (Auspicious Hour of the Day) -->
+    <string-array name="horai_list">
+        <item>சூரிய</item>
+        <item>சந்</item>
+        <item>அங்</item>
+        <item>புத</item>
+        <item>குரு</item>
+        <item>சுக்</item>
+        <item>சனி</item>
+    </string-array>
+
+    <!-- Amruthathi Yogam used to indicate auspiciousness of the Day -->
+    <string-array name="amruthathi_yogam_list">
+        <item>அம்ருதயோகம்</item>
+        <item>சித்தயோகம்</item>
+        <item>மரணயோகம்</item>
+    </string-array>
 </resources>

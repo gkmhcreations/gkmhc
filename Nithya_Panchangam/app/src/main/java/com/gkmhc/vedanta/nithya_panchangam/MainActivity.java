@@ -34,7 +34,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import com.gkmhc.utils.CopyToAssets;
 import com.gkmhc.utils.VedicCalendar;

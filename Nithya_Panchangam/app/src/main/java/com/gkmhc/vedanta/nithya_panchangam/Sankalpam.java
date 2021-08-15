@@ -338,6 +338,8 @@ public class Sankalpam extends Fragment {
         // If Subham (or) Srardham, then generate sankalpam accordingly.
         if (prefSankalpamType.equals(getString(R.string.pref_sankalpam_type_shubam))) {
             sankalpamStr += getString(R.string.sankalpam_shubam_end) + " ||" + "<br>";
+            sankalpamStr = sankalpamStr.replaceAll("\\*\\*\\*\\*",
+                    htmlFontHdrStart + sanskritThithiStr + htmlFontHdrEnd);
         } else if (prefSankalpamType.equals(getString(R.string.pref_sankalpam_type_srardham))) {
             sankalpamStr += getString(R.string.sankalpam_srardham_end_1) + " " +
                     htmlFontHdrStart + sanskritThithiStr + htmlFontHdrEnd + " " +

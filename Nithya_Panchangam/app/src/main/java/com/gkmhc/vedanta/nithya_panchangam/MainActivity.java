@@ -943,7 +943,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         // - Difficult to automatically align to Day light savings (DLS)
         placesTimezoneDB.put("Chennai, India", new PlacesInfo(80.2707, 13.0827, INDIAN_STANDARD_TIME));
         placesTimezoneDB.put("Mumbai, India", new PlacesInfo(72.8777, 19.0760, INDIAN_STANDARD_TIME));
-        placesTimezoneDB.put("Kolkota, India", new PlacesInfo(88.3639, 22.5726, INDIAN_STANDARD_TIME));
+        placesTimezoneDB.put("Kolkata, India", new PlacesInfo(88.3639, 22.5726, INDIAN_STANDARD_TIME));
         placesTimezoneDB.put("New Delhi, India", new PlacesInfo(77.2090, 28.6139, INDIAN_STANDARD_TIME));
         placesTimezoneDB.put("Tirunelveli, India", new PlacesInfo(77.7567, 8.7139, INDIAN_STANDARD_TIME));
         placesTimezoneDB.put("Salem, India", new PlacesInfo(78.1460, 11.6643, INDIAN_STANDARD_TIME));
@@ -983,9 +983,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         placesTimezoneDB.put("Latur, India", new PlacesInfo(76.5604, 18.4088, INDIAN_STANDARD_TIME));
         placesTimezoneDB.put("Calicut, India", new PlacesInfo(75.7804, 11.2588, INDIAN_STANDARD_TIME));
         placesTimezoneDB.put("Cochin, India", new PlacesInfo(76.2673, 9.9312, INDIAN_STANDARD_TIME));
-        placesTimezoneDB.put("Trivandrum, India", new PlacesInfo(76.9366, 8.5241, INDIAN_STANDARD_TIME));
+        placesTimezoneDB.put("Thiruvananthapuram, India", new PlacesInfo(76.9366, 8.5241, INDIAN_STANDARD_TIME));
         placesTimezoneDB.put("Palaghat, India", new PlacesInfo(76.6548, 10.7867, INDIAN_STANDARD_TIME));
-        placesTimezoneDB.put("Bangalore, India", new PlacesInfo(77.5946, 12.9716, INDIAN_STANDARD_TIME));
+        placesTimezoneDB.put("Bengaluru, India", new PlacesInfo(77.5946, 12.9716, INDIAN_STANDARD_TIME));
         placesTimezoneDB.put("Mangalore, India", new PlacesInfo(74.8560, 12.9141, INDIAN_STANDARD_TIME));
         placesTimezoneDB.put("Belgaum, India", new PlacesInfo(74.4977, 15.8497, INDIAN_STANDARD_TIME));
         placesTimezoneDB.put("Udipi, India", new PlacesInfo(74.7421, 13.3409, INDIAN_STANDARD_TIME));
@@ -1038,7 +1038,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         placesTimezoneDB.put("Mira-Bhayandar, India", new PlacesInfo(72.8544, 19.2952, INDIAN_STANDARD_TIME));
         placesTimezoneDB.put("Jalgaon, India", new PlacesInfo(75.5626, 21.0077, INDIAN_STANDARD_TIME));
         placesTimezoneDB.put("Guntur, India", new PlacesInfo(80.4365, 16.3067, INDIAN_STANDARD_TIME));
-        placesTimezoneDB.put("Thiruvananthapuram, India", new PlacesInfo(76.9366, 8.5241, INDIAN_STANDARD_TIME));
         placesTimezoneDB.put("Bhiwandi, India", new PlacesInfo(73.0483, 19.2813, INDIAN_STANDARD_TIME));
         placesTimezoneDB.put("Saharanpur, India", new PlacesInfo(77.5552, 29.9680, INDIAN_STANDARD_TIME));
         placesTimezoneDB.put("Gorakhpur, India", new PlacesInfo(83.3732, 26.7606, INDIAN_STANDARD_TIME));

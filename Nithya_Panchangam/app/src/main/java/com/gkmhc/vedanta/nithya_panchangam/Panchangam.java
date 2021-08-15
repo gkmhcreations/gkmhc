@@ -107,8 +107,6 @@ public class Panchangam extends Fragment {
 
         textViewCurLocation = root.findViewById(R.id.location);
         textViewCurLocation.setPaintFlags(textViewCurLocation.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        //int prefLocationType = mainActivity.getLocationSettingsType();
-        //textViewCurLocation.setEnabled(prefLocationType == MainActivity.LOCATION_MANUAL);
         textViewCurLocation.setEnabled(true);
 
         textViewCurLocation.setOnClickListener(tView -> {

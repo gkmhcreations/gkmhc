@@ -220,7 +220,7 @@
     <!-- Ayanam (6-month) period -->
     <string-array name="ayanam_list">
         <item>உத்தராயணம்</item>
-        <item>தட்சிணாயணம்</item>
+        <item>தக்ஷிணாயணம்</item>
     </string-array>
 
     <!-- Rithu (Season) 2-month period -->
@@ -393,8 +393,8 @@
         <item>மூல</item>
         <item>பூர்வாஷாடா</item>
         <item>உத்திராஷாடா</item>
-        <item>ச்ரவண</item>
-        <item>ச்ரவிஷ்டா</item>
+        <item>ஶ்ரவண</item>
+        <item>ஶ்ரவிஷ்டா</item>
         <item>சதாபிஷக</item>
         <item>பூரவ ப்ரோஷ்டபதா</item>
         <item>உத்திர ப்ரோஷ்டபதா</item>

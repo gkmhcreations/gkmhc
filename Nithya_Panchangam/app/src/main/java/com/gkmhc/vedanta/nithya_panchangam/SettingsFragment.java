@@ -97,10 +97,13 @@ public class SettingsFragment extends PreferenceFragment {
             preference.setSummary(sharedPreferences.getString(PREF_PANCHANGAM_KEY, getString(R.string.pref_def_panchangam)));
 
             preference = findPreference(PREF_LOCATION_SETTINGS_KEY);
-            preference.setSummary(sharedPreferences.getString(PREF_LOCATION_SETTINGS_KEY, getString(R.string.pref_location_manual)));
+            String strLocSettingsType = sharedPreferences.getString(PREF_LOCATION_SETTINGS_KEY,
+                    getString(R.string.pref_location_manual));
+            preference.setSummary(strLocSettingsType);
 
             preference = findPreference(PREF_LOCATION_DEF_VAL_KEY);
             preference.setSummary(sharedPreferences.getString(PREF_LOCATION_DEF_VAL_KEY, getString(R.string.pref_def_location_val)));
+            preference.setEnabled(strLocSettingsType.equalsIgnoreCase(getString(R.string.pref_location_manual)));
             preference.setOnPreferenceClickListener(preference1 -> {
                 showManualLocationDialog(sharedPreferences, preference1);
                 return false;

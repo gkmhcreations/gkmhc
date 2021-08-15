@@ -37,7 +37,7 @@
             android:layout_weight="0.3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            app:drawableEndCompat="@drawable/ic_popup_dialog" />
+            app:drawableEndCompat="@drawable/click_here" />
     </LinearLayout>
 
     <ListView

@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private static final String PREF_LOCATION_SETTINGS_KEY = "PREF_LOCATION_SETTINGS_KEY";
     public static final String PREF_LOCATION_DEF_VAL_KEY = "PREF_LOCATION_DEF_VAL_KEY";
     private static final String PREF_AYANAMSA_KEY = "PREF_AYANAMSA_KEY";
+    private static final String PREF_APP_LAUNCH_FIRST_TIME_KEY = "PREF_APP_LAUNCH_FIRST_TIME_KEY";
     private static final double INDIAN_STANDARD_TIME = 5.5;
     public static final int LOCATION_MANUAL = 0;
     public static final int LOCATION_GPS = 1;
@@ -399,32 +400,28 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.settings_np:
-                // Create a new activity for Settings
-                startActivityForResult(new Intent(this,
-                                NithyaPanchangamSettings.class),
-                                settingsRequestCode);
-                return true;
-            case R.id.about_np:
-                // Create a new activity for About
-                startActivityForResult(new Intent(this,
-                                AboutActivity.class),
-                                aboutRequestCode);
-                return true;
-            case R.id.calendar_np:
-                // Create a dialog for displaying Calender with "English" as default locale
-                Locale locale = new Locale("EN");
-                Locale.setDefault(locale);
-                Resources resources = getResources();
-                Configuration configuration = resources.getConfiguration();
-                configuration.locale = locale;
-                resources.updateConfiguration(configuration, resources.getDisplayMetrics());
-                startActivityForResult(new Intent(this,
-                                NithyaPanchangamCalendar.class), npCalendarRequestCode);
-                return true;
+        boolean retVal = true;
+        if (item.getItemId() == R.id.settings_np) {
+            startActivityForResult(new Intent(this, NithyaPanchangamSettings.class),
+                    settingsRequestCode);
+        } else if (item.getItemId() == R.id.about_np) {
+            startActivityForResult(new Intent(this, AboutActivity.class),
+                    aboutRequestCode);
+        } else if (item.getItemId() == R.id.calendar_np) {
+            // Create a dialog for displaying Calender with "English" as default locale
+            Locale locale = new Locale("EN");
+            Locale.setDefault(locale);
+            Resources resources = getResources();
+            Configuration configuration = resources.getConfiguration();
+            configuration.locale = locale;
+            resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+            startActivityForResult(new Intent(this,
+                    NithyaPanchangamCalendar.class), npCalendarRequestCode);
+        } else {
+            retVal = super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+
+        return retVal;
     }
 
     // Get a new calendar instance
@@ -452,6 +449,16 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         // 2) If Activity results is for Alarm, then create Alarm based on alarm type
         // Ignore the rest
         if (requestCode == settingsRequestCode) {
+            // If Manual location has changed, then refresh the tabs
+            String selectedLocation = readDefLocationSetting(getApplicationContext());
+            if (!selectedLocation.equalsIgnoreCase(curLocationCity)) {
+                curLocationCity = selectedLocation;
+                refreshLocation();
+                updateAppLocale();
+                refreshTab(NPAdapter.NP_TAB_PANCHANGAM);
+                refreshTab(NPAdapter.NP_TAB_SANKALPAM);
+            }
+
             // If there is change in location preferences, then refresh location & the fragments.
             int prefToUpdate = readPrefLocationSelection();
             if (prefLocationType != prefToUpdate) {
@@ -537,7 +544,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     /**
-     * @readPrefLocale Utility function to get the selected locale from the shared preferences.
+     * Utility function to get the selected locale from the shared preferences.
      *
      * @return Selected locale as a string
      */
@@ -557,7 +564,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     /**
-     * @readPrefLocale Utility function to get the selected locale from the shared preferences.
+     * Utility function to get the selected locale from the shared preferences.
      *
      * @return Selected locale as a string
      */
@@ -573,7 +580,23 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     /**
-     * @readPrefLocale Utility function to get the selected locale from the shared preferences.
+     * Utility function to find if App is launched for the first-time.
+     *
+     * @return true if started first time, false otherwise.
+     */
+    public boolean isAppLaunchedFirstTime() {
+        return sharedPreferences.getBoolean(PREF_APP_LAUNCH_FIRST_TIME_KEY, true);
+    }
+
+    /**
+     * Utility function to update App is launched for the first-time field.
+     */
+    public void updateAppLaunchedFirstTime() {
+        sharedPreferences.edit().putBoolean(PREF_APP_LAUNCH_FIRST_TIME_KEY, false).apply();
+    }
+
+    /**
+     * Utility function to get the selected locale from the shared preferences.
      *
      * @return Selected locale as a string
      */
@@ -588,7 +611,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     /**
-     * @readPrefLocale Utility function to get the selected ayanamsa from the shared preferences.
+     * Utility function to get the selected ayanamsa from the shared preferences.
      *
      * @return Selected ayanamsa as a string
      */

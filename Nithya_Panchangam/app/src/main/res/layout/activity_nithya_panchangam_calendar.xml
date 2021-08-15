@@ -27,17 +27,17 @@
 
         <TextView
             android:id="@+id/np_calendar_title"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="2dp"
             android:layout_weight="2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:textStyle="bold"
+            android:gravity="center_vertical|center_horizontal"
             android:textAlignment="center"
             android:text=""
             android:textColor="@color/maroon"
-            android:textSize="16sp"
-            android:maxLines="3"
-            android:textStyle="bold"
-            android:layout_gravity="center_vertical|center_horizontal"/>
+            android:textSize="20sp"
+            android:maxLines="3" />
 
         <ImageView
             android:id="@+id/np_calendar_nextMonth"

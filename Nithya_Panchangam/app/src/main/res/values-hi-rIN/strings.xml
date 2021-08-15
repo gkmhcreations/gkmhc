@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="sankalpam_shubam_begin">ममोपात्त-समस्त-दुरितक्षयद्वारा श्री परमेश्वर-प्रीत्यर्थं शुभे शोभने मुहूर्ते अद्य ब्रह्मणः द्वितीयपरार्धे श्वेतवराहकल्पे वैवस्वत-मन्वंतरे अष्टाविंशतितमे कलियुगे प्रथमे पादे जंबूद्वीपे भारतवर्षे भरतखंडे मेरोः दक्षिणे पार्श्वे शकाब्दे अस्मिन् वर्तमाने व्यावहारिके प्रभवादीनां षष्ट्याः संवत्सराणां मध्ये</string>
-    <string name="app_name">नित्य पंचांगं</string>
-    <string name="nithya_panchangam_header">नित्य पंचांगः</string>
+    <string name="app_name">नित्य पंचांग</string>
+    <string name="nithya_panchangam_header">नित्य पंचांग</string>
     <string name="samvatsaram_heading">संवत्सरः</string>
     <string name="aayanam_heading">अयनम्</string>
     <string name="rithou_heading">ऋतुः</string>
@@ -18,8 +18,8 @@
     <string name="raahu_kaalam_heading">राहुकालः</string>
     <string name="emakandam_heading">यमघंटः</string>
     <string name="kuligai_heading">गुलिककालः</string>
-    <string name="panchangam_tab_heading">पंचांगः</string>
-    <string name="sankalpam_tab_heading">संकल्पः</string>
+    <string name="panchangam_tab_heading">पंचांग</string>
+    <string name="sankalpam_tab_heading">संकल्प</string>
     <string name="alarm_tab_heading">स्तर संकेतध्वनिः</string>
     <string name="stopwatch_tab_heading">विरामघटी</string>
     <string name="splash_screen_banner">स्वामिये शरणं अय्यप्पा</string>
@@ -102,7 +102,7 @@
     <string name="no_alarms">स्तर संकेतध्वनि न कृतं!</string>
     <string name="delete_reminder">Delete Reminder</string>
     <string name="add_alarm">स्तर संकेतध्वनि</string>
-    <string name="reminder_tab_heading">स्मारणं</string>
+    <string name="reminder_tab_heading">अनुस्मारक</string>
     <string name="chithra_pournami">चित्रा पौर्णमासी</string>
     <string name="select_repeat_option">चयन अनुवाद विकल्प</string>
     <string name="repeat_custom">इच्छानुसारं</string>

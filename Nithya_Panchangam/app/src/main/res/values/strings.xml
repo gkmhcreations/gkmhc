@@ -24,15 +24,18 @@
     <string name="pref_location_settings_key" translatable="false">PREF_LOCATION_SETTINGS_KEY</string>
     <string name="pref_location" translatable="false">Location</string>
     <string name="pref_location_type_details" translatable="false">Location Settings</string>
-    <string name="pref_def_location_type" translatable="false">Manual Selection (Recommended)</string>
+    <string name="pref_location_manual" translatable="false">Manual Selection (Recommended)</string>
+    <string name="pref_location_gps" translatable="false">GPS Location (Permissions Required)</string>
+    <string name="pref_location_def_val_key" translatable="false">PREF_LOCATION_DEF_VAL_KEY</string>
+    <string name="pref_def_location" translatable="false">Location Details</string>
     <string name="pref_def_location_val" translatable="false">Varanasi, India</string>
+    <string name="pref_def_location_type_details" translatable="false">Manual Location Selection</string>
     <string name="pref_sankalpam_type_key" translatable="false">PREF_SANKALPAM_TYPE_KEY</string>
     <string name="pref_sankalpam" translatable="false">Sankalpam</string>
     <string name="pref_sankalpam_details" translatable="false">Sankalpam Type</string>
     <string name="pref_sankalpam_type_shubam" translatable="false">Shubham</string>
     <string name="pref_sankalpam_type_srardham" translatable="false">Shraaddham</string>
     <string name="pref_def_sankalpam_type" translatable="false">Shubham</string>
-    <string name="pref_location_gps" translatable="false">GPS Location (Permissions Required)</string>
     <string name="pref_ayanamsa_chitrapaksha" translatable="false">Chitrapaksha</string>
     <string name="pref_ayanamsa_lahiri" translatable="false">Lahiri</string>
     <string-array name="locale_list">
@@ -53,8 +56,8 @@
         <item>@string/pref_ayanamsa_lahiri</item>
     </string-array>
     <string-array name="pref_location_settings">
-        <item>Manual Selection (Recommended)</item>
-        <item>GPS Location (Permissions Required)</item>
+        <item>@string/pref_location_manual</item>
+        <item>@string/pref_location_gps</item>
     </string-array>
     <string-array name="pref_sankalpam_type_list">
         <item>@string/pref_sankalpam_type_shubam</item>

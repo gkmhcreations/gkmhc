@@ -18,8 +18,16 @@
             android:title="@string/pref_location_type_details"
             android:entries="@array/pref_location_settings"
             android:entryValues="@array/pref_location_settings"
-            android:defaultValue="@string/pref_def_location_type"
+            android:defaultValue="@string/pref_location_manual"
             android:summary="Choose Location Settings"/>
+
+    <PreferenceCategory
+        android:title="@string/pref_def_location"/>
+        <Preference
+            android:key="@string/pref_location_def_val_key"
+            android:title="@string/pref_def_location_type_details"
+            android:defaultValue="@string/pref_def_location_val"
+            android:summary="Choose Location Preference"/>
 
     <PreferenceCategory
         android:title="@string/pref_sankalpam"/>

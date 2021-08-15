@@ -3,6 +3,7 @@ package com.gkmhc.vedanta.nithya_panchangam;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.GradientDrawable;
 import android.text.Html;
 import android.view.Gravity;
@@ -126,6 +127,8 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
 
         panchangamViewHolder.panchangamField.setText(panchangamFields.get(position));
         panchangamViewHolder.panchangamField.setTextSize(defTextSize);
+
+        // Make Lagnam value clickable to display a range of lagnams throughout the day!
         if (position == 11) {
             // Add Lagnam details
             // Display Lagnam from the list of Lagnams retrieved.
@@ -142,14 +145,21 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             }
             panchangamViewHolder.panchangamValue.setText(lagnamVal.toString());
             panchangamViewHolder.panchangamValue.setTextSize(defTextSize);
+            panchangamViewHolder.panchangamValue.setPaintFlags(
+                    panchangamViewHolder.panchangamValue.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            panchangamViewHolder.panchangamValue.setCompoundDrawablesWithIntrinsicBounds(
+                    0, 0, R.drawable.ic_popup_dialog, 0);
             convertView.setOnClickListener(v -> showLagnamDetails());
-        } else if (position == 12) {
+        }
+        // Make Lagnam value clickable to display a range of lagnams throughout the day!
+        else if (position == 12) {
             // Add Horai details
             // Display Horai from the list of Horai(s) retrieved.
             StringBuilder horaiVal = new StringBuilder();
             for (int index = 0;index < horaiStr.size();index++) {
                 VedicCalendar.LagnamHoraiInfo horaiInfo = horaiStr.get(index);
-                horaiVal.append(horaiInfo.name);
+                String horaiParsedVal = horaiInfo.name.replaceAll("<br>", "");
+                horaiVal.append(horaiParsedVal);
                 if (!horaiInfo.timeValue.isEmpty()) {
                     horaiVal.append(" (");
                     horaiVal.append(horaiInfo.timeValue);
@@ -159,6 +169,10 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             }
             panchangamViewHolder.panchangamValue.setText(Html.fromHtml(horaiVal.toString()));
             panchangamViewHolder.panchangamValue.setTextSize(defTextSize);
+            panchangamViewHolder.panchangamValue.setPaintFlags(
+                    panchangamViewHolder.panchangamValue.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            panchangamViewHolder.panchangamValue.setCompoundDrawablesWithIntrinsicBounds(
+                    0, 0, R.drawable.ic_popup_dialog, 0);
             convertView.setOnClickListener(v -> showHoraiDetails());
         } else if (position == 18) {
             // Add "Nalla Neram" details

@@ -580,9 +580,23 @@ public class VedicCalendar extends Calendar {
             maasamSpan *= MAX_24HOURS;
             maasamSpan += defTimezone;
 
-            if (maasamSpan <= 0) {
-                System.out.println("Error: VedicCalendar: Negative getMaasam(): " + maasamSpan);
+            if (maasamSpan < 0) {
+                double raviAyanamNextDayAtDayStart = refRaviAyanamAtDayStart + dailyRaviMotion;
+                maasamRef = Math.ceil(raviAyanamNextDayAtDayStart / MAX_RAASI_MINUTES);
+                maasamRef *= MAX_RAASI_MINUTES;
+                maasamSpan = maasamRef - refRaviAyanamAtDayStart;
+
+                // 2) Find the Earth Hours during the day based on daily motion of Ravi & Chandra.
+                maasamSpan /= dailyRaviMotion;
+                maasamSpan *= MAX_24HOURS;
+                maasamSpan += defTimezone;
+
+                if (maasamSpan < 0) {
+                    maasamSpan += MAX_24HOURS;
+                }
+                System.out.println("VedicCalendar: Negative getMaasam(): " + maasamSpan);
             }
+
             // 3) Split Earth hours into HH:MM
             int maasamSpanHour = (int) maasamSpan;
             maasamSpan *= MAX_MINS_IN_HOUR;
@@ -743,9 +757,27 @@ public class VedicCalendar extends Calendar {
         thithiSpan *= MAX_24HOURS;
         thithiSpan += defTimezone;
 
-        if (thithiSpan <= 0) {
-            //System.out.println("VedicCalendar: Negative getThithi(): " + thithiSpan);
+        if (thithiSpan < 0) {
+            chandraRaviDistance = (refChandraAyanamAtDayStart + dailyChandraMotion) -
+                    (refRaviAyanamAtDayStart + dailyRaviMotion);
+            if (chandraRaviDistance < 0) {
+                chandraRaviDistance += MAX_AYANAM_MINUTES;
+            }
+            thithiAtDayStart = (int) (chandraRaviDistance / MAX_THITHI_MINUTES);
+            thithiAtDayStart %= MAX_THITHIS;
+            thithiRef = Math.ceil(chandraRaviDistance / MAX_THITHI_MINUTES);
+            thithiRef *= MAX_THITHI_MINUTES;
+            thithiSpan = thithiRef - chandraRaviDistance;
+            thithiSpan /= (dailyChandraMotion - dailyRaviMotion);
+            thithiSpan *= MAX_24HOURS;
+            thithiSpan += defTimezone;
+
+            if (thithiSpan < 0) {
+                thithiSpan += MAX_24HOURS;
+            }
+            System.out.println("VedicCalendar: Negative getThithi(): " + thithiSpan);
         }
+
         // 3) Split Earth hours into HH:MM
         thithiSpanHour = (int) thithiSpan;
         thithiSpan *= MAX_MINS_IN_HOUR;
@@ -1062,6 +1094,7 @@ public class VedicCalendar extends Calendar {
                 natchathiramIndex += 1;
                 natchathiramIndex %= MAX_NAKSHATHRAMS;
                 natchathiramSpan = getNakshatramSpan(natchathiramIndex, false);
+                System.out.println("VedicCalendar: Negative getNakshatram(): " + natchathiramSpan);
             }
             natchathiramSpanHour = (int) (natchathiramSpan / MAX_MINS_IN_HOUR);
             natchathiramSpanMin = (int) (natchathiramSpan % MAX_MINS_IN_HOUR);
@@ -1069,8 +1102,11 @@ public class VedicCalendar extends Calendar {
             // 1) Calculate the thithi span within the day
             // This is a rough calculation
             natchathiramSpan = getNakshatramSpan(natchathiramIndex, true);
-            if (natchathiramSpan <= 0) {
-                //System.out.println("VedicCalendar: Negative getNakshatram(): " + natchathiramSpan);
+            if (natchathiramSpan < sunRiseTotalMins) {
+                natchathiramIndex += 1;
+                natchathiramIndex %= MAX_NAKSHATHRAMS;
+                natchathiramSpan = getNakshatramSpan(natchathiramIndex, true);
+                System.out.println("VedicCalendar: Negative getNakshatram() Prom : " + natchathiramSpan);
             }
             // 3) Split Earth hours into HH:MM
             natchathiramSpanHour = (int) natchathiramSpan;
@@ -1197,6 +1233,7 @@ public class VedicCalendar extends Calendar {
                 natchathiramSpan = getNakshatramSpan(natchathiramIndex, false);
                 cnatchathiramIndex += 1;
                 cnatchathiramIndex %= MAX_NAKSHATHRAMS;
+                System.out.println("VedicCalendar: Negative getChandrashtamaNakshatram() : " + natchathiramSpan);
             }
             natchathiramSpanHour = (int) (natchathiramSpan / MAX_MINS_IN_HOUR);
             natchathiramSpanMin = (int) (natchathiramSpan % MAX_MINS_IN_HOUR);
@@ -1204,8 +1241,13 @@ public class VedicCalendar extends Calendar {
             // 1) Calculate the thithi span within the day
             // This is a rough calculation
             natchathiramSpan = getNakshatramSpan(natchathiramIndex, true);
-            if (natchathiramSpan <= 0) {
-                //System.out.println("VedicCalendar: Negative getCNakshatram(): " + natchathiramSpan);
+            if (natchathiramSpan < sunRiseTotalMins) {
+                natchathiramIndex += 1;
+                natchathiramIndex %= MAX_NAKSHATHRAMS;
+                natchathiramSpan = getNakshatramSpan(natchathiramIndex, true);
+                cnatchathiramIndex += 1;
+                cnatchathiramIndex %= MAX_NAKSHATHRAMS;
+                System.out.println("VedicCalendar: Negative getChandrashtamaNakshatram() Prom : " + natchathiramSpan);
             }
             // 3) Split Earth hours into HH:MM
             natchathiramSpanHour = (int) natchathiramSpan;
@@ -1257,10 +1299,10 @@ public class VedicCalendar extends Calendar {
             }
         }
 
-        //System.out.println("VedicCalendar", "get_chandrashtama_natchathiram: " + "" +
-        //        "Chandrashtama Nakshatram => " + natchathiramStr +
-        //        " Nakshatram Span = " + natchathiramSpanMin + " later: " +
-        //        secondNakshatramStr);
+        System.out.println("VedicCalendar" + " getChandrashtamaNakshatram: " + "" +
+                "Chandrashtama Nakshatram => " + natchathiramStr +
+                " Nakshatram Span = " + natchathiramSpanHour + ":" + natchathiramSpanMin +
+                " later: " + secondNakshatramStr);
 
         return natchathiramStr;
     }
@@ -1307,17 +1349,21 @@ public class VedicCalendar extends Calendar {
         raasiIndex %= MAX_RAASIS;
 
         String[] raasiList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_RAASI);
-        String raasiStr = raasiList[(raasiIndex % MAX_RAASIS)];
-        String secondRaasiStr = raasiList[((raasiIndex + 1) % MAX_RAASIS)];
 
         // 2) Get 1st Raasi span for the given calendar day
         double raasiSpan = getRaasiSpan(raasiIndex, SweConst.SE_MOON, false);
-        if (raasiSpan <= 0) {
-            //System.out.println("VedicCalendar: Negative getRaasi(): " + raasiSpan);
+        if (raasiSpan < sunRiseTotalMins) {
+            raasiIndex += 1;
+            raasiIndex %= MAX_NAKSHATHRAMS;
+            raasiSpan = getNakshatramSpan(raasiIndex, false);
+            System.out.println("VedicCalendar: Negative getRaasi() : " + raasiSpan);
         }
 
         int raasiSpanHour = (int) (raasiSpan / MAX_MINS_IN_HOUR);
         int raasiSpanMin = (int) (raasiSpan % MAX_MINS_IN_HOUR);
+
+        String raasiStr = raasiList[(raasiIndex % MAX_RAASIS)];
+        String secondRaasiStr = raasiList[((raasiIndex + 1) % MAX_RAASIS)];
 
         // 3) Formulate Raasi string based on raasi span.
         // For Panchangam, entire day's calculation would be good enough
@@ -1595,6 +1641,15 @@ public class VedicCalendar extends Calendar {
 
         // 2) Get 1st Nakshatram span for the given calendar day
         double natchathiramSpan = getNakshatramSpan(natchathiramIndex, false);
+
+        // If 1st Nakshatram occurs before sunrise, then start with next Nakshatram.
+        if (natchathiramSpan < sunRiseTotalMins) {
+            natchathiramIndex += 1;
+            natchathiramIndex %= MAX_NAKSHATHRAMS;
+            natchathiramSpan = getNakshatramSpan(natchathiramIndex, false);
+            System.out.println("VedicCalendar: Negative getAmruthathiYogam() : " + natchathiramSpan);
+        }
+
         int natchathiramSpanHour = (int) (natchathiramSpan / MAX_MINS_IN_HOUR);
         int natchathiramSpanMin = (int) (natchathiramSpan % MAX_MINS_IN_HOUR);
 

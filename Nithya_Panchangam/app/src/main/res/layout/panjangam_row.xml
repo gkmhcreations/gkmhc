@@ -13,7 +13,8 @@
         android:textStyle="bold"
         android:textColor="@color/blue"
         android:maxLines="5"
-        android:gravity="start"
+        android:gravity="center_vertical|start"
+        android:textAlignment="textStart"
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent"/>
@@ -25,7 +26,8 @@
         android:textStyle="bold"
         android:textColor="@color/blue"
         android:maxLines="10"
-        android:gravity="end"
+        android:gravity="center_vertical|end"
+        android:textAlignment="textEnd"
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent"/>

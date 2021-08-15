@@ -1,6 +1,7 @@
 package com.gkmhc.vedanta.nithya_panchangam;
 
 import android.app.AlertDialog;
+import android.graphics.Paint;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -105,6 +106,7 @@ public class Panchangam extends Fragment {
         });
 
         textViewCurLocation = root.findViewById(R.id.location);
+        textViewCurLocation.setPaintFlags(textViewCurLocation.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         //int prefLocationType = mainActivity.getLocationSettingsType();
         //textViewCurLocation.setEnabled(prefLocationType == MainActivity.LOCATION_MANUAL);
         textViewCurLocation.setEnabled(true);
@@ -140,6 +142,11 @@ public class Panchangam extends Fragment {
                     WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             alertDialog.show();
         });
+
+        if (mainActivity.isAppLaunchedFirstTime()) {
+            mainActivity.updateAppLaunchedFirstTime();
+            textViewCurLocation.performClick();
+        }
 
         //SwipeListener swipeListener = new SwipeListener(root);
         return root;

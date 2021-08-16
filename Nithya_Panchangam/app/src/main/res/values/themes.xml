@@ -47,4 +47,26 @@
     <style name="NPTextViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/noto_serif</item>
     </style>
+    <style name="NPPreferencesTheme" parent="@style/Theme.AppCompat.Light">
+        <!-- Primary brand color. -->
+        <item name="android:textColorPrimary">@color/blue</item>
+        <item name="android:textColorSecondary">@color/blue</item>
+        <item name="android:textColorTertiary">@color/lightcyan</item>
+        <item name="actionMenuTextColor">@color/blue</item>
+        <item name="android:colorBackground">@color/lightSaffron</item>
+        <item name="android:windowBackground">@color/lightSaffron</item>
+        <item name="android:windowTitleBackgroundStyle">@style/NPWindowTitleBackground</item>
+    </style>
+    <style name="NPTimePickerTheme" parent="@style/Theme.AppCompat.Light">
+        <!-- Primary brand color. -->
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorPrimary">@color/blue</item>
+        <item name="android:textColorSecondary">@color/gray</item>
+        <item name="android:textColorTertiary">@color/lightcyan</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:background">@color/transparent</item>
+    </style>
+    <style name="NPWindowTitleBackground">
+        <item name="android:windowBackground">@color/lightSaffron</item>
+    </style>
 </resources>

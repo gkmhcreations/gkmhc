@@ -6,16 +6,16 @@
         android:title=""
         android:id="@+id/calendar_np"
         android:icon="@drawable/calendar"
-        app:showAsAction="ifRoom"
-        />
+        android:contentDescription="@string/calendar"
+        app:showAsAction="ifRoom" />
     <item
         android:title="@string/settings"
         android:id="@+id/settings_np"
-        app:showAsAction="collapseActionView"
-        />
+        android:contentDescription="@null"
+        app:showAsAction="collapseActionView" />
     <item
         android:title="@string/about"
         android:id="@+id/about_np"
-        app:showAsAction="collapseActionView"
-        />
+        android:contentDescription="@null"
+        app:showAsAction="collapseActionView" />
 </menu>

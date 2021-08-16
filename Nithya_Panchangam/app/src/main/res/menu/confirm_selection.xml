@@ -6,6 +6,6 @@
         android:id="@+id/confirm_button"
         app:showAsAction="always"
         android:icon="@drawable/confirm_button"
-        android:visible="false"
-        />
+        android:contentDescription="@string/confirm_selection"
+        android:visible="false" />
 </menu>

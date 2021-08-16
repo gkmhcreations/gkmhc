@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:title="@string/pref_locale"/>
+        android:title="@string/pref_locale" />
         <ListPreference
             android:key="@string/pref_np_locale_key"
             android:title="@string/preferred_display_lang"

@@ -11,6 +11,8 @@
         android:id="@+id/np_location_hdr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="48dp"
         android:orientation="horizontal"
         tools:context=".Panchangam">
 
@@ -19,9 +21,10 @@
             android:ellipsize="end"
             android:text="@string/nithya_panchangam_header"
             android:textStyle="bold"
+            android:textAlignment="textStart"
             android:maxLines="3"
             android:textColor="@color/maroon"
-            android:gravity="start"
+            android:gravity="start|center_vertical"
             android:layout_weight="0.7"
             android:layout_width="0dp"
             android:layout_height="match_parent"/>
@@ -33,7 +36,7 @@
             android:textStyle="bold"
             android:maxLines="3"
             android:textColor="@color/maroon"
-            android:gravity="end"
+            android:gravity="end|center_vertical"
             android:layout_weight="0.3"
             android:layout_width="0dp"
             android:layout_height="match_parent"

@@ -6,6 +6,7 @@
     <LinearLayout
         android:id="@+id/np_top_heading"
         android:orientation="horizontal"
+        android:minHeight="48dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -13,6 +14,7 @@
             android:id="@+id/np_calendar_prevYear"
             android:src="@drawable/ic_calendar_prev"
             android:contentDescription="@string/scroll_calendar_left"
+            android:minHeight="48dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_width="0dp" />
@@ -21,6 +23,7 @@
             android:id="@+id/np_calendar_prevMonth"
             android:src="@drawable/ic_calendar_prev_small_arrow"
             android:contentDescription="@string/scroll_calendar_left"
+            android:minHeight="48dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_width="0dp" />
@@ -31,6 +34,7 @@
             android:layout_weight="2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:minHeight="48dp"
             android:textStyle="bold"
             android:gravity="center_vertical|center_horizontal"
             android:textAlignment="center"
@@ -43,6 +47,7 @@
             android:id="@+id/np_calendar_nextMonth"
             android:src="@drawable/ic_calendar_next_small_arrow"
             android:contentDescription="@string/scroll_calendar_left"
+            android:minHeight="48dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_width="0dp" />
@@ -51,6 +56,7 @@
             android:id="@+id/np_calendar_nextYear"
             android:src="@drawable/ic_calendar_next"
             android:contentDescription="@string/scroll_calendar_right"
+            android:minHeight="48dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_width="0dp" />
@@ -58,6 +64,7 @@
 
     <LinearLayout
         android:id="@+id/calendar_view"
+        android:minHeight="48dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/np_top_heading">
@@ -66,72 +73,79 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:minHeight="48dp"
+            android:gravity="center_horizontal|center_vertical"
             android:text="@string/planet_sun"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:textAlignment="center"
-            android:maxLines="1"
-            android:gravity="center_horizontal" />
+            android:maxLines="1" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:minHeight="48dp"
+            android:gravity="center_horizontal|center_vertical"
             android:text="@string/planet_mon"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:textAlignment="center"
-            android:maxLines="1"
-            android:gravity="center_horizontal" />
+            android:maxLines="1" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:minHeight="48dp"
+            android:gravity="center_horizontal|center_vertical"
             android:text="@string/planet_tue"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:textAlignment="center"
-            android:maxLines="1"
-            android:gravity="center_horizontal" />
+            android:maxLines="1" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:minHeight="48dp"
+            android:gravity="center_horizontal|center_vertical"
             android:text="@string/planet_wed"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:textAlignment="center"
-            android:maxLines="1"
-            android:gravity="center_horizontal" />
+            android:maxLines="1" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:minHeight="48dp"
+            android:gravity="center_horizontal|center_vertical"
             android:text="@string/planet_thu"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:textAlignment="center"
-            android:maxLines="1"
-            android:gravity="center_horizontal" />
+            android:maxLines="1" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:minHeight="48dp"
+            android:gravity="center_horizontal|center_vertical"
             android:text="@string/planet_fri"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:textAlignment="center"
-            android:maxLines="1"
-            android:gravity="center_horizontal" />
+            android:maxLines="1" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:minHeight="48dp"
+            android:gravity="center_horizontal|center_vertical"
             android:text="@string/planet_sat"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:textAlignment="center"
-            android:maxLines="1"
-            android:gravity="center_horizontal" />
+            android:maxLines="1" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

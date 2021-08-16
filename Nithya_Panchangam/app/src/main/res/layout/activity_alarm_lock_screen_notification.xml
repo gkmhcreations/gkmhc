@@ -16,7 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="10dp"
-            android:gravity="center_horizontal"
+            android:minHeight="48dp"
+            android:gravity="center_horizontal|center_vertical"
             android:maxLines="5"
             android:text="@string/splash_screen_banner"
             android:textColor="#0000FF"
@@ -39,7 +40,7 @@
             <Button
                 android:id="@+id/lockscreen_snooze_button"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
@@ -53,18 +54,17 @@
             <Button
                 android:id="@+id/lockscreen_dismiss_button"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:text="@string/dismiss_alarm"
-                android:textStyle="bold"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:text="@string/snooze_alarm"
+                android:textAlignment="center"
                 android:textColor="@color/blue"
                 android:textSize="24sp"
-                android:textAlignment="center"
                 android:maxLines="5"
-                android:background="@color/transparent"
-                android:layout_marginHorizontal="5dp"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"/>
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

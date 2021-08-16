@@ -8,12 +8,16 @@ import androidx.appcompat.widget.SwitchCompat;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -22,12 +26,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Activity for providing an interface to gather Alarm / Reminder details.
@@ -41,6 +47,7 @@ import java.util.Calendar;
  * accordance with terms & conditions in GNU GPL license.
  */
 public class HandleAlarmReminderActivity extends AppCompatActivity {
+    private static final String PREF_NP_LOCALE_KEY = "PREF_NP_LOCALE_KEY";
     private static final int INVALID_VALUE = -1;
     private Menu menu;
     private int alarmID = INVALID_VALUE;
@@ -66,10 +73,17 @@ public class HandleAlarmReminderActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        MainActivity.updateSelLocale(this);
+        String prefLang = readLocaleSettings();
+        String selLocale = MainActivity.getLocale2Chars(prefLang);
+        Locale locale = new Locale(selLocale);
+        Locale.setDefault(locale);
+        Resources resources = getResources();
+        Configuration config = resources.getConfiguration();
+        config.locale = locale;
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_alarm);
+        setContentView(R.layout.activity_handle_alarm_reminder);
 
         boolean toVibrate = false;
         Intent recvdIntent = this.getIntent();
@@ -96,25 +110,31 @@ public class HandleAlarmReminderActivity extends AppCompatActivity {
         TextView alarmTimeVal = findViewById(R.id.alarmTimeValue);
         TextView repeatDetails = findViewById(R.id.repeat_details);
         repeatDetails.setText(R.string.repeat_once);
+        repeatDetails.setOnClickListener(v -> showRepeatOptionSelectDialog());
+
         SwitchCompat vibrateSettings = findViewById(R.id.vibration_settings);
         vibrateSettings.setOnCheckedChangeListener((buttonView, isChecked) ->
                 updateVisbilityForMenuItem(true));
 
         EditText labelText = findViewById(R.id.label_text);
-        labelText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+        if (alarmType == Alarm.ALARM_TYPE_STANDARD) {
+            labelText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                updateVisbilityForMenuItem(true);
-            }
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    updateVisbilityForMenuItem(true);
+                }
 
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
+        } else {
+            labelText.setFocusable(false);
+        }
 
         // Use this to launch a Android page to allow user to select a ringtone of his/her choice.
         TextView selectRingTone = findViewById(R.id.ringtone_settings);
@@ -159,9 +179,6 @@ public class HandleAlarmReminderActivity extends AppCompatActivity {
             updateVisbilityForMenuItem(true);
             alarmTimeVal.setText(getString(R.string.alarm_time) + String.format("%02d:%02d", hourOfDay, minute));
         });
-
-        RelativeLayout layout = findViewById(R.id.repeatLayout);
-        layout.setOnClickListener(v -> showRepeatOptionSelectDialog());
 
         if (alarmType == Alarm.ALARM_TYPE_VEDIC) {
             labelText.setEnabled(false);
@@ -582,6 +599,10 @@ public class HandleAlarmReminderActivity extends AppCompatActivity {
                         .setView(repeatOptionsSelectView).create();
         alertDialog.getWindow().setBackgroundDrawableResource(R.color.lightSaffron);
         alertDialog.show();
+        Button okButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        okButton.setTextColor(getResources().getColor(R.color.blue));
+        Button cancelButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        cancelButton.setTextColor(getResources().getColor(R.color.blue));
     }
 
     private boolean isAnyCustomOptionsSelected(CheckBox custSunCheckbox, CheckBox custMonCheckbox,
@@ -592,5 +613,13 @@ public class HandleAlarmReminderActivity extends AppCompatActivity {
                 custTueCheckbox.isChecked() || custWedCheckbox.isChecked() ||
                 custThuCheckbox.isChecked() || custFriCheckbox.isChecked() ||
                 custSatCheckbox.isChecked());
+    }
+
+    private String readLocaleSettings() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPreferences != null) {
+            return sharedPreferences.getString(PREF_NP_LOCALE_KEY, "En");
+        }
+        return "En";
     }
 }

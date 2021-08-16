@@ -172,7 +172,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             panchangamViewHolder.panchangamValue.setPaintFlags(
                     panchangamViewHolder.panchangamValue.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             panchangamViewHolder.panchangamValue.setCompoundDrawablesWithIntrinsicBounds(
-                    0, 0, R.drawable.ic_popup_dialog, 0);
+                    0, 0, R.drawable.click_here, 0);
             convertView.setOnClickListener(v -> showHoraiDetails());
         } else if (position == 18) {
             // Add "Nalla Neram" details

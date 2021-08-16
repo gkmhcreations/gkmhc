@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:minHeight="48dp"
     android:background="@drawable/calendar_cell_background"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -11,12 +12,15 @@
         android:id="@+id/gregCalendarDay"
         android:maxLines="1"
         android:textColor="@color/black"
+        android:minHeight="24dp"
+        android:labelFor="@id/gregCalendarDay"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.50"
-        app:layout_constraintVertical_bias="0.70"/>
+        app:layout_constraintVertical_bias="0.70"
+        android:contentDescription="@string/gregorian_calendar_day" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,12 +28,15 @@
         android:id="@+id/drikCalendarDay"
         android:maxLines="1"
         android:textColor="@color/blue"
+        android:minHeight="24dp"
+        android:labelFor="@id/drikCalendarDay"
         app:layout_constraintBottom_toBottomOf="@id/gregCalendarDay"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.90"
-        app:layout_constraintVertical_bias="0.25"/>
+        app:layout_constraintVertical_bias="0.25"
+        android:contentDescription="@string/panchangam_calendar_day" />
 
     <ViewFlipper
         android:id="@+id/drikCalendarFlipImg"

@@ -2,6 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/transparent"
+    android:minHeight="48dp"
+    android:minWidth="28dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -56,6 +58,8 @@
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/reminder_state"
         android:theme="@style/AlarmStateTheme"
+        android:minHeight="48dp"
+        android:contentDescription="@null"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

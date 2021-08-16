@@ -8,12 +8,14 @@
         android:id="@+id/repeat_option_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:text="@string/select_repeat_option"
         android:textColor="@color/blue"
         android:textStyle="bold"
+        android:textAlignment="center"
         android:maxLines="5"
         android:layout_centerHorizontal="true"
-        android:paddingTop="18dp"
-        android:text="@string/select_repeat_option"/>
+        android:paddingTop="18dp" />
 
     <CheckBox
         android:id="@+id/repeat_once"
@@ -24,6 +26,7 @@
         android:paddingTop="18dp"
         android:checked="true"
         android:layout_below="@id/repeat_option_header"
+        android:minHeight="48dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -35,6 +38,7 @@
         android:padding="@dimen/np_table_top_row_size"
         android:paddingTop="@dimen/np_table_top_row_size"
         android:layout_below="@id/repeat_once"
+        android:minHeight="48dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -47,6 +51,7 @@
         android:paddingTop="@dimen/np_table_top_row_size"
         android:paddingBottom="18dp"
         android:layout_below="@id/repeat_daily"
+        android:minHeight="48dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -59,6 +64,7 @@
         android:paddingTop="@dimen/np_table_top_row_size"
         android:paddingBottom="18dp"
         android:layout_below="@id/repeat_once"
+        android:minHeight="48dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -83,6 +89,7 @@
                 android:padding="@dimen/np_table_top_row_size"
                 android:paddingTop="@dimen/np_table_top_row_size"
                 android:checked="true"
+                android:minHeight="48dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -95,6 +102,7 @@
                 android:paddingTop="@dimen/np_table_top_row_size"
                 android:checked="true"
                 android:layout_below="@id/repeat_custom_sunday"
+                android:minHeight="48dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -107,6 +115,7 @@
                 android:paddingTop="@dimen/np_table_top_row_size"
                 android:checked="true"
                 android:layout_below="@id/repeat_custom_monday"
+                android:minHeight="48dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -119,6 +128,7 @@
                 android:paddingTop="@dimen/np_table_top_row_size"
                 android:checked="true"
                 android:layout_below="@id/repeat_custom_tuesday"
+                android:minHeight="48dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -131,6 +141,7 @@
                 android:paddingTop="@dimen/np_table_top_row_size"
                 android:checked="true"
                 android:layout_below="@id/repeat_custom_wednesday"
+                android:minHeight="48dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -143,6 +154,7 @@
                 android:paddingTop="@dimen/np_table_top_row_size"
                 android:checked="true"
                 android:layout_below="@id/repeat_custom_thursday"
+                android:minHeight="48dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -156,6 +168,7 @@
                 android:paddingBottom="18dp"
                 android:checked="true"
                 android:layout_below="@id/repeat_custom_friday"
+                android:minHeight="48dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </RelativeLayout>

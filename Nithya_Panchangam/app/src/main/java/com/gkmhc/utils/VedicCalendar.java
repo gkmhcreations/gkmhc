@@ -49,13 +49,13 @@ public class VedicCalendar extends Calendar {
     // Non-static members of this class.
     // This is unavoidable.
     private HashMap<String, Integer> dhinaVisheshamList = null;
-    private final HashMap<String, String[]> vedicCalendarLocaleList;
-    private final double refRaviAyanamAtDayStart;
-    private final double refChandraAyanamAtDayStart;
     private double dailyRaviMotion; // DRM
     private double dailyChandraMotion; // DCM
     private double sunRiseTotalMins = 0;
     private double sunSetTotalMins = 0;
+    private final HashMap<String, String[]> vedicCalendarLocaleList;
+    private final double refRaviAyanamAtDayStart;
+    private final double refChandraAyanamAtDayStart;
     private final int refHour;
     private final int refMin;
     private final int refDate;
@@ -89,7 +89,7 @@ public class VedicCalendar extends Calendar {
     private static final int MAX_THITHI_MINUTES = 720; // 12deg * 60 mins per degree
     private static final int MAX_NAKSHATHRAM_MINUTES = 800; // 13deg 20' * 60 mins per degree
     private static final int MAX_RAASI_MINUTES = 1800; // 30deg * 60 mins per degree
-    private static final int MAX_KARANAM_MINUTES = 360; // 1/4th of natchathiram
+    private static final int MAX_KARANAM_MINUTES = 360; // 1/4th of nakshatram
     private static final int MAX_KARANAMS = 60;
     private static final int MAX_RITHUS = 6;
     private static final int MAX_AYANAMS = 2;
@@ -131,8 +131,8 @@ public class VedicCalendar extends Calendar {
     public static final String VEDIC_CALENDAR_TABLE_TYPE_THITHI = "thithi";
     public static final String VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_THITHI = "sankalpa-thithi";
     public static final String VEDIC_CALENDAR_TABLE_TYPE_RAASI = "raasi";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_NAKSHATHRAM = "natchathiram";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_NAKSHATHRAM = "sankalpa-natchathiram";
+    public static final String VEDIC_CALENDAR_TABLE_TYPE_NAKSHATHRAM = "nakshatram";
+    public static final String VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_NAKSHATHRAM = "sankalpa-nakshatram";
     public static final String VEDIC_CALENDAR_TABLE_TYPE_YOGAM = "yogam";
     public static final String VEDIC_CALENDAR_TABLE_TYPE_KARANAM = "karanam";
     public static final String VEDIC_CALENDAR_TABLE_TYPE_VAASARAM = "vaasaram";
@@ -600,7 +600,7 @@ public class VedicCalendar extends Calendar {
             // 3) Split Earth hours into HH:MM
             int maasamSpanHour = (int) maasamSpan;
             maasamSpan *= MAX_MINS_IN_HOUR;
-            int maasamSpanMin = (int)Math.ceil(maasamSpan % MAX_MINS_IN_HOUR);
+            int maasamSpanMin = (int)(maasamSpan % MAX_MINS_IN_HOUR);
             if (maasamIndex != maasamIndexAtSunset) {
                 maasamStr += String.format(" (%02d:%02d)", maasamSpanHour, maasamSpanMin);
                 maasamStr += ARROW_SYMBOL + nextMaasamStr;
@@ -668,7 +668,7 @@ public class VedicCalendar extends Calendar {
         // Align this to given timezone as Longitude fetched from SwissEph is in 00:00 hours (UTC)
         raviAyanamAtSunset -= ((defTimezone * MAX_MINS_IN_HOUR) / earthMinFor1CelMin);
         double dhinaAnkamVal = Math.ceil((raviAyanamAtSunset -
-                Math.floor(raviAyanamAtSunset/MAX_RAASI_MINUTES) * MAX_RAASI_MINUTES) /
+                Math.floor(raviAyanamAtSunset / MAX_RAASI_MINUTES) * MAX_RAASI_MINUTES) /
                 dailyRaviMotion);
 
         //System.out.println("VedicCalendar " + "getDinaAnkam: Ravi: " + refRaviAyanamAtDayStart +
@@ -781,7 +781,7 @@ public class VedicCalendar extends Calendar {
         // 3) Split Earth hours into HH:MM
         thithiSpanHour = (int) thithiSpan;
         thithiSpan *= MAX_MINS_IN_HOUR;
-        thithiSpanMin = (int)Math.ceil(thithiSpan % MAX_MINS_IN_HOUR);
+        thithiSpanMin = (int)(thithiSpan % MAX_MINS_IN_HOUR);
 
         String thithiStr = "";
         String secondThithiStr = "";
@@ -805,10 +805,10 @@ public class VedicCalendar extends Calendar {
         //    1st Thithi (or)
         // 3) If 1st Thithi is present at sunrise but spans lesser than 2nd Thithi then choose
         //    2nd Thithi
-        // Formulate natchathiram string based on the factors below:
-        //    - Panchangam needs full day's natchathiram details {natchathiram (HH:MM) >
-        //      next_natchathiram}
-        //    - Sankalpam needs the exact natchathiram at the time of the current query
+        // Formulate nakshatram string based on the factors below:
+        //    - Panchangam needs full day's nakshatram details {nakshatram (HH:MM) >
+        //      next_nakshatram}
+        //    - Sankalpam needs the exact nakshatram at the time of the current query
         if (queryType == MATCH_PANCHANGAM_FULLDAY) {
             thithiStr += String.format(" (%02d:%02d)", thithiSpanHour, thithiSpanMin);
             if (thithiSpanHour < MAX_24HOURS) {
@@ -1056,75 +1056,75 @@ public class VedicCalendar extends Calendar {
         //         Each degree has 60 mins, 1 min has 60 secs
         //         So, 343deg 22’ 44" can be represented as 20602.73 (in minutes)
         // Step 2: Divide Chandra's longitude (R) by MAX_NAKSHATHRAM_MINUTES to
-        //         calculate natchathiramIndex
-        //         Each natchathiram's span(MAX_NAKSHATHRAM_MINUTES) is 13deg 20 mins (800 mins)
-        // Step 3: To calculate natchathiramIndex
-        //         - Formula is natchathiramIndex = (R / MAX_NAKSHATHRAM_MINUTES)
-        //         Note: natchathiramIndex thus obtained may need to be fine-tuned based on amount
-        //               of natchathiram minutes left in the given calendar day.
+        //         calculate nakshatramIndex
+        //         Each nakshatram's span(MAX_NAKSHATHRAM_MINUTES) is 13deg 20 mins (800 mins)
+        // Step 3: To calculate nakshatramIndex
+        //         - Formula is nakshatramIndex = (R / MAX_NAKSHATHRAM_MINUTES)
+        //         Note: nakshatramIndex thus obtained may need to be fine-tuned based on amount
+        //               of nakshatram minutes left in the given calendar day.
         // Step 4: Get Chandra's longitude for the given day & the next day
         //         Calculate difference and let's call it DCM (daily chandra motion)
-        // Step 5: Calculate natchathiram remaining in the day
+        // Step 5: Calculate nakshatram remaining in the day
         //         Remainder of the expression in [3] can be used to calculate the
-        //         natchathiram remaining in the given Gregorian calendar day.
-        //         - Formula is natchathiramSpanHour = (R / (DCM)) * 24
-        // Step 6: In case, natchathiram falls short of 24 hours,
-        //         then calculate next natchathiram (secondNakshatramIndex)
-        // Step 7: Given the keys {natchathiramIndex, locale}, find the exact matching
-        //         natchathiram string (as per the locale) in the natchathiram mapping table.
+        //         nakshatram remaining in the given Gregorian calendar day.
+        //         - Formula is nakshatramSpanHour = (R / (DCM)) * 24
+        // Step 6: In case, nakshatram falls short of 24 hours,
+        //         then calculate next nakshatram (secondNakshatramIndex)
+        // Step 7: Given the keys {nakshatramIndex, locale}, find the exact matching
+        //         nakshatram string (as per the locale) in the nakshatram mapping table.
         // Step 8: Align remaining minutes as per the given Calendar day's Sun Rise Time
-        double natchathiramSpan;
-        int natchathiramSpanHour;
-        int natchathiramSpanMin = 0;
+        double nakshatramSpan;
+        int nakshatramSpanHour;
+        int nakshatramSpanMin = 0;
 
         // 1) Calculate the Nakshatram index(current & next) & mapping string for the given
         //    calendar day
-        int natchathiramIndex = (int) (refChandraAyanamAtDayStart / MAX_NAKSHATHRAM_MINUTES);
-        natchathiramIndex %= MAX_NAKSHATHRAMS;
+        int nakshatramIndex = (int) (refChandraAyanamAtDayStart / MAX_NAKSHATHRAM_MINUTES);
+        nakshatramIndex %= MAX_NAKSHATHRAMS;
 
         // Get Sunrise & Sunset timings
         calcSunrise(queryType);
 
         if ((queryType == MATCH_SANKALPAM_EXACT) || (queryType == MATCH_PANCHANGAM_FULLDAY)) {
             // 2) Get 1st Nakshatram Span for the given calendar day
-            natchathiramSpan = getNakshatramSpan(natchathiramIndex, false);
+            nakshatramSpan = getNakshatramSpan(nakshatramIndex, false);
 
             // If 1st Nakshatram occurs before sunrise, then start with next Nakshatram.
-            if (natchathiramSpan < sunRiseTotalMins) {
-                natchathiramIndex += 1;
-                natchathiramIndex %= MAX_NAKSHATHRAMS;
-                natchathiramSpan = getNakshatramSpan(natchathiramIndex, false);
-                System.out.println("VedicCalendar: Negative getNakshatram(): " + natchathiramSpan);
+            if (nakshatramSpan < sunRiseTotalMins) {
+                nakshatramIndex += 1;
+                nakshatramIndex %= MAX_NAKSHATHRAMS;
+                nakshatramSpan = getNakshatramSpan(nakshatramIndex, false);
+                System.out.println("VedicCalendar: Negative getNakshatram(): " + nakshatramSpan);
             }
-            natchathiramSpanHour = (int) (natchathiramSpan / MAX_MINS_IN_HOUR);
-            natchathiramSpanMin = (int) (natchathiramSpan % MAX_MINS_IN_HOUR);
+            nakshatramSpanHour = (int) (nakshatramSpan / MAX_MINS_IN_HOUR);
+            nakshatramSpanMin = (int) (nakshatramSpan % MAX_MINS_IN_HOUR);
         } else {
             // 1) Calculate the thithi span within the day
             // This is a rough calculation
-            natchathiramSpan = getNakshatramSpan(natchathiramIndex, true);
-            if (natchathiramSpan < sunRiseTotalMins) {
-                natchathiramIndex += 1;
-                natchathiramIndex %= MAX_NAKSHATHRAMS;
-                natchathiramSpan = getNakshatramSpan(natchathiramIndex, true);
-                System.out.println("VedicCalendar: Negative getNakshatram() Prom : " + natchathiramSpan);
+            nakshatramSpan = getNakshatramSpan(nakshatramIndex, true);
+            if ((nakshatramSpan * MAX_MINS_IN_HOUR) < sunRiseTotalMins) {
+                nakshatramIndex += 1;
+                nakshatramIndex %= MAX_NAKSHATHRAMS;
+                nakshatramSpan = getNakshatramSpan(nakshatramIndex, true);
+                System.out.println("VedicCalendar: Negative getNakshatram() Prom : " + nakshatramSpan);
             }
             // 3) Split Earth hours into HH:MM
-            natchathiramSpanHour = (int) natchathiramSpan;
-            natchathiramSpan *= MAX_MINS_IN_HOUR;
+            nakshatramSpanHour = (int) nakshatramSpan;
+            nakshatramSpan *= MAX_MINS_IN_HOUR;
         }
 
-        String natchathiramStr = "";
+        String nakshatramStr = "";
         String secondNakshatramStr = "";
-        String[] natchathiramList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_NAKSHATHRAM);
-        String[] sankalpanatchathiramList =
+        String[] nakshatramList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_NAKSHATHRAM);
+        String[] sankalpanakshatramList =
                 vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_NAKSHATHRAM);
-        int secondNakshatramIndex = ((natchathiramIndex + 1) % MAX_NAKSHATHRAMS);
+        int secondNakshatramIndex = ((nakshatramIndex + 1) % MAX_NAKSHATHRAMS);
         if (queryType == MATCH_SANKALPAM_EXACT) {
-            natchathiramStr = sankalpanatchathiramList[natchathiramIndex];
-            secondNakshatramStr = sankalpanatchathiramList[secondNakshatramIndex];
+            nakshatramStr = sankalpanakshatramList[nakshatramIndex];
+            secondNakshatramStr = sankalpanakshatramList[secondNakshatramIndex];
         } else {
-            natchathiramStr = natchathiramList[natchathiramIndex];
-            secondNakshatramStr = natchathiramList[secondNakshatramIndex];
+            nakshatramStr = nakshatramList[nakshatramIndex];
+            secondNakshatramStr = nakshatramList[secondNakshatramIndex];
         }
 
         // 3 scenarios here:
@@ -1133,41 +1133,41 @@ public class VedicCalendar extends Calendar {
         //    1st Nakshatram (or)
         // 3) If 1st Nakshatram is present at sunrise but spans lesser than 2nd Thithi then choose
         //    2nd Nakshatram
-        // Formulate natchathiram string based on the factors below:
-        //    - Panchangam needs full day's natchathiram details {natchathiram (HH:MM) >
-        //      next_natchathiram}
-        //    - Sankalpam needs the exact natchathiram at the time of the current query
+        // Formulate nakshatram string based on the factors below:
+        //    - Panchangam needs full day's nakshatram details {nakshatram (HH:MM) >
+        //      next_nakshatram}
+        //    - Sankalpam needs the exact nakshatram at the time of the current query
         if (queryType == MATCH_PANCHANGAM_FULLDAY) {
-            natchathiramStr += String.format(" (%02d:%02d)", natchathiramSpanHour,
-                    natchathiramSpanMin);
-            if (natchathiramSpanHour < MAX_24HOURS) {
-                natchathiramStr += ARROW_SYMBOL + secondNakshatramStr;
+            nakshatramStr += String.format(" (%02d:%02d)", nakshatramSpanHour,
+                    nakshatramSpanMin);
+            if (nakshatramSpanHour < MAX_24HOURS) {
+                nakshatramStr += ARROW_SYMBOL + secondNakshatramStr;
             }
         } else if (queryType == MATCH_SANKALPAM_EXACT) {
             // MATCH_SANKALPAM_EXACT - Identify Nakshatram based on exact time of query
-            if ((refHour >= natchathiramSpanHour)) {
-                natchathiramStr = secondNakshatramStr;
+            if ((refHour >= nakshatramSpanHour)) {
+                nakshatramStr = secondNakshatramStr;
             }
         } else {
             // MATCH_PANCHANGAM_PROMINENT - Identify prominent Nakshatram of the day.
-            if (natchathiramSpanHour < MAX_24HOURS) {
-                double secondRaasiSpan = MAX_MINS_IN_DAY - natchathiramSpan;
-                if (secondRaasiSpan > natchathiramSpan) {
-                    natchathiramStr = secondNakshatramStr;
+            if (nakshatramSpanHour < MAX_24HOURS) {
+                double secondRaasiSpan = MAX_MINS_IN_DAY - nakshatramSpan;
+                if (secondRaasiSpan > nakshatramSpan) {
+                    nakshatramStr = secondNakshatramStr;
                 }
             }
         }
 
-        //System.out.println("VedicCalendar", "get_natchathiram: Nakshatram => " + natchathiramStr +
-        //        " Nakshatram Span = " + natchathiramSpanMin + " later: " +
+        //System.out.println("VedicCalendar", "get_nakshatram: Nakshatram => " + nakshatramStr +
+        //        " Nakshatram Span = " + nakshatramSpanMin + " later: " +
         //        secondNakshatramStr);
 
-        return natchathiramStr;
+        return nakshatramStr;
     }
 
     /**
      * Use this API to get the Nakshatram (star) that falls at 17th paadam (8th Raasi) from the
-     * given day's natchathiram.
+     * given day's nakshatram.
      *
      * @param queryType MATCH_SANKALPAM_EXACT
      *                      - to get exact Nakshatram based on actual Sunrise on a given day.
@@ -1185,87 +1185,87 @@ public class VedicCalendar extends Calendar {
         //        Each degree has 60 mins, 1 min has 60 secs
         //        So, 343deg 22’ 44" can be represented as 20602.73 (in minutes)
         // Step 2: Divide Chandra's longitude (R) by MAX_NAKSHATHRAM_MINUTES to
-        //         calculate natchathiramIndex
-        //         Each natchathiram's span(MAX_NAKSHATHRAM_MINUTES) is 13deg 20 mins (800 mins)
-        // Step 3: To calculate chandrashtama natchathiram index (cnatchathiramIndex)
+        //         calculate nakshatramIndex
+        //         Each nakshatram's span(MAX_NAKSHATHRAM_MINUTES) is 13deg 20 mins (800 mins)
+        // Step 3: To calculate chandrashtama nakshatram index (cnakshatramIndex)
         //         - Formula is
-        //         - cnatchathiram_offset = from R, go back 16 natchathiram duration
-        //         - cnatchathiramIndex = (cnatchathiram_offset / MAX_NAKSHATHRAM_MINUTES)
-        //         Note: cnatchathiramIndex thus obtained may need to be fine-tuned based on amount
-        //               of natchathiram minutes left in the given calendar day.
+        //         - cnakshatram_offset = from R, go back 16 nakshatram duration
+        //         - cnakshatramIndex = (cnakshatram_offset / MAX_NAKSHATHRAM_MINUTES)
+        //         Note: cnakshatramIndex thus obtained may need to be fine-tuned based on amount
+        //               of nakshatram minutes left in the given calendar day.
         // Step 4: Get Chandra's longitude for the given day & the next day
         //         Calculate difference and let's call it DCM (daily chandra motion)
-        // Step 5: Calculate natchathiram remaining in the day
+        // Step 5: Calculate nakshatram remaining in the day
         //         Remainder of the expression in [3] can be used to calculate the
-        //         natchathiram remaining in the given Gregorian calendar day.
-        //         - Formula is natchathiramSpanHour = (R / (DCM)) * 24
-        // Step 6: In case, natchathiram falls short of 24 hours,
-        //         then calculate next chandrashtama natchathiram (secondCNakshatramIndex)
-        // Step 7: Given the keys {cnatchathiramIndex, locale}, find the exact matching
-        //         natchathiram string (as per the locale) in the natchathiram mapping table.
+        //         nakshatram remaining in the given Gregorian calendar day.
+        //         - Formula is nakshatramSpanHour = (R / (DCM)) * 24
+        // Step 6: In case, nakshatram falls short of 24 hours,
+        //         then calculate next chandrashtama nakshatram (secondCNakshatramIndex)
+        // Step 7: Given the keys {cnakshatramIndex, locale}, find the exact matching
+        //         nakshatram string (as per the locale) in the nakshatram mapping table.
         // Step 8: Align remaining minutes as per the given Calendar day's Sun Rise Time
-        double natchathiramSpan;
-        int natchathiramSpanHour;
-        int natchathiramSpanMin = 0;
+        double nakshatramSpan;
+        int nakshatramSpanHour;
+        int nakshatramSpanMin = 0;
 
         // 1) Calculate the Nakshatram index(current & next) & mapping string for the given
         //    calendar day
-        int natchathiramIndex = (int) (refChandraAyanamAtDayStart / MAX_NAKSHATHRAM_MINUTES);
-        natchathiramIndex %= MAX_NAKSHATHRAMS;
-        int cnatchathiramIndex = (int) (refChandraAyanamAtDayStart - (MAX_NAKSHATHRAM_MINUTES *
+        int nakshatramIndex = (int) (refChandraAyanamAtDayStart / MAX_NAKSHATHRAM_MINUTES);
+        nakshatramIndex %= MAX_NAKSHATHRAMS;
+        int cnakshatramIndex = (int) (refChandraAyanamAtDayStart - (MAX_NAKSHATHRAM_MINUTES *
                 CHANDRASHTAMA_NAKSHATHRAM_OFFSET));
-        if (cnatchathiramIndex < 0) {
-            cnatchathiramIndex += MAX_AYANAM_MINUTES;
+        if (cnakshatramIndex < 0) {
+            cnakshatramIndex += MAX_AYANAM_MINUTES;
         }
-        cnatchathiramIndex /= MAX_NAKSHATHRAM_MINUTES;
+        cnakshatramIndex /= MAX_NAKSHATHRAM_MINUTES;
 
         // Get Sunrise & Sunset timings
         calcSunrise(queryType);
 
         if ((queryType == MATCH_SANKALPAM_EXACT) || (queryType == MATCH_PANCHANGAM_FULLDAY)) {
             // 2) Get 1st Nakshatram Span for the given calendar day
-            natchathiramSpan = getNakshatramSpan(natchathiramIndex, false);
+            nakshatramSpan = getNakshatramSpan(nakshatramIndex, false);
 
             // If 1st Nakshatram occurs before sunrise, then start with next Nakshatram.
-            if (natchathiramSpan < sunRiseTotalMins) {
-                natchathiramIndex += 1;
-                natchathiramIndex %= MAX_NAKSHATHRAMS;
-                natchathiramSpan = getNakshatramSpan(natchathiramIndex, false);
-                cnatchathiramIndex += 1;
-                cnatchathiramIndex %= MAX_NAKSHATHRAMS;
-                System.out.println("VedicCalendar: Negative getChandrashtamaNakshatram() : " + natchathiramSpan);
+            if (nakshatramSpan < sunRiseTotalMins) {
+                nakshatramIndex += 1;
+                nakshatramIndex %= MAX_NAKSHATHRAMS;
+                nakshatramSpan = getNakshatramSpan(nakshatramIndex, false);
+                cnakshatramIndex += 1;
+                cnakshatramIndex %= MAX_NAKSHATHRAMS;
+                System.out.println("VedicCalendar: Negative getChandrashtamaNakshatram() : " + nakshatramSpan);
             }
-            natchathiramSpanHour = (int) (natchathiramSpan / MAX_MINS_IN_HOUR);
-            natchathiramSpanMin = (int) (natchathiramSpan % MAX_MINS_IN_HOUR);
+            nakshatramSpanHour = (int) (nakshatramSpan / MAX_MINS_IN_HOUR);
+            nakshatramSpanMin = (int) (nakshatramSpan % MAX_MINS_IN_HOUR);
         } else {
             // 1) Calculate the thithi span within the day
             // This is a rough calculation
-            natchathiramSpan = getNakshatramSpan(natchathiramIndex, true);
-            if (natchathiramSpan < sunRiseTotalMins) {
-                natchathiramIndex += 1;
-                natchathiramIndex %= MAX_NAKSHATHRAMS;
-                natchathiramSpan = getNakshatramSpan(natchathiramIndex, true);
-                cnatchathiramIndex += 1;
-                cnatchathiramIndex %= MAX_NAKSHATHRAMS;
-                System.out.println("VedicCalendar: Negative getChandrashtamaNakshatram() Prom : " + natchathiramSpan);
+            nakshatramSpan = getNakshatramSpan(nakshatramIndex, true);
+            if (nakshatramSpan < sunRiseTotalMins) {
+                nakshatramIndex += 1;
+                nakshatramIndex %= MAX_NAKSHATHRAMS;
+                nakshatramSpan = getNakshatramSpan(nakshatramIndex, true);
+                cnakshatramIndex += 1;
+                cnakshatramIndex %= MAX_NAKSHATHRAMS;
+                System.out.println("VedicCalendar: Negative getChandrashtamaNakshatram() Prom : " + nakshatramSpan);
             }
             // 3) Split Earth hours into HH:MM
-            natchathiramSpanHour = (int) natchathiramSpan;
-            natchathiramSpan *= MAX_MINS_IN_HOUR;
+            nakshatramSpanHour = (int) nakshatramSpan;
+            nakshatramSpan *= MAX_MINS_IN_HOUR;
         }
 
-        String natchathiramStr = "";
+        String nakshatramStr = "";
         String secondNakshatramStr = "";
-        String[] natchathiramList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_NAKSHATHRAM);
-        String[] sankalpanatchathiramList =
+        String[] nakshatramList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_NAKSHATHRAM);
+        String[] sankalpanakshatramList =
                 vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_NAKSHATHRAM);
-        int secondNakshatramIndex = ((cnatchathiramIndex + 1) % MAX_NAKSHATHRAMS);
+        int secondNakshatramIndex = ((cnakshatramIndex + 1) % MAX_NAKSHATHRAMS);
         if (queryType == MATCH_SANKALPAM_EXACT) {
-            natchathiramStr = sankalpanatchathiramList[cnatchathiramIndex];
-            secondNakshatramStr = sankalpanatchathiramList[secondNakshatramIndex];
+            nakshatramStr = sankalpanakshatramList[cnakshatramIndex];
+            secondNakshatramStr = sankalpanakshatramList[secondNakshatramIndex];
         } else {
-            natchathiramStr = natchathiramList[cnatchathiramIndex];
-            secondNakshatramStr = natchathiramList[secondNakshatramIndex];
+            nakshatramStr = nakshatramList[cnakshatramIndex];
+            secondNakshatramStr = nakshatramList[secondNakshatramIndex];
         }
 
         // 3 scenarios here:
@@ -1274,37 +1274,37 @@ public class VedicCalendar extends Calendar {
         //    1st Nakshatram (or)
         // 3) If 1st Nakshatram is present at sunrise but spans lesser than 2nd Thithi then choose
         //    2nd Nakshatram
-        // Formulate natchathiram string based on the factors below:
-        //    - Panchangam needs full day's natchathiram details {natchathiram (HH:MM) >
-        //      next_natchathiram}
-        //    - Sankalpam needs the exact natchathiram at the time of the current query
+        // Formulate nakshatram string based on the factors below:
+        //    - Panchangam needs full day's nakshatram details {nakshatram (HH:MM) >
+        //      next_nakshatram}
+        //    - Sankalpam needs the exact nakshatram at the time of the current query
         if (queryType == MATCH_PANCHANGAM_FULLDAY) {
-            natchathiramStr += String.format(" (%02d:%02d)", natchathiramSpanHour,
-                    natchathiramSpanMin);
-            if (natchathiramSpanHour < MAX_24HOURS) {
-                natchathiramStr += ARROW_SYMBOL + secondNakshatramStr;
+            nakshatramStr += String.format(" (%02d:%02d)", nakshatramSpanHour,
+                    nakshatramSpanMin);
+            if (nakshatramSpanHour < MAX_24HOURS) {
+                nakshatramStr += ARROW_SYMBOL + secondNakshatramStr;
             }
         } else if (queryType == MATCH_SANKALPAM_EXACT) {
             // MATCH_SANKALPAM_EXACT - Identify Nakshatram based on exact time of query
-            if ((refHour >= natchathiramSpanHour)) {
-                natchathiramStr = secondNakshatramStr;
+            if ((refHour >= nakshatramSpanHour)) {
+                nakshatramStr = secondNakshatramStr;
             }
         } else {
             // MATCH_PANCHANGAM_PROMINENT - Identify prominent Nakshatram of the day.
-            if (natchathiramSpanHour < MAX_24HOURS) {
-                double secondRaasiSpan = MAX_MINS_IN_DAY - natchathiramSpan;
-                if (secondRaasiSpan > natchathiramSpan) {
-                    natchathiramStr = secondNakshatramStr;
+            if (nakshatramSpanHour < MAX_24HOURS) {
+                double secondRaasiSpan = MAX_MINS_IN_DAY - nakshatramSpan;
+                if (secondRaasiSpan > nakshatramSpan) {
+                    nakshatramStr = secondNakshatramStr;
                 }
             }
         }
 
         System.out.println("VedicCalendar" + " getChandrashtamaNakshatram: " + "" +
-                "Chandrashtama Nakshatram => " + natchathiramStr +
-                " Nakshatram Span = " + natchathiramSpanHour + ":" + natchathiramSpanMin +
+                "Chandrashtama Nakshatram => " + nakshatramStr +
+                " Nakshatram Span = " + nakshatramSpanHour + ":" + nakshatramSpanMin +
                 " later: " + secondNakshatramStr);
 
-        return natchathiramStr;
+        return nakshatramStr;
     }
 
     /**
@@ -1333,7 +1333,7 @@ public class VedicCalendar extends Calendar {
         //               of raasi minutes left in the given calendar day.
         // Step 4: Get Chandra's longitude for the given day & the next day
         //         Calculate difference and let's call it DCM (daily chandra motion)
-        // Step 5: Calculate natchathiram remaining in the day
+        // Step 5: Calculate nakshatram remaining in the day
         //         Remainder of the expression in [3] can be used to calculate the
         //         raasi remaining in the given Gregorian calendar day.
         //         - Formula is raasiSpanHour = (R / (DCM)) * 24
@@ -1367,7 +1367,7 @@ public class VedicCalendar extends Calendar {
 
         // 3) Formulate Raasi string based on raasi span.
         // For Panchangam, entire day's calculation would be good enough
-        // But for Sankalpam, exact natchathiram given the current time would be desirable.
+        // But for Sankalpam, exact nakshatram given the current time would be desirable.
         if (queryType == MATCH_PANCHANGAM_FULLDAY) {
             if (raasiSpanHour < MAX_24HOURS) {
                 raasiStr += String.format(" (%02d:%02d)", raasiSpanHour, raasiSpanMin);
@@ -1609,58 +1609,58 @@ public class VedicCalendar extends Calendar {
         //         Each degree has 60 mins, 1 min has 60 secs
         //         So, 343deg 22’ 44" can be represented as 20602.73 (in minutes)
         // Step 2: Divide Chandra's longitude (R) by MAX_NAKSHATHRAM_MINUTES to
-        //         calculate natchathiramIndex
-        //         Each natchathiram's span(MAX_NAKSHATHRAM_MINUTES) is 13deg 20 mins (800 mins)
-        // Step 3: To calculate natchathiramIndex
-        //         - Formula is natchathiramIndex = (R / MAX_NAKSHATHRAM_MINUTES)
-        //         Note: natchathiramIndex thus obtained may need to be fine-tuned based on amount
-        //               of natchathiram minutes left in the given calendar day.
+        //         calculate nakshatramIndex
+        //         Each nakshatram's span(MAX_NAKSHATHRAM_MINUTES) is 13deg 20 mins (800 mins)
+        // Step 3: To calculate nakshatramIndex
+        //         - Formula is nakshatramIndex = (R / MAX_NAKSHATHRAM_MINUTES)
+        //         Note: nakshatramIndex thus obtained may need to be fine-tuned based on amount
+        //               of nakshatram minutes left in the given calendar day.
         // Step 4: Get Chandra's longitude for the given day & the next day
         //         Calculate difference and let's call it DCM (daily chandra motion)
-        // Step 5: Calculate natchathiram remaining in the day
+        // Step 5: Calculate nakshatram remaining in the day
         //         Remainder of the expression in [3] can be used to calculate the
-        //         natchathiram remaining in the given Gregorian calendar day.
-        //         - Formula is natchathiramSpanHour = (R / (DCM)) * 24
-        // Step 6: In case, natchathiram falls short of 24 hours,
-        //         then calculate next natchathiram (secondNakshatramIndex)
+        //         nakshatram remaining in the given Gregorian calendar day.
+        //         - Formula is nakshatramSpanHour = (R / (DCM)) * 24
+        // Step 6: In case, nakshatram falls short of 24 hours,
+        //         then calculate next nakshatram (secondNakshatramIndex)
         // Step 7: Get vaasaramIndex => weekday for the given Calendar date
-        // Step 8: Given the keys {natchathiramIndex, vaasaramIndex, locale}, find the exact
+        // Step 8: Given the keys {nakshatramIndex, vaasaramIndex, locale}, find the exact
         //         matching amrutathi yogam in the amruthathiYogamTable mapping table for
         //         the given day and the next amruthathi yogam for the rest of the day as well.
         // Step 9: Align remaining minutes as per the given Calendar day's Sun Rise Time
 
         // 1) Calculate the Nakshatram index(current & next) & mapping string for the given
         //    calendar day
-        int natchathiramIndex = (int) (refChandraAyanamAtDayStart / MAX_NAKSHATHRAM_MINUTES);
-        natchathiramIndex %= MAX_NAKSHATHRAMS;
-        String ayogamStr = getAyogamStr(natchathiramIndex, (refVaasaram - 1));
+        int nakshatramIndex = (int) (refChandraAyanamAtDayStart / MAX_NAKSHATHRAM_MINUTES);
+        nakshatramIndex %= MAX_NAKSHATHRAMS;
+        String ayogamStr = getAyogamStr(nakshatramIndex, (refVaasaram - 1));
 
-        int secondNakshatramIndex = natchathiramIndex + 1;
+        int secondNakshatramIndex = nakshatramIndex + 1;
         secondNakshatramIndex %= MAX_NAKSHATHRAMS;
         String secondAyogamStr = getAyogamStr(secondNakshatramIndex, (refVaasaram - 1));
 
         // 2) Get 1st Nakshatram span for the given calendar day
-        double natchathiramSpan = getNakshatramSpan(natchathiramIndex, false);
+        double nakshatramSpan = getNakshatramSpan(nakshatramIndex, false);
 
         // If 1st Nakshatram occurs before sunrise, then start with next Nakshatram.
-        if (natchathiramSpan < sunRiseTotalMins) {
-            natchathiramIndex += 1;
-            natchathiramIndex %= MAX_NAKSHATHRAMS;
-            natchathiramSpan = getNakshatramSpan(natchathiramIndex, false);
-            System.out.println("VedicCalendar: Negative getAmruthathiYogam() : " + natchathiramSpan);
+        if (nakshatramSpan < sunRiseTotalMins) {
+            nakshatramIndex += 1;
+            nakshatramIndex %= MAX_NAKSHATHRAMS;
+            nakshatramSpan = getNakshatramSpan(nakshatramIndex, false);
+            System.out.println("VedicCalendar: Negative getAmruthathiYogam() : " + nakshatramSpan);
         }
 
-        int natchathiramSpanHour = (int) (natchathiramSpan / MAX_MINS_IN_HOUR);
-        int natchathiramSpanMin = (int) (natchathiramSpan % MAX_MINS_IN_HOUR);
+        int nakshatramSpanHour = (int) (nakshatramSpan / MAX_MINS_IN_HOUR);
+        int nakshatramSpanMin = (int) (nakshatramSpan % MAX_MINS_IN_HOUR);
 
-        // 3) Formulate amruthathi yogam string based on natchathiram span.
+        // 3) Formulate amruthathi yogam string based on nakshatram span.
         //    - Panchangam needs full day's yogam details {Yogam (HH:MM) > next_yogam}
         //    - Sankalpam needs the exact yogam at the time of the current query
         if (queryType == MATCH_PANCHANGAM_FULLDAY) {
             if (!ayogamStr.equalsIgnoreCase(secondAyogamStr)) {
                 ayogamStr +=
-                        String.format(" (%02d:%02d)", natchathiramSpanHour, natchathiramSpanMin);
-                if (natchathiramSpanHour < MAX_24HOURS) {
+                        String.format(" (%02d:%02d)", nakshatramSpanHour, nakshatramSpanMin);
+                if (nakshatramSpanHour < MAX_24HOURS) {
                     ayogamStr += ARROW_SYMBOL + secondAyogamStr;
                 }
             }
@@ -1668,18 +1668,18 @@ public class VedicCalendar extends Calendar {
             // Scenarios here:
             // MATCH_SANKALPAM_EXACT - Identify Yogam based on exact time of query
             // MATCH_PANCHANGAM_PROMINENT - Identify prominent Yogam on a given day.
-            if (natchathiramSpanHour < MAX_24HOURS) {
-                double secondRaasiSpan = MAX_MINS_IN_DAY - natchathiramSpan;
-                if (secondRaasiSpan > natchathiramSpan) {
+            if (nakshatramSpanHour < MAX_24HOURS) {
+                double secondRaasiSpan = MAX_MINS_IN_DAY - nakshatramSpan;
+                if (secondRaasiSpan > nakshatramSpan) {
                     ayogamStr = secondAyogamStr;
                 }
-            } else if ((refHour >= natchathiramSpanHour)) {
+            } else if ((refHour >= nakshatramSpanHour)) {
                 ayogamStr = secondAyogamStr;
             }
         }
 
         //System.out.println("VedicCalendar", "get_amruthathi_yogam: Yogam => " + ayogamStr +
-        //        " Nakshatram Span = " + natchathiramSpanMin + " later: " + secondAyogamStr);
+        //        " Nakshatram Span = " + nakshatramSpanMin + " later: " + secondAyogamStr);
 
         return ayogamStr;
     }
@@ -1909,7 +1909,7 @@ public class VedicCalendar extends Calendar {
         //         exact horai for the given hour of the day
         ArrayList<LagnamHoraiInfo> horaiInfoList = new ArrayList<>();
         int refTotalMins = (refHour * MAX_MINS_IN_HOUR) + refMin;
-        int sunRiseTotalHours = (int)Math.ceil(sunRiseTotalMins / MAX_MINS_IN_HOUR);
+        int sunRiseTotalHours = (int)(sunRiseTotalMins / MAX_MINS_IN_HOUR);
 
         Calendar curCalendar = Calendar.getInstance();
         curCalendar.set(refYear, (refMonth - 1), refDate, 0, 0, 0);
@@ -2169,7 +2169,7 @@ public class VedicCalendar extends Calendar {
         String thithiStr = getThithi(queryType);
         String maasam = getMaasam(queryType);
         String paksham = getPaksham();
-        String natchathiram = getNakshatram(queryType);
+        String nakshatram = getNakshatram(queryType);
         String vaasaram = getVaasaram(queryType);
         List<Integer> dhinaSpecialCode = new ArrayList<>();
         Integer val;
@@ -2205,7 +2205,7 @@ public class VedicCalendar extends Calendar {
         //System.out.println("getDinaVishesham: Values: " + dhinaVisheshamList.values());
 
         //    Type-4 - Match for four tuples {Maasam, Paksham, Thithi, Nakshatram} (or)
-        if ((val = dhinaVisheshamList.get(maasam + paksham + thithiStr + natchathiram)) != null) {
+        if ((val = dhinaVisheshamList.get(maasam + paksham + thithiStr + nakshatram)) != null) {
             //System.out.println("getDinaVishesham: Type-4 MATCH!!! Value = " + val);
             dhinaSpecialCode.add(val);
         }
@@ -2217,7 +2217,7 @@ public class VedicCalendar extends Calendar {
         }
 
         //    Type-3B - Match for Three tuples {Maasam, Paksham, Nakshatram} (or)
-        if ((val = dhinaVisheshamList.get(maasam + paksham + natchathiram)) != null) {
+        if ((val = dhinaVisheshamList.get(maasam + paksham + nakshatram)) != null) {
             //System.out.println("getDinaVishesham: Type-3B MATCH!!! Value = " + val);
             dhinaSpecialCode.add(val);
         }
@@ -2247,7 +2247,7 @@ public class VedicCalendar extends Calendar {
         }
 
         //    Type-7  - Match for 2 tuples {Maasam, Nakshatram}
-        if ((val = dhinaVisheshamList.get(maasam + natchathiram)) != null) {
+        if ((val = dhinaVisheshamList.get(maasam + nakshatram)) != null) {
             //System.out.println("getDinaVishesham: Type-7 MATCH!!! Value = " + val);
             dhinaSpecialCode.add(val);
         }
@@ -2330,7 +2330,7 @@ public class VedicCalendar extends Calendar {
             String[] maasamList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_MAASAM);
             String[] pakshamList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_PAKSHAM);
             String[] thithiList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_THITHI);
-            String[] natchathiramList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_NAKSHATHRAM);
+            String[] nakshatramList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_NAKSHATHRAM);
             String[] vaasaramList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_VAASARAM);
             String shuklaPaksham = pakshamList[0];
             String krishnaPaksham = pakshamList[1];
@@ -2377,7 +2377,7 @@ public class VedicCalendar extends Calendar {
             // {Maasam - Makara, Paksham - Shukla, Nakshatram - Poosam}
             // (Type-3B match) --- TODO - Not Working!
             dhinaVisheshamList.put(maasamList[9] + shuklaPaksham +
-                    natchathiramList[7], PANCHANGAM_DHINA_VISHESHAM_THAI_POOSAM);
+                    nakshatramList[7], PANCHANGAM_DHINA_VISHESHAM_THAI_POOSAM);
 
             // Vasantha Panchami -
             // {Maasam - Makara, Paksham - Shukla, Thithi - Panchami}
@@ -2401,12 +2401,12 @@ public class VedicCalendar extends Calendar {
             // {Maasam - Kumbha, Paksham - Shukla, Nakshatram - Magam}
             // (Type-3B match) --- TODO - Not Working!
             dhinaVisheshamList.put(maasamList[10] + shuklaPaksham +
-                    natchathiramList[9], PANCHANGAM_DHINA_VISHESHAM_MAASI_MAGAM);
+                    nakshatramList[9], PANCHANGAM_DHINA_VISHESHAM_MAASI_MAGAM);
 
             // Bala Periyava Jayanthi -
             // {Maasam - Kumbha, Paksham - Krishna, Nakshatram - Uthiradam}
             // (Type-3B match)
-            dhinaVisheshamList.put(maasamList[10] + krishnaPaksham + natchathiramList[20],
+            dhinaVisheshamList.put(maasamList[10] + krishnaPaksham + nakshatramList[20],
                     PANCHANGAM_DHINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
 
             // Maha Sivarathiri -
@@ -2424,13 +2424,13 @@ public class VedicCalendar extends Calendar {
             // {Maasam - Meena, Paksham - Shukla, Nakshatram - Mrigashirisham}
             // (Type-3B match)
             dhinaVisheshamList.put(maasamList[11] + shuklaPaksham +
-                    natchathiramList[4], PANCHANGAM_DHINA_VISHESHAM_SRINGERI_PERIYAVA_JAYANTHI);
+                    nakshatramList[4], PANCHANGAM_DHINA_VISHESHAM_SRINGERI_PERIYAVA_JAYANTHI);
 
             // Panguni Uthiram -
             // {Maasam - Meena, Paksham - Shukla, Thithi - Pournami, Nakshatram - Uthiram}
             // (Type-4 match)
             dhinaVisheshamList.put(maasamList[11] + shuklaPaksham + thithiList[14] +
-                    natchathiramList[11], PANCHANGAM_DHINA_VISHESHAM_PANGUNI_UTHIRAM);
+                    nakshatramList[11], PANCHANGAM_DHINA_VISHESHAM_PANGUNI_UTHIRAM);
 
             // Ugadi -
             // {Maasam - Meena, Dina-Ankham - 31}
@@ -2446,7 +2446,7 @@ public class VedicCalendar extends Calendar {
             // {Maasam - Mesha, Paksham - Shukla, Nakshatram - Arthra}
             // (Type-3B match)
             dhinaVisheshamList.put(maasamList[0] + shuklaPaksham +
-                    natchathiramList[5], PANCHANGAM_DHINA_VISHESHAM_RAMANUJA_JAYANTHI);
+                    nakshatramList[5], PANCHANGAM_DHINA_VISHESHAM_RAMANUJA_JAYANTHI);
 
             // Sri Rama Navami -
             // {Maasam - Mesha, Paksham - Shukla, Thithi - Navami}
@@ -2488,19 +2488,19 @@ public class VedicCalendar extends Calendar {
             // {Maasam - Rishabha, Paksham - Shukla, Nakshatram - Visaka}
             // (Type-3B match)
             dhinaVisheshamList.put(maasamList[1] + shuklaPaksham +
-                    natchathiramList[15], PANCHANGAM_DHINA_VISHESHAM_VAIKASI_VISHAKAM);
+                    nakshatramList[15], PANCHANGAM_DHINA_VISHESHAM_VAIKASI_VISHAKAM);
 
             // Maha Periyava Jayanthi -
             // {Maasam - Rishabha, Paksham - Shukla, Nakshatram - Anusham}
             // (Type-3B match)
             dhinaVisheshamList.put(maasamList[1] + shuklaPaksham +
-                    natchathiramList[16], PANCHANGAM_DHINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
+                    nakshatramList[16], PANCHANGAM_DHINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
 
             // Puthu Periyava Jayanthi -
             // {Maasam - Kataka, Paksham - Krishna, Nakshatram - Avittam}
             // (Type-3B match)
             dhinaVisheshamList.put(maasamList[3] + krishnaPaksham +
-                    natchathiramList[22], PANCHANGAM_DHINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
+                    nakshatramList[22], PANCHANGAM_DHINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
 
             // Aadi Perukku -
             // {Maasam - Kataka, Dina-Ankham - 18}
@@ -2511,7 +2511,7 @@ public class VedicCalendar extends Calendar {
             // {Maasam - Kataka, Paksham - Shukla, Nakshatram - Pooram}
             // (Type-3B match)
             dhinaVisheshamList.put(maasamList[3] + shuklaPaksham +
-                    natchathiramList[10], PANCHANGAM_DHINA_VISHESHAM_AADI_POORAM);
+                    nakshatramList[10], PANCHANGAM_DHINA_VISHESHAM_AADI_POORAM);
 
             // Garuda Panchami -
             // {Maasam - Kataka, Paksham - Shukla, Thithi - Panchami}
@@ -2535,12 +2535,12 @@ public class VedicCalendar extends Calendar {
             // {Maasam - Simha, Paksham - Shukla, Nakshatram - Thiruvonam}
             // (Type-3B match)
             dhinaVisheshamList.put(maasamList[4] + shuklaPaksham +
-                    natchathiramList[21], PANCHANGAM_DHINA_VISHESHAM_AVANI_AVITTAM_RIG);
+                    nakshatramList[21], PANCHANGAM_DHINA_VISHESHAM_AVANI_AVITTAM_RIG);
 
             // Onam
             // {Maasam - Simha, Nakshatram - Thiruvonam}
             // (Type-7 match)
-            dhinaVisheshamList.put(maasamList[4] + natchathiramList[21],
+            dhinaVisheshamList.put(maasamList[4] + nakshatramList[21],
                     PANCHANGAM_DHINA_VISHESHAM_ONAM);
 
             // Maha Sankata Hara Chathurti -
@@ -2559,7 +2559,7 @@ public class VedicCalendar extends Calendar {
             // {Maasam - Simha, Paksham - Shukla, Nakshatram - Hastha}
             // (Type-3B match)
             dhinaVisheshamList.put(maasamList[4] + shuklaPaksham +
-                    natchathiramList[12], PANCHANGAM_DHINA_VISHESHAM_AVANI_AVITTAM_SAM);
+                    nakshatramList[12], PANCHANGAM_DHINA_VISHESHAM_AVANI_AVITTAM_SAM);
 
             // Vinayagar Chathurthi -
             // {Maasam - Simha, Paksham - Shukla, Thithi - Chathurthi}
@@ -2571,7 +2571,7 @@ public class VedicCalendar extends Calendar {
             // {Maasam - Kanni, Paksham - Krishna, Nakshatram - Apabharani}
             // (Type-3B match)
             dhinaVisheshamList.put(maasamList[5] + krishnaPaksham +
-                    natchathiramList[1], PANCHANGAM_DHINA_VISHESHAM_MAHA_BHARANI);
+                    nakshatramList[1], PANCHANGAM_DHINA_VISHESHAM_MAHA_BHARANI);
 
             // Appayya Dikshitar Jayanthi -
             // {Maasam - Kanni, Paksham - Krishna, Thithi - Prathama}
@@ -2644,7 +2644,7 @@ public class VedicCalendar extends Calendar {
             // Arudra Darshan -
             // {Maasam - Dhanusu, Nakshatram - Arthra}
             // (Type-7 match)
-            dhinaVisheshamList.put(maasamList[8] + natchathiramList[5],
+            dhinaVisheshamList.put(maasamList[8] + nakshatramList[5],
                     PANCHANGAM_DHINA_VISHESHAM_ARUDHRA_DARSHAN);
 
             // Hanuman Jayanthi -
@@ -2672,8 +2672,8 @@ public class VedicCalendar extends Calendar {
         //         Each degree has 60 mins, 1 min has 60 secs
         //         So, 343deg 22’ 44" can be represented as 20602.73 (in minutes)
         // Step 2: Divide Ravi's longitude (R) by MAX_NAKSHATHRAM_MINUTES to
-        //         calculate natchathiramIndex
-        //         Each natchathiram's span(MAX_RAASI_MINUTES) is 30deg (1800 mins)
+        //         calculate nakshatramIndex
+        //         Each nakshatram's span(MAX_RAASI_MINUTES) is 30deg (1800 mins)
         // Step 3: To calculate maasamIndex
         //         - Formula is maasamIndex = (R / MAX_RAASI_MINUTES)
         //         Note: maasamIndex thus obtained may need to be fine-tuned based on amount
@@ -2797,12 +2797,12 @@ public class VedicCalendar extends Calendar {
     /**
      * Utility function to get the locale index given a locale string.
      *
-     * @param natchathiramIndex Index into natchathiram table
+     * @param nakshatramIndex Index into nakshatram table
      * @param vaasaramIndex Index into vaasaram table
      *
      * @return amruthathi yogam as a string
      */
-    private String getAyogamStr (int natchathiramIndex, int vaasaramIndex) {
+    private String getAyogamStr (int nakshatramIndex, int vaasaramIndex) {
         // Logic:
         // There are is a need to do multi-D lookup to find the correct amruthathi yogam.
         // {Nakshatram}{Vaasaram}{Yogam}{locale involving strings for supported languages}
@@ -2815,8 +2815,8 @@ public class VedicCalendar extends Calendar {
         //  - Using the index fetched in 1st level lookup {index, locale}, lookup in
         //    amruthathiYogamTable table and fetch the correct amruthathi yogam.
         // Note: This table mapping is as per Pambu Panchangam
-        String ayogamNatchathiramMap = amruthathiYogamMapTable[natchathiramIndex];
-        char cVal = ayogamNatchathiramMap.charAt(vaasaramIndex);
+        String ayogamNakshatramMap = amruthathiYogamMapTable[nakshatramIndex];
+        char cVal = ayogamNakshatramMap.charAt(vaasaramIndex);
         int ayogamIndex = Integer.parseInt(String.valueOf(cVal));
 
         //System.out.println("VedicCalendar", "getAyogamStr: Yogam => " + ayogamStr);
@@ -3083,29 +3083,30 @@ public class VedicCalendar extends Calendar {
     /**
      * Get Nakshatram span on a given Calendar day.
      *
-     * @param natchathiramIndex Nakshatram Index
+     * @param nakshatramIndex Nakshatram Index
      * @param calcLocal         Set true to use local calculation, false to use SwissEph.
      *
      * @return Nakshatram in celestial minutes.
      */
-    private double getNakshatramSpan (int natchathiramIndex, boolean calcLocal) {
+    private double getNakshatramSpan (int nakshatramIndex, boolean calcLocal) {
         double natSpan;
 
         if (calcLocal) {
-            double chandraAyanamAtSunset = dailyChandraMotion / MAX_MINS_IN_DAY;
-            chandraAyanamAtSunset = refChandraAyanamAtDayStart + (chandraAyanamAtSunset * sunSetTotalMins);
+            double earthMinFor1ChandraCelMin = (MAX_MINS_IN_DAY / dailyChandraMotion);
+            double timeLeftToSunset = sunSetTotalMins - (defTimezone * MAX_MINS_IN_HOUR);
+            double curChandraAyanamAtSunset = refChandraAyanamAtDayStart +
+                    (timeLeftToSunset / earthMinFor1ChandraCelMin);
 
-            //double natchathiramRef = Math.ceil(refChandraAyanamAtDayStart / MAX_NAKSHATHRAM_MINUTES);
-            double natchathiramRef = Math.ceil(chandraAyanamAtSunset / MAX_NAKSHATHRAM_MINUTES);
-            natchathiramRef *= MAX_NAKSHATHRAM_MINUTES;
-            natSpan = natchathiramRef - refChandraAyanamAtDayStart;
+            double nakshatramRef = Math.ceil(curChandraAyanamAtSunset / MAX_NAKSHATHRAM_MINUTES);
+            nakshatramRef *= MAX_NAKSHATHRAM_MINUTES;
+            natSpan = nakshatramRef - refChandraAyanamAtDayStart;
 
             // 2) Find the Earth Hours during the day based on daily motion of Ravi & Chandra.
             natSpan /= dailyChandraMotion;
             natSpan *= MAX_24HOURS;
             natSpan += defTimezone;
         } else {
-            double natOffset = ((natchathiramIndex + 1) % MAX_NAKSHATHRAMS) * (360. / 27.);
+            double natOffset = ((nakshatramIndex + 1) % MAX_NAKSHATHRAMS) * (360. / 27.);
 
             SweDate sd = new SweDate(refYear, refMonth, refDate, 0);
             int flags = SweConst.SEFLG_SWIEPH | SweConst.SEFLG_SIDEREAL |

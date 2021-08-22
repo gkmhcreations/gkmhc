@@ -20,36 +20,16 @@
         android:background="@drawable/def_sankalpam_bg"
         android:layout_below="@id/sankalpam_hdr">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/sankalpam_res_begin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:gravity="center_vertical"
-            android:minHeight="48dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/sankalpam_res_begin"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:textAlignment="textStart"
-                android:gravity="start|center_vertical"
-                android:textStyle="bold"
-                android:textColor="@color/blue"
-                android:textSize="20sp"
-                android:text="" />
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/np_heading_size"
-                android:textAlignment="textEnd"
-                android:gravity="end|center_vertical"
-                android:textStyle="bold"
-                android:textColor="@color/blue"
-                android:text=""
-                android:layout_marginStart="1dp" />
-        </LinearLayout>
+            android:textStyle="bold"
+            android:textColor="@color/blue"
+            android:textSize="20sp"
+            android:text="" />
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

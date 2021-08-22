@@ -59,7 +59,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@color/transparent"
-                android:text="@string/snooze_alarm"
+                android:text="@string/dismiss_alarm"
                 android:textAlignment="center"
                 android:textColor="@color/blue"
                 android:textSize="24sp"

@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,17 +39,14 @@ public class Sankalpam extends Fragment {
     private MainActivity mainActivity;
     private Calendar selectedCalendar;
     private View root;
-    TextView begSankalpamTextView;
+    private TextView begSankalpamTextView;
 
-    private boolean isOutSide;
-    private static final int NONE = 0;
-    private static final int DRAG = 1;
-    private static final int ZOOM = 2;
-    private int mode = NONE;
-    private final PointF start = new PointF();
-    private final PointF mid = new PointF();
-    float oldDist = 1f;
-    private float xCoOrdinate, yCoOrdinate;
+    private static final int SANKALPAM_TEXT_MAX_SIZE = 140;
+    private static final int SANKALPAM_TEXT_MIN_SIZE = 40;
+    private static final int SANKALPAM_INCREMENT_SIZE = 4;
+
+    private int mBaseDistZoomIn;
+    private int mBaseDistZoomOut;
 
     private String prefSankalpamType;
     private String samvatsaramStr;
@@ -381,61 +379,41 @@ public class Sankalpam extends Fragment {
      * Utility function to handle text zoom functionality.
      */
     private void viewTransformation(View view, MotionEvent event) {
-        switch (event.getAction() & MotionEvent.ACTION_MASK) {
-            case MotionEvent.ACTION_DOWN:
-                xCoOrdinate = view.getX() - event.getRawX();
-                yCoOrdinate = view.getY() - event.getRawY();
+        if (event.getPointerCount() == 2) {
+            TextView viewById = (TextView) view;
+            int action = event.getAction();
+            int pure = action & MotionEvent.ACTION_MASK;
 
-                start.set(event.getX(), event.getY());
-                isOutSide = false;
-                mode = DRAG;
-                break;
-            case MotionEvent.ACTION_POINTER_DOWN:
-                oldDist = spacing(event);
-                if (oldDist > 12f) {
-                    midPoint(mid, event);
-                    mode = ZOOM;
-                }
-                break;
-            case MotionEvent.ACTION_OUTSIDE:
-                isOutSide = true;
-                mode = NONE;
-            case MotionEvent.ACTION_POINTER_UP:
-                mode = NONE;
-                break;
-            case MotionEvent.ACTION_MOVE:
-                if (!isOutSide) {
-                    if (mode == DRAG) {
-                        view.animate().x(event.getRawX() + xCoOrdinate).y(event.getRawY() + yCoOrdinate).setDuration(0).start();
+            if (pure == MotionEvent.ACTION_POINTER_DOWN
+                    && viewById.getTextSize() <= SANKALPAM_TEXT_MAX_SIZE
+                    && viewById.getTextSize() >= SANKALPAM_TEXT_MIN_SIZE) {
+                mBaseDistZoomIn = getDistanceFromEvent(event);
+                mBaseDistZoomOut = getDistanceFromEvent(event);
+            } else {
+                int currentDistance = getDistanceFromEvent(event);
+                if (currentDistance > mBaseDistZoomIn) {
+                    float finalSize = viewById.getTextSize() + SANKALPAM_INCREMENT_SIZE;
+                    if (finalSize > SANKALPAM_TEXT_MAX_SIZE) {
+                        finalSize = SANKALPAM_TEXT_MAX_SIZE;
                     }
-                    if (mode == ZOOM && event.getPointerCount() == 2) {
-                        float newDist1 = spacing(event);
-                        if (newDist1 > 12f) {
-                            float scale = newDist1 / oldDist * view.getScaleX();
-                            view.setScaleX(scale);
-                            view.setScaleY(scale);
+                    viewById.setTextSize(TypedValue.COMPLEX_UNIT_PX, finalSize);
+                } else {
+                    if (currentDistance < mBaseDistZoomOut) {
+                        float finalSize = viewById.getTextSize() - SANKALPAM_INCREMENT_SIZE;
+                        if (finalSize < SANKALPAM_TEXT_MIN_SIZE) {
+                            finalSize = SANKALPAM_TEXT_MIN_SIZE;
                         }
+                        viewById.setTextSize(TypedValue.COMPLEX_UNIT_PX, finalSize);
                     }
                 }
-                break;
+            }
         }
     }
 
-    /**
-     * Utility function to figure out spacing based on event.
-     */
-    private float spacing(MotionEvent event) {
-        float x = event.getX(0) - event.getX(1);
-        float y = event.getY(0) - event.getY(1);
-        return (int) Math.sqrt(x * x + y * y);
-    }
-
-    /**
-     * Utility function to figure out mid-point based on event.
-     */
-    private void midPoint(PointF point, MotionEvent event) {
-        float x = event.getX(0) + event.getX(1);
-        float y = event.getY(0) + event.getY(1);
-        point.set(x / 2, y / 2);
+    // Utility function to get the distance between the multiple touch
+    int getDistanceFromEvent(MotionEvent event) {
+        int dx = (int) (event.getX(0) - event.getX(1));
+        int dy = (int) (event.getY(0) - event.getY(1));
+        return (int) (Math.sqrt(dx * dx + dy * dy));
     }
 }

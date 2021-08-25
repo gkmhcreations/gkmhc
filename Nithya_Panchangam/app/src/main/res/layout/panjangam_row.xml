@@ -17,7 +17,19 @@
         android:maxLines="5"
         android:gravity="center_vertical|start"
         android:textAlignment="textStart"
-        android:layout_weight="1"
+        android:layout_weight="0.45"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:ellipsize="end"
+        android:text=""
+        android:textStyle="bold"
+        android:textColor="@color/blue"
+        android:maxLines="1"
+        android:gravity="center_vertical|start"
+        android:textAlignment="textStart"
+        android:layout_weight="0.1"
         android:layout_width="0dp"
         android:layout_height="match_parent"/>
 
@@ -30,7 +42,7 @@
         android:maxLines="10"
         android:gravity="center_vertical|end"
         android:textAlignment="textEnd"
-        android:layout_weight="1"
+        android:layout_weight="0.45"
         android:layout_width="0dp"
         android:layout_height="match_parent"/>
 </LinearLayout>

@@ -74,7 +74,7 @@ public class HandleAlarmReminderActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         String prefLang = readLocaleSettings();
-        String selLocale = MainActivity.getLocale2Chars(prefLang);
+        String selLocale = MainActivity.getLocaleShortStr(prefLang);
         Locale locale = new Locale(selLocale);
         Locale.setDefault(locale);
         Resources resources = getResources();

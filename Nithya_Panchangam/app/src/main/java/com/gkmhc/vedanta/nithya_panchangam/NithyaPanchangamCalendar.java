@@ -72,7 +72,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
     private double curLocationLongitude = 0; // Default to Varanasi
     private double curLocationLatitude = 0; // Default to Varanasi
     private static final String PREF_NP_LOCALE_KEY = "PREF_NP_LOCALE_KEY";
-    public static final String PREF_LOCATION_DEF_VAL_KEY = "PREF_LOCATION_DEF_VAL_KEY";
+    private static final String PREF_LOCATION_DEF_VAL_KEY = "PREF_LOCATION_DEF_VAL_KEY";
     private Menu menu;
     private HashMap<String, String[]> vedicCalendarLocaleList;
 
@@ -80,7 +80,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String prefLang = readLocaleSettings();
-        selLocale = MainActivity.getLocale2Chars(prefLang);
+        selLocale = MainActivity.getLocaleShortStr(prefLang);
         Locale locale = new Locale(selLocale);
         Locale.setDefault(locale);
         Resources resources = getResources();
@@ -209,9 +209,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
     }
 
     public void getLocationCoords(String locationStr) {
-        //String place = (String)adapterView.getItemAtPosition(position);
-
-        try {
+        /*try {
             Geocoder geocoder = new Geocoder(this);
             List<Address> addressList = geocoder.getFromLocationName(locationStr, 1);
             if ((addressList != null) && (addressList.size() > 0)) {
@@ -225,7 +223,10 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
         } catch (Exception e) {
             // Nothing to do here.
             Log.d("NPCalendar","Exception in initManualLocation()");
-        }
+        }*/
+        MainActivity.PlacesInfo placesInfo = MainActivity.getLocationFromPlacesDB(locationStr);
+        curLocationLatitude = placesInfo.latitude;
+        curLocationLongitude = placesInfo.longitude;
     }
 
     private void setMonthView() {

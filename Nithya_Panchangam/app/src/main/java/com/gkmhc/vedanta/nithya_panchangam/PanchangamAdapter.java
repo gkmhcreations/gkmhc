@@ -129,7 +129,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
         panchangamViewHolder.panchangamField.setTextSize(defTextSize);
 
         // Make Lagnam value clickable to display a range of lagnams throughout the day!
-        if (position == 11) {
+        if (position == 15) {
             // Add Lagnam details
             // Display Lagnam from the list of Lagnams retrieved.
             StringBuilder lagnamVal = new StringBuilder();
@@ -147,17 +147,19 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             panchangamViewHolder.panchangamValue.setTextSize(defTextSize);
             panchangamViewHolder.panchangamValue.setPaintFlags(
                     panchangamViewHolder.panchangamValue.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-            panchangamViewHolder.panchangamValue.setCompoundDrawablesWithIntrinsicBounds(
-                    0, 0, R.drawable.click_here, 0);
+            /*panchangamViewHolder.panchangamValue.setCompoundDrawablesWithIntrinsicBounds(
+                    0, 0, R.drawable.click_here, 0);*/
             convertView.setOnClickListener(v -> showLagnamDetails());
         }
-        // Make Lagnam value clickable to display a range of lagnams throughout the day!
-        else if (position == 12) {
+        // Make Horai value clickable to display a range of horai(s) throughout the day!
+        else if (position == 16) {
             // Add Horai details
             // Display Horai from the list of Horai(s) retrieved.
             StringBuilder horaiVal = new StringBuilder();
             for (int index = 0;index < horaiStr.size();index++) {
                 VedicCalendar.LagnamHoraiInfo horaiInfo = horaiStr.get(index);
+
+                // Remove the "line break" for better display
                 String horaiParsedVal = horaiInfo.name.replaceAll("<br>", "");
                 horaiVal.append(horaiParsedVal);
                 if (!horaiInfo.timeValue.isEmpty()) {
@@ -171,14 +173,22 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             panchangamViewHolder.panchangamValue.setTextSize(defTextSize);
             panchangamViewHolder.panchangamValue.setPaintFlags(
                     panchangamViewHolder.panchangamValue.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-            panchangamViewHolder.panchangamValue.setCompoundDrawablesWithIntrinsicBounds(
-                    0, 0, R.drawable.click_here, 0);
+            /*panchangamViewHolder.panchangamValue.setCompoundDrawablesWithIntrinsicBounds(
+                    0, 0, R.drawable.click_here, 0);*/
             convertView.setOnClickListener(v -> showHoraiDetails());
-        } else if (position == 18) {
+        }
+        // Align & display "Nalla Neram" in HTML format
+        else if (position == 18) {
             // Add "Nalla Neram" details
-            panchangamViewHolder.panchangamValue.setText(Html.fromHtml(panchangamValues.get(position)));
+            String nallaNeramParsedVal = panchangamValues.get(position);
+
+            // Replace only the last occurence of "line break"
+            nallaNeramParsedVal = nallaNeramParsedVal.replaceAll("<br>$", "");
+            panchangamViewHolder.panchangamValue.setText(Html.fromHtml(nallaNeramParsedVal));
             panchangamViewHolder.panchangamValue.setTextSize(defTextSize);
-        } else {
+        }
+        // Display remaining fields as-is as retrived!
+        else {
             // Default handling for remaining panchangam fields & values.
             panchangamViewHolder.panchangamValue.setText(panchangamValues.get(position));
             panchangamViewHolder.panchangamValue.setTextSize(defTextSize);

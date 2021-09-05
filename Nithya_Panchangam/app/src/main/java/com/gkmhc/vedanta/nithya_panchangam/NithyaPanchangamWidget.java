@@ -92,7 +92,7 @@ public class NithyaPanchangamWidget extends AppWidgetProvider {
     public void update(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String prefLang = readLocaleSettings(context);
-        String selLocale = MainActivity.getLocale2Chars(prefLang);
+        String selLocale = MainActivity.getLocaleShortStr(prefLang);
         Locale locale = new Locale(selLocale);
         Locale.setDefault(locale);
         Resources resources = context.getResources();
@@ -149,9 +149,7 @@ public class NithyaPanchangamWidget extends AppWidgetProvider {
     }
 
     public void getLocationCoords(String locationStr, Context context) {
-        //String place = (String)adapterView.getItemAtPosition(position);
-
-        try {
+        /*try {
             Geocoder geocoder = new Geocoder(context);
             List<Address> addressList = geocoder.getFromLocationName(locationStr, 1);
             if ((addressList != null) && (addressList.size() > 0)) {
@@ -165,7 +163,10 @@ public class NithyaPanchangamWidget extends AppWidgetProvider {
         } catch (Exception e) {
             // Nothing to do here.
             Log.d("MainActivity","Exception in initManualLocation()");
-        }
+        }*/
+        MainActivity.PlacesInfo placesInfo = MainActivity.getLocationFromPlacesDB(locationStr);
+        curLocationLatitude = placesInfo.latitude;
+        curLocationLongitude = placesInfo.longitude;
     }
 
     private String readLocaleSettings(Context context) {

@@ -8,6 +8,19 @@
         android:icon="@drawable/calendar"
         android:contentDescription="@string/calendar"
         app:showAsAction="ifRoom" />
+    <!--
+    TODO - For future revision!
+    <item
+        android:title="@string/raasi_chart_menu"
+        android:id="@+id/raasi_chart"
+        android:contentDescription="@null"
+        app:showAsAction="collapseActionView" />
+    <item
+        android:title="@string/kaala_vibhagam_menu"
+        android:id="@+id/kaala_vibhagam"
+        android:contentDescription="@null"
+        app:showAsAction="collapseActionView" />
+    -->
     <item
         android:title="@string/settings"
         android:id="@+id/settings_np"

@@ -154,11 +154,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     public static final int LOCATION_MANUAL = 0;
     public static final int LOCATION_GPS = 1;
 
-    private static final int settingsRequestCode = 2100;
-    private static final int aboutRequestCode = 2101;
-    private static final int npCalendarRequestCode = 2102;
-    private static final int npRequestLocationUpdate = 2103;
-    private static final int npRequestPermissionsUpdate = 2104;
+    private static final int SETTINGS_REQUEST_CODE = 2100;
+    private static final int ABOUT_REQUEST_CODE = 2101;
+    private static final int CALENDAR_REQUEST_CODE = 2102;
+    private static final int LOCATION_UPDATE_REQUEST_CODE = 2103;
+    private static final int REQUEST_PERMISSIONS_CODE = 2104;
+    private static final int RAASI_CHART_CODE = 2105;
+    private static final int KAALA_VIBHAGAM_CODE = 2106;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private double curLocationLongitude = 0; // Default to Varanasi
     private double curLocationLatitude = 0; // Default to Varanasi
@@ -166,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     public static List<String> placesList;
     private static final HashMap<String, String[]> vedicCalendarLocaleList = new HashMap<>();;
 
-    private static class PlacesInfo {
+    public static class PlacesInfo {
         public final double longitude;
         public final double latitude;
         public final double timezone;
@@ -177,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             this.timezone = timezone;
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -401,13 +404,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         boolean retVal = true;
-        if (item.getItemId() == R.id.settings_np) {
+        int itemID = item.getItemId();
+        if (itemID == R.id.settings_np) {
             startActivityForResult(new Intent(this, NithyaPanchangamSettings.class),
-                    settingsRequestCode);
-        } else if (item.getItemId() == R.id.about_np) {
+                    SETTINGS_REQUEST_CODE);
+        } else if (itemID == R.id.about_np) {
             startActivityForResult(new Intent(this, AboutActivity.class),
-                    aboutRequestCode);
-        } else if (item.getItemId() == R.id.calendar_np) {
+                    ABOUT_REQUEST_CODE);
+        } else if (itemID == R.id.calendar_np) {
             // Create a dialog for displaying Calender with "English" as default locale
             Locale locale = new Locale("EN");
             Locale.setDefault(locale);
@@ -416,10 +420,19 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             configuration.locale = locale;
             resources.updateConfiguration(configuration, resources.getDisplayMetrics());
             startActivityForResult(new Intent(this,
-                    NithyaPanchangamCalendar.class), npCalendarRequestCode);
+                    NithyaPanchangamCalendar.class), CALENDAR_REQUEST_CODE);
         } else {
             retVal = super.onOptionsItemSelected(item);
         }
+        /*
+        TODO - For future revision!
+        else if (itemID == R.id.raasi_chart) {
+            startActivityForResult(new Intent(this, RaasiChart.class),
+                    RAASI_CHART_CODE);
+        } else if (itemID == R.id.kaala_vibhagam) {
+            startActivityForResult(new Intent(this, NithyaKaalam.class),
+                    KAALA_VIBHAGAM_CODE);
+        }*/
 
         return retVal;
     }
@@ -448,7 +461,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         // 1) If Activity results is for Settings, then update all fragments with selected locale
         // 2) If Activity results is for Alarm, then create Alarm based on alarm type
         // Ignore the rest
-        if (requestCode == settingsRequestCode) {
+        if (requestCode == SETTINGS_REQUEST_CODE) {
             // If Manual location has changed, then refresh the tabs
             String selectedLocation = readDefLocationSetting(getApplicationContext());
             if (!selectedLocation.equalsIgnoreCase(curLocationCity)) {
@@ -500,7 +513,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 refreshTab(NPAdapter.NP_TAB_PANCHANGAM);
                 refreshTab(NPAdapter.NP_TAB_SANKALPAM);
             }
-        } else if (requestCode == npCalendarRequestCode) {
+        } else if (requestCode == CALENDAR_REQUEST_CODE) {
             if (data != null) {
                 refYear = data.getIntExtra("Calendar_Year", 0);
                 refMonth = data.getIntExtra("Calendar_Month", 0);
@@ -665,7 +678,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         if (localPreferences != null) {
             String prefLang = localPreferences.getString(PREF_NP_LOCALE_KEY, "En");
             try {
-                selLocale = getLocale2Chars(prefLang);
+                selLocale = getLocaleShortStr(prefLang);
             } catch (Exception e) {
                 // Fallback to default language preference
                 selLocale = "en";
@@ -802,7 +815,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 // Request for permissions in case of a soft denial without "Don't ask again"
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        npRequestLocationUpdate);
+                        LOCATION_UPDATE_REQUEST_CODE);
             }
         } catch (Exception e) {
             curLocationCity = readDefLocationSetting(getApplicationContext());
@@ -814,7 +827,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == npRequestLocationUpdate) {
+        if (requestCode == LOCATION_UPDATE_REQUEST_CODE) {
             // 2.1) If permissions are "Allowed", then retrieve longitude & latitude
             if ((grantResults.length > 0) &&
                     (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
@@ -920,7 +933,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         Uri uri = Uri.fromParts("package", getPackageName(), null);
         intent.setData(uri);
-        startActivityForResult(intent, npRequestPermissionsUpdate);
+        startActivityForResult(intent, REQUEST_PERMISSIONS_CODE);
     }
 
     public static double getLocationTimeZone(String location) {
@@ -930,6 +943,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             offset = placesInfo.timezone;
         }
         return offset;
+    }
+
+    public static PlacesInfo getLocationFromPlacesDB(String locationStr) {
+        return placesTimezoneDB.get(locationStr);
     }
 
     private static void buildPlacesTimezoneDB() {
@@ -1356,7 +1373,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         if (localPreferences != null) {
             String prefLang = localPreferences.getString(PREF_NP_LOCALE_KEY, "En");
             try {
-                selLocale = getLocale2Chars(prefLang);
+                selLocale = getLocaleShortStr(prefLang);
             } catch (Exception e) {
                 // Fallback to default language preference
                 selLocale = "en";
@@ -1373,36 +1390,36 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         return selLocale;
     }
 
-    public static String getLocale2Chars(String localeStr) {
-        String locale2Chars;
+    public static String getLocaleShortStr(String localeStr) {
+        String localeShortStr;
         switch (localeStr) {
             case "Tamil":
-                locale2Chars = "ta";
+                localeShortStr = "ta";
                 break;
             case "Sanskrit":
-                locale2Chars = "sa";
+                localeShortStr = "sa";
                 break;
             case "Telugu":
-                locale2Chars = "te";
+                localeShortStr = "te";
                 break;
             case "Malayalam":
-                locale2Chars = "ml";
+                localeShortStr = "ml";
                 break;
             case "Kannada":
-                locale2Chars = "kn";
+                localeShortStr = "kn";
                 break;
             case "Hindi":
-                locale2Chars = "hi";
+                localeShortStr = "hi";
                 break;
             case "IAST":
-                locale2Chars = "inc";
+                localeShortStr = "inc";
                 break;
             default:
-                locale2Chars = "en";
+                localeShortStr = "en";
                 break;
         }
 
-        return locale2Chars;
+        return localeShortStr;
     }
 
     public static HashMap<String, String[]> buildVedicCalendarLocaleList(Context context) {

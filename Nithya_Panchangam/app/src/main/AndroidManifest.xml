@@ -17,30 +17,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Nithya_Panchangam">
-
-        <activity android:name="com.gkmhc.vedanta.nithya_panchangam.AlarmLockScreenNotification"
+        <activity android:name=".NithyaKaalam"></activity>
+        <activity android:name=".RaasiChart" />
+        <activity
+            android:name=".AlarmLockScreenNotification"
             android:excludeFromRecents="true"
             android:keepScreenOn="true"
-            android:showOnLockScreen="true">
-        </activity>
-
-        <activity android:name="com.gkmhc.vedanta.nithya_panchangam.NithyaPanchangamCalendar"
-            android:theme="@style/Theme.Nithya_Panchangam">
-        </activity>
+            android:showOnLockScreen="true" />
+        <activity
+            android:name=".NithyaPanchangamCalendar"
+            android:theme="@style/Theme.Nithya_Panchangam" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="com.gkmhc.vedanta.nithya_panchangam" />
 
-        <activity android:name="com.gkmhc.vedanta.nithya_panchangam.AboutActivity"
+        <activity
+            android:name=".AboutActivity"
             android:theme="@style/ThemeOverlay.Nithya_Panchangam.SplashScreen" />
-
-        <activity android:name="com.gkmhc.vedanta.nithya_panchangam.NithyaPanchangamSettings" />
-
-        <activity android:name="com.gkmhc.vedanta.nithya_panchangam.HandleAlarmReminderActivity" />
+        <activity android:name=".NithyaPanchangamSettings" />
+        <activity android:name=".HandleAlarmReminderActivity" />
 
         <receiver
-            android:name="com.gkmhc.vedanta.nithya_panchangam.NPBroadcastReceiver"
+            android:name=".NPBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -52,7 +51,8 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name="com.gkmhc.vedanta.nithya_panchangam.SplashScreen"
+        <activity
+            android:name=".SplashScreen"
             android:theme="@style/ThemeOverlay.Nithya_Panchangam.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -62,7 +62,7 @@
         </activity>
 
         <receiver
-            android:name="com.gkmhc.vedanta.nithya_panchangam.NithyaPanchangamWidget"
+            android:name=".NithyaPanchangamWidget"
             android:theme="@style/ThemeOverlay.Nithya_Panchangam.AppWidgetContainer">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -76,7 +76,8 @@
                 android:resource="@xml/nithya_panchangam_widget_info" />
         </receiver>
 
-        <activity android:name="com.gkmhc.vedanta.nithya_panchangam.MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:configChanges="screenSize|keyboardHidden|orientation|locale"
             android:theme="@style/Theme.Nithya_Panchangam">
             <intent-filter>

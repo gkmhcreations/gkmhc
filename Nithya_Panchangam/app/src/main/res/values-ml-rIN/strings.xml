@@ -40,7 +40,7 @@
     <string name="sankalpam_srardham_end_1">വിഷ്ണു യോഗ വിഷ്ണു കരണ ഏവം ഗുണ വിശേഷണ വിശിഷ്ടായാം അസ്യാം</string>
     <string name="sankalpam_srardham_end_2">(പ്രാചീനാവീതി) ............ ഗോത്രാണാം, വസുരുദ്ര ആദിത്യ സ്വരൂപാണാം അസ്മദ് പിതൃ പിതാമഹ പ്രപിതാമഹാനാം --- (മാതാ അസ്തി ചേത്) പിതാമഹീ പിതുഃ പിതാമഹീ പിതുഃ പ്രപിതാമഹീ (നോ ചേത്) മാതൃ, പിതാമഹീ പിതുഃ പ്രപിതാമഹീനാം (മാതുഃ ജന്മ ഗോത്രം വദതു) ............ ഗോത്രാണാം സപത്നീക, മാതാമഹ, മാതുഃ പിതാമഹ, മാതുഃ പ്രപിതാമഹാനാം ഉഭയ വംശ പിതൄണാം അക്ഷയ്യ തൃപ്തയര്‍ഥം</string>
     <string name="amruthathi_yogam_heading">അമൃതാദി യോഗം</string>
-    <string name="vaasaram_suffix">വാസരഃ</string>
+    <string name="vaasaram_suffix">വാസര</string>
     <string name="solar_calendar">സൗരമാനം</string>
     <string name="sunrise_heading">സൂര്‍യോദയഃ</string>
     <string name="sunset_heading">സുര്‍യാസ്തമയഃ</string>
@@ -320,7 +320,7 @@
         <item>ദ്വാദശ്യാം</item>
         <item>ത്രയോദശ്യാം</item>
         <item>ചതുര്‍ദശ്യാം</item>
-        <item>അമാവാസ്യായാം"</item>
+        <item>അമാവാസ്യായാം</item>
     </string-array>
 
     <!-- Raasi (Planet) -->

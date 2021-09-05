@@ -518,6 +518,19 @@
         <item>சனி</item>
     </string-array>
 
+    <!-- Planets -->
+    <string-array name="planet_list">
+        <item>சூரிய</item>
+        <item>சந்</item>
+        <item>அங்</item>
+        <item>புத</item>
+        <item>குரு</item>
+        <item>சுக்</item>
+        <item>சனி</item>
+        <item>ராஹு</item>
+        <item>கேது</item>
+    </string-array>
+
     <!-- Horai (Auspicious Hour of the Day) -->
     <string-array name="horai_list">
         <item>சூரிய</item>

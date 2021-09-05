@@ -30,7 +30,7 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // Step 1: Read selected locale from shared preferences
         String prefLang = readLocaleSettings();
-        String selLocale = MainActivity.getLocale2Chars(prefLang);
+        String selLocale = MainActivity.getLocaleShortStr(prefLang);
         Locale locale = new Locale(selLocale);
         Locale.setDefault(locale);
         Resources resources = getResources();

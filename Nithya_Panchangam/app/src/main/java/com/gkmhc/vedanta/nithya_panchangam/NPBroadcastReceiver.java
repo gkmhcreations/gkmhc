@@ -902,10 +902,10 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
     private List<Integer> findDinaVishesham(Context context) {
         Calendar currCalendar = Calendar.getInstance();
         String location = MainActivity.readDefLocationSetting(context);
-        double curLocationLongitude = 0;
-        double curLocationLatitude = 0;
+        double curLocationLongitude;
+        double curLocationLatitude;
 
-        try {
+        /*try {
             Geocoder geocoder = new Geocoder(context);
             List<Address> addressList = geocoder.getFromLocationName(location, 1);
             if ((addressList != null) && (addressList.size() > 0)) {
@@ -919,7 +919,10 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
         } catch (Exception e) {
             // Nothing to do here.
             Log.d("NPBcastReceiver","Exception in initManualLocation()");
-        }
+        }*/
+        MainActivity.PlacesInfo placesInfo = MainActivity.getLocationFromPlacesDB(location);
+        curLocationLatitude = placesInfo.latitude;
+        curLocationLongitude = placesInfo.longitude;
 
         List<Integer> dhinaSpecialCodeList = null;
         String localpath = context.getFilesDir() + File.separator + "/ephe";

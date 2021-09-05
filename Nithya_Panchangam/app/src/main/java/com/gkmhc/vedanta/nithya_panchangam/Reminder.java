@@ -71,7 +71,7 @@ public class Reminder extends Fragment {
             public void run() {
                 try {
                     // code runs in a thread
-                    getActivity().runOnUiThread(() -> updateRemindersListView());
+                    getActivity().runOnUiThread(() -> updateRemindersListView(-1));
                 } catch (final Exception ex) {
                     Log.d("Reminder","Exception in initReminders()");
                 }
@@ -113,13 +113,13 @@ public class Reminder extends Fragment {
                     } else {
                         Log.e("Reminder", "ERROR: Cannot create new Reminder!");
                     }
-                    updateRemindersListView();
+                    updateRemindersListView(reminderID);
                 }
             }
         }
     }
 
-    private void updateRemindersListView() {
+    private void updateRemindersListView(int scrollToReminder) {
         boolean addToDB = true;
         long pStartTime = System.nanoTime();
         int labelID;
@@ -156,6 +156,17 @@ public class Reminder extends Fragment {
         ReminderAdapter reminderAdapter = new ReminderAdapter(context, reminderAlarmIDList,
                 remindersDB, this);
         reminderListView.setAdapter(reminderAdapter);
+
+        // -1 indicates - Don't scroll!
+        // Basically, after refresh scroll to the reminder that was just updated!
+        if (scrollToReminder != -1) {
+            try {
+                int scrollPos = reminderAlarmIDList.get(scrollToReminder);
+                reminderListView.setSelection(scrollPos);
+            } catch (Exception e) {
+                // Nothing to do!
+            }
+        }
     }
 
     /**

@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/saffron_background_rr_corner"
+    android:orientation="vertical"
+    android:fillViewport="true">
+
+    <TextView
+        android:id="@+id/raasi_day_details"
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textStyle="bold"
+        android:gravity="center_vertical|center_horizontal"
+        android:textAlignment="center"
+        android:text=""
+        android:textColor="@color/maroon"
+        android:textSize="20sp"
+        android:maxLines="3" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:id="@+id/np_raasi_recycler_view"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5" />
+
+    <TextView
+        android:id="@+id/raasi_location_details"
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textStyle="bold"
+        android:gravity="center_vertical|center_horizontal"
+        android:textAlignment="center"
+        android:text=""
+        android:textColor="@color/maroon"
+        android:textSize="20sp"
+        android:maxLines="3" />
+</LinearLayout>

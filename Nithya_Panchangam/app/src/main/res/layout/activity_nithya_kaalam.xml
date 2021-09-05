@@ -1,0 +1,124 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/saffron_background_rr_corner"
+    android:orientation="vertical"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/np_kaalam_std_time_layout"
+        android:orientation="horizontal"
+        android:minHeight="96dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/np_std_time_heading"
+            android:minHeight="96dp"
+            android:text="@string/standard_clock"
+            android:textSize="24sp"
+            android:textColor="@color/blue"
+            android:textStyle="bold"
+            android:maxLines="3"
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <TextClock
+            android:id="@+id/np_kaalam_std_time"
+            android:format12Hour="hh:mm:ss a"
+            android:minHeight="96dp"
+            android:textSize="32sp"
+            android:textColor="@color/blue"
+            android:textStyle="bold"
+            android:maxLines="3"
+            android:gravity="center_vertical|end"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <View
+        android:layout_below="@id/np_kaalam_std_time_layout"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <LinearLayout
+        android:id="@+id/np_kaalam_naazhigai_time_layout"
+        android:orientation="horizontal"
+        android:minHeight="96dp"
+        android:layout_below="@id/np_kaalam_std_time_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/np_naazhigai_time_heading"
+            android:minHeight="96dp"
+            android:text="@string/nazhigai_clock"
+            android:textSize="24sp"
+            android:textColor="@color/blue"
+            android:textStyle="bold"
+            android:maxLines="3"
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/np_kaalam_nazhigai_time"
+            android:textSize="32sp"
+            android:textColor="@color/blue"
+            android:textStyle="bold"
+            android:maxLines="3"
+            android:gravity="center_vertical|end"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="96dp" />
+    </LinearLayout>
+
+    <View
+        android:layout_below="@id/np_kaalam_naazhigai_time_layout"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minHeight="96dp"
+        android:layout_below="@id/np_kaalam_naazhigai_time_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/np_kaalam_daytime_heading"
+            android:layout_marginTop="2dp"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:minHeight="96dp"
+            android:textStyle="bold"
+            android:gravity="center_vertical|start"
+            android:textAlignment="textStart"
+            android:text="@string/kaalam_daytime"
+            android:textColor="@color/maroon"
+            android:textSize="20sp"
+            android:maxLines="3" />
+
+        <TextView
+            android:id="@+id/np_kaalam_daytime_value"
+            android:layout_marginTop="2dp"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:minHeight="96dp"
+            android:textStyle="bold"
+            android:gravity="center_vertical|end"
+            android:textAlignment="textEnd"
+            android:text="@string/kaala_vibhaagah"
+            android:textColor="@color/maroon"
+            android:textSize="20sp"
+            android:maxLines="3" />
+    </LinearLayout>
+</RelativeLayout>

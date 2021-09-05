@@ -277,7 +277,6 @@ public class Sankalpam extends Fragment {
             return true;
         });
 
-        // Change last 1 or 2 alphabets in the suffix of below strings as per sanskrit grammar.
         String sanskritAyanamStr = ayanamStr;
         String sanskritRithouStr = rithouStr;
         String sanskritPakshamStr = pakshamStr;
@@ -288,18 +287,77 @@ public class Sankalpam extends Fragment {
         String htmlFontHdrStart = "<font color='#990000'>";
         String htmlFontHdrEnd = "</font>";
 
+        // Change last 1 or 2 alphabets in the suffix of below strings as per the grammar of the
+        // given locale.
+        // Also, remove the "visargam" from strings for sankalpam.
         if (selLocale.equalsIgnoreCase("en")) {
             sanskritAyanamStr = ayanamStr.substring(0, ayanamStr.length() - 2) + "e";
-            sanskritRithouStr = rithouStr.substring(0, rithouStr.length() - 1) + "ou";
+            sanskritRithouStr = rithouStr.substring(0, rithouStr.length() - 1) + "au";
             sanskritPakshamStr = pakshamStr + "pakshe";
         } else if (selLocale.equalsIgnoreCase("ta")) {
             sanskritAyanamStr = ayanamStr.substring(0, ayanamStr.length() - 3) + "னே";
             sanskritRithouStr = rithouStr.substring(0, rithouStr.length() - 2) + "தெள";
             sanskritPakshamStr = pakshamStr + "பக்ஷே";
         } else if (selLocale.equalsIgnoreCase("sa")) {
+            sanskritVaasaramStr = sanskritVaasaramStr.replaceAll("ः", "");
+            sanskritNatchathiramStr = sanskritNatchathiramStr.replaceAll("ः", "");
+            sanskritYogamStr = sanskritYogamStr.replaceAll("ः", "");
+            maasamStr = maasamStr.replaceAll("ः", "");
+            karanamStr = karanamStr.replaceAll("ः", "");
+
             sanskritAyanamStr = ayanamStr.substring(0, ayanamStr.length() - 3) + "णे";
-            sanskritRithouStr = rithouStr.substring(0, rithouStr.length() - 2) + "तौ";
+            sanskritRithouStr = rithouStr.substring(0, rithouStr.length() - 3) + "तौ";
             sanskritPakshamStr = pakshamStr + "पक्षे";
+        } else if (selLocale.equalsIgnoreCase("hi")) {
+            sanskritVaasaramStr = sanskritVaasaramStr.replaceAll("ः", "");
+            sanskritNatchathiramStr = sanskritNatchathiramStr.replaceAll("ः", "");
+            sanskritYogamStr = sanskritYogamStr.replaceAll("ः", "");
+            maasamStr = maasamStr.replaceAll("ः", "");
+            karanamStr = karanamStr.replaceAll("ः", "");
+
+            sanskritAyanamStr = ayanamStr.substring(0, ayanamStr.length() - 3) + "णे";
+            sanskritRithouStr = rithouStr.substring(0, rithouStr.length() - 3) + "तौ";
+            sanskritPakshamStr = pakshamStr + "पक्षे";
+        } else if (selLocale.equalsIgnoreCase("inc")) {
+            sanskritVaasaramStr = sanskritVaasaramStr.replaceAll("ḥ", "");
+            sanskritNatchathiramStr = sanskritNatchathiramStr.replaceAll("ḥ", "");
+            sanskritYogamStr = sanskritYogamStr.replaceAll("ḥ", "");
+            maasamStr = maasamStr.replaceAll("ḥ", "");
+            karanamStr = karanamStr.replaceAll("ḥ", "");
+
+            sanskritAyanamStr = ayanamStr.substring(0, ayanamStr.length() - 2) + "ē";
+            sanskritRithouStr = rithouStr.substring(0, rithouStr.length() - 2) + "au";
+            sanskritPakshamStr = pakshamStr + "pakṣē";
+        } else if (selLocale.equalsIgnoreCase("te")) {
+            sanskritVaasaramStr = sanskritVaasaramStr.replaceAll("ః", "");
+            sanskritNatchathiramStr = sanskritNatchathiramStr.replaceAll("ః", "");
+            sanskritYogamStr = sanskritYogamStr.replaceAll("ః", "");
+            maasamStr = maasamStr.replaceAll("ః", "");
+            karanamStr = karanamStr.replaceAll("ః", "");
+
+            sanskritAyanamStr = ayanamStr.substring(0, ayanamStr.length() - 3) + "ణే";
+            sanskritRithouStr = rithouStr.substring(0, rithouStr.length() - 3) + "థౌ";
+            sanskritPakshamStr = pakshamStr + "పక్షే";
+        } else if (selLocale.equalsIgnoreCase("kn")) {
+            sanskritVaasaramStr = sanskritVaasaramStr.replaceAll("ಃ", "");
+            sanskritNatchathiramStr = sanskritNatchathiramStr.replaceAll("ಃ", "");
+            sanskritYogamStr = sanskritYogamStr.replaceAll("ಃ", "");
+            maasamStr = maasamStr.replaceAll("ಃ", "");
+            karanamStr = karanamStr.replaceAll("ಃ", "");
+
+            sanskritAyanamStr = ayanamStr.substring(0, ayanamStr.length() - 3) + "ಣೇ";
+            sanskritRithouStr = rithouStr.substring(0, rithouStr.length() - 3) + "ತೌ";
+            sanskritPakshamStr = pakshamStr + "ಪಕ್ಷೆ";
+        } else if (selLocale.equalsIgnoreCase("ml")) {
+            sanskritVaasaramStr = sanskritVaasaramStr.replaceAll("ഃ", "");
+            sanskritNatchathiramStr = sanskritNatchathiramStr.replaceAll("ഃ", "");
+            sanskritYogamStr = sanskritYogamStr.replaceAll("ഃ", "");
+            maasamStr = maasamStr.replaceAll("ഃ", "");
+            karanamStr = karanamStr.replaceAll("ഃ", "");
+
+            sanskritAyanamStr = ayanamStr.substring(0, ayanamStr.length() - 2) + "നേ";
+            sanskritRithouStr = rithouStr.substring(0, rithouStr.length() - 2) + "തൗ";
+            sanskritPakshamStr = pakshamStr + "പക്ഷെ";
         }
 
         // Step 2: Middle part that are specific to the location, region, space, time etc

@@ -230,6 +230,13 @@
     <string name="confirm_selection" translatable="false">Confirm Selection</string>
     <string name="gregorian_calendar_day" translatable="false">Gregorian Calendar Day</string>
     <string name="panchangam_calendar_day" translatable="false">Panchangam Calendar Day</string>
+    <string name="raasi_chart">Raasi Chart</string>
+    <string name="kaala_vibhaagah">Kaala Vibhaagah</string>
+    <string name="kaalam_daytime">Daytime</string>
+    <string name="raasi_chart_menu">Raasi Chart</string>
+    <string name="kaala_vibhagam_menu">Kaala Vibhagam</string>
+    <string name="nazhigai_clock">Nazhigai Clock</string>
+    <string name="standard_clock">Standard Clock</string>
 
     <!-- Samvatsaram (Year) -->
     <string-array name="samvatsaram_list">
@@ -594,6 +601,19 @@
         <item>Guru</item>
         <item>Brughu</item>
         <item>Sthira</item>
+    </string-array>
+
+    <!-- Planets -->
+    <string-array name="planet_list">
+        <item>Sun</item>
+        <item>Moon</item>
+        <item>Mars</item>
+        <item>Mercury</item>
+        <item>Jupiter</item>
+        <item>Venus</item>
+        <item>Saturn</item>
+        <item>Raahu</item>
+        <item>Kethu</item>
     </string-array>
 
     <!-- Horai (Auspicious Hour of the Day) -->

@@ -263,30 +263,43 @@ public class Panchangam extends Fragment {
         if (vedicCalendar != null) {
             panchangamValues = new ArrayList<>();
 
-            // Step1: Calculate Samvatsaram
+            // Step1: Retrieve Sunrise timings for the given calendar day
+            //startTime = System.nanoTime();
+            panchangamValues.add(vedicCalendar.getSunrise());
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getSunrise()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
+
+            // Step2: Retrieve Sunrise timings for the given calendar day
+            //startTime = System.nanoTime();
+            panchangamValues.add(vedicCalendar.getSunset());
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getSunset()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
+
+            // Step3: Calculate Samvatsaram
             //startTime = System.nanoTime();
             panchangamValues.add(vedicCalendar.getSamvatsaram());
             //endTime = System.nanoTime();
             //Log.d("PanchangamProfiler","getSamvatsaram()... Time Taken: " +
             //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-            // Step2: Retrieve correct Ayanam given current system time
+            // Step4: Retrieve correct Ayanam given current system time
             //startTime = System.nanoTime();
             panchangamValues.add(vedicCalendar.getAyanam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
             //endTime = System.nanoTime();
             //Log.d("PanchangamProfiler","getAyanam()... Time Taken: " +
-          //        VedicCalendar.getTimeTaken(startTime, endTime));
+            //      VedicCalendar.getTimeTaken(startTime, endTime));
 
-            // Step3: Retrieve correct rithou  given current system time
-            // Step5: Retrieve correct paksham  given current system time
-            // Step6: Retrieve correct thithi  given current system time
+            // Step5: Retrieve correct rithu  given current system time
             //startTime = System.nanoTime();
             refDinaAnkam = vedicCalendar.getDinaAnkam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
             //endTime = System.nanoTime();
             //Log.d("PanchangamProfiler","getDinaankham()... Time Taken: " +
             //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-            // Step3: Retrieve correct rithou  given current system time
+            // Step5: Retrieve correct paksham  given current system time
+            // Step6: Retrieve correct thithi  given current system time
             //startTime = System.nanoTime();
             panchangamValues.add(vedicCalendar.getRithu(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
             //endTime = System.nanoTime();
@@ -349,7 +362,21 @@ public class Panchangam extends Fragment {
             //Log.d("PanchangamProfiler","getChandrashtamaNatchathiram()... Time Taken: " +
             //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-            // Step11: Retrieve correct lagnam for the current thithi
+            // Step11: Retrieve correct Yogam for the current thithi
+            //startTime = System.nanoTime();
+            panchangamValues.add(vedicCalendar.getYogam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getYogam()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
+
+            // Step12: Retrieve correct Karanam for the current thithi
+            //startTime = System.nanoTime();
+            panchangamValues.add(vedicCalendar.getKaranam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getKaranam()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
+
+            // Step13: Retrieve correct lagnam for the current thithi
             //startTime = System.nanoTime();
             lagnamStr = vedicCalendar.getLagnam(VedicCalendar.MATCH_SANKALPAM_EXACT);
             panchangamValues.add("");
@@ -360,7 +387,7 @@ public class Panchangam extends Fragment {
             //Log.d("PanchangamProfiler","getLagnam()... Time Taken: " +
             //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-            // Step12: Retrieve correct horai for the current thithi
+            // Step14: Retrieve correct horai for the current thithi
             //startTime = System.nanoTime();
             horaiStr = vedicCalendar.getHorai(VedicCalendar.MATCH_SANKALPAM_EXACT);
             panchangamValues.add("");
@@ -370,40 +397,12 @@ public class Panchangam extends Fragment {
             //Log.d("PanchangamProfiler","getHorai()... Time Taken: " +
             //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-            // Step13: Retrieve correct Yogam for the current thithi
-            //startTime = System.nanoTime();
-            panchangamValues.add(vedicCalendar.getYogam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
-            //endTime = System.nanoTime();
-            //Log.d("PanchangamProfiler","getYogam()... Time Taken: " +
-            //        VedicCalendar.getTimeTaken(startTime, endTime));
-
-            // Step14: Retrieve correct Karanam for the current thithi
-            //startTime = System.nanoTime();
-            panchangamValues.add(vedicCalendar.getKaranam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
-            //endTime = System.nanoTime();
-            //Log.d("PanchangamProfiler","getKaranam()... Time Taken: " +
-            //        VedicCalendar.getTimeTaken(startTime, endTime));
-
             // Step15: Retrieve amruthathi yogam in the current thithi
             //startTime = System.nanoTime();
             panchangamValues.add(
                     vedicCalendar.getAmruthathiYogam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
             //endTime = System.nanoTime();
             //Log.d("PanchangamProfiler","getAmruthathiYogam()... Time Taken: " +
-            //        VedicCalendar.getTimeTaken(startTime, endTime));
-
-            // Step16: Retrieve Sunrise timings for the given calendar day
-            //startTime = System.nanoTime();
-            panchangamValues.add(vedicCalendar.getSunrise());
-            //endTime = System.nanoTime();
-            //Log.d("PanchangamProfiler","getSunrise()... Time Taken: " +
-            //        VedicCalendar.getTimeTaken(startTime, endTime));
-
-            // Step17: Retrieve Sunrise timings for the given calendar day
-            //startTime = System.nanoTime();
-            panchangamValues.add(vedicCalendar.getSunset());
-            //endTime = System.nanoTime();
-            //Log.d("PanchangamProfiler","getSunset()... Time Taken: " +
             //        VedicCalendar.getTimeTaken(startTime, endTime));
 
             // Step18: Retrieve Nalla Neram (auspicious time) within the current thithi
@@ -434,6 +433,7 @@ public class Panchangam extends Fragment {
             //Log.d("PanchangamProfiler","getKuligaiTimings()... Time Taken: " +
             //        VedicCalendar.getTimeTaken(startTime, endTime));
 
+            vedicCalendar.getPlanetsRise();
             //startTime = System.nanoTime();
             List<Integer> dhinaVisheshamCodeList =
                     vedicCalendar.getDinaVishesham(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
@@ -499,6 +499,8 @@ public class Panchangam extends Fragment {
     private void updatePanchangamFieldsHeader() {
         panchangamFields = new ArrayList<>();
         panchangamFields.add(getString(R.string.festivals_events));
+        panchangamFields.add(getString(R.string.sunrise_heading));
+        panchangamFields.add(getString(R.string.sunset_heading));
         panchangamFields.add(getString(R.string.samvatsaram_heading));
         panchangamFields.add(getString(R.string.aayanam_heading));
         panchangamFields.add(getString(R.string.rithou_heading));
@@ -509,13 +511,11 @@ public class Panchangam extends Fragment {
         panchangamFields.add(getString(R.string.raasi_heading));
         panchangamFields.add(getString(R.string.nakshatram_heading));
         panchangamFields.add(getString(R.string.chandrashtama_nakshathram_heading));
-        panchangamFields.add(getString(R.string.lagnam_heading));
-        panchangamFields.add(getString(R.string.horai_heading));
         panchangamFields.add(getString(R.string.yogam_heading));
         panchangamFields.add(getString(R.string.karanam_heading));
+        panchangamFields.add(getString(R.string.lagnam_heading));
+        panchangamFields.add(getString(R.string.horai_heading));
         panchangamFields.add(getString(R.string.amruthathi_yogam_heading));
-        panchangamFields.add(getString(R.string.sunrise_heading));
-        panchangamFields.add(getString(R.string.sunset_heading));
         panchangamFields.add(getString(R.string.good_time_heading));
         panchangamFields.add(getString(R.string.raahu_kaalam_heading));
         panchangamFields.add(getString(R.string.emakandam_heading));

@@ -110,7 +110,7 @@ public class VedicCalendar extends Calendar {
     private static final int SUNSET_TOTAL_MINS = 1080;
     private static final int CHANDRASHTAMA_NAKSHATHRAM_OFFSET = 16;
     private static final double MAX_KAALAM_FACTOR = 0.125;
-    private static final double LAGNAM_DAILY_OFFSET = 3; // TODO - This needs to be fine-tuned
+    private static final double LAGNAM_DAILY_OFFSET = 4.05; // TODO - This needs to be fine-tuned
     private static double DEF_LONGITUDE = (82 + 58.34 / 60.0); // Default to Varanasi
     private static double DEF_LATITUDE = (25 + 19 / 60.0); // Default to Varanasi
     private static double defTimezone = INDIAN_STANDARD_TIME; // IST
@@ -118,9 +118,21 @@ public class VedicCalendar extends Calendar {
     // Only "Drik Ganitham" supported as of now
     public static final int PANCHANGAM_TYPE_DRIK_GANITHAM = 1;
 
+    // Panchangam Query/Match Types
     public static final int MATCH_PANCHANGAM_FULLDAY = 0;   // To get Full-day details
     public static final int MATCH_SANKALPAM_EXACT = 1;      // To get details as per current time
     public static final int MATCH_PANCHANGAM_PROMINENT = 2; // To get details as per prominence
+
+    // Planet Types
+    public static final int SURYA = 0;
+    public static final int CHANDRA = 1;
+    public static final int MANGAL = 2;
+    public static final int BUDH = 3;
+    public static final int GURU = 4;
+    public static final int SUKRA = 5;
+    public static final int SHANI = 6;
+    public static final int RAAHU = 7;
+    public static final int KETHU = 8;
 
     // Table types for adding locale values based on panchangam type
     public static final String VEDIC_CALENDAR_TABLE_TYPE_SAMVATSARAM = "samvatsaram";
@@ -413,12 +425,12 @@ public class VedicCalendar extends Calendar {
 
         // Get Chandra's & Ravi's longitudes as per Sunrise for the given day
         //long startTime = System.nanoTime();
-        refRaviAyanamAtDayStart = calcPlanetLongitude(refCalendar, SweConst.SE_SUN);
+        refRaviAyanamAtDayStart = calcPlanetLongitude(refCalendar, SweConst.SE_SUN, false);
         //long endTime = System.nanoTime();
         //System.out.println("VedicCalendarProf","calcPlanetLongitude() for Sun... Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime, endTime));
         //startTime = System.nanoTime();
-        refChandraAyanamAtDayStart = calcPlanetLongitude(refCalendar, SweConst.SE_MOON);
+        refChandraAyanamAtDayStart = calcPlanetLongitude(refCalendar, SweConst.SE_MOON, false);
         //endTime = System.nanoTime();
         //System.out.println("VedicCalendarProf","calcPlanetLongitude() for Moon... Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime, endTime));
@@ -436,13 +448,13 @@ public class VedicCalendar extends Calendar {
         Calendar nextDayCalendar = (Calendar) refCalendar.clone();
         nextDayCalendar.add(Calendar.DATE, 1);
         //startTime = System.nanoTime();
-        double nextDayRaviAyanamAtDayStart = calcPlanetLongitude(nextDayCalendar, SweConst.SE_SUN);
+        double nextDayRaviAyanamAtDayStart = calcPlanetLongitude(nextDayCalendar, SweConst.SE_SUN, false);
         //endTime = System.nanoTime();
         //System.out.println("VedicCalendarProf","calcPlanetLongitude() Prev Day for Sun... Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime, endTime));
 
         //startTime = System.nanoTime();
-        double nextDayChandraAyanamAtDayStart = calcPlanetLongitude(nextDayCalendar, SweConst.SE_MOON);
+        double nextDayChandraAyanamAtDayStart = calcPlanetLongitude(nextDayCalendar, SweConst.SE_MOON, false);
         //endTime = System.nanoTime();
         //System.out.println("VedicCalendarProf","calcPlanetLongitude() Prev Day for Sun... Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime, endTime));
@@ -659,22 +671,26 @@ public class VedicCalendar extends Calendar {
         // Step 3: Divide resultant expression by Ravi's daily motion to get Dina Ankham
 
         calcSunset(queryType);
-        double raviAyanamAtSunset = dailyRaviMotion / MAX_MINS_IN_DAY;
-        raviAyanamAtSunset = refRaviAyanamAtDayStart + (raviAyanamAtSunset * sunSetTotalMins);
+        double raviAyanamDayEnd = dailyRaviMotion / MAX_MINS_IN_DAY;
+        raviAyanamDayEnd = refRaviAyanamAtDayStart + (raviAyanamDayEnd * sunSetTotalMins);
 
         double earthMinFor1CelMin = (MAX_MINS_IN_DAY / dailyRaviMotion);
 
         // This is important!
         // Align this to given timezone as Longitude fetched from SwissEph is in 00:00 hours (UTC)
-        raviAyanamAtSunset -= ((defTimezone * MAX_MINS_IN_HOUR) / earthMinFor1CelMin);
-        double dhinaAnkamVal = Math.ceil((raviAyanamAtSunset -
-                Math.floor(raviAyanamAtSunset / MAX_RAASI_MINUTES) * MAX_RAASI_MINUTES) /
-                dailyRaviMotion);
+        raviAyanamDayEnd -= ((defTimezone * MAX_MINS_IN_HOUR) / earthMinFor1CelMin);
+        double dhinaAnkamVal = Math.floor(raviAyanamDayEnd / MAX_RAASI_MINUTES) * MAX_RAASI_MINUTES;
+        dhinaAnkamVal = raviAyanamDayEnd - dhinaAnkamVal;
+        dhinaAnkamVal /= dailyRaviMotion;
+        /*double dhinaAnkamVal = Math.ceil((raviAyanamDayEnd -
+                Math.floor(raviAyanamDayEnd / MAX_RAASI_MINUTES) * MAX_RAASI_MINUTES) /
+                dailyRaviMotion);*/
 
-        //System.out.println("VedicCalendar " + "getDinaAnkam: Ravi: " + refRaviAyanamAtDayStart +
-        //        " mins " + "Ravi at Sunset: " + raviAyanamAtSunset +
-        //        " DRM: " + dailyRaviMotion + " Thithi => " + dhinaAnkamVal +
-        //        " Sunset: " + sunSetTotalMins);
+        System.out.println("VedicCalendar " + "getDinaAnkam: Ravi: " + refRaviAyanamAtDayStart +
+                " mins " + "Ravi at Sunset: " + raviAyanamDayEnd +
+                " DRM: " + dailyRaviMotion + " Thithi => " + dhinaAnkamVal +
+                " Sunset: " + sunSetTotalMins);
+        dhinaAnkamVal = Math.ceil(dhinaAnkamVal);
 
         return (int)dhinaAnkamVal;
     }
@@ -2119,7 +2135,7 @@ public class VedicCalendar extends Calendar {
     }
 
     /**
-     * Use this API to get the Sunrise time for the  for the given time in a given Calendar day.
+     * Use this API to get the Sunrise time for the given time in a given Calendar day.
      *
      * @return Exact Sunrise time as a string (as per Drik calendar) in HH:MM format
      */
@@ -2138,7 +2154,7 @@ public class VedicCalendar extends Calendar {
     }
 
     /**
-     * Use this API to get the Sunset time for the  for the given time in a given Calendar day.
+     * Use this API to get the Sunset time for the given time in a given Calendar day.
      *
      * @return Exact Sunset time as a string (as per Drik calendar) in HH:MM format
      */
@@ -2154,6 +2170,32 @@ public class VedicCalendar extends Calendar {
 
         //System.out.println("VedicCalendar", "get_sunset: SunRise => " + sunRise);
         return sunSet;
+    }
+
+    /**
+     * Use this API to get the rise timings for all the planets as per Vedic Astrology.
+     *
+     * @return A list of planet rise timings for each planet.
+     */
+    public HashMap<Integer, Double> getPlanetsRise() {
+        HashMap<Integer, Double> planetRiseTimings = new HashMap<>();
+
+        Calendar refCalendar = Calendar.getInstance();
+        refCalendar.set(refYear, refMonth, refDate, refHour, refMin);
+        /*planetRiseTimings.put(SURYA, calcPlanetLongitude(refCalendar, SweConst.SE_SUN, true));
+        planetRiseTimings.put(CHANDRA, calcPlanetLongitude(refCalendar, SweConst.SE_MOON, true));
+        planetRiseTimings.put(MANGAL, calcPlanetLongitude(refCalendar, SweConst.SE_MARS, true));
+        planetRiseTimings.put(BUDH, calcPlanetLongitude(refCalendar, SweConst.SE_MERCURY, true));
+        planetRiseTimings.put(GURU, calcPlanetLongitude(refCalendar, SweConst.SE_JUPITER, true));
+        planetRiseTimings.put(SUKRA, calcPlanetLongitude(refCalendar, SweConst.SE_VENUS, true));
+        planetRiseTimings.put(SHANI, calcPlanetLongitude(refCalendar, SweConst.SE_SATURN, true));
+        planetRiseTimings.put(RAAHU, calcPlanetLongitude(refCalendar, SweConst.SE_TRUE_NODE, true));
+        planetRiseTimings.put(KETHU, calcPlanetLongitude(refCalendar, KETHU, true));*/
+        //planetRiseTimings.put(SURYA, calcPlanetRise(SweConst.SE_SUN));
+        //planetRiseTimings.put(CHANDRA, calcPlanetRise(SweConst.SE_MOON));
+        calcLagnam();
+
+        return planetRiseTimings;
     }
 
     /**
@@ -2826,7 +2868,64 @@ public class VedicCalendar extends Calendar {
     }
 
     /**
-     * Utility function to get the sunrise time for the  for the given time in a given Calendar day.
+     * Utility function to get the sunrise time for the given time in a given Calendar day.
+     *
+     * @param planet    Number that represents a planet
+     *
+     * @return Planet's rise timings in Earth minutes.
+     */
+    private double calcPlanetRise(int planet) {
+        // Logic:
+        // Using SWEDate Library, get sunrise of the given day with the following inputs:
+        // { Longitude, Latitude, calendar Date}
+        double planetRiseTotalMins = 0;
+
+        // Retrieve Sunrise timings only once as it is performance-intensive to do this repeatedly.
+        StringBuffer serr = new StringBuffer();
+        double[] geoPos = new double[]{DEF_LONGITUDE, DEF_LATITUDE, 0}; // Chennai
+        DblObj ddlObj = new DblObj();
+
+        int flags = SweConst.SE_CALC_RISE | SweConst.SE_BIT_NO_REFRACTION |
+                SweConst.SE_BIT_DISC_CENTER;
+
+        double tjd = SweDate.getJulDay(refYear, refMonth, refDate, 0, SweDate.SE_GREG_CAL);
+
+        //System.out.println("VedicCalendar", "tjd: " + tjd);
+        double dt = geoPos[0] / 360.0;
+        tjd = tjd - dt;
+        //System.out.println("VedicCalendar", "tjd-dt: " + tjd);
+
+        int retVal = swissEphInst.swe_rise_trans(tjd, planet, null,
+                SweConst.SEFLG_SWIEPH, flags, geoPos, 0, 0, ddlObj, serr);
+        if (retVal == 0) {
+            SweDate sd = new SweDate();
+            sd.setJulDay(ddlObj.val);
+
+            // Calculate given day's sunrise timings (Hour & Mins)
+            String sunRiseTimeStr = getSDTime(sd.getJulDay() + defTimezone / 24.);
+            if (!sunRiseTimeStr.equals("")) {
+                String[] sunRiseTimeArr = sunRiseTimeStr.split(":");
+                if (sunRiseTimeArr.length >= 2) {
+                    int hours = Integer.parseInt(sunRiseTimeArr[0]);
+                    int mins = Integer.parseInt(sunRiseTimeArr[1]);
+                    planetRiseTotalMins = (hours * MAX_MINS_IN_HOUR) + mins;
+                }
+            }
+        } else {
+            if (serr.length() > 0) {
+                System.out.println("VedicCalendar, Warning: " + serr);
+            } else {
+                System.out.println("VedicCalendar" +
+                        String.format("Warning, different flags used (0x%x)", retVal));
+            }
+            planetRiseTotalMins = SUNRISE_TOTAL_MINS;
+        }
+
+        return planetRiseTotalMins;
+    }
+
+    /**
+     * Utility function to get the sunrise time for the given time in a given Calendar day.
      *
      * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY / MATCH_PANCHANGAM_PROMINENT
      *                      - to get given day's Sunrise timings.
@@ -2840,45 +2939,7 @@ public class VedicCalendar extends Calendar {
         if (sunRiseTotalMins == 0) {
             //if ((queryType != MATCH_PANCHANGAM_PROMINENT) && (sunRiseTotalMins == 0)) {
             if (queryType != MATCH_PANCHANGAM_PROMINENT) {
-                StringBuffer serr = new StringBuffer();
-                double[] geoPos = new double[]{DEF_LONGITUDE, DEF_LATITUDE, 0}; // Chennai
-                DblObj ddlObj = new DblObj();
-
-                int flags = SweConst.SE_CALC_RISE | SweConst.SE_BIT_NO_REFRACTION |
-                        SweConst.SE_BIT_DISC_CENTER;
-
-                double tjd = SweDate.getJulDay(refYear, refMonth, refDate, 0, SweDate.SE_GREG_CAL);
-
-                //System.out.println("VedicCalendar", "tjd: " + tjd);
-                double dt = geoPos[0] / 360.0;
-                tjd = tjd - dt;
-                //System.out.println("VedicCalendar", "tjd-dt: " + tjd);
-
-                int retVal = swissEphInst.swe_rise_trans(tjd, SweConst.SE_SUN, null,
-                        SweConst.SEFLG_SWIEPH, flags, geoPos, 0, 0, ddlObj, serr);
-                if (retVal == 0) {
-                    SweDate sd = new SweDate();
-                    sd.setJulDay(ddlObj.val);
-
-                    // Calculate given day's sunrise timings (Hour & Mins)
-                    String sunRiseTimeStr = getSDTime(sd.getJulDay() + defTimezone / 24.);
-                    if (!sunRiseTimeStr.equals("")) {
-                        String[] sunRiseTimeArr = sunRiseTimeStr.split(":");
-                        if (sunRiseTimeArr.length >= 2) {
-                            int hours = Integer.parseInt(sunRiseTimeArr[0]);
-                            int mins = Integer.parseInt(sunRiseTimeArr[1]);
-                            sunRiseTotalMins = (hours * MAX_MINS_IN_HOUR) + mins;
-                        }
-                    }
-                } else {
-                    if (serr.length() > 0) {
-                        System.out.println("VedicCalendar, Warning: " + serr);
-                    } else {
-                        System.out.println("VedicCalendar" +
-                                String.format("Warning, different flags used (0x%x)", retVal));
-                    }
-                    sunRiseTotalMins = SUNRISE_TOTAL_MINS;
-                }
+                sunRiseTotalMins = calcPlanetRise(SweConst.SE_SUN);
             } else {
                 sunRiseTotalMins = SUNRISE_TOTAL_MINS;
             }
@@ -2886,7 +2947,7 @@ public class VedicCalendar extends Calendar {
     }
 
     /**
-     * Utility function to get the sunset time for the  for the given time in a given Calendar day.
+     * Utility function to get the sunset time for the given time in a given Calendar day.
      *
      * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY / MATCH_PANCHANGAM_PROMINENT
      *                      - to get given day's Sunset timings.
@@ -2978,11 +3039,19 @@ public class VedicCalendar extends Calendar {
      *
      * @return Longitude as a double number
      */
-    private double calcPlanetLongitude(Calendar refCalendar, int planet) {
+    private double calcPlanetLongitude(Calendar refCalendar, int planet, boolean useHour) {
+        boolean isKethu = false;
+        if (planet == KETHU) {
+            isKethu = true;
+            planet = SweConst.SE_TRUE_NODE;
+        }
         int currYear = refCalendar.get(Calendar.YEAR);
         int currMonth = refCalendar.get(Calendar.MONTH) + 1;
         int currDate = refCalendar.get(Calendar.DATE);
-        int currHour = 0;//refCalendar.get(Calendar.HOUR_OF_DAY);
+        int currHour = 0;
+        if (useHour) {
+            currHour = refCalendar.get(Calendar.HOUR_OF_DAY);
+        }
 
         //System.out.println("VedicCalendar", "calcPlanetLongitude(): " + currDate + "/" +
         //        currMonth + "/" + currYear);
@@ -3015,10 +3084,13 @@ public class VedicCalendar extends Calendar {
             }
         }
 
+        if (isKethu) {
+            xp[0] = ((xp[0] + 180) % 360);
+        }
         int ayanamDeg = (int) (xp[0]);
         double ayanamMin = (xp[0]) - ayanamDeg;
-        double refAyanamMins = (ayanamDeg * 60);
-        refAyanamMins += ((ayanamMin) * 60);
+        double refAyanamMins = (ayanamDeg * MAX_MINS_IN_HOUR);
+        refAyanamMins += ((ayanamMin) * MAX_MINS_IN_HOUR);
         //System.out.println("VedicCalendar", "calcPlanetLongitude(): Ayanam Minutes: " +
         //        refAyanamMins + " Deg: " + toDMS(xp[0]));
         return refAyanamMins;

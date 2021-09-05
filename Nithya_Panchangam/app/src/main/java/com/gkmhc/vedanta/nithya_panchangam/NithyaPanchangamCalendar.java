@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Paint;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -124,6 +125,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
 
         formYearList();
         TextView npCalendarTitle = findViewById(R.id.np_calendar_title);
+        npCalendarTitle.setPaintFlags(npCalendarTitle.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         npCalendarTitle.setOnClickListener(v -> showYearsDialog());
 
         ImageView prevYearView = findViewById(R.id.np_calendar_prevYear);

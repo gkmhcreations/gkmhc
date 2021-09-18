@@ -6,7 +6,8 @@
     <string name="samvatsaram_heading">saṃvatsaraḥ</string>
     <string name="aayanam_heading">ayanam</string>
     <string name="rithou_heading">ṛtuḥ</string>
-    <string name="maasam_heading">māsaḥ</string>
+    <string name="surya_maasam_heading">māsaḥ (Sauramānam)</string>
+    <string name="chandra_maasam_heading">māsaḥ (Candramaṇaṁ)</string>
     <string name="paksham_heading">pakṣaḥ</string>
     <string name="thithi_heading">tithiḥ</string>
     <string name="vaasaram_heading">vāsaraḥ</string>
@@ -233,8 +234,8 @@
         <item>śiśiraṛtuḥ</item>
     </string-array>
 
-    <!-- Maasam (month) -->
-    <string-array name="maasam_list">
+    <!-- Sauramaanam Maasam (Solar Month) -->
+    <string-array name="sauramaanam_maasam_list">
         <item>meṣaḥ</item>
         <item>vṛṣabhaḥ</item>
         <item>mithunam</item>
@@ -247,6 +248,22 @@
         <item>makaraḥ</item>
         <item>kumbhaḥ</item>
         <item>mīnaḥ</item>
+    </string-array>
+
+    <!-- Chaandramaanam Maasam (Lunar Month) -->
+    <string-array name="chaandramaanam_maasam_list">
+        <item>चैत्र</item>
+        <item>vaiśākha</item>
+        <item>jyēṣṭha</item>
+        <item>āṣādha</item>
+        <item>śrāvaṇa</item>
+        <item>bhadrapad</item>
+        <item>aśvin</item>
+        <item>kārttik</item>
+        <item>mārgaśīrṣa</item>
+        <item>paṣ</item>
+        <item>māgha</item>
+        <item>Phālgun</item>
     </string-array>
 
     <!-- Paksham (15-day) period -->

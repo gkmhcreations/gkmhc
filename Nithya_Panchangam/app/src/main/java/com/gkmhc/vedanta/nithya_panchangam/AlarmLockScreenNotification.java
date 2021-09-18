@@ -7,11 +7,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -33,7 +31,6 @@ import java.util.Locale;
  * accordance with terms & conditions in GNU GPL license.
  */
 public class AlarmLockScreenNotification extends AppCompatActivity {
-    private static final String PREF_NP_LOCALE_KEY = "PREF_NP_LOCALE_KEY";
     private boolean alarmType;
     private int alarmID = 0;
     private int alarmHourOfDay = 0;
@@ -46,9 +43,8 @@ public class AlarmLockScreenNotification extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        String prefLang = readLocaleSettings();
-        String selLocale = MainActivity.getLocaleShortStr(prefLang);
-        Locale locale = new Locale(selLocale);
+        String prefLang = MainActivity.updateSelLocale(this);
+        Locale locale = new Locale(prefLang);
         Locale.setDefault(locale);
         Resources resources = getResources();
         Configuration config = resources.getConfiguration();
@@ -142,13 +138,5 @@ public class AlarmLockScreenNotification extends AppCompatActivity {
                              WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
                              WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON |
                              WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-    }
-
-    private String readLocaleSettings() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPreferences != null) {
-            return sharedPreferences.getString(PREF_NP_LOCALE_KEY, "En");
-        }
-        return "En";
     }
 }

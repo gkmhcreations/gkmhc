@@ -6,7 +6,8 @@
     <string name="samvatsaram_heading">ಸಂವತ್ಸರಃ</string>
     <string name="aayanam_heading">ಅಯನಮ್</string>
     <string name="rithou_heading">ಋತುಃ</string>
-    <string name="maasam_heading">ಮಾಸಃ</string>
+    <string name="surya_maasam_heading">ಮಾಸಃ (ಸೌರಮಾನಂ)</string>
+    <string name="chandra_maasam_heading">ಮಾಸಃ (ಚಂದ್ರಮಣಮ್)</string>
     <string name="paksham_heading">ಪಕ್ಷಃ</string>
     <string name="thithi_heading">ತಿಥಿಃ</string>
     <string name="vaasaram_heading">ವಾಸರಃ</string>
@@ -233,8 +234,8 @@
         <item>ಶಿಶಿರಋತುಃ</item>
     </string-array>
 
-    <!-- Maasam (month) -->
-    <string-array name="maasam_list">
+    <!-- Sauramaanam Maasam (Solar Month) -->
+    <string-array name="sauramaanam_maasam_list">
         <item>ಮೇಷಃ</item>
         <item>ವೃಷಭಃ</item>
         <item>ಮಿಥುನಮ್</item>
@@ -247,6 +248,22 @@
         <item>ಮಕರಃ</item>
         <item>ಕುಂಭಃ</item>
         <item>ಮೀನಃ</item>
+    </string-array>
+
+    <!-- Chaandramaanam Maasam (Lunar Month) -->
+    <string-array name="chaandramaanam_maasam_list">
+        <item>ಚೈತ್ರ</item>
+        <item>ವೈಶಾಖ</item>
+        <item>ಜ್ಯೇಷ್ಠಾ</item>
+        <item>ಆಷಾ</item>
+        <item>ಶ್ರಾವಣ</item>
+        <item>ಭಾದ್ರಪದ</item>
+        <item>ಅಶ್ವಿನಾ</item>
+        <item>ಕಾರ್ತಿಕ</item>
+        <item>ಮಾರ್ಗಶೀರ್ಷ</item>
+        <item>ಪೌಶಾ</item>
+        <item>ಮಾಘ</item>
+        <item>ಫಲ್ಗುನ್</item>
     </string-array>
 
     <!-- Paksham (15-day) period -->

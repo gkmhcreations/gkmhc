@@ -1,5 +1,8 @@
 package com.gkmhc.vedanta.nithya_panchangam;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,21 +27,32 @@ import java.util.List;
  * accordance with terms & conditions in GNU GPL license.
  */
 public class CalendarAdapter extends RecyclerView.Adapter<CalenderViewHolder> {
+    private final Context context;
     private final ArrayList<String> gregDaysOfMonth;
     private final ArrayList<String> drikDaysOfMonth;
     private final ArrayList<List<Integer>> drikImgIDOfMonth;
+    private final ArrayList<String> drikMaasam;
     private final HashMap<Integer, RecyclerView.ViewHolder> holderlist;
     public final OnItemListener onItemListener;
+    private final GradientDrawable gradientDrawable;
 
-    public CalendarAdapter(ArrayList<String> gregDaysOfMonth,
+    public CalendarAdapter(Context context, ArrayList<String> gregDaysOfMonth,
                            ArrayList<String> drikDaysOfMonth,
                            ArrayList<List<Integer>> drikImgIDOfMonth,
+                           ArrayList<String> drikMaasam,
                            OnItemListener onItemListener) {
+        this.context = context;
         this.gregDaysOfMonth = gregDaysOfMonth;
         this.drikDaysOfMonth = drikDaysOfMonth;
         this.drikImgIDOfMonth = drikImgIDOfMonth;
+        this.drikMaasam = drikMaasam;
         this.onItemListener = onItemListener;
         holderlist = new HashMap<>();
+
+        gradientDrawable = new GradientDrawable();
+        gradientDrawable.setColor(context.getResources().getColor(R.color.lightergray));
+        gradientDrawable.setStroke(1, Color.BLUE);
+        gradientDrawable.setGradientRadius(0.1F);
     }
 
     @NonNull
@@ -56,6 +70,12 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalenderViewHolder> {
         holder.gregDaysOfMonth.setText(gregDaysOfMonth.get(position));
         holder.drikDaysOfMonth.setText(drikDaysOfMonth.get(position));
         List<Integer> imgIDs = drikImgIDOfMonth.get(position);
+
+        String strMaasam = drikMaasam.get(position);
+        if (strMaasam.contains("Adhik")) {
+            holder.parentView.setBackground(gradientDrawable);
+        }
+
         try {
             if ((imgIDs != null) && (imgIDs.size() > 0)) {
                 int iconID = imgIDs.get(0);

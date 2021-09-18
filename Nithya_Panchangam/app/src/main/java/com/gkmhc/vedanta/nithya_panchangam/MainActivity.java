@@ -143,13 +143,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private int refDate = 14;
     private int prefLocationType = LOCATION_MANUAL;
     private int prefAyanamsa = VedicCalendar.AYANAMSA_CHITRAPAKSHA;
+    private int prefChaandramanamType = VedicCalendar.CHAANDRAMAANAM_TYPE_AMANTA;
     private static String prefSankalpamType = "";
     private static String selLocale = "en";
     private static String curLocationCity = "";
-    private static final String PREF_LOCATION_SETTINGS_KEY = "PREF_LOCATION_SETTINGS_KEY";
-    public static final String PREF_LOCATION_DEF_VAL_KEY = "PREF_LOCATION_DEF_VAL_KEY";
-    private static final String PREF_AYANAMSA_KEY = "PREF_AYANAMSA_KEY";
-    private static final String PREF_APP_LAUNCH_FIRST_TIME_KEY = "PREF_APP_LAUNCH_FIRST_TIME_KEY";
     private static final double INDIAN_STANDARD_TIME = 5.5;
     public static final int LOCATION_MANUAL = 0;
     public static final int LOCATION_GPS = 1;
@@ -194,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         refreshLocation();
 
         // Step 1: Get the preferred locale from preferences and update activity.
-        prefSankalpamType = readPrefSankalpamType();
+        prefSankalpamType = readPrefSankalpamType(this);
         updateAppLocale();
         getSupportActionBar().setTitle(Html.fromHtml("<font color='#0000FF'>" +
                 getString(R.string.app_name) + "</font>"));
@@ -501,7 +498,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
 
             // If there is change in sankalpam preferences, then refresh location & the fragments.
-            String sankalpamType = readPrefSankalpamType();
+            String sankalpamType = readPrefSankalpamType(this);
             if (!prefSankalpamType.equals(sankalpamType)) {
                 prefSankalpamType = sankalpamType;
                 refreshTab(NPAdapter.NP_TAB_SANKALPAM);
@@ -510,6 +507,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             int selectedAyanamsa = readPrefAyanamsaSelection(this);
             if (prefAyanamsa != selectedAyanamsa) {
                 prefAyanamsa = selectedAyanamsa;
+                refreshTab(NPAdapter.NP_TAB_PANCHANGAM);
+                refreshTab(NPAdapter.NP_TAB_SANKALPAM);
+            }
+
+            int selectedChaandramanamType = readPrefChaandramanaType(this);
+            if (prefChaandramanamType != selectedChaandramanamType) {
+                prefChaandramanamType = selectedChaandramanamType;
                 refreshTab(NPAdapter.NP_TAB_PANCHANGAM);
                 refreshTab(NPAdapter.NP_TAB_SANKALPAM);
             }
@@ -563,11 +567,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
      */
     private String readPrefLocale() {
         String defLocale = "En";
-        String PREF_NP_LOCALE_KEY = "PREF_NP_LOCALE_KEY";
         SharedPreferences localPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         try {
-            String prefLang = localPreferences.getString(PREF_NP_LOCALE_KEY, "En");
+            String prefLang = localPreferences.getString(SettingsFragment.PREF_NP_LOCALE_KEY, "En");
             defLocale = prefLang.substring(0, 2);
         } catch (Exception e) {
             // Fallback to default language preference
@@ -577,35 +580,19 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     /**
-     * Utility function to get the selected locale from the shared preferences.
-     *
-     * @return Selected locale as a string
-     */
-    private String readPrefSankalpamType() {
-        String PREF_SANKALPAM_TYPE_KEY = "PREF_SANKALPAM_TYPE_KEY";
-        String defSankalpamType = getString(R.string.pref_sankalpam_type_shubam);
-        SharedPreferences localPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        if (localPreferences != null) {
-            return localPreferences.getString(PREF_SANKALPAM_TYPE_KEY, defSankalpamType);
-        }
-
-        return defSankalpamType;
-    }
-
-    /**
      * Utility function to find if App is launched for the first-time.
      *
      * @return true if started first time, false otherwise.
      */
     public boolean isAppLaunchedFirstTime() {
-        return sharedPreferences.getBoolean(PREF_APP_LAUNCH_FIRST_TIME_KEY, true);
+        return sharedPreferences.getBoolean(SettingsFragment.PREF_APP_LAUNCH_FIRST_TIME_KEY, true);
     }
 
     /**
      * Utility function to update App is launched for the first-time field.
      */
     public void updateAppLaunchedFirstTime() {
-        sharedPreferences.edit().putBoolean(PREF_APP_LAUNCH_FIRST_TIME_KEY, false).apply();
+        sharedPreferences.edit().putBoolean(SettingsFragment.PREF_APP_LAUNCH_FIRST_TIME_KEY, false).apply();
     }
 
     /**
@@ -615,12 +602,72 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
      */
     private int readPrefLocationSelection() {
         int prefLocationCode = LOCATION_MANUAL;
-        String prefLocationStr = sharedPreferences.getString(PREF_LOCATION_SETTINGS_KEY, "");
+        String prefLocationStr = sharedPreferences.getString(SettingsFragment.PREF_LOCATION_SETTINGS_KEY, "");
         if (prefLocationStr.equalsIgnoreCase(getString(R.string.pref_location_gps))) {
             prefLocationCode = LOCATION_GPS;
         }
 
         return prefLocationCode;
+    }
+
+    /**
+     * Utility function to get the preferred panchangam type from the shared preferences.
+     *
+     * @return Selected panchangam type as an integer value.
+     */
+    public static int readPrefPanchangamType(Context context) {
+        int defPanchangamType = VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM;
+        String defPanchangamTypeStr = context.getString(R.string.pref_def_panchangam);
+        SharedPreferences localPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        if (localPreferences != null) {
+            defPanchangamTypeStr = localPreferences.getString(SettingsFragment.PREF_PANCHANGAM_KEY, defPanchangamTypeStr);
+
+            if (defPanchangamTypeStr.equalsIgnoreCase(
+                    context.getString(R.string.pref_panchangam_telugu_panchangam))) {
+                defPanchangamType = VedicCalendar.PANCHANGAM_TYPE_TELUGU_PANCHANGAM;
+            } else if (defPanchangamTypeStr.equalsIgnoreCase(
+                    context.getString(R.string.pref_panchangam_kannada_panchangam))) {
+                defPanchangamType = VedicCalendar.PANCHANGAM_TYPE_KANNADA_PANCHANGAM;
+            }
+        }
+
+        return defPanchangamType;
+    }
+
+    /**
+     * Utility function to get the preferred Chaandramana type from the shared preferences.
+     *
+     * @return Selected chaandramana type as an integer value.
+     */
+    public static int readPrefChaandramanaType(Context context) {
+        int defChaandramanaType = VedicCalendar.CHAANDRAMAANAM_TYPE_AMANTA;
+        String defChaandramanaTypeStr = context.getString(R.string.pref_def_lunar_calendar_type);
+        SharedPreferences localPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        if (localPreferences != null) {
+            defChaandramanaTypeStr = localPreferences.getString(SettingsFragment.PREF_CHAANDRAMANA_CALENDAR_KEY,
+                    defChaandramanaTypeStr);
+            if (defChaandramanaTypeStr.equalsIgnoreCase(
+                    context.getString(R.string.pref_lunar_calendar_type_purnimanta))) {
+                defChaandramanaType = VedicCalendar.CHAANDRAMAANAM_TYPE_PURNIMANTA;
+            }
+        }
+
+        return defChaandramanaType;
+    }
+
+    /**
+     * Utility function to get the selected locale from the shared preferences.
+     *
+     * @return Selected locale as a string
+     */
+    public static String readPrefSankalpamType(Context context) {
+        String defSankalpamType = context.getString(R.string.pref_sankalpam_type_shubam);
+        SharedPreferences localPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        if (localPreferences != null) {
+            return localPreferences.getString(SettingsFragment.PREF_SANKALPAM_TYPE_KEY, defSankalpamType);
+        }
+
+        return defSankalpamType;
     }
 
     /**
@@ -632,7 +679,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         int prefAyanamsa = VedicCalendar.AYANAMSA_CHITRAPAKSHA;
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         if (sharedPreferences != null) {
-            String prefAyanamsaStr = sharedPreferences.getString(PREF_AYANAMSA_KEY, "");
+            String prefAyanamsaStr = sharedPreferences.getString(SettingsFragment.PREF_AYANAMSA_KEY, "");
             if (prefAyanamsaStr.equalsIgnoreCase(context.getString(R.string.pref_ayanamsa_lahiri))) {
                 prefAyanamsa = VedicCalendar.AYANAMSA_LAHIRI;
             }
@@ -650,7 +697,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         String location = context.getString(R.string.pref_def_location_val);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         if (preferences != null) {
-            location = preferences.getString(PREF_LOCATION_DEF_VAL_KEY,
+            location = preferences.getString(SettingsFragment.PREF_LOCATION_DEF_VAL_KEY,
                                              context.getString(R.string.pref_def_location_val));
         }
 
@@ -664,7 +711,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
      * Utility function to update the default preferred location in the shared preferences.
      */
     private void updateDefLocationSetting(String locationToUpdate) {
-        sharedPreferences.edit().putString(PREF_LOCATION_DEF_VAL_KEY, locationToUpdate).apply();
+        sharedPreferences.edit().putString(SettingsFragment.PREF_LOCATION_DEF_VAL_KEY, locationToUpdate).apply();
     }
 
     /**
@@ -673,10 +720,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
      * @return Modified language as a string.
      */
     public static String updateSelLocale(Context context) {
-        String PREF_NP_LOCALE_KEY = "PREF_NP_LOCALE_KEY";
         SharedPreferences localPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         if (localPreferences != null) {
-            String prefLang = localPreferences.getString(PREF_NP_LOCALE_KEY, "En");
+            String prefLang = localPreferences.getString(SettingsFragment.PREF_NP_LOCALE_KEY, "En");
             try {
                 selLocale = getLocaleShortStr(prefLang);
             } catch (Exception e) {
@@ -708,14 +754,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         super.onConfigurationChanged(newConfig);
         updateAppLocale();
         updateTabTitle();
-    }
-
-    public double getLongitude() {
-        return curLocationLongitude;
-    }
-
-    public double getLatitude() {
-        return curLocationLatitude;
     }
 
     public String getLocationCity() {
@@ -936,20 +974,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         startActivityForResult(intent, REQUEST_PERMISSIONS_CODE);
     }
 
-    public static double getLocationTimeZone(String location) {
-        double offset = INDIAN_STANDARD_TIME;
-        PlacesInfo placesInfo = placesTimezoneDB.get(location);
-        if (placesInfo != null) {
-            offset = placesInfo.timezone;
-        }
-        return offset;
+    public static PlacesInfo getLocationDetails(String locationStr) {
+        return MainActivity.getLocationFromPlacesDB(locationStr);
     }
 
     public static PlacesInfo getLocationFromPlacesDB(String locationStr) {
         return placesTimezoneDB.get(locationStr);
     }
 
-    private static void buildPlacesTimezoneDB() {
+    public static void buildPlacesTimezoneDB() {
         // Build a list of locations manually.
         // TODO - Is there a way, below info can be retrieved across the world?
         //        {city, state, country, longitude, latitude, timezone}
@@ -1368,10 +1401,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
      * @return Modified language as a string.
      */
     public String updateAppLocale() {
-        String PREF_NP_LOCALE_KEY = "PREF_NP_LOCALE_KEY";
         SharedPreferences localPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if (localPreferences != null) {
-            String prefLang = localPreferences.getString(PREF_NP_LOCALE_KEY, "En");
+            String prefLang = localPreferences.getString(SettingsFragment.PREF_NP_LOCALE_KEY, "En");
             try {
                 selLocale = getLocaleShortStr(prefLang);
             } catch (Exception e) {
@@ -1390,7 +1422,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         return selLocale;
     }
 
-    public static String getLocaleShortStr(String localeStr) {
+    private static String getLocaleShortStr(String localeStr) {
         String localeShortStr;
         switch (localeStr) {
             case "Tamil":
@@ -1438,9 +1470,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             arrayList = context.getResources().getStringArray(R.array.rithu_list);
             vedicCalendarLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_RITHU, arrayList);
 
-            // Step4: Maasam
-            arrayList = context.getResources().getStringArray(R.array.maasam_list);
-            vedicCalendarLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_MAASAM, arrayList);
+            // Step4-1: Maasam (Solar Months)
+            arrayList = context.getResources().getStringArray(R.array.sauramaanam_maasam_list);
+            vedicCalendarLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_SAURAMANA_MAASAM, arrayList);
+
+            // Step4-2: Maasam (Lunar Months)
+            arrayList = context.getResources().getStringArray(R.array.chaandramaanam_maasam_list);
+            vedicCalendarLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_CHAANDRAMANA_MAASAM, arrayList);
 
             // Step5: Paksham
             arrayList = context.getResources().getStringArray(R.array.paksham_list);

@@ -3,12 +3,10 @@ package com.gkmhc.vedanta.nithya_panchangam;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 
 import java.util.Locale;
 
@@ -24,14 +22,12 @@ import java.util.Locale;
  * accordance with terms & conditions in GNU GPL license.
  */
 public class SplashScreen extends AppCompatActivity {
-    private static final String PREF_NP_LOCALE_KEY = "PREF_NP_LOCALE_KEY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Step 1: Read selected locale from shared preferences
-        String prefLang = readLocaleSettings();
-        String selLocale = MainActivity.getLocaleShortStr(prefLang);
-        Locale locale = new Locale(selLocale);
+        String prefLang = MainActivity.updateSelLocale(this);
+        Locale locale = new Locale(prefLang);
         Locale.setDefault(locale);
         Resources resources = getResources();
         Configuration config = resources.getConfiguration();
@@ -47,13 +43,5 @@ public class SplashScreen extends AppCompatActivity {
             startActivity(spIntent);
             finish();
         }, 2000);
-    }
-
-    private String readLocaleSettings() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPreferences != null) {
-            return sharedPreferences.getString(PREF_NP_LOCALE_KEY, "En");
-        }
-        return "En";
     }
 }

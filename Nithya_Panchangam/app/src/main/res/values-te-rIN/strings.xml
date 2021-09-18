@@ -6,7 +6,8 @@
     <string name="samvatsaram_heading">సంవత్సరః</string>
     <string name="aayanam_heading">అయనమ్</string>
     <string name="rithou_heading">ఋతుః</string>
-    <string name="maasam_heading">మాసః</string>
+    <string name="surya_maasam_heading">మాసః (సౌరమాణం)</string>
+    <string name="chandra_maasam_heading">మాసః (చంద్రమణం)</string>
     <string name="paksham_heading">పక్షః</string>
     <string name="thithi_heading">తిథిః</string>
     <string name="vaasaram_heading">వాసరః</string>
@@ -233,8 +234,8 @@
         <item>శిశిరఋతుః</item>
     </string-array>
 
-    <!-- Maasam (month) -->
-    <string-array name="maasam_list">
+    <!-- Sauramaanam Maasam (Solar Month) -->
+    <string-array name="sauramaanam_maasam_list">
         <item>మేషః</item>
         <item>వృషభః</item>
         <item>మిథునమ్</item>
@@ -247,6 +248,22 @@
         <item>మకరః</item>
         <item>కుంభః</item>
         <item>మీనః</item>
+    </string-array>
+
+    <!-- Chaandramaanam Maasam (Lunar Month) -->
+    <string-array name="chaandramaanam_maasam_list">
+        <item>చైత్రము</item>
+        <item>వైశాఖము</item>
+        <item>జ్యేష్ఠము</item>
+        <item>ఆషాఢము</item>
+        <item>శ్రావణము</item>
+        <item>భద్రపదము</item>
+        <item>ఆశ్వయుజము</item>
+        <item>కార్తికము</item>
+        <item>మార్గశిరము</item>
+        <item>పుష్యము</item>
+        <item>మాఘము</item>
+        <item>ఫాల్గుణము</item>
     </string-array>
 
     <!-- Paksham (15-day) period -->

@@ -6,7 +6,8 @@
     <string name="samvatsaram_heading">संवत्सरः</string>
     <string name="aayanam_heading">अयनम्</string>
     <string name="rithou_heading">ऋतुः</string>
-    <string name="maasam_heading">मासः</string>
+    <string name="surya_maasam_heading">मासः (सौरमानम्)</string>
+    <string name="chandra_maasam_heading">मासः (चान्द्रमानम्)</string>
     <string name="paksham_heading">पक्षः</string>
     <string name="thithi_heading">तिथिः</string>
     <string name="vaasaram_heading">वासरः</string>
@@ -233,8 +234,8 @@
         <item>शिशिरऋतुः</item>
     </string-array>
 
-    <!-- Maasam (month) -->
-    <string-array name="maasam_list">
+    <!-- Sauramaanam Maasam (Solar Month) -->
+    <string-array name="sauramaanam_maasam_list">
         <item>मेषः</item>
         <item>वृषभः</item>
         <item>मिथुनम्</item>
@@ -247,6 +248,22 @@
         <item>मकरः</item>
         <item>कुम्भः</item>
         <item>मीनः</item>
+    </string-array>
+
+    <!-- Chaandramaanam Maasam (Lunar Month) -->
+    <string-array name="chaandramaanam_maasam_list">
+        <item>चैत्रः</item>
+        <item>वैशाखः</item>
+        <item>ज्येष्ठः</item>
+        <item>आषाढ़ः</item>
+        <item>श्रावणः</item>
+        <item>भाद्रपदः</item>
+        <item>आश्वयुजः</item>
+        <item>कार्तिकः</item>
+        <item>मार्गशीर्षः</item>
+        <item>पौषः</item>
+        <item>माघः</item>
+        <item>फाल्गुनः</item>
     </string-array>
 
     <!-- Paksham (15-day) period -->

@@ -8,7 +8,6 @@ import androidx.appcompat.widget.SwitchCompat;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.media.AudioManager;
@@ -17,7 +16,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -47,7 +45,6 @@ import java.util.Locale;
  * accordance with terms & conditions in GNU GPL license.
  */
 public class HandleAlarmReminderActivity extends AppCompatActivity {
-    private static final String PREF_NP_LOCALE_KEY = "PREF_NP_LOCALE_KEY";
     private static final int INVALID_VALUE = -1;
     private Menu menu;
     private int alarmID = INVALID_VALUE;
@@ -73,9 +70,8 @@ public class HandleAlarmReminderActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        String prefLang = readLocaleSettings();
-        String selLocale = MainActivity.getLocaleShortStr(prefLang);
-        Locale locale = new Locale(selLocale);
+        String prefLang = MainActivity.updateSelLocale(getApplicationContext());
+        Locale locale = new Locale(prefLang);
         Locale.setDefault(locale);
         Resources resources = getResources();
         Configuration config = resources.getConfiguration();
@@ -613,13 +609,5 @@ public class HandleAlarmReminderActivity extends AppCompatActivity {
                 custTueCheckbox.isChecked() || custWedCheckbox.isChecked() ||
                 custThuCheckbox.isChecked() || custFriCheckbox.isChecked() ||
                 custSatCheckbox.isChecked());
-    }
-
-    private String readLocaleSettings() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPreferences != null) {
-            return sharedPreferences.getString(PREF_NP_LOCALE_KEY, "En");
-        }
-        return "En";
     }
 }

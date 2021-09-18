@@ -26,11 +26,13 @@ import androidx.annotation.Nullable;
  */
 public class SettingsFragment extends PreferenceFragment {
     public static final String PREF_NP_LOCALE_KEY = "PREF_NP_LOCALE_KEY";
-    public static final String PREF_LOCATION_SETTINGS_KEY = "PREF_LOCATION_SETTINGS_KEY";
     public static final String PREF_SANKALPAM_TYPE_KEY = "PREF_SANKALPAM_TYPE_KEY";
     public static final String PREF_PANCHANGAM_KEY = "PREF_PANCHANGAM_KEY";
+    public static final String PREF_CHAANDRAMANA_CALENDAR_KEY = "PREF_CHAANDRAMANA_CALENDAR_KEY";
     public static final String PREF_AYANAMSA_KEY = "PREF_AYANAMSA_KEY";
     public static final String PREF_LOCATION_DEF_VAL_KEY = "PREF_LOCATION_DEF_VAL_KEY";
+    public static final String PREF_LOCATION_SETTINGS_KEY = "PREF_LOCATION_SETTINGS_KEY";
+    public static final String PREF_APP_LAUNCH_FIRST_TIME_KEY = "PREF_APP_LAUNCH_FIRST_TIME_KEY";
     private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
 
     @Override
@@ -62,6 +64,7 @@ public class SettingsFragment extends PreferenceFragment {
                 case PREF_NP_LOCALE_KEY:
                 case PREF_SANKALPAM_TYPE_KEY:
                 case PREF_PANCHANGAM_KEY:
+                case PREF_CHAANDRAMANA_CALENDAR_KEY:
                 case PREF_AYANAMSA_KEY: {
                     Preference preference = findPreference(key);
                     preference.setSummary(sharedPreferences.getString(key, ""));
@@ -111,6 +114,9 @@ public class SettingsFragment extends PreferenceFragment {
 
             preference = findPreference(PREF_SANKALPAM_TYPE_KEY);
             preference.setSummary(sharedPreferences.getString(PREF_SANKALPAM_TYPE_KEY, getString(R.string.pref_def_sankalpam_type)));
+
+            preference = findPreference(PREF_CHAANDRAMANA_CALENDAR_KEY);
+            preference.setSummary(sharedPreferences.getString(PREF_CHAANDRAMANA_CALENDAR_KEY, getString(R.string.pref_def_lunar_calendar_type)));
 
             preference = findPreference(PREF_AYANAMSA_KEY);
             preference.setSummary(sharedPreferences.getString(PREF_AYANAMSA_KEY, getString(R.string.pref_def_ayanamsa)));

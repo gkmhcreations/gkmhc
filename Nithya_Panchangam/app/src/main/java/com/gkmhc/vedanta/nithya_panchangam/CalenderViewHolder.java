@@ -27,11 +27,13 @@ public class CalenderViewHolder extends RecyclerView.ViewHolder implements View.
     public final ImageView drikCalendarImg2View;
     public final ImageView drikCalendarImg3View;
     public final ImageView drikCalendarImg4View;
+    public final View parentView;
     private final CalendarAdapter.OnItemListener onItemListener;
 
     public CalenderViewHolder(@NonNull View itemView,
                               CalendarAdapter.OnItemListener onItemListener) {
         super(itemView);
+        parentView = itemView;
         gregDaysOfMonth = itemView.findViewById(R.id.gregCalendarDay);
         drikDaysOfMonth = itemView.findViewById(R.id.drikCalendarDay);
         drikCalendarImg1View = itemView.findViewById(R.id.drikCalendarImg1);

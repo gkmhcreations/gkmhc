@@ -1,7 +1,12 @@
 package com.gkmhc.vedanta.nithya_panchangam;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+
+import java.util.Locale;
 
 /**
  * Activity to display more about the App.
@@ -18,7 +23,13 @@ public class AboutActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        MainActivity.updateSelLocale(this);
+        String prefLang = MainActivity.updateSelLocale(this);
+        Locale locale = new Locale(prefLang);
+        Locale.setDefault(locale);
+        Resources resources = getResources();
+        Configuration config = resources.getConfiguration();
+        config.locale = locale;
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);

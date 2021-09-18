@@ -159,7 +159,7 @@ public class Alarm extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.i("Alarm","Request Code: " + requestCode + " Response Code: " + resultCode);
+        //Log.i("Alarm","Request Code: " + requestCode + " Response Code: " + resultCode);
 
         // Upon Activity Results, do the following:
         // 1) Create new Alarm based on information provided (not yet supported)

@@ -6,7 +6,8 @@
     <string name="samvatsaram_heading">ஸம்வத்ஸரம்</string>
     <string name="aayanam_heading">அயனம்</string>
     <string name="rithou_heading">ருʼது</string>
-    <string name="maasam_heading">மாதம்</string>
+    <string name="surya_maasam_heading">மாதம் (ஸௌரமானம்)</string>
+    <string name="chandra_maasam_heading">மாதம் (சாந்த்ரமானம்)</string>
     <string name="paksham_heading">பக்ஷம்</string>
     <string name="vaasaram_heading">வாஸரம்</string>
     <string name="raasi_heading">ராசி</string>
@@ -233,8 +234,8 @@
         <item>ஷிஷிரரிது</item>
     </string-array>
 
-    <!-- Maasam (month) -->
-    <string-array name="maasam_list">
+    <!-- Sauramaanam Maasam (Solar Month) -->
+    <string-array name="sauramaanam_maasam_list">
         <item>சித்திரை</item>
         <item>வைகாசி</item>
         <item>ஆனி</item>
@@ -247,6 +248,22 @@
         <item>தை</item>
         <item>மாசி</item>
         <item>பங்குனி</item>
+    </string-array>
+
+    <!-- Chaandramaanam Maasam (Lunar Month) -->
+    <string-array name="chaandramaanam_maasam_list">
+        <item>சைத்ர</item>
+        <item>வைஶாக</item>
+        <item>ஜ்யைஷ்ட</item>
+        <item>ஆஷாட</item>
+        <item>ஶ்ராவண</item>
+        <item>பாத்ரபத</item>
+        <item>ஆஶ்வயுஜ</item>
+        <item>கார்த்திகை</item>
+        <item>மார்கஶீர்ஷ</item>
+        <item>பௌஷ</item>
+        <item>மாக</item>
+        <item>பால்குன</item>
     </string-array>
 
     <!-- Paksham (15-day) period -->

@@ -5,8 +5,6 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -900,50 +898,36 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
      * @return List of Dina Vishesham code(s) for the given calendar day.
      */
     private List<Integer> findDinaVishesham(Context context) {
-        Calendar currCalendar = Calendar.getInstance();
-        String location = MainActivity.readDefLocationSetting(context);
-        double curLocationLongitude;
-        double curLocationLatitude;
+        List<Integer> dhinaSpecialCodeList = null;
+        try {
+            Calendar currCalendar = Calendar.getInstance();
+            String location = MainActivity.readDefLocationSetting(context);
 
-        /*try {
-            Geocoder geocoder = new Geocoder(context);
-            List<Address> addressList = geocoder.getFromLocationName(location, 1);
-            if ((addressList != null) && (addressList.size() > 0)) {
-                location = addressList.get(0).getLocality();
-                curLocationLongitude = addressList.get(0).getLongitude();
-                curLocationLatitude = addressList.get(0).getLatitude();
-                Log.d("NPBcastReceiver", "Location: " + location +
-                        " Longitude: " + curLocationLongitude +
-                        " Latitude: " + curLocationLatitude);
+            MainActivity.PlacesInfo placesInfo = MainActivity.getLocationFromPlacesDB(location);
+
+            String localpath = context.getFilesDir() + File.separator + "/ephe";
+            VedicCalendar.initSwissEph(localpath);
+            HashMap<String, String[]> vedicCalendarLocaleList =
+                    MainActivity.buildVedicCalendarLocaleList(context);
+            int ayanamsaMode = MainActivity.readPrefAyanamsaSelection(context);
+            VedicCalendar vedicCalendar = VedicCalendar.getInstance(
+                    MainActivity.readPrefPanchangamType(context), currCalendar, placesInfo.longitude,
+                    placesInfo.latitude, placesInfo.timezone, ayanamsaMode,
+                    MainActivity.readPrefChaandramanaType(context), vedicCalendarLocaleList);
+            if (vedicCalendar != null) {
+                vedicCalendar.getThithi(VedicCalendar.MATCH_SANKALPAM_EXACT);
+                dhinaSpecialCodeList =
+                        vedicCalendar.getDinaVishesham(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
+            }
+
+            if (dhinaSpecialCodeList != null) {
+                Log.d("NPBcastReceiver", "Dina Vishesham: " +
+                        dhinaSpecialCodeList.toString() + " for " + location +
+                        " Longitude: " + placesInfo.longitude + " Latitude: " + placesInfo.latitude);
             }
         } catch (Exception e) {
-            // Nothing to do here.
-            Log.d("NPBcastReceiver","Exception in initManualLocation()");
-        }*/
-        MainActivity.PlacesInfo placesInfo = MainActivity.getLocationFromPlacesDB(location);
-        curLocationLatitude = placesInfo.latitude;
-        curLocationLongitude = placesInfo.longitude;
-
-        List<Integer> dhinaSpecialCodeList = null;
-        String localpath = context.getFilesDir() + File.separator + "/ephe";
-        VedicCalendar.initSwissEph(localpath);
-        HashMap<String, String[]> vedicCalendarLocaleList =
-                MainActivity.buildVedicCalendarLocaleList(context);
-        int ayanamsaMode = MainActivity.readPrefAyanamsaSelection(context);
-        VedicCalendar vedicCalendar = VedicCalendar.getInstance(
-                VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM, currCalendar, curLocationLongitude,
-                curLocationLatitude, MainActivity.getLocationTimeZone(location), ayanamsaMode,
-                vedicCalendarLocaleList);
-        if (vedicCalendar != null) {
-            vedicCalendar.getThithi(VedicCalendar.MATCH_SANKALPAM_EXACT);
-            dhinaSpecialCodeList =
-                    vedicCalendar.getDinaVishesham(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
-        }
-
-        if (dhinaSpecialCodeList != null) {
-            Log.d("NPBcastReceiver", "Dina Vishesham: " + dhinaSpecialCodeList.toString() + " for " +
-                    location + " Longitude: " + curLocationLongitude + " Latitude: " +
-                    curLocationLatitude);
+            // Create a dummy list!
+            dhinaSpecialCodeList = new ArrayList<>();
         }
 
         return dhinaSpecialCodeList;

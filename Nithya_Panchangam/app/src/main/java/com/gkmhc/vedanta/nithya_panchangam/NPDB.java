@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -111,8 +110,7 @@ public class NPDB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.i("NPDB","Creating Table(" + NP_ALARM_TABLE + " & " +
-                NP_ALARMS_TABLE_CREATE + ")!");
+        //Log.i("NPDB","Creating Table(" + NP_ALARM_TABLE + " & " + NP_ALARMS_TABLE_CREATE + ")!");
         db.execSQL(NP_ALARMS_TABLE_CREATE);
         db.execSQL(NP_REMINDERS_TABLE_CREATE);
     }
@@ -122,8 +120,8 @@ public class NPDB extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + NP_ALARM_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + NP_REMINDER_TABLE);
         onCreate(db);
-        Log.i("NPDB","Upgrading Tables(" + NP_ALARM_TABLE + " & " +
-                NP_ALARMS_TABLE_CREATE + ") to new ver(" + NP_ALARM_DB_VER + ")!");
+        //Log.i("NPDB","Upgrading Tables(" + NP_ALARM_TABLE + " & " +
+        //        NP_ALARMS_TABLE_CREATE + ") to new ver(" + NP_ALARM_DB_VER + ")!");
     }
 
     public static class AlarmInfo {

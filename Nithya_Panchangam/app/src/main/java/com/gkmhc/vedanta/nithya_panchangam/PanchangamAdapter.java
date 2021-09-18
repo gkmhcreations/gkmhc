@@ -129,7 +129,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
         panchangamViewHolder.panchangamField.setTextSize(defTextSize);
 
         // Make Lagnam value clickable to display a range of lagnams throughout the day!
-        if (position == 15) {
+        if (position == 16) {
             // Add Lagnam details
             // Display Lagnam from the list of Lagnams retrieved.
             StringBuilder lagnamVal = new StringBuilder();
@@ -152,7 +152,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             convertView.setOnClickListener(v -> showLagnamDetails());
         }
         // Make Horai value clickable to display a range of horai(s) throughout the day!
-        else if (position == 16) {
+        else if (position == 17) {
             // Add Horai details
             // Display Horai from the list of Horai(s) retrieved.
             StringBuilder horaiVal = new StringBuilder();
@@ -178,7 +178,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             convertView.setOnClickListener(v -> showHoraiDetails());
         }
         // Align & display "Nalla Neram" in HTML format
-        else if (position == 18) {
+        else if (position == 19) {
             // Add "Nalla Neram" details
             String nallaNeramParsedVal = panchangamValues.get(position);
 

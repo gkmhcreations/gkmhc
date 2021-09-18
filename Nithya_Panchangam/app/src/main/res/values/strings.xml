@@ -19,8 +19,10 @@
     <string name="pref_panchangam_key" translatable="false">PREF_PANCHANGAM_KEY</string>
     <string name="pref_panchangam" translatable="false">Panchangam</string>
     <string name="pref_panchangam_type" translatable="false">Panchangam Type</string>
-    <string name="pref_panchangam_drik" translatable="false">Drik Ganitham</string>
-    <string name="pref_def_panchangam" translatable="false">Drik Ganitham</string>
+    <string name="pref_panchangam_drik_ganitham" translatable="false">Drik Ganitham</string>
+    <string name="pref_panchangam_telugu_panchangam" translatable="false">Telugu Panchangam</string>
+    <string name="pref_panchangam_kannada_panchangam" translatable="false">Kannada Panchangam</string>
+    <string name="pref_def_panchangam" translatable="false">@string/pref_panchangam_drik_ganitham</string>
     <string name="pref_location_settings_key" translatable="false">PREF_LOCATION_SETTINGS_KEY</string>
     <string name="pref_location" translatable="false">Location</string>
     <string name="pref_location_type_details" translatable="false">Location Settings</string>
@@ -35,9 +37,16 @@
     <string name="pref_sankalpam_details" translatable="false">Sankalpam Type</string>
     <string name="pref_sankalpam_type_shubam" translatable="false">Shubham</string>
     <string name="pref_sankalpam_type_srardham" translatable="false">Shraaddham</string>
-    <string name="pref_def_sankalpam_type" translatable="false">Shubham</string>
+    <string name="pref_def_sankalpam_type" translatable="false">@string/pref_sankalpam_type_shubam</string>
     <string name="pref_ayanamsa_chitrapaksha" translatable="false">Chitrapaksha</string>
     <string name="pref_ayanamsa_lahiri" translatable="false">Lahiri</string>
+    <string name="pref_def_ayanamsa" translatable="false">@string/pref_ayanamsa_chitrapaksha</string>
+    <string name="pref_lunar_calendar_key" translatable="false">PREF_CHAANDRAMANA_CALENDAR_KEY</string>
+    <string name="pref_lunar_calendar" translatable="false">Chāndramānam (Lunar Calendar)</string>
+    <string name="pref_lunar_calendar_type" translatable="false">Chāndramānam Type</string>
+    <string name="pref_lunar_calendar_type_amanta" translatable="false">Amanta</string>
+    <string name="pref_lunar_calendar_type_purnimanta" translatable="false">Purnimanta</string>
+    <string name="pref_def_lunar_calendar_type" translatable="false">@string/pref_lunar_calendar_type_amanta</string>
     <string-array name="locale_list">
         <item>Tamil</item>
         <item>Sanskrit</item>
@@ -49,7 +58,9 @@
         <item>English</item>
     </string-array>
     <string-array name="pref_allowed_panchangam_list">
-        <item>@string/pref_panchangam_drik</item>
+        <item>@string/pref_panchangam_drik_ganitham</item>
+        <item>@string/pref_panchangam_telugu_panchangam</item>
+        <item>@string/pref_panchangam_kannada_panchangam</item>
     </string-array>
     <string-array name="pref_allowed_ayanamsa_list">
         <item>@string/pref_ayanamsa_chitrapaksha</item>
@@ -63,10 +74,15 @@
         <item>@string/pref_sankalpam_type_shubam</item>
         <item>@string/pref_sankalpam_type_srardham</item>
     </string-array>
+    <string-array name="pref_lunar_calendar_type_list">
+        <item>@string/pref_lunar_calendar_type_amanta</item>
+        <item>@string/pref_lunar_calendar_type_purnimanta</item>
+    </string-array>
     <string name="samvatsaram_heading">Samvatsaram (Year)</string>
     <string name="aayanam_heading">Ayanam (6-month cycle)</string>
     <string name="rithou_heading">Rithu (Season)</string>
-    <string name="maasam_heading">Maasam (Month)</string>
+    <string name="surya_maasam_heading">Maasam (Solar Month)</string>
+    <string name="chandra_maasam_heading">Maasam (Lunar Month)</string>
     <string name="paksham_heading">Paksham (15-day cycle)</string>
     <string name="thithi_heading">Thithi (Lunar Day)</string>
     <string name="vaasaram_heading">Vaasaram (Weekday)</string>
@@ -225,7 +241,6 @@
     <string name="mahalayam_start">Mahalayam Begins</string>
     <string name="pref_ayanamsa" translatable="false">Ayanamsa</string>
     <string name="pref_ayanamsa_options" translatable="false">Ayanamsa Modes</string>
-    <string name="pref_def_ayanamsa" translatable="false">Chitrapaksha</string>
     <string name="pref_ayanamsa_key" translatable="false">PREF_AYANAMSA_KEY</string>
     <string name="confirm_selection" translatable="false">Confirm Selection</string>
     <string name="gregorian_calendar_day" translatable="false">Gregorian Calendar Day</string>
@@ -304,8 +319,8 @@
 
     <!-- Ayanam (6-month) period -->
     <string-array name="ayanam_list">
-        <item>Utharayinam</item>
-        <item>Dhakshinayinam</item>
+        <item>Utharayanam</item>
+        <item>Dhakshinayanam</item>
     </string-array>
 
     <!-- Rithu (Season) 2-month period -->
@@ -318,8 +333,8 @@
         <item>Shishirarithu</item>
     </string-array>
 
-    <!-- Maasam (month) -->
-    <string-array name="maasam_list">
+    <!-- Sauramaanam Maasam (Solar Month) -->
+    <string-array name="sauramaanam_maasam_list">
         <item>Mesha</item>
         <item>Rishabha</item>
         <item>Mithuna</item>
@@ -332,6 +347,22 @@
         <item>Makara</item>
         <item>Kumbha</item>
         <item>Meena</item>
+    </string-array>
+
+    <!-- Chaandramaanam Maasam (Lunar Month) -->
+    <string-array name="chaandramaanam_maasam_list">
+        <item>Chaitra</item>
+        <item>Vaishakha</item>
+        <item>Jyeshta</item>
+        <item>Aashadha</item>
+        <item>Shraavana</item>
+        <item>Bhadrapada</item>
+        <item>Ashwina</item>
+        <item>Kaartika</item>
+        <item>Margashirsha</item>
+        <item>Pausha</item>
+        <item>Maagha</item>
+        <item>Phaalguna</item>
     </string-array>
 
     <!-- Paksham (15-day) period -->

@@ -50,6 +50,16 @@
             android:summary="Choose Preferred Panchangam type"/>
 
     <PreferenceCategory
+        android:title="@string/pref_lunar_calendar"/>
+    <ListPreference
+        android:key="@string/pref_lunar_calendar_key"
+        android:title="@string/pref_lunar_calendar_type"
+        android:entries="@array/pref_lunar_calendar_type_list"
+        android:entryValues="@array/pref_lunar_calendar_type_list"
+        android:defaultValue="@string/pref_def_lunar_calendar_type"
+        android:summary="Choose Preferred Lunar Calendar type"/>
+
+    <PreferenceCategory
         android:title="@string/pref_ayanamsa"/>
     <ListPreference
         android:key="@string/pref_ayanamsa_key"

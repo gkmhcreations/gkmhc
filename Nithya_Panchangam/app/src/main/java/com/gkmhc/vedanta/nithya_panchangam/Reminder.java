@@ -83,7 +83,7 @@ public class Reminder extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.i("Reminder","Request Code: " + requestCode + " Response Code: " + resultCode);
+        //Log.i("Reminder","Request Code: " + requestCode + " Response Code: " + resultCode);
 
         // Upon Activity Results, do the following:
         // 1) Create new Reminder based on information provided (not yet supported)
@@ -336,7 +336,7 @@ public class Reminder extends Fragment {
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_ARUDHRA_DARSHAN:
                 dhinaVishesham = R.string.arudhra_darshan;
                 break;
-            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_HANUMAN_JAYANTHI:
+            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_HANUMATH_JAYANTHI:
                 dhinaVishesham = R.string.hanuman_jayanthi;
                 break;
             default:
@@ -369,11 +369,13 @@ public class Reminder extends Fragment {
                 break;
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SASHTI:
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_AADI_PERUKKU:
-            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_PANGUNI_UTHIRAM:
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_VAIKASI_VISHAKAM:
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SOORA_SAMHAARAM:
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SASHTI_VRATHAM:
                 dhinaVisheshamCode = R.drawable.sashti;
+                break;
+            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_PANGUNI_UTHIRAM:
+                dhinaVisheshamCode = R.drawable.panguni_uthiram;
                 break;
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_EKADASI:
                 dhinaVisheshamCode = R.drawable.ekadashi;
@@ -486,7 +488,7 @@ public class Reminder extends Fragment {
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_ARUDHRA_DARSHAN:
                 dhinaVisheshamCode = R.drawable.rudra;
                 break;
-            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_HANUMAN_JAYANTHI:
+            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_HANUMATH_JAYANTHI:
                 dhinaVisheshamCode = R.drawable.hanuma_jayanthi;
                 break;
             default:

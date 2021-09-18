@@ -11,6 +11,7 @@
     <color name="transparent">#00000000</color>
     <color name="lightSaffron">#FFCC99</color>
     <color name="maroon">#990000</color>
-    <color name="lightgray">#E0E0E0</color>
+    <color name="lightergray">#E0E0E0</color>
+    <color name="lightgray">#A0A0A0</color>
     <color name="gray">#606060</color>
 </resources>

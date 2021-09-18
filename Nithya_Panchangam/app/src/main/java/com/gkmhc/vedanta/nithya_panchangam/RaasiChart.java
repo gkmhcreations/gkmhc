@@ -6,16 +6,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,14 +18,11 @@ import com.gkmhc.utils.VedicCalendar;
 
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
 public class RaasiChart extends AppCompatActivity implements
         CalendarAdapter.OnItemListener {
-    private static final String PREF_NP_LOCALE_KEY = "PREF_NP_LOCALE_KEY";
-    private static final String PREF_LOCATION_DEF_VAL_KEY = "PREF_LOCATION_DEF_VAL_KEY";
     public static final String EXTRA_DATE = "Raasi_Extra_Date";
     public static final String EXTRA_MONTH = "Raasi_Extra_Month";
     public static final String EXTRA_YEAR = "Raasi_Extra_Year";
@@ -41,9 +33,8 @@ public class RaasiChart extends AppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        String prefLang = readLocaleSettings();
-        String selLocale = MainActivity.getLocaleShortStr(prefLang);
-        Locale locale = new Locale(selLocale);
+        String prefLang = MainActivity.updateSelLocale(this);
+        Locale locale = new Locale(prefLang);
         Locale.setDefault(locale);
         Resources resources = getResources();
         Configuration config = resources.getConfiguration();
@@ -76,7 +67,6 @@ public class RaasiChart extends AppCompatActivity implements
         if (defLocation.isEmpty()) {
             defLocation = getString(R.string.pref_def_location_val);
         }
-        getLocationCoords(defLocation);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_raasi_chart);
@@ -84,35 +74,6 @@ public class RaasiChart extends AppCompatActivity implements
                 getResources().getColor(android.R.color.holo_red_dark));
         raasiRecyclerView = findViewById(R.id.np_raasi_recycler_view);
         refreshRaasiView(defLocation);
-    }
-
-    public void getLocationCoords(String locationStr) {
-        /*try {
-            Geocoder geocoder = new Geocoder(this);
-            List<Address> addressList = geocoder.getFromLocationName(locationStr, 1);
-            if ((addressList != null) && (addressList.size() > 0)) {
-                String strLocality = addressList.get(0).getLocality();
-                curLocationLongitude = addressList.get(0).getLongitude();
-                curLocationLatitude = addressList.get(0).getLatitude();
-                Log.d("NPCalendar", "Location: " + strLocality +
-                        " Longitude: " + curLocationLongitude +
-                        " Latitude: " + curLocationLatitude);
-            }
-        } catch (Exception e) {
-            // Nothing to do here.
-            Log.d("NPCalendar","Exception in initManualLocation()");
-        }*/
-        MainActivity.PlacesInfo placesInfo = MainActivity.getLocationFromPlacesDB(locationStr);
-        curLocationLatitude = placesInfo.latitude;
-        curLocationLongitude = placesInfo.longitude;
-    }
-
-    private String readLocaleSettings() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPreferences != null) {
-            return sharedPreferences.getString(PREF_NP_LOCALE_KEY, "En");
-        }
-        return "En";
     }
 
     public void refreshRaasiView(String defLocation) {
@@ -127,46 +88,53 @@ public class RaasiChart extends AppCompatActivity implements
         String[] planetList = getResources().getStringArray(R.array.planet_list);
 
         long startTime = System.nanoTime();
-        HashMap<String, String[]> vedicCalendarLocaleList =
-                MainActivity.buildVedicCalendarLocaleList(this);
-        int ayanamsaMode = MainActivity.readPrefAyanamsaSelection(this);
-        VedicCalendar vedicCalendar = VedicCalendar.getInstance(
-                VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM, currCalendar, curLocationLongitude,
-                curLocationLatitude, MainActivity.getLocationTimeZone(defLocation), ayanamsaMode,
-                vedicCalendarLocaleList);
-        HashMap<Integer, Double> planetsRiseTimings = vedicCalendar.getPlanetsRise();
-        long endTime = System.nanoTime();
-        System.out.println("RaasiChart, Time Taken: " + VedicCalendar.getTimeTaken(startTime, endTime));
+        try {
+            HashMap<String, String[]> vedicCalendarLocaleList =
+                    MainActivity.buildVedicCalendarLocaleList(this);
+            int ayanamsaMode = MainActivity.readPrefAyanamsaSelection(this);
+            MainActivity.PlacesInfo placesInfo = MainActivity.getLocationDetails(defLocation);
+            curLocationLongitude = placesInfo.longitude;
+            curLocationLatitude = placesInfo.latitude;
+            VedicCalendar vedicCalendar = VedicCalendar.getInstance(
+                    MainActivity.readPrefPanchangamType(this), currCalendar, placesInfo.longitude,
+                    placesInfo.latitude, placesInfo.timezone, ayanamsaMode,
+                    MainActivity.readPrefChaandramanaType(this), vedicCalendarLocaleList);
+            HashMap<Integer, Double> planetsRiseTimings = vedicCalendar.getPlanetsRise();
+            long endTime = System.nanoTime();
+            System.out.println("RaasiChart, Time Taken: " + VedicCalendar.getTimeTaken(startTime, endTime));
 
-        RaasiChartAdapter raasiChartAdapter = new RaasiChartAdapter(this, raasiList, planetList,
-                planetsRiseTimings, this);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 4);
-        raasiRecyclerView.setHasFixedSize(true);
-        raasiRecyclerView.setLayoutManager(layoutManager);
-        raasiRecyclerView.setAdapter(raasiChartAdapter);
-        raasiChartAdapter.notifyDataSetChanged();
+            RaasiChartAdapter raasiChartAdapter = new RaasiChartAdapter(this, raasiList, planetList,
+                    planetsRiseTimings, this);
+            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 4);
+            raasiRecyclerView.setHasFixedSize(true);
+            raasiRecyclerView.setLayoutManager(layoutManager);
+            raasiRecyclerView.setAdapter(raasiChartAdapter);
+            raasiChartAdapter.notifyDataSetChanged();
 
-        String degLatSuffix = "°N";
-        if (curLocationLatitude < 0) {
-            degLatSuffix = "°S";
+            String degLatSuffix = "°N";
+            if (curLocationLatitude < 0) {
+                degLatSuffix = "°S";
+            }
+
+            String degLongSuffix = "°E";
+            if (curLocationLongitude < 0) {
+                degLongSuffix = "°W";
+            }
+
+            TextView textView = findViewById(R.id.raasi_location_details);
+            String npRaasiText = defLocation + " (" +
+                    String.format("%.5g%n", Math.abs(curLocationLatitude)) + degLatSuffix + ", " +
+                    String.format("%.5g%n", Math.abs(curLocationLongitude)) + degLongSuffix + ")";
+            npRaasiText = npRaasiText.replace("\n", "");
+            textView.setText(npRaasiText);
+            npRaasiText = " (" + currCalendar.get(Calendar.DATE) + "-" +
+                    currCalendar.getDisplayName(Calendar.MONTH, Calendar.SHORT,
+                            Locale.ENGLISH) + "-" + currCalendar.get(Calendar.YEAR) + ")";
+            textView = findViewById(R.id.raasi_day_details);
+            textView.setText(npRaasiText);
+        } catch (Exception e) {
+            // Do Nothing!
         }
-
-        String degLongSuffix = "°E";
-        if (curLocationLongitude < 0) {
-            degLongSuffix = "°W";
-        }
-
-        TextView textView = findViewById(R.id.raasi_location_details);
-        String npRaasiText = defLocation + " (" +
-                String.format("%.5g%n", Math.abs(curLocationLatitude)) + degLatSuffix + ", " +
-                String.format("%.5g%n", Math.abs(curLocationLongitude)) + degLongSuffix + ")";
-        npRaasiText = npRaasiText.replace("\n", "");
-        textView.setText(npRaasiText);
-        npRaasiText = " (" + currCalendar.get(Calendar.DATE) + "-" +
-                currCalendar.getDisplayName(Calendar.MONTH, Calendar.SHORT,
-                        Locale.ENGLISH) + "-" + currCalendar.get(Calendar.YEAR) + ")";
-        textView = findViewById(R.id.raasi_day_details);
-        textView.setText(npRaasiText);
     }
 
     @Override

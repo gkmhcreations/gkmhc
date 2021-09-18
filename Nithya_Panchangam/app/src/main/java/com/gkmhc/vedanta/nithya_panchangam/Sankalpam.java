@@ -1,15 +1,12 @@
 package com.gkmhc.vedanta.nithya_panchangam;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.PointF;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
@@ -60,23 +57,18 @@ public class Sankalpam extends Fragment {
     private String natchathiramStr;
     private String yogamStr;
     private String karanamStr;
-    private double curLocationLongitude = 0; // Default to Varanasi
-    private double curLocationLatitude = 0; // Default to Varanasi
-    private static final String PREF_SANKALPAM_TYPE_KEY = "PREF_SANKALPAM_TYPE_KEY";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        prefSankalpamType = getPrefSankalpamType(getContext());
+        prefSankalpamType = MainActivity.readPrefSankalpamType(getContext());
         root = inflater.inflate(R.layout.fragment_sankalpam, container, false);
 
         mainActivity = (MainActivity) getActivity();
         if (mainActivity != null) {
             mainActivity.updateAppLocale();
-            curLocationLongitude = mainActivity.getLongitude();
-            curLocationLatitude = mainActivity.getLatitude();
-            Log.d("Sankalpam","Longitude: " + curLocationLongitude +
-                    " Latitude: " + curLocationLatitude);
+            //Log.d("Sankalpam","Longitude: " + curLocationLongitude +
+            //        " Latitude: " + curLocationLatitude);
         }
 
         // Handle Prev Date Button
@@ -141,23 +133,17 @@ public class Sankalpam extends Fragment {
                 if (forceRefresh) {
                     toRefresh = true;
                 } else {
-                    if ((selectedCalendar != null) &&
-                        (calendar.get(Calendar.YEAR) == selectedCalendar.get(Calendar.YEAR)) &&
-                        (calendar.get(Calendar.MONTH) == selectedCalendar.get(Calendar.MONTH)) &&
-                        (calendar.get(Calendar.DATE) == selectedCalendar.get(Calendar.DATE))) {
-                        toRefresh = false;
-                    } else {
-                        toRefresh = true;
-                    }
+                    toRefresh = (selectedCalendar == null) ||
+                            (calendar.get(Calendar.YEAR) != selectedCalendar.get(Calendar.YEAR)) ||
+                            (calendar.get(Calendar.MONTH) != selectedCalendar.get(Calendar.MONTH)) ||
+                            (calendar.get(Calendar.DATE) != selectedCalendar.get(Calendar.DATE));
                 }
 
                 // Refresh completely if set to true, else just update UI.
                 String selLocale = mainActivity.updateAppLocale();
                 if (toRefresh) {
                     selectedCalendar = calendar;
-                    prefSankalpamType = getPrefSankalpamType(getContext());
-                    curLocationLongitude = mainActivity.getLongitude();
-                    curLocationLatitude = mainActivity.getLatitude();
+                    prefSankalpamType = MainActivity.readPrefSankalpamType(getContext());
                     //Log.d("Sankalpam","Longitude: " + curLocationLongitude +
                     //        " Latitude: " + curLocationLatitude);
                     retrieveTodaysPanchangam(selectedCalendar, selLocale);
@@ -165,6 +151,7 @@ public class Sankalpam extends Fragment {
                 updateSankalpamFragment(root, selectedCalendar, prefSankalpamType, selLocale);
             } catch (final Exception ex) {
                 Log.e("Sankalpam","Exception in refreshPanchangam()");
+                ex.printStackTrace();
             }
         }, 50);
     }
@@ -194,50 +181,56 @@ public class Sankalpam extends Fragment {
         // 3) Longitude - This is important as panchangam calculations changes with location
         // 4) Latitude - This is important as panchangam calculations changes with location
         long pStartTime = System.nanoTime();
-        HashMap<String, String[]> vedicCalendarLocaleList =
-                MainActivity.buildVedicCalendarLocaleList(getContext());
-        String location = MainActivity.readDefLocationSetting(getContext());
-        int ayanamsaMode = MainActivity.readPrefAyanamsaSelection(getContext());
-        VedicCalendar vedicCalendar = VedicCalendar.getInstance(
-                VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM, currCalendar, curLocationLongitude,
-                curLocationLatitude, MainActivity.getLocationTimeZone(location), ayanamsaMode,
-                vedicCalendarLocaleList);
-        if (vedicCalendar != null) {
-            // Step1: Calculate Samvatsaram
-            samvatsaramStr = vedicCalendar.getSamvatsaram();
+        try {
+            Context context = getContext();
+            HashMap<String, String[]> vedicCalendarLocaleList =
+                    MainActivity.buildVedicCalendarLocaleList(context);
+            String location = MainActivity.readDefLocationSetting(context);
+            int ayanamsaMode = MainActivity.readPrefAyanamsaSelection(context);
+            MainActivity.PlacesInfo placesInfo = MainActivity.getLocationDetails(location);
+            VedicCalendar vedicCalendar = VedicCalendar.getInstance(
+                    MainActivity.readPrefPanchangamType(context), currCalendar, placesInfo.longitude,
+                    placesInfo.latitude, placesInfo.timezone, ayanamsaMode,
+                    MainActivity.readPrefChaandramanaType(context), vedicCalendarLocaleList);
+            if (vedicCalendar != null) {
+                // Step1: Calculate Samvatsaram
+                samvatsaramStr = vedicCalendar.getSamvatsaram();
 
-            // Step2: Retrieve correct Ayanam given current system time
-            ayanamStr = vedicCalendar.getAyanam(VedicCalendar.MATCH_SANKALPAM_EXACT);
+                // Step2: Retrieve correct Ayanam given current system time
+                ayanamStr = vedicCalendar.getAyanam(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-            // Step3: Retrieve correct rithou  given current system time
-            // Step5: Retrieve correct paksham  given current system time
-            // Step6: Retrieve correct thithi  given current system time
-            refDinaAnkam = vedicCalendar.getDinaAnkam(VedicCalendar.MATCH_SANKALPAM_EXACT);
+                // Step3: Retrieve correct rithou  given current system time
+                // Step5: Retrieve correct paksham  given current system time
+                // Step6: Retrieve correct thithi  given current system time
+                refDinaAnkam = vedicCalendar.getDinaAnkam(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-            // Step3: Retrieve correct rithou  given current system time
-            rithouStr = vedicCalendar.getRithu(VedicCalendar.MATCH_SANKALPAM_EXACT);
+                // Step3: Retrieve correct rithou  given current system time
+                rithouStr = vedicCalendar.getRithu(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-            // Step4: Retrieve correct maasam given current system time
-            maasamStr = vedicCalendar.getMaasam(VedicCalendar.MATCH_SANKALPAM_EXACT);
+                // Step4: Retrieve correct maasam given current system time
+                maasamStr = vedicCalendar.getMaasam(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-            // Step5: Retrieve correct paksham  given current system time
-            pakshamStr = vedicCalendar.getPaksham();
+                // Step5: Retrieve correct paksham  given current system time
+                pakshamStr = vedicCalendar.getPaksham();
 
-            // Step6: Retrieve correct thithi  given current system time
-            thithiStr = vedicCalendar.getThithi(VedicCalendar.MATCH_SANKALPAM_EXACT);
+                // Step6: Retrieve correct thithi  given current system time
+                thithiStr = vedicCalendar.getThithi(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-            // Step7: Retrieve correct vaasaram for the current thithi
-            vaasaramStr = vedicCalendar.getVaasaram(VedicCalendar.MATCH_SANKALPAM_EXACT);
+                // Step7: Retrieve correct vaasaram for the current thithi
+                vaasaramStr = vedicCalendar.getVaasaram(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-            // Step8: Retrieve correct natchathiram for the current thithi
-            natchathiramStr =
-                    vedicCalendar.getNakshatram(VedicCalendar.MATCH_SANKALPAM_EXACT);
+                // Step8: Retrieve correct natchathiram for the current thithi
+                natchathiramStr =
+                        vedicCalendar.getNakshatram(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-            // Step9: Retrieve correct Yogam for the current thithi
-            yogamStr = vedicCalendar.getYogam(VedicCalendar.MATCH_SANKALPAM_EXACT);
+                // Step9: Retrieve correct Yogam for the current thithi
+                yogamStr = vedicCalendar.getYogam(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-            // Step10: Retrieve correct Karanam for the current thithi
-            karanamStr = vedicCalendar.getKaranam(VedicCalendar.MATCH_SANKALPAM_EXACT);
+                // Step10: Retrieve correct Karanam for the current thithi
+                karanamStr = vedicCalendar.getKaranam(VedicCalendar.MATCH_SANKALPAM_EXACT);
+            }
+        } catch (Exception e) {
+            // Do Nothing!
         }
         long pEndTime = System.nanoTime();
         Log.d("Sankalpam:","Overall Retrieve Time Taken: " +
@@ -298,6 +291,9 @@ public class Sankalpam extends Fragment {
             sanskritAyanamStr = ayanamStr.substring(0, ayanamStr.length() - 3) + "னே";
             sanskritRithouStr = rithouStr.substring(0, rithouStr.length() - 2) + "தெள";
             sanskritPakshamStr = pakshamStr + "பக்ஷே";
+
+            sanskritYogamStr = sanskritYogamStr.replaceAll("ம்", "");
+            karanamStr = karanamStr.replaceAll("ம்", "");
         } else if (selLocale.equalsIgnoreCase("sa")) {
             sanskritVaasaramStr = sanskritVaasaramStr.replaceAll("ः", "");
             sanskritNatchathiramStr = sanskritNatchathiramStr.replaceAll("ः", "");
@@ -417,20 +413,6 @@ public class Sankalpam extends Fragment {
         long pEndTime = System.nanoTime();
         Log.d("Sankalpam:","Overall Update Time Taken: " +
                 VedicCalendar.getTimeTaken(pStartTime, pEndTime));
-    }
-
-    /**
-     * Utility function to get the selected sankalpam type from shared preferences.
-     *
-     * @return Selected sankalpam type as a string
-     */
-    private String getPrefSankalpamType (Context context) {
-        String defSankalpamType = getString(R.string.pref_sankalpam_type_shubam);
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        if (preferences != null) {
-            defSankalpamType = preferences.getString(PREF_SANKALPAM_TYPE_KEY, defSankalpamType);
-        }
-        return defSankalpamType;
     }
 
     /**

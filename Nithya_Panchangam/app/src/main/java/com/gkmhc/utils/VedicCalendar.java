@@ -57,14 +57,14 @@ public class VedicCalendar extends Calendar {
     private double sunRiseTotalMins = 0;
     private double sunSetTotalMins = 0;
     private final HashMap<String, String[]> vedicCalendarLocaleList;
-    private final double refRaviAyanamAtDayStart;
-    private final double refChandraAyanamAtDayStart;
-    private final int refHour;
-    private final int refMin;
-    private final int refDate;
-    private final int refMonth;
-    private final int refYear;
-    private final int refVaasaram;
+    private double refRaviAyanamAtDayStart;
+    private double refChandraAyanamAtDayStart;
+    private int refHour;
+    private int refMin;
+    private int refDate;
+    private int refMonth;
+    private int refYear;
+    private int refVaasaram;
 
     public static class LagnamHoraiInfo {
         public final String name;
@@ -428,6 +428,23 @@ public class VedicCalendar extends Calendar {
     }
 
     /**
+     * Use this API to set a new calendar date in VedicCalendar.
+     *
+     * @param date      The value used to set the DAY_OF_MONTH calendar field.
+     * @param month     The value used to set the MONTH calendar field.
+     *                  (This value is 0-based. e.g., 0 for January.)
+     * @param year      The value used to set the YEAR calendar field.
+     * @param hourOfDay The value used to set the HOUR_OF_DAY calendar field.
+     * @param minute    The value used to set the MINUTE calendar field.
+     *
+     */
+    public void setDate(int date, int month, int year, int hourOfDay, int minute) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, date, hourOfDay, minute);
+        initRaviChandraLongitudes(calendar);
+    }
+
+    /**
      * Private parameterized Constructor which does the following:
      * Step 1) Initialize SwissEph Instance
      * Step 2) Using SwissEph, get given day's Ravi & Chandra longitudes
@@ -453,12 +470,6 @@ public class VedicCalendar extends Calendar {
         createDinaVisheshamsList();
 
         defTimezone = timeZone;
-        refHour = refCalendar.get(Calendar.HOUR_OF_DAY);
-        refMin = refCalendar.get(Calendar.MINUTE);
-        refDate = refCalendar.get(Calendar.DATE);
-        refMonth = refCalendar.get(Calendar.MONTH) + 1;
-        refYear = refCalendar.get(Calendar.YEAR);
-        refVaasaram = refCalendar.get(Calendar.DAY_OF_WEEK);
 
         if (prefAyanamsa == AYANAMSA_CHITRAPAKSHA) {
             // Set sidereal mode: SE_SIDM_TRUE_CITRA for "Drik Ganitham"
@@ -468,6 +479,37 @@ public class VedicCalendar extends Calendar {
             // TODO - Check if the various Vakhyam calendars aligns with this setting!
             swissEphInst.swe_set_sid_mode(SweConst.SE_SIDM_LAHIRI, 0, 0);
         }
+
+        // If no longitude or latitude is given, then assume Varanasi's longitude & latitude
+        if (locLongitude != 0) {
+            DEF_LONGITUDE = locLongitude;
+        }
+        if (locLatitude != 0) {
+            DEF_LATITUDE = locLatitude;
+        }
+        double[] geoPos = new double[] {DEF_LONGITUDE, DEF_LATITUDE, 0}; // Chennai
+
+        swissEphInst.swe_set_topo(geoPos[0], geoPos[1], geoPos[2]);
+        initRaviChandraLongitudes(refCalendar);
+
+        //System.out.println("VedicCalendar" + "Ref Ravi => " + refRaviAyanamAtDayStart +
+        //        " Prev Day Ravi => " + nextDay_ravi_ayanam + " DRM: " + dailyRaviMotion);
+        //System.out.println("VedicCalendar" + "Ref Chandra => " + refChandraAyanamAtDayStart +
+        //        " Prev Day Chandra => " + nextDay_chandra_ayanam + " DCM: " + dailyChandraMotion);
+    }
+
+    /**
+     * Utility function to calculate Ravi & Chandra longitudes as per the given Calendar.
+     *
+     * @param refCalendar   A Calendar date as per Gregorian Calendar
+     */
+    private void initRaviChandraLongitudes(Calendar refCalendar) {
+        refHour = refCalendar.get(Calendar.HOUR_OF_DAY);
+        refMin = refCalendar.get(Calendar.MINUTE);
+        refDate = refCalendar.get(Calendar.DATE);
+        refMonth = refCalendar.get(Calendar.MONTH) + 1;
+        refYear = refCalendar.get(Calendar.YEAR);
+        refVaasaram = refCalendar.get(Calendar.DAY_OF_WEEK);
 
         // Get Chandra's & Ravi's longitudes as per Sunrise for the given day
         //long startTime = System.nanoTime();
@@ -481,16 +523,6 @@ public class VedicCalendar extends Calendar {
         //System.out.println("VedicCalendarProf","calcPlanetLongitude() for Moon... Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // If no longitude or latitude is given, then assume Varanasi's longitude & latitude
-        if (locLongitude != 0) {
-            DEF_LONGITUDE = locLongitude;
-        }
-        if (locLatitude != 0) {
-            DEF_LATITUDE = locLatitude;
-        }
-        double[] geoPos = new double[] {DEF_LONGITUDE, DEF_LATITUDE, 0}; // Chennai
-
-        swissEphInst.swe_set_topo(geoPos[0], geoPos[1], geoPos[2]);
         Calendar nextDayCalendar = (Calendar) refCalendar.clone();
         nextDayCalendar.add(Calendar.DATE, 1);
         //startTime = System.nanoTime();
@@ -513,11 +545,6 @@ public class VedicCalendar extends Calendar {
         if (dailyChandraMotion < 0) {
             dailyChandraMotion += MAX_AYANAM_MINUTES;
         }
-
-        //System.out.println("VedicCalendar" + "Ref Ravi => " + refRaviAyanamAtDayStart +
-        //        " Prev Day Ravi => " + nextDay_ravi_ayanam + " DRM: " + dailyRaviMotion);
-        //System.out.println("VedicCalendar" + "Ref Chandra => " + refChandraAyanamAtDayStart +
-        //        " Prev Day Chandra => " + nextDay_chandra_ayanam + " DCM: " + dailyChandraMotion);
     }
 
     /**
@@ -3529,26 +3556,31 @@ public class VedicCalendar extends Calendar {
     @Override
     public void set(int field, int value) {
         // Not planning to support!
+        // Use setDate instead
     }
 
     @Override
     protected void computeTime() {
         // Not planning to support!
+        // Use setDate instead
     }
 
     @Override
     protected void computeFields() {
         // Not planning to support!
+        // Use setDate instead
     }
 
     @Override
     public void add(int field, int amount) {
         // Not planning to support!
+        // Use setDate instead
     }
 
     @Override
     public void roll(int field, boolean up) {
         // Not planning to support!
+        // Use setDate instead
     }
 
     @Override

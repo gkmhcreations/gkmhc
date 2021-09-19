@@ -378,8 +378,8 @@ public class VedicCalendar extends Calendar {
      *          throws InvalidParameterSpecException if any or all of the input parameters are
      *          invalid (or) contain invalid fields/values.
      *
-     * @note  Take care of copying all the SwissEph assets to the localPath before calling
-     *        getInstance().
+     * @apiNote Take care of copying all the SwissEph assets to the localPath before calling
+     *          getInstance().
      */
     public static VedicCalendar getInstance(String localPath, int panchangamType, Calendar calendar,
                                             double locLongitude, double locLatitude,
@@ -421,11 +421,7 @@ public class VedicCalendar extends Calendar {
             throw new InvalidParameterSpecException("Invalid Ayanamsa!");
         }
 
-        // Callers should first call initSwissEph() before creating an instance.
-        /*if (swissEphInst == null) {
-            throw new InvalidParameterSpecException("SwissEph Uninitialized!");
-        }*/
-
+        // Initialize SwissEph library based on the assets in localPath
         initSwissEph(localPath);
         return new VedicCalendar(panchangamType, calendar, locLongitude, locLatitude, timeZone,
                                  prefAyanamsa, chaandramanaType, vcLocaleList);

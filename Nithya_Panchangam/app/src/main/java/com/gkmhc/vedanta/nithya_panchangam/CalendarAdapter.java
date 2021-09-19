@@ -27,7 +27,6 @@ import java.util.List;
  * accordance with terms & conditions in GNU GPL license.
  */
 public class CalendarAdapter extends RecyclerView.Adapter<CalenderViewHolder> {
-    private final Context context;
     private final ArrayList<String> gregDaysOfMonth;
     private final ArrayList<String> drikDaysOfMonth;
     private final ArrayList<List<Integer>> drikImgIDOfMonth;
@@ -41,7 +40,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalenderViewHolder> {
                            ArrayList<List<Integer>> drikImgIDOfMonth,
                            ArrayList<String> drikMaasam,
                            OnItemListener onItemListener) {
-        this.context = context;
         this.gregDaysOfMonth = gregDaysOfMonth;
         this.drikDaysOfMonth = drikDaysOfMonth;
         this.drikImgIDOfMonth = drikImgIDOfMonth;

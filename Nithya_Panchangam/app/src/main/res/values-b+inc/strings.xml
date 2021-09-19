@@ -6,8 +6,8 @@
     <string name="samvatsaram_heading">saṃvatsaraḥ</string>
     <string name="aayanam_heading">ayanam</string>
     <string name="rithou_heading">ṛtuḥ</string>
-    <string name="surya_maasam_heading">māsaḥ (Sauramānam)</string>
-    <string name="chandra_maasam_heading">māsaḥ (Candramaṇaṁ)</string>
+    <string name="sauramanam_maasam_heading">māsaḥ (Sauramānam)</string>
+    <string name="chaandra_maasam_heading">māsaḥ (Candramaṇaṁ)</string>
     <string name="paksham_heading">pakṣaḥ</string>
     <string name="thithi_heading">tithiḥ</string>
     <string name="vaasaram_heading">vāsaraḥ</string>
@@ -99,7 +99,6 @@
     <string name="channel_name">Nithya Panchangam</string>
     <string name="channel_description">Nithya Panchangam Events</string>
     <string name="label">sañjika</string>
-    <string name="no_reminders">smāraṇaṃ nāsti!</string>
     <string name="no_alarms">stara saṃketadhvani na kṛtaṃ!</string>
     <string name="delete_reminder">Delete Reminder</string>
     <string name="add_alarm">stara saṃketadhvani</string>

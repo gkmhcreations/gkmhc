@@ -17,7 +17,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Nithya_Panchangam">
-        <activity android:name=".NithyaKaalam"></activity>
         <activity android:name=".RaasiChart" />
         <activity
             android:name=".AlarmLockScreenNotification"

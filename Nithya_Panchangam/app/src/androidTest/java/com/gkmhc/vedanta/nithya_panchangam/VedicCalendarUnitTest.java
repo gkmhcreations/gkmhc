@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+import java.security.spec.InvalidParameterSpecException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -31,15 +32,14 @@ public class VedicCalendarUnitTest {
 
     public VedicCalendar getVedicCalendarInstance(Calendar currCalendar, int panchangamType,
                                                   int ayanamsaType, int chaandramanamType,
-                                                  String location) {
+                                                  String location) throws InvalidParameterSpecException {
         HashMap<String, String[]> vedicCalendarLocaleList =
                 MainActivity.buildVedicCalendarLocaleList(appContext);
         MainActivity.buildPlacesTimezoneDB();
         MainActivity.PlacesInfo placesInfo = MainActivity.getLocationDetails(location);
-        String localpath = appContext.getFilesDir() + File.separator + "/ephe";
-        VedicCalendar.initSwissEph(localpath);
 
         return VedicCalendar.getInstance(
+                MainActivity.getLocalPath(appContext),
                 panchangamType, currCalendar, placesInfo.longitude, placesInfo.latitude,
                 placesInfo.timezone, ayanamsaType, chaandramanamType, vedicCalendarLocaleList);
     }
@@ -1115,32 +1115,42 @@ public class VedicCalendarUnitTest {
                                                  List<Integer> dinaVisheshamExpectedList) {
         Calendar currCalendar = Calendar.getInstance();
         currCalendar.set(year, (month - 1), date);
-        VedicCalendar vedicCalendar = getVedicCalendarInstance(currCalendar,
-                VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM, VedicCalendar.AYANAMSA_CHITRAPAKSHA,
-                VedicCalendar.CHAANDRAMAANAM_TYPE_AMANTA, location);
+        try {
+            VedicCalendar vedicCalendar = getVedicCalendarInstance(currCalendar,
+                    VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM, VedicCalendar.AYANAMSA_CHITRAPAKSHA,
+                    VedicCalendar.CHAANDRAMAANAM_TYPE_AMANTA, location);
 
-        List<Integer> dinaVisheshamActualList = vedicCalendar.getDinaVishesham(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
-        System.out.print("Checking Dhina Vishesham for (" +
-                "Expected: " + Arrays.toString(dinaVisheshamExpectedList.toArray()) +
-                "Actual: " + Arrays.toString(dinaVisheshamActualList.toArray()) +
-                ") on " + date + "/" + month + "/" + year + "...");
-        assertArrayEquals(dinaVisheshamExpectedList.toArray(), dinaVisheshamActualList.toArray());
-        System.out.println("PASSED");
+            List<Integer> dinaVisheshamActualList = vedicCalendar.getDinaVishesham(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
+            System.out.print("Checking Dhina Vishesham for (" +
+                    "Expected: " + Arrays.toString(dinaVisheshamExpectedList.toArray()) +
+                    "Actual: " + Arrays.toString(dinaVisheshamActualList.toArray()) +
+                    ") on " + date + "/" + month + "/" + year + "...");
+            assertArrayEquals(dinaVisheshamExpectedList.toArray(), dinaVisheshamActualList.toArray());
+            System.out.println("PASSED");
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
     }
 
     public void checkDinaVisheshamsforAnyMatch(String location, int date, int month, int year,
                                                int dinaVisheshamExpected) {
         Calendar currCalendar = Calendar.getInstance();
         currCalendar.set(year, (month - 1), date);
-        VedicCalendar vedicCalendar = getVedicCalendarInstance(currCalendar,
-                VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM, VedicCalendar.AYANAMSA_CHITRAPAKSHA,
-                VedicCalendar.CHAANDRAMAANAM_TYPE_AMANTA, location);
+        try {
+            VedicCalendar vedicCalendar = getVedicCalendarInstance(currCalendar,
+                    VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM, VedicCalendar.AYANAMSA_CHITRAPAKSHA,
+                    VedicCalendar.CHAANDRAMAANAM_TYPE_AMANTA, location);
 
-        List<Integer> dinaVisheshamActualList = vedicCalendar.getDinaVishesham(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
-        System.out.print("Checking Dhina Vishesham for (" +
-                appContext.getString(Reminder.getDinaVisheshamLabel(dinaVisheshamExpected)) +
-                ") on " + date + "/" + month + "/" + year + "...");
-        assertTrue(dinaVisheshamActualList.contains(dinaVisheshamExpected));
-        System.out.println("PASSED");
+            List<Integer> dinaVisheshamActualList = vedicCalendar.getDinaVishesham(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
+            System.out.print("Checking Dhina Vishesham for (" +
+                    appContext.getString(Reminder.getDinaVisheshamLabel(dinaVisheshamExpected)) +
+                    ") on " + date + "/" + month + "/" + year + "...");
+            assertTrue(dinaVisheshamActualList.contains(dinaVisheshamExpected));
+            System.out.println("PASSED");
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
     }
 }

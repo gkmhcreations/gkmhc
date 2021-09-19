@@ -118,7 +118,7 @@
                 android:maxLines="5"
                 android:textStyle="bold"
                 android:textColor="@color/blue"
-                android:text="@string/surya_maasam_heading"
+                android:text="@string/sauramanam_maasam_heading"
                 android:layout_marginStart="1dp" />
             <TextView
                 android:id="@+id/np_cell_maasam"

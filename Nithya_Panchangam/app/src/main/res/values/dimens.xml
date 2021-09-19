@@ -2,11 +2,7 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="text_margin">8sp</dimen>
-    <dimen name="text_size">12sp</dimen>
-    <dimen name="dlg_row_size">8sp</dimen>
-    <dimen name="np_heading_size">16sp</dimen>
     <dimen name="np_table_top_row_size">14sp</dimen>
-    <dimen name="np_val_size">16sp</dimen>
     <!--
 Refer to App Widget Documentation for margin information
 http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout

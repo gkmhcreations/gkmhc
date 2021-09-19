@@ -47,36 +47,35 @@ public class NithyaPanchangamWidget extends AppWidgetProvider {
         try {
             int ayanamsaMode = MainActivity.readPrefAyanamsaSelection(context);
             VedicCalendar vedicCalendar = VedicCalendar.getInstance(
+                    MainActivity.getLocalPath(context),
                     MainActivity.readPrefPanchangamType(context), currCalendar, placesInfo.longitude,
                     placesInfo.latitude, placesInfo.timezone, ayanamsaMode,
                     MainActivity.readPrefChaandramanaType(context), vedicCalendarLocaleList);
-            if (vedicCalendar != null) {
-                int refDinaangam =
-                        vedicCalendar.getDinaAnkam(VedicCalendar.MATCH_SANKALPAM_EXACT);
-                String vaasaramStr =
-                        vedicCalendar.getVaasaram(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
-                String maasamStr =
-                        vedicCalendar.getSauramaanamMaasam(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
-                float textSize = 12f;
+            int refDinaangam =
+                    vedicCalendar.getDinaAnkam(VedicCalendar.MATCH_SANKALPAM_EXACT);
+            String vaasaramStr =
+                    vedicCalendar.getVaasaram(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
+            String maasamStr =
+                    vedicCalendar.getSauramaanamMaasam(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
+            float textSize = 12f;
 
-                // Increase font size for Sanskrit alone but keep default for Tamil & English
-                if (selLocale.equalsIgnoreCase("Sa")) {
-                    textSize = 16f;
-                }
-                CharSequence widgetText = refDinaangam + ", " + vaasaramStr + "-" + maasamStr;
-                // Construct the RemoteViews object
-                RemoteViews views = new RemoteViews(context.getPackageName(),
-                        R.layout.nithya_panchangam_widget);
-                views.setTextViewTextSize(R.id.appwidget_text, TypedValue.COMPLEX_UNIT_SP, textSize);
-                views.setTextViewText(R.id.appwidget_text, widgetText);
-
-                // Pop up the splash screen
-                Intent openMainApp = new Intent(context, SplashScreen.class);
-                PendingIntent pIntent = PendingIntent.getActivity(context, 0, openMainApp, 0);
-                views.setOnClickPendingIntent(R.id.widget_clock, pIntent);
-                // Instruct the widget manager to update the widget
-                appWidgetManager.updateAppWidget(appWidgetId, views);
+            // Increase font size for Sanskrit alone but keep default for Tamil & English
+            if (selLocale.equalsIgnoreCase("Sa")) {
+                textSize = 16f;
             }
+            CharSequence widgetText = refDinaangam + ", " + vaasaramStr + "-" + maasamStr;
+            // Construct the RemoteViews object
+            RemoteViews views = new RemoteViews(context.getPackageName(),
+                    R.layout.nithya_panchangam_widget);
+            views.setTextViewTextSize(R.id.appwidget_text, TypedValue.COMPLEX_UNIT_SP, textSize);
+            views.setTextViewText(R.id.appwidget_text, widgetText);
+
+            // Pop up the splash screen
+            Intent openMainApp = new Intent(context, SplashScreen.class);
+            PendingIntent pIntent = PendingIntent.getActivity(context, 0, openMainApp, 0);
+            views.setOnClickPendingIntent(R.id.widget_clock, pIntent);
+            // Instruct the widget manager to update the widget
+            appWidgetManager.updateAppWidget(appWidgetId, views);
         } catch (Exception e) {
             // Do Nothing
         }
@@ -93,8 +92,6 @@ public class NithyaPanchangamWidget extends AppWidgetProvider {
 
         Calendar currCalendar = Calendar.getInstance();
         long startTime = System.nanoTime();
-        String localpath = context.getFilesDir() + File.separator + "/ephe";
-        VedicCalendar.initSwissEph(localpath);
         long endTime = System.nanoTime();
         Log.d("NithyaPanchangamWidget","initSwissEph()... Time Taken: " +
                 VedicCalendar.getTimeTaken(startTime, endTime));

@@ -71,7 +71,7 @@ public class Reminder extends Fragment {
             public void run() {
                 try {
                     // code runs in a thread
-                    getActivity().runOnUiThread(() -> updateRemindersListView(-1));
+                    requireActivity().runOnUiThread(() -> updateRemindersListView(-1));
                 } catch (final Exception ex) {
                     Log.d("Reminder","Exception in initReminders()");
                 }

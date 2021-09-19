@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Activity to handle App Settings.
@@ -33,7 +34,7 @@ public class NithyaPanchangamSettings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nithya_panchangam_settings);
 
-        getSupportActionBar().setTitle(R.string.settings_title);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.settings_title);
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         if (findViewById(R.id.settings_frame) != null) {

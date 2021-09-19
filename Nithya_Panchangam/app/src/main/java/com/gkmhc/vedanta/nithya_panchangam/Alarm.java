@@ -147,8 +147,8 @@ public class Alarm extends Fragment {
             public void run() {
                 try {
                     // code runs in a thread
-                    getActivity().runOnUiThread(() -> updateAlarmsListView());
-                } catch (final Exception ex) {
+                    requireActivity().runOnUiThread(() -> updateAlarmsListView());
+                } catch (Exception ex) {
                     Log.d("Alarm","Exception in initAlarms()");
                 }
             }

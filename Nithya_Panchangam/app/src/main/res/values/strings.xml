@@ -81,8 +81,8 @@
     <string name="samvatsaram_heading">Samvatsaram (Year)</string>
     <string name="aayanam_heading">Ayanam (6-month cycle)</string>
     <string name="rithou_heading">Rithu (Season)</string>
-    <string name="surya_maasam_heading">Maasam (Solar Month)</string>
-    <string name="chandra_maasam_heading">Maasam (Lunar Month)</string>
+    <string name="sauramanam_maasam_heading">Maasam (Solar Month)</string>
+    <string name="chaandra_maasam_heading">Maasam (Lunar Month)</string>
     <string name="paksham_heading">Paksham (15-day cycle)</string>
     <string name="thithi_heading">Thithi (Lunar Day)</string>
     <string name="vaasaram_heading">Vaasaram (Weekday)</string>
@@ -118,7 +118,6 @@
     <string name="vaasaram_suffix">vaasara</string>
     <string name="solar_calendar">Sauramānam</string>
     <string name="splash_logo" translatable="false">Splash Logo</string>
-    <string name="ayyappan_logo" translatable="false">Ayyappan Logo</string>
     <string name="add_alarm">Add Alarm</string>
     <string name="delete_alarm" translatable="false">Delete Alarm</string>
     <string name="scroll_calendar_left" translatable="false">Prev</string>
@@ -196,7 +195,6 @@
     <string name="channel_description">Nithya Panchangam Events</string>
     <string name="label">Label</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="no_reminders">No Reminders!</string>
     <string name="no_alarms">No Alarms!</string>
     <string name="delete_reminder">Delete Reminder</string>
     <string name="reminder_tab_heading">Reminder</string>

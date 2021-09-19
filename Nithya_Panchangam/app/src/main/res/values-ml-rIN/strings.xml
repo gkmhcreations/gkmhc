@@ -6,8 +6,8 @@
     <string name="samvatsaram_heading">സംവത്സരഃ</string>
     <string name="aayanam_heading">അയനം</string>
     <string name="rithou_heading">ഋതുഃ</string>
-    <string name="surya_maasam_heading">മാസഃ (സൗരമനം)</string>
-    <string name="chandra_maasam_heading">മാസഃ (ചന്ദ്രാമനം)</string>
+    <string name="sauramanam_maasam_heading">മാസഃ (സൗരമനം)</string>
+    <string name="chaandra_maasam_heading">മാസഃ (ചന്ദ്രാമനം)</string>
     <string name="paksham_heading">പക്ഷഃ</string>
     <string name="thithi_heading">തിഥിഃ</string>
     <string name="vaasaram_heading">വാസരഃ</string>
@@ -99,7 +99,6 @@
     <string name="channel_name">Nithya Panchangam</string>
     <string name="channel_description">Nithya Panchangam Events</string>
     <string name="label">സഞ്ജിക</string>
-    <string name="no_reminders">സ്മാരണം നാസ്തി!</string>
     <string name="no_alarms">സ്തര സംകേതധ്വനി ന കൃതം!</string>
     <string name="delete_reminder">Delete Reminder</string>
     <string name="add_alarm">സ്തര സംകേതധ്വനി</string>

@@ -709,36 +709,34 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
     private void recreateRemindersFromPersistentDB(Context context) {
         HashMap<Integer, NPDB.AlarmInfo> remindersDB = NPDB.readAlarmsFromDB(
                 context.getApplicationContext(), Alarm.ALARM_TYPE_VEDIC);
-        if (remindersDB != null) {
-            ArrayList<Integer> remindersList = NPDB.getAlarmIDs(remindersDB);
-            if (remindersList != null) {
-                int reminderIter = 0;
-                int numReminders = remindersList.size();
+        ArrayList<Integer> remindersList = NPDB.getAlarmIDs(remindersDB);
+        if (remindersList != null) {
+            int reminderIter = 0;
+            int numReminders = remindersList.size();
 
-                while (reminderIter < numReminders) {
-                    int reminderID = remindersList.get(reminderIter);
-                    NPDB.AlarmInfo reminderInfo = remindersDB.get(reminderID);
+            while (reminderIter < numReminders) {
+                int reminderID = remindersList.get(reminderIter);
+                NPDB.AlarmInfo reminderInfo = remindersDB.get(reminderID);
 
-                    if (reminderInfo != null) {
-                        boolean reminderType = reminderInfo.alarmType;
-                        boolean isReminderOn = reminderInfo.isAlarmOn;
-                        int reminderHourOfDay = reminderInfo.alarmHourOfDay;
-                        int reminderMin = reminderInfo.alarmMin;
-                        String ringTone = reminderInfo.ringTone;
-                        boolean toVibrate = reminderInfo.toVibrate;
-                        int repeatOption = reminderInfo.repeatOption;
-                        String label = reminderInfo.label;
-                        int iconID = Reminder.getDinaVisheshamImg(reminderID);
+                if (reminderInfo != null) {
+                    boolean reminderType = reminderInfo.alarmType;
+                    boolean isReminderOn = reminderInfo.isAlarmOn;
+                    int reminderHourOfDay = reminderInfo.alarmHourOfDay;
+                    int reminderMin = reminderInfo.alarmMin;
+                    String ringTone = reminderInfo.ringTone;
+                    boolean toVibrate = reminderInfo.toVibrate;
+                    int repeatOption = reminderInfo.repeatOption;
+                    String label = reminderInfo.label;
+                    int iconID = Reminder.getDinaVisheshamImg(reminderID);
 
-                        // Recreate Reminder with the parsed fields only if Alarm State is "On"
-                        if (isReminderOn == Alarm.ALARM_STATE_ON) {
-                            notifyBroadcastReceiver(context, START_ALARM, reminderType, reminderID,
-                                    reminderHourOfDay, reminderMin, ringTone, toVibrate, repeatOption,
-                                    label, iconID);
-                        }
+                    // Recreate Reminder with the parsed fields only if Alarm State is "On"
+                    if (isReminderOn == Alarm.ALARM_STATE_ON) {
+                        notifyBroadcastReceiver(context, START_ALARM, reminderType, reminderID,
+                                reminderHourOfDay, reminderMin, ringTone, toVibrate, repeatOption,
+                                label, iconID);
                     }
-                    reminderIter += 1;
                 }
+                reminderIter += 1;
             }
         }
     }
@@ -904,21 +902,17 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
             String location = MainActivity.readDefLocationSetting(context);
 
             MainActivity.PlacesInfo placesInfo = MainActivity.getLocationFromPlacesDB(location);
-
-            String localpath = context.getFilesDir() + File.separator + "/ephe";
-            VedicCalendar.initSwissEph(localpath);
             HashMap<String, String[]> vedicCalendarLocaleList =
                     MainActivity.buildVedicCalendarLocaleList(context);
             int ayanamsaMode = MainActivity.readPrefAyanamsaSelection(context);
             VedicCalendar vedicCalendar = VedicCalendar.getInstance(
+                    MainActivity.getLocalPath(context),
                     MainActivity.readPrefPanchangamType(context), currCalendar, placesInfo.longitude,
                     placesInfo.latitude, placesInfo.timezone, ayanamsaMode,
                     MainActivity.readPrefChaandramanaType(context), vedicCalendarLocaleList);
-            if (vedicCalendar != null) {
-                vedicCalendar.getThithi(VedicCalendar.MATCH_SANKALPAM_EXACT);
-                dhinaSpecialCodeList =
-                        vedicCalendar.getDinaVishesham(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
-            }
+            vedicCalendar.getThithi(VedicCalendar.MATCH_SANKALPAM_EXACT);
+            dhinaSpecialCodeList =
+                    vedicCalendar.getDinaVishesham(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
 
             if (dhinaSpecialCodeList != null) {
                 Log.d("NPBcastReceiver", "Dina Vishesham: " +

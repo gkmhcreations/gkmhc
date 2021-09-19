@@ -47,6 +47,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Main Activity of Nithya Panchangam Android App.
@@ -163,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private double curLocationLatitude = 0; // Default to Varanasi
     private static final HashMap<String, PlacesInfo> placesTimezoneDB = new HashMap<>();
     public static List<String> placesList;
-    private static final HashMap<String, String[]> vedicCalendarLocaleList = new HashMap<>();;
+    private static final HashMap<String, String[]> vedicCalendarLocaleList = new HashMap<>();
 
     public static class PlacesInfo {
         public final double longitude;
@@ -193,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         // Step 1: Get the preferred locale from preferences and update activity.
         prefSankalpamType = readPrefSankalpamType(this);
         updateAppLocale();
-        getSupportActionBar().setTitle(Html.fromHtml("<font color='#0000FF'>" +
+        Objects.requireNonNull(getSupportActionBar()).setTitle(Html.fromHtml("<font color='#0000FF'>" +
                 getString(R.string.app_name) + "</font>"));
 
         Calendar todaysDate = Calendar.getInstance();
@@ -255,18 +256,25 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         });
         //new CopyToAssets(".*\\.se1", getApplicationContext()).copy();
         //new CopyToAssets(".*\\.txt", getApplicationContext()).copy();
-        new CopyToAssets(".*?\\.(se1|xml?)", getApplicationContext()).copy();
-        String localpath = getApplicationContext().getFilesDir() + File.separator + "/ephe";
-
-        //long startTime = System.nanoTime();
-        VedicCalendar.initSwissEph(localpath);
-        //long endTime = System.nanoTime();
+        //new CopyToAssets(".*?\\.(se1|xml?)", getApplicationContext()).copy();
+        //String localpath = getApplicationContext().getFilesDir() + File.separator + "/ephe";
 
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(alarmMsgReceiver, new IntentFilter(NPBroadcastReceiver.STOP_ALARM));
 
         //Log.d("MainActivity","initSwissEph()... Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime, endTime));
+    }
+
+    // Copy all the SwissEph assets to the local directory.
+    // On Android, this can be done in the below suggested way.
+    //
+    // Note: When using VedicCalendar class on other platforms then all the
+    // SwissEph assets needs to be copied to the local directory as per the local platform
+    // on VedicCalendar is being used.
+    public static String getLocalPath(Context context) {
+        new CopyToAssets(".*?\\.(se1|xml?)", context).copy();
+        return context.getFilesDir() + File.separator + "ephe";
     }
 
     private final BroadcastReceiver alarmMsgReceiver = new BroadcastReceiver() {
@@ -484,7 +492,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             if (!defLocale.equals(selLocale)) {
                 updateAppLocale();
                 updateTabTitle();
-                getSupportActionBar().setTitle(Html.fromHtml("<font color='#0000FF'>" +
+                Objects.requireNonNull(getSupportActionBar()).setTitle(Html.fromHtml("<font color='#0000FF'>" +
                         getString(R.string.app_name) + "</font>"));
 
                 if (vedicCalendarLocaleList != null) {
@@ -534,7 +542,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private void updateCurrentFragment() {
         updateAppLocale();
         updateTabTitle();
-        getSupportActionBar().setTitle(Html.fromHtml("<font color='#0000FF'>" +
+        Objects.requireNonNull(getSupportActionBar()).setTitle(Html.fromHtml("<font color='#0000FF'>" +
                 getString(R.string.app_name) + "</font>"));
         refreshTab(viewPager.getCurrentItem());
     }
@@ -745,7 +753,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     // This is used when locale is changed or when orientation is changed
     private void updateTabTitle() {
         for (int index = 0; index < myAdapter.getCount(); index += 1) {
-            tabLayout.getTabAt(index).setText(myAdapter.getPageTitle(index));
+            Objects.requireNonNull(tabLayout.getTabAt(index)).setText(myAdapter.getPageTitle(index));
         }
     }
 
@@ -1455,7 +1463,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     public static HashMap<String, String[]> buildVedicCalendarLocaleList(Context context) {
-        if ((vedicCalendarLocaleList != null) && (vedicCalendarLocaleList.isEmpty())) {
+        if (vedicCalendarLocaleList.isEmpty()) {
 
             // Step1: Samvatsaram
             String[] arrayList = context.getResources().getStringArray(R.array.samvatsaram_list);

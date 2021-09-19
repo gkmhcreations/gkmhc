@@ -26,8 +26,6 @@ public class RaasiChart extends AppCompatActivity implements
     public static final String EXTRA_DATE = "Raasi_Extra_Date";
     public static final String EXTRA_MONTH = "Raasi_Extra_Month";
     public static final String EXTRA_YEAR = "Raasi_Extra_Year";
-    private double curLocationLongitude = 0;
-    private double curLocationLatitude = 0;
     private RecyclerView raasiRecyclerView;
     private Calendar currCalendar;
 
@@ -93,9 +91,10 @@ public class RaasiChart extends AppCompatActivity implements
                     MainActivity.buildVedicCalendarLocaleList(this);
             int ayanamsaMode = MainActivity.readPrefAyanamsaSelection(this);
             MainActivity.PlacesInfo placesInfo = MainActivity.getLocationDetails(defLocation);
-            curLocationLongitude = placesInfo.longitude;
-            curLocationLatitude = placesInfo.latitude;
+            double curLocationLongitude = placesInfo.longitude;
+            double curLocationLatitude = placesInfo.latitude;
             VedicCalendar vedicCalendar = VedicCalendar.getInstance(
+                    MainActivity.getLocalPath(getApplicationContext()),
                     MainActivity.readPrefPanchangamType(this), currCalendar, placesInfo.longitude,
                     placesInfo.latitude, placesInfo.timezone, ayanamsaMode,
                     MainActivity.readPrefChaandramanaType(this), vedicCalendarLocaleList);

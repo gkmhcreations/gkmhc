@@ -1,5 +1,6 @@
 package com.gkmhc.utils;
 
+import java.security.spec.InvalidParameterSpecException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -351,16 +352,21 @@ public class VedicCalendar extends Calendar {
      *
      * @param localPath  Full path to location where SwissEph library can store local information.
      */
-    public static void initSwissEph(String localPath) {
+    private static void initSwissEph(String localPath) {
         //long startTime = System.nanoTime();
-        swissEphInst = new SwissEph(localPath);
+        // Create SwissEph instance only once in the lifetime of this App as this is a
+        // CPU-intensive operation!
+        if (swissEphInst == null) {
+            swissEphInst = new SwissEph(localPath);
+        }
         //long endTime = System.nanoTime();
     }
 
     /**
      * Use this API to get an instance of VedicCalendar class.
      *
-     * @param refCalendar       A Calendar date as per Gregorian Calendar
+     * @param localPath         Path in the local file system where SwissEph assets are stored.
+     * @param calendar          A Calendar date as per Gregorian Calendar
      * @param locLongitude      Longitude of the location
      * @param locLatitude       Latitude of the location
      * @param timeZone          Timezone of the location
@@ -368,35 +374,57 @@ public class VedicCalendar extends Calendar {
      * @param chaandramanaType  Preferred Chaandramana Type
      * @param vcLocaleList      List of panchangam fields & values as per the locale of choice.
      *
-     * @return  Returns a valid instance of VedicCalendar class or NULL if any of
-     *          refCalendar (or) panchangamType (or) vcLocaleList are invalid.
+     * @return  Returns a valid instance of VedicCalendar class (or)
+     *          throws InvalidParameterSpecException if any or all of the input parameters are
+     *          invalid (or) contain invalid fields/values.
      */
-    public static VedicCalendar getInstance(int panchangamType, Calendar refCalendar,
+    public static VedicCalendar getInstance(String localPath, int panchangamType, Calendar calendar,
                                             double locLongitude, double locLatitude,
                                             double timeZone, int prefAyanamsa, int chaandramanaType,
-                                            HashMap<String, String[]> vcLocaleList) {
-        if ((refCalendar == null) || (vcLocaleList == null) ||
-            ((panchangamType != PANCHANGAM_TYPE_DRIK_GANITHAM) &&
-             (panchangamType != PANCHANGAM_TYPE_TAMIL_VAKHYAM) &&
-             (panchangamType != PANCHANGAM_TYPE_TELUGU_PANCHANGAM) &&
-             (panchangamType != PANCHANGAM_TYPE_KANNADA_PANCHANGAM)) ||
-            ((chaandramanaType != CHAANDRAMAANAM_TYPE_AMANTA) &&
-             (chaandramanaType != CHAANDRAMAANAM_TYPE_PURNIMANTA))) {
-            return null;
+                                            HashMap<String, String[]> vcLocaleList)
+            throws InvalidParameterSpecException {
+        if (localPath == null) {
+            throw new InvalidParameterSpecException("Invalid Local Path!");
+        }
+        if (calendar == null) {
+            throw new InvalidParameterSpecException("Invalid Calendar!");
+        }
+
+        if (vcLocaleList == null) {
+            throw new InvalidParameterSpecException("Invalid Locale List!");
+        }
+
+        if ((panchangamType != PANCHANGAM_TYPE_DRIK_GANITHAM) &&
+            (panchangamType != PANCHANGAM_TYPE_TAMIL_VAKHYAM) &&
+            (panchangamType != PANCHANGAM_TYPE_TELUGU_PANCHANGAM) &&
+            (panchangamType != PANCHANGAM_TYPE_KANNADA_PANCHANGAM)) {
+            throw new InvalidParameterSpecException("Invalid Panchangam type!");
+        }
+
+        if ((chaandramanaType != CHAANDRAMAANAM_TYPE_AMANTA) &&
+            (chaandramanaType != CHAANDRAMAANAM_TYPE_PURNIMANTA)) {
+            throw new InvalidParameterSpecException("Invalid Chaandramanam type!");
         }
 
         // Validate if vcLocaleList contains all required Panchangam fields & values.
         // Once this is done, there is no need to NULL check vedicCalendarLocaleList rest of the
         // file.
         if (!isVCLocaleListValid(vcLocaleList)) {
-            return null;
+            throw new InvalidParameterSpecException("Invalid combination of Panchangam field/value!");
         }
 
         // Chitrapaksha & Lahiri are only supported Ayanamsa Modes
         if ((prefAyanamsa != AYANAMSA_CHITRAPAKSHA) && (prefAyanamsa != AYANAMSA_LAHIRI)) {
-            return null;
+            throw new InvalidParameterSpecException("Invalid Ayanamsa!");
         }
-        return new VedicCalendar(panchangamType, refCalendar, locLongitude, locLatitude, timeZone,
+
+        // Callers should first call initSwissEph() before creating an instance.
+        /*if (swissEphInst == null) {
+            throw new InvalidParameterSpecException("SwissEph Uninitialized!");
+        }*/
+
+        initSwissEph(localPath);
+        return new VedicCalendar(panchangamType, calendar, locLongitude, locLatitude, timeZone,
                                  prefAyanamsa, chaandramanaType, vcLocaleList);
     }
 
@@ -855,16 +883,14 @@ public class VedicCalendar extends Calendar {
             dhinaAnkamVal = Math.ceil(dhinaAnkamVal);
         } else {
             int thithiNum = (getThithiNum() + 1);
-            if (chaandramanaType == CHAANDRAMAANAM_TYPE_AMANTA) {
-                dhinaAnkamVal = thithiNum;
-            } else {
+            if (chaandramanaType != CHAANDRAMAANAM_TYPE_AMANTA) {
                 if ((thithiNum >= 0) && (thithiNum <= 15)) {
                     thithiNum += 15;
                 } else {
                     thithiNum -= 15;
                 }
-                dhinaAnkamVal = thithiNum;
             }
+            dhinaAnkamVal = thithiNum;
         }
 
         return (int)dhinaAnkamVal;
@@ -974,8 +1000,8 @@ public class VedicCalendar extends Calendar {
         thithiSpan *= MAX_MINS_IN_HOUR;
         thithiSpanMin = (int)(thithiSpan % MAX_MINS_IN_HOUR);
 
-        String thithiStr = "";
-        String secondThithiStr = "";
+        String thithiStr;
+        String secondThithiStr;
         String[] thithiList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_THITHI);
         String[] sankalpaThithiList =
                 vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_THITHI);
@@ -1216,7 +1242,7 @@ public class VedicCalendar extends Calendar {
         // Step 2: Given the keys {vaasaramIndex, locale}, find the exact matching
         //         vaasaram string (as per the locale) in the vaasaram mapping table.
 
-        String vaasamVal = "";
+        String vaasamVal;
         String[] vaasaramList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_VAASARAM);
         String[] dhinamList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_DHINAM);
         if (queryType == MATCH_SANKALPAM_EXACT) {
@@ -1303,8 +1329,8 @@ public class VedicCalendar extends Calendar {
             nakshatramSpan *= MAX_MINS_IN_HOUR;
         }
 
-        String nakshatramStr = "";
-        String secondNakshatramStr = "";
+        String nakshatramStr;
+        String secondNakshatramStr;
         String[] nakshatramList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_NAKSHATHRAM);
         String[] sankalpanakshatramList =
                 vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_NAKSHATHRAM);
@@ -1444,8 +1470,8 @@ public class VedicCalendar extends Calendar {
             nakshatramSpan *= MAX_MINS_IN_HOUR;
         }
 
-        String nakshatramStr = "";
-        String secondNakshatramStr = "";
+        String nakshatramStr;
+        String secondNakshatramStr;
         String[] nakshatramList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_NAKSHATHRAM);
         String[] sankalpanakshatramList =
                 vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_NAKSHATHRAM);

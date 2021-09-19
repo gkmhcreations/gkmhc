@@ -6,8 +6,8 @@
     <string name="samvatsaram_heading">ஸம்வத்ஸரம்</string>
     <string name="aayanam_heading">அயனம்</string>
     <string name="rithou_heading">ருʼது</string>
-    <string name="surya_maasam_heading">மாதம் (ஸௌரமானம்)</string>
-    <string name="chandra_maasam_heading">மாதம் (சாந்த்ரமானம்)</string>
+    <string name="sauramanam_maasam_heading">மாதம் (ஸௌரமானம்)</string>
+    <string name="chaandra_maasam_heading">மாதம் (சாந்த்ரமானம்)</string>
     <string name="paksham_heading">பக்ஷம்</string>
     <string name="vaasaram_heading">வாஸரம்</string>
     <string name="raasi_heading">ராசி</string>
@@ -100,7 +100,6 @@
     <string name="channel_name">Nithya Panchangam</string>
     <string name="channel_description">Nithya Panchangam Events</string>
     <string name="label">பெயர்</string>
-    <string name="no_reminders">நினைவூட்டல்கள் இல்லை!</string>
     <string name="no_alarms">அலாரங்கள் இல்லை!</string>
     <string name="delete_reminder">Delete Reminder</string>
     <string name="add_alarm">அலாரம்</string>
@@ -121,7 +120,7 @@
     <string name="bala_periyava_jayanthi">ஸ்ரீ சங்கர விஜயேந்திர சரஸ்வதி ஸ்வாமிகள் ஜெயந்தி</string>
     <string name="sringeri_periyava_jayanthi">ஸ்ரீ பாரதி தீர்த்த ஸ்வாமிகள் வர்தந்தி</string>
     <string name="appayya_dikshitar_jayanthi">ஸ்ரீ அப்பைய்ய தீக்ஷிதர் ஜெயந்தி</string>
-    <string name="lagnam_details">தின லக்னம்கள்</string>
+    <string name="lagnam_details">தின லக்னங்கள்</string>
     <string name="horai_details">தின ஹோரைகள்</string>
     <string name="start_time">ஆரம்பம்</string>
     <string name="end_time">முடிவு</string>

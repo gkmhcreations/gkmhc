@@ -377,6 +377,9 @@ public class VedicCalendar extends Calendar {
      * @return  Returns a valid instance of VedicCalendar class (or)
      *          throws InvalidParameterSpecException if any or all of the input parameters are
      *          invalid (or) contain invalid fields/values.
+     *
+     * @note  Take care of copying all the SwissEph assets to the localPath before calling
+     *        getInstance().
      */
     public static VedicCalendar getInstance(String localPath, int panchangamType, Calendar calendar,
                                             double locLongitude, double locLatitude,

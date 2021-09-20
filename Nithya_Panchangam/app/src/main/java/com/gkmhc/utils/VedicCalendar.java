@@ -378,6 +378,9 @@ public class VedicCalendar extends Calendar {
      *          throws InvalidParameterSpecException if any or all of the input parameters are
      *          invalid (or) contain invalid fields/values.
      *
+     * @throws  InvalidParameterSpecException if any or all of the input parameters are
+     *          invalid (or) contain invalid fields/values.
+     *
      * @apiNote Take care of copying all the SwissEph assets to the localPath before calling
      *          getInstance().
      */
@@ -442,6 +445,150 @@ public class VedicCalendar extends Calendar {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, date, hourOfDay, minute);
         initRaviChandraLongitudes(calendar);
+    }
+
+    /**
+     * Use this API to get the value of the given calendar field in VedicCalendar.
+     *
+     * @param field     The given calendar field
+     *
+     * @throws  ArrayIndexOutOfBoundsException if the specified field is out of range
+     *          (field < 0 || field >= FIELD_COUNT).
+     */
+    @Override
+    public int get(int field) {
+        int retVal;
+        switch (field) {
+            case Calendar.YEAR:
+                retVal = refYear;
+                break;
+            case Calendar.MONTH:
+                retVal = (refMonth - 1);
+                break;
+            case Calendar.DATE:
+                retVal = refDate;
+                break;
+            case Calendar.HOUR:
+            case Calendar.HOUR_OF_DAY:
+                retVal = refHour;
+                break;
+            case Calendar.MINUTE:
+                retVal = refMin;
+                break;
+            default:
+                return super.get(field);
+        }
+
+        return retVal;
+    }
+
+    /**
+     * Use this API to set a new value for the given calendar field in VedicCalendar.
+     *
+     * @param field     The given calendar field
+     * @param value     The value to be set for the given calendar field
+     *
+     * @throws  ArrayIndexOutOfBoundsException if the specified field is out of range
+     *          (field < 0 || field >= FIELD_COUNT).
+     */
+    @Override
+    public void set(int field, int value) {
+        Calendar curCalendar = Calendar.getInstance();
+        curCalendar.set(refYear, (refMonth - 1), refDate, refHour, refMin, 0);
+        switch (field) {
+            case Calendar.YEAR:
+            case Calendar.MONTH:
+            case Calendar.DATE:
+            case Calendar.HOUR:
+            case Calendar.HOUR_OF_DAY:
+            case Calendar.MINUTE:
+                curCalendar.set(field, value);
+                initRaviChandraLongitudes(curCalendar);
+                break;
+        }
+    }
+
+    /**
+     * Use this API to add (or) subtract a new value to the given calendar field in VedicCalendar.
+     *
+     * @param field     The given calendar field
+     * @param amount    The amount of date or time to be added to the field.
+     */
+    @Override
+    public void add(int field, int amount) {
+        Calendar curCalendar = Calendar.getInstance();
+        curCalendar.set(refYear, (refMonth - 1), refDate, refHour, refMin, 0);
+        switch (field) {
+            case Calendar.YEAR:
+            case Calendar.MONTH:
+            case Calendar.DATE:
+            case Calendar.HOUR:
+            case Calendar.HOUR_OF_DAY:
+            case Calendar.MINUTE:
+                curCalendar.add(field, amount);
+                initRaviChandraLongitudes(curCalendar);
+                break;
+        }
+    }
+
+    @Override
+    protected void computeTime() {
+        // Not planning to support!
+        // Use setDate instead
+    }
+
+    @Override
+    protected void computeFields() {
+        // Not planning to support!
+        // Use setDate instead
+    }
+
+    @Override
+    public void roll(int field, boolean up) {
+        // Not planning to support!
+        // Use setDate instead
+    }
+
+    @Override
+    public int getMinimum(int field) {
+        return getGreatestMinimum(field);
+    }
+
+    @Override
+    public int getMaximum(int field) {
+        return getGreatestMinimum(field);
+    }
+
+    @Override
+    public int getGreatestMinimum(int field) {
+        int value = 0;
+        switch (field) {
+            case Calendar.YEAR:
+                value = refYear;
+                break;
+            case Calendar.MONTH:
+                value = refMonth;
+                break;
+            case Calendar.DATE:
+                value = refDate;
+                break;
+            case Calendar.HOUR:
+            case Calendar.HOUR_OF_DAY:
+                value = refHour;
+                break;
+            case Calendar.MINUTE:
+                value = refMin;
+                break;
+            default:
+                break;
+        }
+
+        return value;
+    }
+
+    @Override
+    public int getLeastMaximum(int field) {
+        return getGreatestMinimum(field);
     }
 
     /**
@@ -545,6 +692,9 @@ public class VedicCalendar extends Calendar {
         if (dailyChandraMotion < 0) {
             dailyChandraMotion += MAX_AYANAM_MINUTES;
         }
+
+        sunRiseTotalMins = 0;
+        sunSetTotalMins = 0;
     }
 
     /**
@@ -3551,77 +3701,5 @@ public class VedicCalendar extends Calendar {
         int hour = (int) (time / MAX_MINS_IN_HOUR);
         int min = (int) time % MAX_MINS_IN_HOUR;
         return String.format("%02d:%02d", hour, min);
-    }
-
-    @Override
-    public void set(int field, int value) {
-        // Not planning to support!
-        // Use setDate instead
-    }
-
-    @Override
-    protected void computeTime() {
-        // Not planning to support!
-        // Use setDate instead
-    }
-
-    @Override
-    protected void computeFields() {
-        // Not planning to support!
-        // Use setDate instead
-    }
-
-    @Override
-    public void add(int field, int amount) {
-        // Not planning to support!
-        // Use setDate instead
-    }
-
-    @Override
-    public void roll(int field, boolean up) {
-        // Not planning to support!
-        // Use setDate instead
-    }
-
-    @Override
-    public int getMinimum(int field) {
-        return getGreatestMinimum(field);
-    }
-
-    @Override
-    public int getMaximum(int field) {
-        return getGreatestMinimum(field);
-    }
-
-    @Override
-    public int getGreatestMinimum(int field) {
-        int value = 0;
-        switch (field) {
-            case Calendar.YEAR:
-                value = refYear;
-                break;
-            case Calendar.MONTH:
-                value = refMonth;
-                break;
-            case Calendar.DATE:
-                value = refDate;
-                break;
-            case Calendar.HOUR:
-            case Calendar.HOUR_OF_DAY:
-                value = refHour;
-                break;
-            case Calendar.MINUTE:
-                value = refMin;
-                break;
-            default:
-                break;
-        }
-
-        return value;
-    }
-
-    @Override
-    public int getLeastMaximum(int field) {
-        return getGreatestMinimum(field);
     }
 }

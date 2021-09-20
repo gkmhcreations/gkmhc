@@ -1,6 +1,5 @@
 package com.gkmhc.vedanta.nithya_panchangam;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 import com.gkmhc.utils.VedicCalendar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -34,7 +32,7 @@ import java.util.Locale;
  */
 public class Sankalpam extends Fragment {
     private MainActivity mainActivity;
-    private Calendar selectedCalendar;
+    private VedicCalendar vedicCalendar;
     private View root;
     private TextView begSankalpamTextView;
 
@@ -82,7 +80,7 @@ public class Sankalpam extends Fragment {
             int refYear = calendar.get(Calendar.YEAR);
             mainActivity.setSelectedCalendar(refDate, refMonth, refYear);
 
-            refreshSankalpam(true);
+            refreshSankalpam();
             mainActivity.refreshTab(NPAdapter.NP_TAB_PANCHANGAM);
         });
 
@@ -97,7 +95,7 @@ public class Sankalpam extends Fragment {
             int refYear = calendar.get(Calendar.YEAR);
             mainActivity.setSelectedCalendar(refDate, refMonth, refYear);
 
-            refreshSankalpam(true);
+            refreshSankalpam();
             mainActivity.refreshTab(NPAdapter.NP_TAB_PANCHANGAM);
         });
 
@@ -113,7 +111,7 @@ public class Sankalpam extends Fragment {
         super.onResume();
 
         try {
-            refreshSankalpam(false);
+            refreshSankalpam();
         } catch (Exception exception) {
             Log.e("Sankalpam:","Exception --- onResume()!");
         }
@@ -121,36 +119,18 @@ public class Sankalpam extends Fragment {
 
     /**
      * Use this utility function to update the sankalpam details for the given Calendar date.
-     *
-     * @param forceRefresh True to force refresh, false to just update partially.
      */
-    public void refreshSankalpam(boolean forceRefresh) {
+    public void refreshSankalpam() {
         new Handler().postDelayed(() -> {
             try {
                 // code runs in a thread
-                boolean toRefresh;
-                Calendar calendar = mainActivity.getSelectedCalendar();
-                if (forceRefresh) {
-                    toRefresh = true;
-                } else {
-                    toRefresh = (selectedCalendar == null) ||
-                            (calendar.get(Calendar.YEAR) != selectedCalendar.get(Calendar.YEAR)) ||
-                            (calendar.get(Calendar.MONTH) != selectedCalendar.get(Calendar.MONTH)) ||
-                            (calendar.get(Calendar.DATE) != selectedCalendar.get(Calendar.DATE));
-                }
-
-                // Refresh completely if set to true, else just update UI.
+                vedicCalendar = mainActivity.getVedicCalendar();
                 String selLocale = mainActivity.updateAppLocale();
-                if (toRefresh) {
-                    selectedCalendar = calendar;
-                    prefSankalpamType = MainActivity.readPrefSankalpamType(requireContext());
-                    //Log.d("Sankalpam","Longitude: " + curLocationLongitude +
-                    //        " Latitude: " + curLocationLatitude);
-                    retrieveTodaysPanchangam(selectedCalendar);
-                }
-                updateSankalpamFragment(root, selectedCalendar, prefSankalpamType, selLocale);
+                prefSankalpamType = MainActivity.readPrefSankalpamType(requireContext());
+                retrieveTodaysPanchangam();
+                updateSankalpamFragment(root, prefSankalpamType, selLocale);
             } catch (Exception ex) {
-                Log.e("Sankalpam","Exception in refreshPanchangam()");
+                Log.e("Sankalpam","Exception in refreshSankalpam()");
                 ex.printStackTrace();
             }
         }, 50);
@@ -167,66 +147,50 @@ public class Sankalpam extends Fragment {
     /**
      *  Utility function to retrieve all the values for Vedic Panchangam elements and
      *  store them as data members.
-     *
-     * @param currCalendar A Calendar date as per Gregorian Calendar
      */
-    private void retrieveTodaysPanchangam(Calendar currCalendar) {
+    private void retrieveTodaysPanchangam() {
         // Create a VedicCalendar instance.
         // 1) Current Calendar - Today or any given date
         // 2) localpath - Path to SwissEph conf files
         // 3) Longitude - This is important as panchangam calculations changes with location
         // 4) Latitude - This is important as panchangam calculations changes with location
         long pStartTime = System.nanoTime();
-        try {
-            Context context = requireContext();
-            HashMap<String, String[]> vedicCalendarLocaleList =
-                    MainActivity.buildVedicCalendarLocaleList(context);
-            String location = MainActivity.readDefLocationSetting(context);
-            int ayanamsaMode = MainActivity.readPrefAyanamsaSelection(context);
-            MainActivity.PlacesInfo placesInfo = MainActivity.getLocationDetails(location);
-            VedicCalendar vedicCalendar = VedicCalendar.getInstance(
-                    MainActivity.getLocalPath(context),
-                    MainActivity.readPrefPanchangamType(context), currCalendar, placesInfo.longitude,
-                    placesInfo.latitude, placesInfo.timezone, ayanamsaMode,
-                    MainActivity.readPrefChaandramanaType(context), vedicCalendarLocaleList);
-            // Step1: Calculate Samvatsaram
-            samvatsaramStr = vedicCalendar.getSamvatsaram();
 
-            // Step2: Retrieve correct Ayanam given current system time
-            ayanamStr = vedicCalendar.getAyanam(VedicCalendar.MATCH_SANKALPAM_EXACT);
+        // Step1: Calculate Samvatsaram
+        samvatsaramStr = vedicCalendar.getSamvatsaram();
 
-            // Step3: Retrieve correct rithou  given current system time
-            // Step5: Retrieve correct paksham  given current system time
-            // Step6: Retrieve correct thithi  given current system time
-            refDinaAnkam = vedicCalendar.getDinaAnkam(VedicCalendar.MATCH_SANKALPAM_EXACT);
+        // Step2: Retrieve correct Ayanam given current system time
+        ayanamStr = vedicCalendar.getAyanam(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-            // Step3: Retrieve correct rithou  given current system time
-            rithouStr = vedicCalendar.getRithu(VedicCalendar.MATCH_SANKALPAM_EXACT);
+        // Step3: Retrieve correct rithou  given current system time
+        // Step5: Retrieve correct paksham  given current system time
+        // Step6: Retrieve correct thithi  given current system time
+        refDinaAnkam = vedicCalendar.getDinaAnkam(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-            // Step4: Retrieve correct maasam given current system time
-            maasamStr = vedicCalendar.getMaasam(VedicCalendar.MATCH_SANKALPAM_EXACT);
+        // Step3: Retrieve correct rithou  given current system time
+        rithouStr = vedicCalendar.getRithu(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-            // Step5: Retrieve correct paksham  given current system time
-            pakshamStr = vedicCalendar.getPaksham();
+        // Step4: Retrieve correct maasam given current system time
+        maasamStr = vedicCalendar.getMaasam(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-            // Step6: Retrieve correct thithi  given current system time
-            thithiStr = vedicCalendar.getThithi(VedicCalendar.MATCH_SANKALPAM_EXACT);
+        // Step5: Retrieve correct paksham  given current system time
+        pakshamStr = vedicCalendar.getPaksham();
 
-            // Step7: Retrieve correct vaasaram for the current thithi
-            vaasaramStr = vedicCalendar.getVaasaram(VedicCalendar.MATCH_SANKALPAM_EXACT);
+        // Step6: Retrieve correct thithi  given current system time
+        thithiStr = vedicCalendar.getThithi(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-            // Step8: Retrieve correct natchathiram for the current thithi
-            natchathiramStr =
-                    vedicCalendar.getNakshatram(VedicCalendar.MATCH_SANKALPAM_EXACT);
+        // Step7: Retrieve correct vaasaram for the current thithi
+        vaasaramStr = vedicCalendar.getVaasaram(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-            // Step9: Retrieve correct Yogam for the current thithi
-            yogamStr = vedicCalendar.getYogam(VedicCalendar.MATCH_SANKALPAM_EXACT);
+        // Step8: Retrieve correct natchathiram for the current thithi
+        natchathiramStr =
+                vedicCalendar.getNakshatram(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-            // Step10: Retrieve correct Karanam for the current thithi
-            karanamStr = vedicCalendar.getKaranam(VedicCalendar.MATCH_SANKALPAM_EXACT);
-        } catch (Exception e) {
-            // Do Nothing!
-        }
+        // Step9: Retrieve correct Yogam for the current thithi
+        yogamStr = vedicCalendar.getYogam(VedicCalendar.MATCH_SANKALPAM_EXACT);
+
+        // Step10: Retrieve correct Karanam for the current thithi
+        karanamStr = vedicCalendar.getKaranam(VedicCalendar.MATCH_SANKALPAM_EXACT);
         long pEndTime = System.nanoTime();
         Log.d("Sankalpam:","Overall Retrieve Time Taken: " +
                 VedicCalendar.getTimeTaken(pStartTime, pEndTime));
@@ -235,22 +199,20 @@ public class Sankalpam extends Fragment {
     /**
      * Utility function to update all elements in Sankalpam fragment with all the values retrieved
      * from vedicCalendar mapped to the given Calendar date.
-     *  @param root              Root View
-     * @param currCalendar      A Calendar date as per Gregorian Calendar
+     * @param root              Root View
      * @param prefSankalpamType Sankalpam Type (Shubham or Srardham)
      * @param selLocale         Language
-*        Note: Currently only 3 locales are supported. (English, Tamil, Sanskrit)
-*              If an unsupported locale is given as input, then by default "English" is
+     *        Note: Currently only 3 locales are supported. (English, Tamil, Sanskrit)
+     *              If an unsupported locale is given as input, then by default "English" is
      */
-    private void updateSankalpamFragment(View root, Calendar currCalendar, String prefSankalpamType,
-                                         String selLocale) {
+    private void updateSankalpamFragment(View root, String prefSankalpamType, String selLocale) {
         // Sankalpam involves the following parts:
         // Step 1: Beginning part that involves common constructs as per sankalpam type
         // Step 2: Middle part that are specific to the location, region, space, time etc
         // Step 3: Final part that involves common constructs as per sankalpam type
         long pStartTime = System.nanoTime();
-        int currYear = currCalendar.get(Calendar.YEAR);
-        int currDate = currCalendar.get(Calendar.DATE);
+        int currYear = vedicCalendar.get(Calendar.YEAR);
+        int currDate = vedicCalendar.get(Calendar.DATE);
 
         // Step 1: Beginning part that involves common constructs as per sankalpam type
         begSankalpamTextView = root.findViewById(R.id.sankalpam_res_begin);
@@ -402,7 +364,7 @@ public class Sankalpam extends Fragment {
         TextView hdrTextView = root.findViewById(R.id.sankalpam_hdr);
         String npHeader = refDinaAnkam + ", " + vaasaramStr + "-" + maasamStr + " (" +
                 currDate + "-" +
-                currCalendar.getDisplayName(Calendar.MONTH, Calendar.SHORT,
+                vedicCalendar.getDisplayName(Calendar.MONTH, Calendar.SHORT,
                         Locale.ENGLISH) + "-" + currYear + ")";
         hdrTextView.setText(npHeader);
         long pEndTime = System.nanoTime();

@@ -28,7 +28,6 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class VedicCalendarUnitTest {
     private VedicCalendar vedicCalendar = null;
-    private final String location = "Chennai, India";
     private final Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
     public VedicCalendarUnitTest() {
@@ -36,6 +35,7 @@ public class VedicCalendarUnitTest {
             HashMap<String, String[]> vedicCalendarLocaleList =
                     MainActivity.buildVedicCalendarLocaleList(appContext);
             MainActivity.buildPlacesTimezoneDB();
+            String location = "Chennai, India";
             MainActivity.PlacesInfo placesInfo = MainActivity.getLocationDetails(location);
             Calendar currCalendar = Calendar.getInstance();
             try {

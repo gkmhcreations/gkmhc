@@ -47,6 +47,7 @@ import java.util.Objects;
 public class NithyaPanchangamCalendar extends AppCompatActivity implements
         CalendarAdapter.OnItemListener {
     private Calendar calendar;
+    private VedicCalendar vedicCalendar;
     private int npYear;
     private int refYear;
     private int npMonth;
@@ -67,7 +68,6 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
     private ArrayList<String> drikNatchathiram = null;
     private String[] gregYearList = null;
     private Menu menu;
-    private HashMap<String, String[]> vedicCalendarLocaleList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +79,10 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
         config.locale = locale;
         resources.updateConfiguration(config, resources.getDisplayMetrics());
 
-        vedicCalendarLocaleList = MainActivity.buildVedicCalendarLocaleList(this);
+        HashMap<String, String[]> vedicCalendarLocaleList = MainActivity.buildVedicCalendarLocaleList(this);
+        String location = MainActivity.readDefLocationSetting(getApplicationContext());
+        int ayanamsaMode = MainActivity.readPrefAyanamsaSelection(getApplicationContext());
+        MainActivity.PlacesInfo placesInfo = MainActivity.getLocationDetails(location);
         try {
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
             getSupportActionBar().setIcon(R.mipmap.ic_launcher_round);
@@ -88,6 +91,19 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
                     ResourcesCompat.getDrawable(getResources(), R.drawable.default_background, null));
             getSupportActionBar().setTitle(Html.fromHtml("<font color='#0000FF'>" +
                     getString(R.string.app_name) + "</font>"));
+
+            calendar = Calendar.getInstance();
+            npYear = calendar.get(Calendar.YEAR);
+            refYear = npYear;
+            npMonth = calendar.get(Calendar.MONTH);
+            refMonth = npMonth;
+            npDate = calendar.get(Calendar.DATE);
+            refDate = npDate;
+            vedicCalendar = VedicCalendar.getInstance(
+                    MainActivity.getLocalPath(getApplicationContext()),
+                    MainActivity.readPrefPanchangamType(this), calendar,
+                    placesInfo.longitude, placesInfo.latitude, placesInfo.timezone, ayanamsaMode,
+                    MainActivity.readPrefChaandramanaType(this), vedicCalendarLocaleList);
         } catch (Exception e) {
             // Nothing to do here.
         }
@@ -102,14 +118,6 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
         this.getWindow().getDecorView().setBackgroundColor(
                 getResources().getColor(android.R.color.holo_red_dark));
         initWidgets();
-
-        calendar = Calendar.getInstance();
-        npYear = calendar.get(Calendar.YEAR);
-        refYear = npYear;
-        npMonth = calendar.get(Calendar.MONTH);
-        refMonth = npMonth;
-        npDate = calendar.get(Calendar.DATE);
-        refDate = npDate;
         setMonthView();
 
         formYearList();
@@ -244,20 +252,13 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
 
                 //long startTime = System.nanoTime();
                 try {
-                    String location = MainActivity.readDefLocationSetting(getApplicationContext());
-                    int ayanamsaMode = MainActivity.readPrefAyanamsaSelection(getApplicationContext());
-                    MainActivity.PlacesInfo placesInfo = MainActivity.getLocationDetails(location);
-                    VedicCalendar vedicCalendar = VedicCalendar.getInstance(
-                            MainActivity.getLocalPath(getApplicationContext()),
-                            MainActivity.readPrefPanchangamType(this), calendarIter,
-                            placesInfo.longitude, placesInfo.latitude, placesInfo.timezone, ayanamsaMode,
-                            MainActivity.readPrefChaandramanaType(this), vedicCalendarLocaleList);
                     //long endTime = System.nanoTime();
                     //Log.d("NPCalProfiler","VedicCalendar()... Time Taken: " +
                     //        VedicCalendar.getTimeTaken(startTime, endTime));
 
                     // 1) Add Dinaankham
                     //startTime = System.nanoTime();
+                    vedicCalendar.setDate((index - firstDate + 1), npMonth, npYear, 0, 0);
                     int dinaAnkham =
                             vedicCalendar.getDinaAnkam(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
                     //endTime = System.nanoTime();

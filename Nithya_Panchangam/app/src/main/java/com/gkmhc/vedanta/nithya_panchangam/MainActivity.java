@@ -133,6 +133,7 @@ import java.util.Objects;
  * accordance with terms & conditions in GNU GPL license.
  */
 public class MainActivity extends AppCompatActivity implements LocationListener {
+    private VedicCalendar vedicCalendar;
     public static final String NP_CHANNEL_ID = "Nithya_Panchangam";
     private SharedPreferences sharedPreferences;
     private TabLayout tabLayout;
@@ -164,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private double curLocationLatitude = 0; // Default to Varanasi
     private static final HashMap<String, PlacesInfo> placesTimezoneDB = new HashMap<>();
     public static List<String> placesList;
-    private static final HashMap<String, String[]> vedicCalendarLocaleList = new HashMap<>();
+    private static HashMap<String, String[]> vedicCalendarLocaleList = new HashMap<>();
 
     public static class PlacesInfo {
         public final double longitude;
@@ -210,6 +211,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 ResourcesCompat.getDrawable(getResources(), R.drawable.default_background, null));
         getSupportActionBar().setTitle(Html.fromHtml("<font color='#0000FF'>" +
                 getString(R.string.app_name) + "</font>"));
+
+        initVedicCalendar();
 
         // Step 4: Create required tabs via adapter and attach them to viewpager
         tabLayout = findViewById(R.id.npTabs);
@@ -456,6 +459,29 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         refDate = updDate;
     }
 
+    public void initVedicCalendar() {
+        Calendar currCalendar = getSelectedCalendar();
+        try {
+            String location = readDefLocationSetting(this);
+            int ayanamsaMode = readPrefAyanamsaSelection(this);
+            PlacesInfo placesInfo = getLocationDetails(location);
+            vedicCalendarLocaleList.clear();
+            vedicCalendarLocaleList = buildVedicCalendarLocaleList(this);
+            vedicCalendar = VedicCalendar.getInstance(
+                    getLocalPath(this),
+                    readPrefPanchangamType(this), currCalendar, placesInfo.longitude,
+                    placesInfo.latitude, placesInfo.timezone, ayanamsaMode,
+                    readPrefChaandramanaType(this), vedicCalendarLocaleList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            vedicCalendar = null;
+        }
+    }
+
+    public VedicCalendar getVedicCalendar() {
+        return vedicCalendar;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -472,37 +498,25 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             if (!selectedLocation.equalsIgnoreCase(curLocationCity)) {
                 curLocationCity = selectedLocation;
                 refreshLocation();
-                updateAppLocale();
-                refreshTab(NPAdapter.NP_TAB_PANCHANGAM);
-                refreshTab(NPAdapter.NP_TAB_SANKALPAM);
+                refreshPanchangamDetails();
             }
 
             // If there is change in location preferences, then refresh location & the fragments.
             int prefToUpdate = readPrefLocationSelection();
             if (prefLocationType != prefToUpdate) {
-                refreshLocation();
                 prefLocationType = prefToUpdate;
-                updateAppLocale();
-                refreshTab(NPAdapter.NP_TAB_PANCHANGAM);
-                refreshTab(NPAdapter.NP_TAB_SANKALPAM);
+                refreshLocation();
+                refreshPanchangamDetails();
             }
 
             // If there is change in locale preferences, then refresh location & the fragments.
             String defLocale = readPrefLocale();
             if (!defLocale.equals(selLocale)) {
-                updateAppLocale();
-                updateTabTitle();
-                Objects.requireNonNull(getSupportActionBar()).setTitle(Html.fromHtml("<font color='#0000FF'>" +
-                        getString(R.string.app_name) + "</font>"));
-
-                if (vedicCalendarLocaleList != null) {
-                    vedicCalendarLocaleList.clear();
-                    buildVedicCalendarLocaleList(this);
-                }
-                refreshTab(NPAdapter.NP_TAB_PANCHANGAM);
-                refreshTab(NPAdapter.NP_TAB_SANKALPAM);
+                refreshPanchangamDetails();
                 refreshTab(NPAdapter.NP_TAB_ALARM);
                 refreshTab(NPAdapter.NP_TAB_REMINDER);
+                Objects.requireNonNull(getSupportActionBar()).setTitle(Html.fromHtml("<font color='#0000FF'>" +
+                        getString(R.string.app_name) + "</font>"));
             }
 
             // If there is change in sankalpam preferences, then refresh location & the fragments.
@@ -515,47 +529,42 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             int selectedAyanamsa = readPrefAyanamsaSelection(this);
             if (prefAyanamsa != selectedAyanamsa) {
                 prefAyanamsa = selectedAyanamsa;
-                refreshTab(NPAdapter.NP_TAB_PANCHANGAM);
-                refreshTab(NPAdapter.NP_TAB_SANKALPAM);
+                refreshPanchangamDetails();
             }
 
             int selectedChaandramanamType = readPrefChaandramanaType(this);
             if (prefChaandramanamType != selectedChaandramanamType) {
                 prefChaandramanamType = selectedChaandramanamType;
-                refreshTab(NPAdapter.NP_TAB_PANCHANGAM);
-                refreshTab(NPAdapter.NP_TAB_SANKALPAM);
+                refreshPanchangamDetails();
             }
         } else if (requestCode == CALENDAR_REQUEST_CODE) {
             if (data != null) {
                 refYear = data.getIntExtra("Calendar_Year", 0);
                 refMonth = data.getIntExtra("Calendar_Month", 0);
                 refDate = data.getIntExtra("Calendar_Date", 0);
-                updateAppLocale();
-                refreshTab(NPAdapter.NP_TAB_PANCHANGAM);
-                refreshTab(NPAdapter.NP_TAB_SANKALPAM);
-                Log.i("Calendar View", "Selected Date: " + refDate + "/" + refMonth +
-                        "/" + refYear);
+                refreshPanchangamDetails();
             }
         }
     }
 
-    private void updateCurrentFragment() {
+    private void refreshPanchangamDetails() {
         updateAppLocale();
         updateTabTitle();
-        Objects.requireNonNull(getSupportActionBar()).setTitle(Html.fromHtml("<font color='#0000FF'>" +
-                getString(R.string.app_name) + "</font>"));
-        refreshTab(viewPager.getCurrentItem());
+
+        initVedicCalendar();
+        refreshTab(NPAdapter.NP_TAB_PANCHANGAM);
+        refreshTab(NPAdapter.NP_TAB_SANKALPAM);
     }
 
     public void refreshTab(int tabPosition) {
         switch (tabPosition) {
             case NPAdapter.NP_TAB_PANCHANGAM:
                 Panchangam panchangamFragment = (Panchangam) myAdapter.getItem(tabPosition);
-                panchangamFragment.refreshPanchangam(true);
+                panchangamFragment.refreshPanchangam();
                 break;
             case NPAdapter.NP_TAB_SANKALPAM:
                 Sankalpam sankalpamFragment = (Sankalpam) myAdapter.getItem(tabPosition);
-                sankalpamFragment.refreshSankalpam(true);
+                sankalpamFragment.refreshSankalpam();
                 break;
             case NPAdapter.NP_TAB_ALARM:
                 Alarm alarmFragment = (Alarm) myAdapter.getItem(tabPosition);
@@ -942,20 +951,20 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     @Override
     public void onLocationChanged(@NonNull Location location) {
         try {
-            Geocoder geoCoder = new Geocoder(this, Locale.getDefault());
+            Geocoder geoCoder = new Geocoder(this, Locale.ENGLISH);
             List<Address> addressList = geoCoder.getFromLocation(location.getLatitude(),
                     location.getLongitude(), 1);
             if (addressList != null) {
                 String country = addressList.get(0).getCountryName();
                 String state = addressList.get(0).getAdminArea();
-                curLocationCity = addressList.get(0).getLocality();
+                curLocationCity = addressList.get(0).getLocality() + ", " + country;
                 String pincode = addressList.get(0).getPostalCode();
                 String address = addressList.get(0).getAddressLine(0);
 
                 updateDefLocationSetting(curLocationCity);
 
                 // Inform & Refresh Current Fragment!
-                updateCurrentFragment();
+                refreshPanchangamDetails();
                 Toast.makeText(this, "Location(GPS): " + curLocationCity,
                         Toast.LENGTH_SHORT).show();
                 Log.i("MainActivity:", "Country: " + country + " State: " + state + " City: " +

@@ -73,13 +73,7 @@ public class Sankalpam extends Fragment {
         // Get Prev Date panchangam & update fragment
         FloatingActionButton faBtnDayPrev = root.findViewById(R.id.dayPrev);
         faBtnDayPrev.setOnClickListener(v -> {
-            Calendar calendar = mainActivity.getSelectedCalendar();
-            calendar.add(Calendar.DATE, -1);
-            int refDate = calendar.get(Calendar.DATE);
-            int refMonth = calendar.get(Calendar.MONTH);
-            int refYear = calendar.get(Calendar.YEAR);
-            mainActivity.setSelectedCalendar(refDate, refMonth, refYear);
-
+            vedicCalendar.add(Calendar.DATE, -1);
             refreshSankalpam();
             mainActivity.refreshTab(NPAdapter.NP_TAB_PANCHANGAM);
         });
@@ -88,13 +82,7 @@ public class Sankalpam extends Fragment {
         // Get Next Date panchangam & update fragment
         FloatingActionButton faBtnDayNext = root.findViewById(R.id.dayNext);
         faBtnDayNext.setOnClickListener(v -> {
-            Calendar calendar = mainActivity.getSelectedCalendar();
-            calendar.add(Calendar.DATE, +1);
-            int refDate = calendar.get(Calendar.DATE);
-            int refMonth = calendar.get(Calendar.MONTH);
-            int refYear = calendar.get(Calendar.YEAR);
-            mainActivity.setSelectedCalendar(refDate, refMonth, refYear);
-
+            vedicCalendar.add(Calendar.DATE, 1);
             refreshSankalpam();
             mainActivity.refreshTab(NPAdapter.NP_TAB_PANCHANGAM);
         });

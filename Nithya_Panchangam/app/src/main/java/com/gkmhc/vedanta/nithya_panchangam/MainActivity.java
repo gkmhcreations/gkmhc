@@ -140,9 +140,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private ViewPager viewPager;
     private NPAdapter myAdapter;
     private int selTabPos = 0;
-    private int refYear = 1987;
-    private int refMonth = 3;
-    private int refDate = 14;
     private int prefLocationType = LOCATION_MANUAL;
     private int prefAyanamsa = VedicCalendar.AYANAMSA_CHITRAPAKSHA;
     private int prefChaandramanamType = VedicCalendar.CHAANDRAMAANAM_TYPE_AMANTA;
@@ -197,11 +194,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         updateAppLocale();
         Objects.requireNonNull(getSupportActionBar()).setTitle(Html.fromHtml("<font color='#0000FF'>" +
                 getString(R.string.app_name) + "</font>"));
-
-        Calendar todaysDate = Calendar.getInstance();
-        refYear = todaysDate.get(Calendar.YEAR);
-        refMonth = todaysDate.get(Calendar.MONTH);
-        refDate = todaysDate.get(Calendar.DATE);
 
         // Step 2: Sort out the toolbar icon & logos
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -445,22 +437,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         return retVal;
     }
 
-    // Get a new calendar instance
-    public Calendar getSelectedCalendar() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(refYear, refMonth, refDate);
-        return calendar;
-    }
-
-    // Set the reference calendar with updates {date, month, year}
-    public void setSelectedCalendar(int updDate, int updMonth, int updYear) {
-        refYear = updYear;
-        refMonth = updMonth;
-        refDate = updDate;
-    }
-
     public void initVedicCalendar() {
-        Calendar currCalendar = getSelectedCalendar();
+        Calendar currCalendar = Calendar.getInstance();
+        if (vedicCalendar != null) {
+            int date = vedicCalendar.get(Calendar.DATE);
+            int month = vedicCalendar.get(Calendar.MONTH);
+            int year = vedicCalendar.get(Calendar.YEAR);
+            currCalendar.set(year, month, date);
+        }
+
         try {
             String location = readDefLocationSetting(this);
             int ayanamsaMode = readPrefAyanamsaSelection(this);
@@ -539,10 +524,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
         } else if (requestCode == CALENDAR_REQUEST_CODE) {
             if (data != null) {
-                refYear = data.getIntExtra("Calendar_Year", 0);
-                refMonth = data.getIntExtra("Calendar_Month", 0);
-                refDate = data.getIntExtra("Calendar_Date", 0);
-                refreshPanchangamDetails();
+                int calYear = data.getIntExtra("Calendar_Year", 0);
+                int calMonth = data.getIntExtra("Calendar_Month", 0);
+                int calDate = data.getIntExtra("Calendar_Date", 0);
+                vedicCalendar.setDate(calDate, calMonth, calYear, 0, 0);
+                refreshTab(NPAdapter.NP_TAB_PANCHANGAM);
+                refreshTab(NPAdapter.NP_TAB_SANKALPAM);
             }
         }
     }

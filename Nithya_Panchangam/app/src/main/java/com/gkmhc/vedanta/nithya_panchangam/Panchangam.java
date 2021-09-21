@@ -76,13 +76,6 @@ public class Panchangam extends Fragment {
         // Get Prev Date panchangam & update fragment
         FloatingActionButton faBtnDayPrev = root.findViewById(R.id.npDayPrev);
         faBtnDayPrev.setOnClickListener(v -> {
-            Calendar prevCalendar = mainActivity.getSelectedCalendar();
-            prevCalendar.add(Calendar.DATE, -1);
-            int refDate = prevCalendar.get(Calendar.DATE);
-            int refMonth = prevCalendar.get(Calendar.MONTH);
-            int refYear = prevCalendar.get(Calendar.YEAR);
-            mainActivity.setSelectedCalendar(refDate, refMonth, refYear);
-
             vedicCalendar.add(Calendar.DATE, -1);
             refreshPanchangam();
             mainActivity.refreshTab(NPAdapter.NP_TAB_SANKALPAM);
@@ -92,13 +85,6 @@ public class Panchangam extends Fragment {
         // Get Next Date panchangam & update fragment
         FloatingActionButton faBtnDayNext = root.findViewById(R.id.npDayNext);
         faBtnDayNext.setOnClickListener(v -> {
-            Calendar nextCalendar = mainActivity.getSelectedCalendar();
-            nextCalendar.add(Calendar.DATE, 1);
-            int refDate = nextCalendar.get(Calendar.DATE);
-            int refMonth = nextCalendar.get(Calendar.MONTH);
-            int refYear = nextCalendar.get(Calendar.YEAR);
-            mainActivity.setSelectedCalendar(refDate, refMonth, refYear);
-
             long pStartTime = System.nanoTime();
             vedicCalendar.add(Calendar.DATE, 1);
             long pEndTime = System.nanoTime();

@@ -454,7 +454,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             vedicCalendarLocaleList.clear();
             vedicCalendarLocaleList = buildVedicCalendarLocaleList(this);
             vedicCalendar = VedicCalendar.getInstance(
-                    getLocalPath(this),
+                    copyAssetsToLocalDir(this),
                     readPrefPanchangamType(this), currCalendar, placesInfo.longitude,
                     placesInfo.latitude, placesInfo.timezone, ayanamsaMode,
                     readPrefChaandramanaType(this), vedicCalendarLocaleList);

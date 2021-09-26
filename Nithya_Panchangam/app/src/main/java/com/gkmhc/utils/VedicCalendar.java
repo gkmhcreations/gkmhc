@@ -179,7 +179,7 @@ public class VedicCalendar extends Calendar {
     //  - String arrays is simple to use & maintain and in this particular case is quite
     //    performance efficient.
     private static final int[] horaisubhamTable = {
-            HORAI_NORMAL,  // {"Sooriya", "சூரிய", "सूर्य"},
+            HORAI_NORMAL,   // {"Sooriya", "சூரிய", "सूर्य"},
             HORAI_SUBHAM,   // {"Chandra", "சந்", "चन्द्र"},
             HORAI_ASUBHAM,  // {"Mangal", "அங்", "मङ्गल"},
             HORAI_SUBHAM,   // {"Budh", "புத", "बुध"},
@@ -206,10 +206,10 @@ public class VedicCalendar extends Calendar {
             120,  // {"Kanni", "கன்னி", "कन्या"}, => 5 Nazhigai (120 mins)
             120,  // {"Thula", "துலா", "तुला"}, => 5 Nazhigai (120 mins)
             126,  // {"Vrichiga", "விருச்சிக", "वृश्चिक"}, => 5 Nazhigai, 1/4 Nazhigai (126 mins)
-            132, // {"Dhanusu", "தனுசு", "धनु"}, => 5 Nazhigai, 1/2 Nazhigai (132 mins)
-            126, // {"Makara", "மகர", "मकर"}, => 5 Nazhigai, 1/4 Nazhigai (126 mins)
-            114, // {"Kumbha", "கும்ப", "कुम्भ"}, => 4 Nazhigai, 3/4 Nazhigai (114 mins)
-            102  // {"Meena", "மீன", "मीन"} => 4 Nazhigai, 1/4 Nazhigai (102 mins)
+            132,  // {"Dhanusu", "தனுசு", "धनु"}, => 5 Nazhigai, 1/2 Nazhigai (132 mins)
+            126,  // {"Makara", "மகர", "मकर"}, => 5 Nazhigai, 1/4 Nazhigai (126 mins)
+            114,  // {"Kumbha", "கும்ப", "कुम्भ"}, => 4 Nazhigai, 3/4 Nazhigai (114 mins)
+            102   // {"Meena", "மீன", "मीन"} => 4 Nazhigai, 1/4 Nazhigai (102 mins)
     };
 
     // Index into amruthathiYogamTable

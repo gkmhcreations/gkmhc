@@ -58,7 +58,7 @@
     <string name="ammavasai">அமாவாஸை</string>
     <string name="pournami">பௌர்ணமீ</string>
     <string name="sri_rama_navami">ஸ்ரீ ராம நவமீ</string>
-    <string name="sashti">ஷஷ்டீ</string>
+    <string name="subramanya_sashti">சுப்ரமண்ய ஷஷ்டீ</string>
     <string name="ekadasi">ஏகாதசி</string>
     <string name="pradosham">ப்ரதோஷம்</string>
     <string name="makara_sankaranthi">மகர ஸங்கராந்தி, பொங்கல்</string>
@@ -118,8 +118,8 @@
     <string name="maha_periyava_jayanthi">ஸ்ரீ சந்திரசேகரேந்திர சரஸ்வதி மஹாஸ்வாமிகள் ஜெயந்தி</string>
     <string name="puthu_periyava_jayanthi">ஸ்ரீ ஜெயேந்திர சரஸ்வதி ஸ்வாமிகள் ஜெயந்தி</string>
     <string name="bala_periyava_jayanthi">ஸ்ரீ சங்கர விஜயேந்திர சரஸ்வதி ஸ்வாமிகள் ஜெயந்தி</string>
-    <string name="sringeri_periyava_jayanthi">ஸ்ரீ பாரதி தீர்த்த ஸ்வாமிகள் வர்தந்தி</string>
-    <string name="appayya_dikshitar_jayanthi">ஸ்ரீ அப்பைய்ய தீக்ஷிதர் ஜெயந்தி</string>
+    <string name="sringeri_periyava_jayanthi">ஜகத்குரு ஸ்ரீ மஹாசன்னிதானம் ஸ்ரீ பாரதீ தீர்த்த மஹாஸ்வாமிகள் வர்தந்தி</string>
+    <string name="appayya_dikshitar_jayanthi">ஸ்ரீம்த் அப்பய்ய தீக்ஷிதர் ஜெயந்தி</string>
     <string name="lagnam_details">தின லக்னங்கள்</string>
     <string name="horai_details">தின ஹோரைகள்</string>
     <string name="start_time">ஆரம்பம்</string>

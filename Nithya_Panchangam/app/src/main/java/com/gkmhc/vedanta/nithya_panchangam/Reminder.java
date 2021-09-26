@@ -189,10 +189,10 @@ public class Reminder extends Fragment {
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SANKATA_HARA_CHATHURTHI:
                 dhinaVishesham = R.string.sankata_hara_chathurthi;
                 break;
-            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SASHTI:
-                dhinaVishesham = R.string.sashti;
+            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SASHTI_VRATHAM:
+                dhinaVishesham = R.string.subramanya_sashti;
                 break;
-            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_EKADASI:
+            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_EKADASHI:
                 dhinaVishesham = R.string.ekadasi;
                 break;
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_PRADOSHAM:
@@ -225,7 +225,7 @@ public class Reminder extends Fragment {
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_KARADAIYAN_NOMBHU:
                 dhinaVishesham = R.string.karadaiyan_nombu;
                 break;
-            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SRINGERI_PERIYAVA_JAYANTHI:
+            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SRINGERI_PERIYAVA_VARDHANTHI:
                 dhinaVishesham = R.string.sringeri_periyava_jayanthi;
                 break;
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_PANGUNI_UTHIRAM:
@@ -297,7 +297,7 @@ public class Reminder extends Fragment {
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_VINAYAGAR_CHATHURTHI:
                 dhinaVishesham = R.string.vinayagar_chaturthi;
                 break;
-            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_APPAIYA_DIKSHITAR_JAYANTHI:
+            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_APPAYYA_DIKSHITAR_JAYANTHI:
                 dhinaVishesham = R.string.appayya_dikshitar_jayanthi;
                 break;
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_MAHA_BHARANI:
@@ -330,7 +330,7 @@ public class Reminder extends Fragment {
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_KARTHIGAI_DEEPAM:
                 dhinaVishesham = R.string.karthigai_deepam;
                 break;
-            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SASHTI_VRATHAM:
+            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SUBRAMANYA_SASHTI:
                 dhinaVishesham = R.string.sashti_vratham;
                 break;
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_ARUDHRA_DARSHAN:
@@ -367,17 +367,17 @@ public class Reminder extends Fragment {
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_MAHA_SANKATA_HARA_CHATHURTHI:
                 dhinaVisheshamCode = R.drawable.sankata_hara_chathurthi;
                 break;
-            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SASHTI:
+            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SASHTI_VRATHAM:
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_AADI_PERUKKU:
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_VAIKASI_VISHAKAM:
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SOORA_SAMHAARAM:
-            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SASHTI_VRATHAM:
+            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SUBRAMANYA_SASHTI:
                 dhinaVisheshamCode = R.drawable.sashti;
                 break;
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_PANGUNI_UTHIRAM:
                 dhinaVisheshamCode = R.drawable.panguni_uthiram;
                 break;
-            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_EKADASI:
+            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_EKADASHI:
                 dhinaVisheshamCode = R.drawable.ekadashi;
                 break;
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_PRADOSHAM:
@@ -415,7 +415,7 @@ public class Reminder extends Fragment {
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_KARADAIYAN_NOMBHU:
                 dhinaVisheshamCode = R.drawable.karadaiyan_nombu;
                 break;
-            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SRINGERI_PERIYAVA_JAYANTHI:
+            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SRINGERI_PERIYAVA_VARDHANTHI:
                 dhinaVisheshamCode = R.drawable.sringeri_periyava;
                 break;
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_UGADI:
@@ -469,7 +469,7 @@ public class Reminder extends Fragment {
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_VINAYAGAR_CHATHURTHI:
                 dhinaVisheshamCode = R.drawable.ganesh_chathurthi;
                 break;
-            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_APPAIYA_DIKSHITAR_JAYANTHI:
+            case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_APPAYYA_DIKSHITAR_JAYANTHI:
                 dhinaVisheshamCode = R.drawable.appayya_dikshitar;
                 break;
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_NAVARATHRI:

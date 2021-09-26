@@ -3,6 +3,7 @@ package com.gkmhc.vedanta.nithya_panchangam;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -13,7 +14,7 @@ import android.widget.RemoteViews;
 
 import com.gkmhc.utils.VedicCalendar;
 
-import java.io.File;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -91,16 +92,19 @@ public class NithyaPanchangamWidget extends AppWidgetProvider {
         resources.updateConfiguration(config, resources.getDisplayMetrics());
 
         Calendar currCalendar = Calendar.getInstance();
-        long startTime = System.nanoTime();
-        long endTime = System.nanoTime();
-        Log.d("NithyaPanchangamWidget","initSwissEph()... Time Taken: " +
-                VedicCalendar.getTimeTaken(startTime, endTime));
 
         String curLocationCity = MainActivity.readDefLocationSetting(context);
         if (curLocationCity.isEmpty()) {
             curLocationCity = context.getString(R.string.pref_def_location_val);
         }
         MainActivity.PlacesInfo placesInfo = MainActivity.getLocationDetails(curLocationCity);
+        // In some cases, places DB may not be available when App is closed.
+        // In those cases, rebuild places DB.
+        if (placesInfo == null) {
+            Log.d("NithyaPanchangamWidget","Rebuilding places DB!");
+            MainActivity.buildPlacesTimezoneDB();
+            placesInfo = MainActivity.getLocationDetails(curLocationCity);
+        }
 
         HashMap<String, String[]> vedicCalendarLocaleList =
                 MainActivity.buildVedicCalendarLocaleList(context);
@@ -125,5 +129,19 @@ public class NithyaPanchangamWidget extends AppWidgetProvider {
     @Override
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (intent.hasExtra(MainActivity.NP_UPDATE_WIDGET)) {
+            AppWidgetManager manager = AppWidgetManager.getInstance(context);
+            final int[] appWidgetIds = manager.getAppWidgetIds(new ComponentName(context, NithyaPanchangamWidget.class));
+            if (appWidgetIds != null) {
+                //Log.d("NithyaPanchangamWidget","Updating widgets: " + Arrays.toString(appWidgetIds));
+                onUpdate(context, manager, appWidgetIds);
+            }
+        } else {
+            super.onReceive(context, intent);
+        }
     }
 }

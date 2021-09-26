@@ -290,8 +290,8 @@ public class VedicCalendar extends Calendar {
     public static final int PANCHANGAM_DHINA_VISHESHAM_AMAVAASAI = 0;
     public static final int PANCHANGAM_DHINA_VISHESHAM_POURNAMI = 1;
     public static final int PANCHANGAM_DHINA_VISHESHAM_SANKATA_HARA_CHATHURTHI = 2;
-    public static final int PANCHANGAM_DHINA_VISHESHAM_SASHTI = 3;
-    public static final int PANCHANGAM_DHINA_VISHESHAM_EKADASI = 4;
+    public static final int PANCHANGAM_DHINA_VISHESHAM_SASHTI_VRATHAM = 3;
+    public static final int PANCHANGAM_DHINA_VISHESHAM_EKADASHI = 4;
     public static final int PANCHANGAM_DHINA_VISHESHAM_PRADOSHAM = 5;
     public static final int PANCHANGAM_DHINA_VISHESHAM_MAKARA_SANKARANTHI = 6;
     public static final int PANCHANGAM_DHINA_VISHESHAM_THAI_POOSAM = 7;
@@ -302,7 +302,7 @@ public class VedicCalendar extends Calendar {
     public static final int PANCHANGAM_DHINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI = 12;
     public static final int PANCHANGAM_DHINA_VISHESHAM_MAHA_SIVARATHIRI = 13;
     public static final int PANCHANGAM_DHINA_VISHESHAM_KARADAIYAN_NOMBHU = 14;
-    public static final int PANCHANGAM_DHINA_VISHESHAM_SRINGERI_PERIYAVA_JAYANTHI = 15;
+    public static final int PANCHANGAM_DHINA_VISHESHAM_SRINGERI_PERIYAVA_VARDHANTHI = 15;
     public static final int PANCHANGAM_DHINA_VISHESHAM_PANGUNI_UTHIRAM = 16;
     public static final int PANCHANGAM_DHINA_VISHESHAM_UGADI = 17;
     public static final int PANCHANGAM_DHINA_VISHESHAM_TAMIL_PUTHANDU = 18;
@@ -327,7 +327,7 @@ public class VedicCalendar extends Calendar {
     public static final int PANCHANGAM_DHINA_VISHESHAM_GOKULASHTAMI = 37;
     public static final int PANCHANGAM_DHINA_VISHESHAM_AVANI_AVITTAM_SAM = 38;
     public static final int PANCHANGAM_DHINA_VISHESHAM_VINAYAGAR_CHATHURTHI = 39;
-    public static final int PANCHANGAM_DHINA_VISHESHAM_APPAIYA_DIKSHITAR_JAYANTHI = 40;
+    public static final int PANCHANGAM_DHINA_VISHESHAM_APPAYYA_DIKSHITAR_JAYANTHI = 40;
     public static final int PANCHANGAM_DHINA_VISHESHAM_MAHA_BHARANI = 41;
     public static final int PANCHANGAM_DHINA_VISHESHAM_MAHALAYA_START = 42;
     public static final int PANCHANGAM_DHINA_VISHESHAM_MAHALAYA_AMMAVASAI = 43;
@@ -338,7 +338,7 @@ public class VedicCalendar extends Calendar {
     public static final int PANCHANGAM_DHINA_VISHESHAM_DEEPAVALI = 48;
     public static final int PANCHANGAM_DHINA_VISHESHAM_SOORA_SAMHAARAM = 49;
     public static final int PANCHANGAM_DHINA_VISHESHAM_KARTHIGAI_DEEPAM = 50;
-    public static final int PANCHANGAM_DHINA_VISHESHAM_SASHTI_VRATHAM = 51;
+    public static final int PANCHANGAM_DHINA_VISHESHAM_SUBRAMANYA_SASHTI = 51;
     public static final int PANCHANGAM_DHINA_VISHESHAM_ARUDHRA_DARSHAN = 52;
     public static final int PANCHANGAM_DHINA_VISHESHAM_HANUMATH_JAYANTHI = 53;
 
@@ -623,7 +623,6 @@ public class VedicCalendar extends Calendar {
             swissEphInst.swe_set_sid_mode(SweConst.SE_SIDM_TRUE_CITRA, 0, 0);
         } else {
             // Set sidereal mode: SE_SIDM_LAHIRI for "Lahiri" Ayanamsa
-            // TODO - Check if the various Vakhyam calendars aligns with this setting!
             swissEphInst.swe_set_sid_mode(SweConst.SE_SIDM_LAHIRI, 0, 0);
         }
 
@@ -920,7 +919,10 @@ public class VedicCalendar extends Calendar {
         if (maasamIndexAtChaandramanaMaasamStart != maasamIndexAtChaandramanaMaasamEnd) {
             maasamIndex = maasamIndexAtChaandramanaMaasamEnd;
         } else {
-            // TODO - This indicates "Adhika" maasam.
+            // If maasam is the same across 30 days of Chaandramanam then this indicates
+            // that there has been no sankaramanam during this period.
+            // Hence, this can be declared as "Adhika" maasam.
+            // TODO - Finetune this!
             isAdhikaMaasam = true;
         }
 
@@ -1004,8 +1006,8 @@ public class VedicCalendar extends Calendar {
         int pakshamIndex = 0;
         int thithiIndex = getThithiNum();
 
-        // From Prathama(next day) after Pournami to Ammavasai is Krishnapaksham
-        // From From Prathama(next day) after Ammavasai to Pournami is Shuklapaksham
+        // From Prathama(next day) after Pournami to Amavasai is Krishnapaksham
+        // From From Prathama(next day) after Amavasai to Pournami is Shuklapaksham
         if (thithiIndex > 14) {
             pakshamIndex = 1;
         }
@@ -2600,12 +2602,12 @@ public class VedicCalendar extends Calendar {
         // 1) Match for repeating thithis first
         //    Type-1  - Match for {Thithi} --- 5 matches!
         String[] thithiList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_THITHI);
-        if (thithiStr.equalsIgnoreCase(thithiList[29]) ||       // Ammavasai
-                thithiStr.equalsIgnoreCase(thithiList[14]) ||   // Pournami
-                thithiStr.equalsIgnoreCase(thithiList[3]) ||    // Chathurthi
-                thithiStr.equalsIgnoreCase(thithiList[5]) ||    // Sashti
-                thithiStr.equalsIgnoreCase(thithiList[10]) ||   // Ekadasi
-                thithiStr.equalsIgnoreCase(thithiList[12])) {   // Thrayodasi
+        if (thithiStr.equalsIgnoreCase(thithiList[29]) ||   // Amavasai
+            thithiStr.equalsIgnoreCase(thithiList[14]) ||   // Pournami
+            thithiStr.equalsIgnoreCase(thithiList[3]) ||    // Chathurthi
+            thithiStr.equalsIgnoreCase(thithiList[5]) ||    // Sashti
+            thithiStr.equalsIgnoreCase(thithiList[10]) ||   // Ekadasi
+            thithiStr.equalsIgnoreCase(thithiList[12])) {   // Thrayodasi
             val = dhinaVisheshamList.get(thithiStr);
             if (val != null) {
                 //System.out.println("getDinaVishesham: Type-1 MATCH!!! Value = " + val);
@@ -2835,8 +2837,8 @@ public class VedicCalendar extends Calendar {
 
             dhinaVisheshamList = new HashMap<>();
 
-            // Regular repeating Ammavasai -
-            // {Thithi - Ammavasai}
+            // Regular repeating Amavasai -
+            // {Thithi - Amavasai}
             // (Type-1 match)
             dhinaVisheshamList.put(thithiList[29], PANCHANGAM_DHINA_VISHESHAM_AMAVAASAI);
 
@@ -2851,15 +2853,15 @@ public class VedicCalendar extends Calendar {
             dhinaVisheshamList.put(krishnaPaksham + thithiList[3],
                     PANCHANGAM_DHINA_VISHESHAM_SANKATA_HARA_CHATHURTHI);
 
-            // Regular repeating Sashti -
+            // Regular repeating Sashti Vratham -
             // {Thithi - Sashti}
             // (Type-1 match)
-            dhinaVisheshamList.put(thithiList[5], PANCHANGAM_DHINA_VISHESHAM_SASHTI);
+            dhinaVisheshamList.put(thithiList[5], PANCHANGAM_DHINA_VISHESHAM_SASHTI_VRATHAM);
 
             // Regular repeating Ekadasi -
             // {Thithi - Ekadasi}
             // (Type-1 match)
-            dhinaVisheshamList.put(thithiList[10], PANCHANGAM_DHINA_VISHESHAM_EKADASI);
+            dhinaVisheshamList.put(thithiList[10], PANCHANGAM_DHINA_VISHESHAM_EKADASHI);
 
             // Regular repeating Thrayodasi -
             // {Thithi - Thrayodasi}
@@ -2919,10 +2921,10 @@ public class VedicCalendar extends Calendar {
             dhinaVisheshamList.put(sauramanaMaasamList[11] + "1", PANCHANGAM_DHINA_VISHESHAM_KARADAIYAN_NOMBHU);
 
             // Sringeri Periyava Jayanthi -
-            // {SauramaanaMaasam - Meena, Paksham - Shukla, Nakshatram - Mrigashirisham}
-            // (Type-4A match)
-            dhinaVisheshamList.put(sauramanaMaasamList[11] + shuklaPaksham + nakshatramList[4],
-                    PANCHANGAM_DHINA_VISHESHAM_SRINGERI_PERIYAVA_JAYANTHI);
+            // {ChaandramanaMaasam - Chaitra, Paksham - Shukla, Thithi - Sashti}
+            // (Type-3B match)
+            dhinaVisheshamList.put(chaandramanaMaasamList[0] + shuklaPaksham + thithiList[5],
+                    PANCHANGAM_DHINA_VISHESHAM_SRINGERI_PERIYAVA_VARDHANTHI);
 
             // Panguni Uthiram -
             // {SauramaanaMaasam - Meena, Nakshatram - Uthiram}
@@ -3043,9 +3045,9 @@ public class VedicCalendar extends Calendar {
                     PANCHANGAM_DHINA_VISHESHAM_ONAM);
 
             // Maha Sankata Hara Chathurti -
-            // {ChaandramanaMaasam - Simha, Paksham - Krishna, Thithi - Chathurthi}
+            // {ChaandramanaMaasam - Shravana, Paksham - Krishna, Thithi - Chathurthi}
             // (Type-3B match)
-            dhinaVisheshamList.put(sauramanaMaasamList[4] + krishnaPaksham + thithiList[3],
+            dhinaVisheshamList.put(chaandramanaMaasamList[4] + krishnaPaksham + thithiList[3],
                     PANCHANGAM_DHINA_VISHESHAM_MAHA_SANKATA_HARA_CHATHURTHI);
 
             // Gokulashtami -
@@ -3075,19 +3077,17 @@ public class VedicCalendar extends Calendar {
             // Appayya Dikshitar Jayanthi -
             // {SauramaanaMaasam - Kanni, Paksham - Krishna, Thithi - Prathama}
             // (Type-3A match)
-            // TODO - Multiple matches on same key/value. Fix this!
             dhinaVisheshamList.put(sauramanaMaasamList[5] + krishnaPaksham +
-                    thithiList[15], PANCHANGAM_DHINA_VISHESHAM_APPAIYA_DIKSHITAR_JAYANTHI);
+                    thithiList[15], PANCHANGAM_DHINA_VISHESHAM_APPAYYA_DIKSHITAR_JAYANTHI);
 
             // Mahalayam Start -
             // {ChaandramanaMaasam - Bhadrapada, Paksham - Krishna, Thithi - Prathama}
             // (Type-3B match)
-            // TODO - Multiple matches on same key/value. Fix this!
             dhinaVisheshamList.put(chaandramanaMaasamList[5] + krishnaPaksham + thithiList[15],
                     PANCHANGAM_DHINA_VISHESHAM_MAHALAYA_START);
 
             // Mahalaya Amavasai -
-            // {ChaandramanaMaasam - Bhadrapada, Paksham - Shukla, Thithi - Ammavasai}
+            // {ChaandramanaMaasam - Bhadrapada, Paksham - Shukla, Thithi - Amavasai}
             // (Type-3B match)
             dhinaVisheshamList.put(chaandramanaMaasamList[5] + krishnaPaksham + thithiList[29],
                     PANCHANGAM_DHINA_VISHESHAM_MAHALAYA_AMMAVASAI);
@@ -3117,7 +3117,7 @@ public class VedicCalendar extends Calendar {
                     PANCHANGAM_DHINA_VISHESHAM_NARAKA_CHATHURDASI);
 
             // Deepavali -
-            // {ChaandramanaMaasam - Ashwina, Paksham - Krishna, Thithi - Ammavasai}
+            // {ChaandramanaMaasam - Ashwina, Paksham - Krishna, Thithi - Amavasai}
             // (Type-3B match)
             dhinaVisheshamList.put(chaandramanaMaasamList[6] + krishnaPaksham + thithiList[29],
                     PANCHANGAM_DHINA_VISHESHAM_DEEPAVALI);
@@ -3134,11 +3134,11 @@ public class VedicCalendar extends Calendar {
             dhinaVisheshamList.put(sauramanaMaasamList[7] + nakshatramList[2],
                     PANCHANGAM_DHINA_VISHESHAM_KARTHIGAI_DEEPAM);
 
-            // Sashti Vratham -
-            // {SauramaanaMaasam - Vrichiga, Paksham - Shukla, Thithi - Sashti}
+            // Subramanya Sashti -
+            // {SauramaanaMaasam - Margashirsha, Paksham - Shukla, Thithi - Sashti}
             // (Type-3A match)
-            dhinaVisheshamList.put(sauramanaMaasamList[7] + shuklaPaksham + thithiList[5],
-                    PANCHANGAM_DHINA_VISHESHAM_SASHTI_VRATHAM);
+            dhinaVisheshamList.put(chaandramanaMaasamList[8] + shuklaPaksham + thithiList[5],
+                    PANCHANGAM_DHINA_VISHESHAM_SUBRAMANYA_SASHTI);
 
             // Arudra Darshan -
             // {SauramaanaMaasam - Dhanusu, Nakshatram - Arthra}

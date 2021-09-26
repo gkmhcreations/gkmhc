@@ -19,9 +19,9 @@
     <string name="pref_panchangam_key" translatable="false">PREF_PANCHANGAM_KEY</string>
     <string name="pref_panchangam" translatable="false">Panchangam</string>
     <string name="pref_panchangam_type" translatable="false">Panchangam Type</string>
-    <string name="pref_panchangam_drik_ganitham" translatable="false">Drik Ganitham</string>
-    <string name="pref_panchangam_telugu_panchangam" translatable="false">Telugu Panchangam</string>
-    <string name="pref_panchangam_kannada_panchangam" translatable="false">Kannada Panchangam</string>
+    <string name="pref_panchangam_drik_ganitham" translatable="false">Drik Ganitham (Solar)</string>
+    <string name="pref_panchangam_telugu_panchangam" translatable="false">Telugu Panchangam (Lunar)</string>
+    <string name="pref_panchangam_kannada_panchangam" translatable="false">Kannada Panchangam (Lunar)</string>
     <string name="pref_def_panchangam" translatable="false">@string/pref_panchangam_drik_ganitham</string>
     <string name="pref_location_settings_key" translatable="false">PREF_LOCATION_SETTINGS_KEY</string>
     <string name="pref_location" translatable="false">Location</string>
@@ -148,7 +148,7 @@
     <string name="ammavasai">Amavasai</string>
     <string name="pournami">Pournami</string>
     <string name="sri_rama_navami">Sri Rama Navami</string>
-    <string name="sashti">Sashti</string>
+    <string name="subramanya_sashti">Subramanya Sashti</string>
     <string name="ekadasi">Ekadasi</string>
     <string name="pradosham">Pradosham</string>
     <string name="makara_sankaranthi">Makara Sankaranthi, Pongal</string>
@@ -222,7 +222,7 @@
     <string name="maha_periyava_jayanthi">Shri Chandrasekharendra Saraswati Mahaswamigal Jayanthi</string>
     <string name="puthu_periyava_jayanthi">Shri Jayendra Saraswathi Swamigal Jayanthi</string>
     <string name="bala_periyava_jayanthi">Shri Shankara Vijayendra Saraswathi Swamigal Jayanthi</string>
-    <string name="sringeri_periyava_jayanthi">Shri Bharathi Theertha Swaminaha Vardhanthi</string>
+    <string name="sringeri_periyava_jayanthi">Jagadguru Shri Mahaasannidaanam Shri Bharathi Theertha Swaminaha Vardhanthi</string>
     <string name="appayya_dikshitar_jayanthi">Shri Appayya Dikshitar Jayanthi</string>
     <string name="lagnam_details">Dina Lagnams</string>
     <string name="horai_details">Dina Horai(s)</string>

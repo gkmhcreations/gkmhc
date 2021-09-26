@@ -57,7 +57,7 @@
     <string name="ammavasai">अमावस्या</string>
     <string name="pournami">पौर्णमासी</string>
     <string name="sri_rama_navami">श्रीरामनवमी</string>
-    <string name="sashti">षष्ठी</string>
+    <string name="subramanya_sashti">सुब्रह्मण्य षष्ठी</string>
     <string name="ekadasi">एकादशी</string>
     <string name="pradosham">प्रदोषः</string>
     <string name="makara_sankaranthi">मकर सङ्क्रान्तिः, पोङ्गल्</string>
@@ -117,7 +117,7 @@
     <string name="maha_periyava_jayanthi">श्री चन्द्रशेखरेन्द्र सरस्वती महास्वामिनः जयन्ती</string>
     <string name="puthu_periyava_jayanthi">श्री जयेन्द्र सरस्वती स्वामिनः जयन्ती</string>
     <string name="bala_periyava_jayanthi">श्री शंकर विजयेन्द्र सरस्वती स्वामिनः जयन्ती</string>
-    <string name="sringeri_periyava_jayanthi">श्री भारति तीर्थ स्वामिनः वर्धन्ति</string>
+    <string name="sringeri_periyava_jayanthi">जगद्गुरु श्री महासन्निदानं श्री भारति तीर्थ स्वामिनः वर्धन्ति</string>
     <string name="appayya_dikshitar_jayanthi">श्री अप्पय्य दीक्षित जयन्ती</string>
     <string name="lagnam_details">नित्य लग्नः</string>
     <string name="horai_details">नित्य होरा</string>

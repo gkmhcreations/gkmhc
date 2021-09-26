@@ -77,7 +77,7 @@ public class Panchangam extends Fragment {
         FloatingActionButton faBtnDayPrev = root.findViewById(R.id.npDayPrev);
         faBtnDayPrev.setOnClickListener(v -> {
             vedicCalendar.add(Calendar.DATE, -1);
-            refreshPanchangam();
+            refreshPanchangam(true);
             mainActivity.refreshTab(NPAdapter.NP_TAB_SANKALPAM);
         });
 
@@ -85,12 +85,8 @@ public class Panchangam extends Fragment {
         // Get Next Date panchangam & update fragment
         FloatingActionButton faBtnDayNext = root.findViewById(R.id.npDayNext);
         faBtnDayNext.setOnClickListener(v -> {
-            long pStartTime = System.nanoTime();
             vedicCalendar.add(Calendar.DATE, 1);
-            long pEndTime = System.nanoTime();
-            Log.d("PanchangamProfiler", "Overall Add Time Taken: " +
-                    VedicCalendar.getTimeTaken(pStartTime, pEndTime));
-            refreshPanchangam();
+            refreshPanchangam(true);
             mainActivity.refreshTab(NPAdapter.NP_TAB_SANKALPAM);
         });
 
@@ -119,7 +115,7 @@ public class Panchangam extends Fragment {
                 if (mainActivity.updateManualLocation(cityToSearch)) {
                     alertDialog.dismiss();
                     mainActivity.initVedicCalendar();
-                    refreshPanchangam();
+                    refreshPanchangam(true);
                 } else {
                     Toast.makeText(getContext(), "Invalid Location: " + cityToSearch,
                             Toast.LENGTH_SHORT).show();
@@ -145,7 +141,7 @@ public class Panchangam extends Fragment {
         super.onResume();
 
         try {
-            refreshPanchangam();
+            refreshPanchangam(false);
         } catch (Exception exception) {
             Log.e("Panchangam","Exception --- onResume()!");
         }
@@ -154,12 +150,55 @@ public class Panchangam extends Fragment {
     /**
      * Use this utility function to update the Panchangam details for the given Calendar date.
      */
-    public void refreshPanchangam() {
+    public void refreshPanchangam(boolean forceRefresh) {
         new Handler().postDelayed(() -> {
             try {
                 // code runs in a thread
-                vedicCalendar = mainActivity.getVedicCalendar();
-                retrieveTodaysPanchangam();
+                boolean toRefresh = false;
+                VedicCalendar vedicCalendarTemp = mainActivity.getVedicCalendar();
+
+                /*
+                 * Refresh Panchangam only when there is a change in one or all of the following
+                 * settings:
+                 * 1) Locale change
+                 * 2) Location change
+                 * 3) Panchangam type change
+                 * 4) Date change
+                 * 5) Chaandramaanam change
+                 *
+                 * Note: No need to refresh when user is shifting between tabs!
+                 */
+                if (!forceRefresh) {
+                    if (vedicCalendar != null) {
+                        int tempDate = vedicCalendarTemp.get(Calendar.DATE);
+                        int tempMonth = vedicCalendarTemp.get(Calendar.MONTH);
+                        int tempYear = vedicCalendarTemp.get(Calendar.YEAR);
+
+                        int date = vedicCalendar.get(Calendar.DATE);
+                        int month = vedicCalendar.get(Calendar.MONTH);
+                        int year = vedicCalendar.get(Calendar.YEAR);
+
+                        // Refresh when one of the following occurs:
+                        // 1) vedicCalendar instance has changed
+                        // 2) Either date or month or year or all have changed
+                        if ((vedicCalendarTemp != vedicCalendar) ||
+                            (tempDate != date) || (tempMonth != month) || (tempYear != year)) {
+                            toRefresh = true;
+                        }
+                    } else {
+                        // Refresh when during first-time load (vedicCalendar will be null)
+                        toRefresh = true;
+                    }
+                } else {
+                    // Refresh when caller forces to refresh!
+                    toRefresh = true;
+                }
+
+                // Retrieve the panchangam fields all over again!
+                if (toRefresh) {
+                    vedicCalendar = vedicCalendarTemp;
+                    retrieveTodaysPanchangam();
+                }
                 updatePanchangamFieldsHeader();
                 updatePanchangamFragment(root);
             } catch (final Exception ex) {

@@ -134,7 +134,6 @@ import java.util.Objects;
  */
 public class MainActivity extends AppCompatActivity implements LocationListener {
     private VedicCalendar vedicCalendar;
-    public static final String NP_CHANNEL_ID = "Nithya_Panchangam";
     private SharedPreferences sharedPreferences;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -147,6 +146,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private static String selLocale = "en";
     private static String curLocationCity = "";
     private static final double INDIAN_STANDARD_TIME = 5.5;
+    public static final String NP_UPDATE_WIDGET = "Nithya_Panchangam_Update_Widget";
+    public static final String NP_CHANNEL_ID = "Nithya_Panchangam";
     public static final int LOCATION_MANUAL = 0;
     public static final int LOCATION_GPS = 1;
 
@@ -484,6 +485,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 curLocationCity = selectedLocation;
                 refreshLocation();
                 refreshPanchangamDetails();
+
+                // Send broadcast Intent to widget(s) to refresh!
+                sendBroadcastToWidget(this);
             }
 
             // If there is change in location preferences, then refresh location & the fragments.
@@ -492,6 +496,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 prefLocationType = prefToUpdate;
                 refreshLocation();
                 refreshPanchangamDetails();
+
+                // Send broadcast Intent to widget(s) to refresh!
+                sendBroadcastToWidget(this);
             }
 
             // If there is change in locale preferences, then refresh location & the fragments.
@@ -502,6 +509,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 refreshTab(NPAdapter.NP_TAB_REMINDER);
                 Objects.requireNonNull(getSupportActionBar()).setTitle(Html.fromHtml("<font color='#0000FF'>" +
                         getString(R.string.app_name) + "</font>"));
+
+                // Send broadcast Intent to widget(s) to refresh!
+                sendBroadcastToWidget(this);
             }
 
             // If there is change in sankalpam preferences, then refresh location & the fragments.
@@ -509,18 +519,25 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             if (!prefSankalpamType.equals(sankalpamType)) {
                 prefSankalpamType = sankalpamType;
                 refreshTab(NPAdapter.NP_TAB_SANKALPAM);
+                // No need to inform widget here for Sankalpam change!
             }
 
             int selectedAyanamsa = readPrefAyanamsaSelection(this);
             if (prefAyanamsa != selectedAyanamsa) {
                 prefAyanamsa = selectedAyanamsa;
                 refreshPanchangamDetails();
+
+                // Send broadcast Intent to widget(s) to refresh!
+                sendBroadcastToWidget(this);
             }
 
             int selectedChaandramanamType = readPrefChaandramanaType(this);
             if (prefChaandramanamType != selectedChaandramanamType) {
                 prefChaandramanamType = selectedChaandramanamType;
                 refreshPanchangamDetails();
+
+                // Send broadcast Intent to widget(s) to refresh!
+                sendBroadcastToWidget(this);
             }
         } else if (requestCode == CALENDAR_REQUEST_CODE) {
             if (data != null) {
@@ -530,6 +547,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 vedicCalendar.setDate(calDate, calMonth, calYear, 0, 0);
                 refreshTab(NPAdapter.NP_TAB_PANCHANGAM);
                 refreshTab(NPAdapter.NP_TAB_SANKALPAM);
+
+                // No need to inform widget here for calendar date change!
             }
         }
     }
@@ -547,11 +566,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         switch (tabPosition) {
             case NPAdapter.NP_TAB_PANCHANGAM:
                 Panchangam panchangamFragment = (Panchangam) myAdapter.getItem(tabPosition);
-                panchangamFragment.refreshPanchangam();
+                panchangamFragment.refreshPanchangam(true);
                 break;
             case NPAdapter.NP_TAB_SANKALPAM:
                 Sankalpam sankalpamFragment = (Sankalpam) myAdapter.getItem(tabPosition);
-                sankalpamFragment.refreshSankalpam();
+                sankalpamFragment.refreshSankalpam(true);
                 break;
             case NPAdapter.NP_TAB_ALARM:
                 Alarm alarmFragment = (Alarm) myAdapter.getItem(tabPosition);
@@ -979,10 +998,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     public static PlacesInfo getLocationDetails(String locationStr) {
-        return MainActivity.getLocationFromPlacesDB(locationStr);
-    }
-
-    public static PlacesInfo getLocationFromPlacesDB(String locationStr) {
         return placesTimezoneDB.get(locationStr);
     }
 
@@ -1532,5 +1547,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         }
 
         return vedicCalendarLocaleList;
+    }
+
+    public static void sendBroadcastToWidget(Context context) {
+        Intent intent = new Intent(context, NithyaPanchangamWidget.class);
+        intent.putExtra(NP_UPDATE_WIDGET, "Update");
+        context.sendBroadcast(intent);
     }
 }

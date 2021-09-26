@@ -57,7 +57,7 @@
     <string name="ammavasai">ಅಮಾವಸ್ಯಾ</string>
     <string name="pournami">ಪೌರ್ಣಮಾಸೀ</string>
     <string name="sri_rama_navami">ಶ್ರೀರಾಮನವಮೀ</string>
-    <string name="sashti">ಷಷ್ಠೀ</string>
+    <string name="subramanya_sashti">ಸುಬ್ರಹ್ಮಣ್ಯ ಷಷ್ಠೀ</string>
     <string name="ekadasi">ಏಕಾದಶೀ</string>
     <string name="pradosham">ಪ್ರದೋಷಃ</string>
     <string name="makara_sankaranthi">ಮಕರ ಸಂಕ್ರಾಂತಿಃ, ಪೋಂಗಲ್</string>
@@ -117,7 +117,7 @@
     <string name="maha_periyava_jayanthi">ಶ್ರೀ ಚಂದ್ರಶೇಖರೇಂದ್ರ ಸರಸ್ವತೀ ಮಹಾಸ್ವಾಮಿನಃ ಜಯಂತೀ</string>
     <string name="puthu_periyava_jayanthi">ಶ್ರೀ ಜಯೇಂದ್ರ ಸರಸ್ವತೀ ಸ್ವಾಮಿನಃ ಜಯಂತೀ</string>
     <string name="bala_periyava_jayanthi">ಶ್ರೀ ಶಂಕರ ವಿಜಯೇಂದ್ರ ಸರಸ್ವತೀ ಸ್ವಾಮಿನಃ ಜಯಂತೀ</string>
-    <string name="sringeri_periyava_jayanthi">ಶ್ರೀ ಭಾರತಿ ತೀರ್ಥ ಸ್ವಾಮಿನಃ ವರ್ಧಂತಿ</string>
+    <string name="sringeri_periyava_jayanthi">ಜಗದ್ಗುರು ಶ್ರೀ ಮಹಾಸನ್ನಿದಾನಂ ಶ್ರೀ ಭಾರತಿ ತೀರ್ಥ ಸ್ವಾಮಿನಹ ವರ್ಧಂತಿ</string>
     <string name="appayya_dikshitar_jayanthi">ಶ್ರೀ ಅಪ್ಪಯ್ಯ ದೀಕ್ಷಿತ ಜಯಂತೀ</string>
     <string name="lagnam_details">ನಿತ್ಯ ಲಗ್ನಃ</string>
     <string name="horai_details">ನಿತ್ಯ ಹೋರಾ</string>

@@ -18,8 +18,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.gkmhc.utils.VedicCalendar;
 
-import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -142,6 +142,9 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
                     // Handle Phone Restart Scenario
                     recreateAlarmsFromPersistentDB(context.getApplicationContext());
                     recreateRemindersFromPersistentDB(context.getApplicationContext());
+
+                    // Inform widget about date/time/timezone changes!
+                    MainActivity.sendBroadcastToWidget(context);
                     break;
                 case START_ALARM:
                     // Register Alarm with AlarmManager.
@@ -180,7 +183,8 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
                             } else {
                                 Log.i("NPBcastReceiver",
                                         "NPAlarm: Skipping Alarm(" + alarmID + ") as " +
-                                                "Dina Vishesham: " + alarmID +
+                                                "Dina Vishesham: " +
+                                                Arrays.toString(dhinaVisheshamCodeList.toArray()) +
                                                 " does not match!");
                                 cancelAlarm(context, intent, alarmID, true);
                             }
@@ -896,24 +900,32 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
      * @return List of Dina Vishesham code(s) for the given calendar day.
      */
     private List<Integer> findDinaVishesham(Context context) {
-        List<Integer> dhinaSpecialCodeList = null;
+        List<Integer> dhinaSpecialCodeList;
         try {
             Calendar currCalendar = Calendar.getInstance();
             String location = MainActivity.readDefLocationSetting(context);
 
-            MainActivity.PlacesInfo placesInfo = MainActivity.getLocationFromPlacesDB(location);
+            MainActivity.PlacesInfo placesInfo = MainActivity.getLocationDetails(location);
+
+            // In some cases, places DB may not be available when App is closed.
+            // In those cases, rebuild places DB.
+            if (placesInfo == null) {
+                Log.d("NPBcastReceiver","Rebuilding places DB!");
+                MainActivity.buildPlacesTimezoneDB();
+                placesInfo = MainActivity.getLocationDetails(location);
+            }
             HashMap<String, String[]> vedicCalendarLocaleList =
                     MainActivity.buildVedicCalendarLocaleList(context);
-            int ayanamsaMode = MainActivity.readPrefAyanamsaSelection(context);
             VedicCalendar vedicCalendar = VedicCalendar.getInstance(
                     MainActivity.getLocalPath(context),
-                    MainActivity.readPrefPanchangamType(context), currCalendar, placesInfo.longitude,
-                    placesInfo.latitude, placesInfo.timezone, ayanamsaMode,
-                    MainActivity.readPrefChaandramanaType(context), vedicCalendarLocaleList);
-            vedicCalendar.getThithi(VedicCalendar.MATCH_SANKALPAM_EXACT);
+                    MainActivity.readPrefPanchangamType(context),
+                    currCalendar,
+                    placesInfo.longitude, placesInfo.latitude, placesInfo.timezone,
+                    MainActivity.readPrefAyanamsaSelection(context),
+                    MainActivity.readPrefChaandramanaType(context),
+                    vedicCalendarLocaleList);
             dhinaSpecialCodeList =
                     vedicCalendar.getDinaVishesham(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
-
             if (dhinaSpecialCodeList != null) {
                 Log.d("NPBcastReceiver", "Dina Vishesham: " +
                         dhinaSpecialCodeList.toString() + " for " + location +
@@ -921,6 +933,7 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
             }
         } catch (Exception e) {
             // Create a dummy list!
+            e.printStackTrace();
             dhinaSpecialCodeList = new ArrayList<>();
         }
 

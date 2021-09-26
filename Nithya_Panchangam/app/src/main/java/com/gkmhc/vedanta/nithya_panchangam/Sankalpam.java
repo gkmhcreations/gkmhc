@@ -74,7 +74,7 @@ public class Sankalpam extends Fragment {
         FloatingActionButton faBtnDayPrev = root.findViewById(R.id.dayPrev);
         faBtnDayPrev.setOnClickListener(v -> {
             vedicCalendar.add(Calendar.DATE, -1);
-            refreshSankalpam();
+            refreshSankalpam(true);
             mainActivity.refreshTab(NPAdapter.NP_TAB_PANCHANGAM);
         });
 
@@ -83,12 +83,11 @@ public class Sankalpam extends Fragment {
         FloatingActionButton faBtnDayNext = root.findViewById(R.id.dayNext);
         faBtnDayNext.setOnClickListener(v -> {
             vedicCalendar.add(Calendar.DATE, 1);
-            refreshSankalpam();
+            refreshSankalpam(true);
             mainActivity.refreshTab(NPAdapter.NP_TAB_PANCHANGAM);
         });
 
         begSankalpamTextView = root.findViewById(R.id.sankalpam_res_begin);
-        //begSankalpamTextView.setTextSize(ratio + 15);
 
         // Inflate the layout for this fragment
         return root;
@@ -99,7 +98,7 @@ public class Sankalpam extends Fragment {
         super.onResume();
 
         try {
-            refreshSankalpam();
+            refreshSankalpam(false);
         } catch (Exception exception) {
             Log.e("Sankalpam:","Exception --- onResume()!");
         }
@@ -108,14 +107,57 @@ public class Sankalpam extends Fragment {
     /**
      * Use this utility function to update the sankalpam details for the given Calendar date.
      */
-    public void refreshSankalpam() {
+    public void refreshSankalpam(boolean forceRefresh) {
         new Handler().postDelayed(() -> {
             try {
                 // code runs in a thread
-                vedicCalendar = mainActivity.getVedicCalendar();
+                boolean toRefresh = false;
+                VedicCalendar vedicCalendarTemp = mainActivity.getVedicCalendar();
+
+                /*
+                 * Refresh Panchangam only when there is a change in one or all of the following
+                 * settings:
+                 * 1) Locale change
+                 * 2) Location change
+                 * 3) Panchangam type change
+                 * 4) Date change
+                 * 5) Chaandramaanam change
+                 *
+                 * Note: No need to refresh when user is shifting between tabs!
+                 */
+                if (!forceRefresh) {
+                    if (vedicCalendar != null) {
+                        int tempDate = vedicCalendarTemp.get(Calendar.DATE);
+                        int tempMonth = vedicCalendarTemp.get(Calendar.MONTH);
+                        int tempYear = vedicCalendarTemp.get(Calendar.YEAR);
+
+                        int date = vedicCalendar.get(Calendar.DATE);
+                        int month = vedicCalendar.get(Calendar.MONTH);
+                        int year = vedicCalendar.get(Calendar.YEAR);
+
+                        // Refresh when one of the following occurs:
+                        // 1) vedicCalendar instance has changed
+                        // 2) Either date or month or year or all have changed
+                        if ((vedicCalendarTemp != vedicCalendar) ||
+                                (tempDate != date) || (tempMonth != month) || (tempYear != year)) {
+                            toRefresh = true;
+                        }
+                    } else {
+                        // Refresh when during first-time load (vedicCalendar will be null)
+                        toRefresh = true;
+                    }
+                } else {
+                    // Refresh when caller forces to refresh!
+                    toRefresh = true;
+                }
+
+                // Retrieve the panchangam fields all over again!
+                if (toRefresh) {
+                    vedicCalendar = vedicCalendarTemp;
+                    retrieveTodaysPanchangam();
+                }
                 String selLocale = mainActivity.updateAppLocale();
                 prefSankalpamType = MainActivity.readPrefSankalpamType(requireContext());
-                retrieveTodaysPanchangam();
                 updateSankalpamFragment(root, prefSankalpamType, selLocale);
             } catch (Exception ex) {
                 Log.e("Sankalpam","Exception in refreshSankalpam()");

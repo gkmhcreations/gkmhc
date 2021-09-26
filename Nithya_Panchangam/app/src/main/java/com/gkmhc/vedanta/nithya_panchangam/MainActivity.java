@@ -268,7 +268,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     // Note: When using VedicCalendar class on other platforms then all the
     // SwissEph assets needs to be copied to the local directory as per the local platform
     // on VedicCalendar is being used.
-    public static String getLocalPath(Context context) {
+    public static String copyAssetsToLocalDir(Context context) {
         new CopyToAssets(".*?\\.(se1|xml?)", context).copy();
         return context.getFilesDir() + File.separator + "ephe";
     }

@@ -100,7 +100,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
             npDate = calendar.get(Calendar.DATE);
             refDate = npDate;
             vedicCalendar = VedicCalendar.getInstance(
-                    MainActivity.getLocalPath(getApplicationContext()),
+                    MainActivity.copyAssetsToLocalDir(getApplicationContext()),
                     MainActivity.readPrefPanchangamType(this), calendar,
                     placesInfo.longitude, placesInfo.latitude, placesInfo.timezone, ayanamsaMode,
                     MainActivity.readPrefChaandramanaType(this), vedicCalendarLocaleList);

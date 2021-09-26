@@ -94,7 +94,7 @@ public class RaasiChart extends AppCompatActivity implements
             double curLocationLongitude = placesInfo.longitude;
             double curLocationLatitude = placesInfo.latitude;
             VedicCalendar vedicCalendar = VedicCalendar.getInstance(
-                    MainActivity.getLocalPath(getApplicationContext()),
+                    MainActivity.copyAssetsToLocalDir(getApplicationContext()),
                     MainActivity.readPrefPanchangamType(this), currCalendar, placesInfo.longitude,
                     placesInfo.latitude, placesInfo.timezone, ayanamsaMode,
                     MainActivity.readPrefChaandramanaType(this), vedicCalendarLocaleList);

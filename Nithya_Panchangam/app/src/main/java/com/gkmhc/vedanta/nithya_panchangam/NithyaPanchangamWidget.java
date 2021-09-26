@@ -48,7 +48,7 @@ public class NithyaPanchangamWidget extends AppWidgetProvider {
         try {
             int ayanamsaMode = MainActivity.readPrefAyanamsaSelection(context);
             VedicCalendar vedicCalendar = VedicCalendar.getInstance(
-                    MainActivity.getLocalPath(context),
+                    MainActivity.copyAssetsToLocalDir(context),
                     MainActivity.readPrefPanchangamType(context), currCalendar, placesInfo.longitude,
                     placesInfo.latitude, placesInfo.timezone, ayanamsaMode,
                     MainActivity.readPrefChaandramanaType(context), vedicCalendarLocaleList);

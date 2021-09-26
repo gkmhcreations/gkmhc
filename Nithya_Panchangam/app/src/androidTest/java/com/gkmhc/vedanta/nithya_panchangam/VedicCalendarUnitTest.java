@@ -40,7 +40,7 @@ public class VedicCalendarUnitTest {
             Calendar currCalendar = Calendar.getInstance();
             try {
                 vedicCalendar = VedicCalendar.getInstance(
-                        MainActivity.getLocalPath(appContext),
+                        MainActivity.copyAssetsToLocalDir(appContext),
                         VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM, currCalendar,
                         placesInfo.longitude, placesInfo.latitude,
                         placesInfo.timezone, VedicCalendar.AYANAMSA_CHITRAPAKSHA,

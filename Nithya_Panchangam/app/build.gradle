@@ -30,10 +30,18 @@ android {
         applicationId "com.gkmhc.vedanta.nithya_panchangam"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 23
-        versionName "0.0.23 Beta"
+        versionCode 28
+        versionName "0.0.28 Beta"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // If set to 'true', enables the instrumentation class to start and stop profiling.
+        // If set to false (default), profiling occurs the entire time the instrumentation
+        // class is running.
+        testHandleProfiling true
+        // If set to 'true', indicates that the Android system should run the instrumentation
+        // class as a functional test. The default value is 'false'
+        testFunctionalTest true
     }
 
     buildTypes {
@@ -49,6 +57,40 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    testOptions {
+        unitTests.includeAndroidResources = true
+
+        // Changes the directory where Gradle saves test reports. By default, Gradle saves test reports
+        // in the path_to_your_project/module_name/build/outputs/reports/ directory.
+        // '$rootDir' sets the path relative to the root directory of the current project.
+        reportDir "$rootDir/test-reports"
+        // Changes the directory where Gradle saves test results. By default, Gradle saves test results
+        // in the path_to_your_project/module_name/build/outputs/test-results/ directory.
+        // '$rootDir' sets the path relative to the root directory of the current project.
+        resultsDir "$rootDir/test-results"
+
+        // Encapsulates options for local unit tests.
+        unitTests {
+            // By default, local unit tests throw an exception any time the code you are testing tries to access
+            // Android platform APIs (unless you mock Android dependencies yourself or with a testing
+            // framework like Mockito). However, you can enable the following property so that the test
+            // returns either null or zero when accessing platform APIs, rather than throwing an exception.
+            returnDefaultValues true
+
+            // Encapsulates options for controlling how Gradle executes local unit tests. For a list
+            // of all the options you can specify, read Gradle's reference documentation.
+            all {
+                // Sets JVM argument(s) for the test JVM(s).
+                jvmArgs '-XX:MaxPermSize=256m'
+
+                // You can also check the task name to apply options to only the tests you specify.
+                if (it.name == 'VedicCalendarUnitTest') {
+                    systemProperty 'debug', 'true'
+                }
+            }
+        }
+    }
 }
 
 dependencies {
@@ -60,4 +102,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:18.0.0'
     implementation 'com.github.niqo01.rxplayservices:rx-play-services-location:0.4.0'
     implementation files('libs/swisseph-2.01.00-02.jar')
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }

@@ -79,7 +79,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
         config.locale = locale;
         resources.updateConfiguration(config, resources.getDisplayMetrics());
 
-        HashMap<String, String[]> vedicCalendarLocaleList = MainActivity.buildVedicCalendarLocaleList(this);
+        HashMap<Integer, String[]> vedicCalendarLocaleList = MainActivity.buildVedicCalendarLocaleList(this);
         String location = MainActivity.readDefLocationSetting(getApplicationContext());
         int ayanamsaMode = MainActivity.readPrefAyanamsaSelection(getApplicationContext());
         MainActivity.PlacesInfo placesInfo = MainActivity.getLocationDetails(location);

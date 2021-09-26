@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private double curLocationLatitude = 0; // Default to Varanasi
     private static final HashMap<String, PlacesInfo> placesTimezoneDB = new HashMap<>();
     public static List<String> placesList;
-    private static HashMap<String, String[]> vedicCalendarLocaleList = new HashMap<>();
+    private static HashMap<Integer, String[]> vedicCalendarLocaleList = new HashMap<>();
 
     public static class PlacesInfo {
         public final double longitude;
@@ -1473,7 +1473,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         return localeShortStr;
     }
 
-    public static HashMap<String, String[]> buildVedicCalendarLocaleList(Context context) {
+    public static HashMap<Integer, String[]> buildVedicCalendarLocaleList(Context context) {
         if (vedicCalendarLocaleList.isEmpty()) {
 
             // Step1: Samvatsaram

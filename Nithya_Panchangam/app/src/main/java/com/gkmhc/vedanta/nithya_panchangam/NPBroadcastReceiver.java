@@ -914,7 +914,7 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
                 MainActivity.buildPlacesTimezoneDB();
                 placesInfo = MainActivity.getLocationDetails(location);
             }
-            HashMap<String, String[]> vedicCalendarLocaleList =
+            HashMap<Integer, String[]> vedicCalendarLocaleList =
                     MainActivity.buildVedicCalendarLocaleList(context);
             VedicCalendar vedicCalendar = VedicCalendar.getInstance(
                     MainActivity.getLocalPath(context),

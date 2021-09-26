@@ -39,7 +39,7 @@ public class NithyaPanchangamWidget extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId, String selLocale, Calendar currCalendar,
                                 MainActivity.PlacesInfo placesInfo,
-                                HashMap<String, String[]> vedicCalendarLocaleList) {
+                                HashMap<Integer, String[]> vedicCalendarLocaleList) {
         // For Widget, following fields are good enough to be displayed:
         // 1) Thithi
         // 2) Vaasaram
@@ -106,7 +106,7 @@ public class NithyaPanchangamWidget extends AppWidgetProvider {
             placesInfo = MainActivity.getLocationDetails(curLocationCity);
         }
 
-        HashMap<String, String[]> vedicCalendarLocaleList =
+        HashMap<Integer, String[]> vedicCalendarLocaleList =
                 MainActivity.buildVedicCalendarLocaleList(context);
 
         // There may be multiple widgets active, so update all of them

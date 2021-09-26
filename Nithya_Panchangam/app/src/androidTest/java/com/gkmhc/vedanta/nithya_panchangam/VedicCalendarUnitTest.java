@@ -32,7 +32,7 @@ public class VedicCalendarUnitTest {
 
     public VedicCalendarUnitTest() {
         if (vedicCalendar == null) {
-            HashMap<String, String[]> vedicCalendarLocaleList =
+            HashMap<Integer, String[]> vedicCalendarLocaleList =
                     MainActivity.buildVedicCalendarLocaleList(appContext);
             MainActivity.buildPlacesTimezoneDB();
             String location = "Chennai, India";

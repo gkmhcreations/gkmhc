@@ -56,7 +56,7 @@ public class VedicCalendar extends Calendar {
     private double dailyChandraMotion; // DCM
     private double sunRiseTotalMins = 0;
     private double sunSetTotalMins = 0;
-    private final HashMap<String, String[]> vedicCalendarLocaleList;
+    private final HashMap<Integer, String[]> vedicCalendarLocaleList;
     private double refRaviAyanamAtDayStart;
     private double refChandraAyanamAtDayStart;
     private int refHour;
@@ -107,7 +107,6 @@ public class VedicCalendar extends Calendar {
     private static final int MAX_MINS_IN_HOUR = 60;
     private static final int MAX_MINS_IN_DAY = 1440;
     private static final int APPROX_HOURS_TILL_NEXTDAY_SUNRISE = 30;
-    private static final int MAX_PANCHANGAM_FIELDS = 17;
     private static final int SUNRISE_TOTAL_MINS = 360;
     private static final int SUNSET_TOTAL_MINS = 1080;
     private static final int CHANDRASHTAMA_NAKSHATHRAM_OFFSET = 16;
@@ -150,23 +149,24 @@ public class VedicCalendar extends Calendar {
     public static final int KETHU = 8;
 
     // Table types for adding locale values based on panchangam type
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_SAMVATSARAM = "samvatsaram";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_AYANAM = "ayanam";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_RITHU = "rithu";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_SAURAMANA_MAASAM = "sauramana_maasam";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_CHAANDRAMANA_MAASAM = "chaandramana_maasam";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_PAKSHAM = "paksham";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_THITHI = "thithi";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_THITHI = "sankalpa-thithi";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_RAASI = "raasi";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_NAKSHATHRAM = "nakshatram";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_NAKSHATHRAM = "sankalpa-nakshatram";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_YOGAM = "yogam";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_KARANAM = "karanam";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_VAASARAM = "vaasaram";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_DHINAM = "dhinam";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_HORAI = "horai";
-    public static final String VEDIC_CALENDAR_TABLE_TYPE_AMRUTATHI_YOGAM = "amruthathi-yogam";
+    public static final int VEDIC_CALENDAR_TABLE_TYPE_SAMVATSARAM = 0;
+    public static final int VEDIC_CALENDAR_TABLE_TYPE_AYANAM = 1;
+    public static final int VEDIC_CALENDAR_TABLE_TYPE_RITHU = 2;
+    public static final int VEDIC_CALENDAR_TABLE_TYPE_SAURAMANA_MAASAM = 3;
+    public static final int VEDIC_CALENDAR_TABLE_TYPE_CHAANDRAMANA_MAASAM = 4;
+    public static final int VEDIC_CALENDAR_TABLE_TYPE_PAKSHAM = 5;
+    public static final int VEDIC_CALENDAR_TABLE_TYPE_THITHI = 6;
+    public static final int VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_THITHI = 7;
+    public static final int VEDIC_CALENDAR_TABLE_TYPE_RAASI = 8;
+    public static final int VEDIC_CALENDAR_TABLE_TYPE_NAKSHATHRAM = 9;
+    public static final int VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_NAKSHATHRAM = 10;
+    public static final int VEDIC_CALENDAR_TABLE_TYPE_YOGAM = 11;
+    public static final int VEDIC_CALENDAR_TABLE_TYPE_KARANAM = 12;
+    public static final int VEDIC_CALENDAR_TABLE_TYPE_VAASARAM = 13;
+    public static final int VEDIC_CALENDAR_TABLE_TYPE_DHINAM = 14;
+    public static final int VEDIC_CALENDAR_TABLE_TYPE_HORAI = 15;
+    public static final int VEDIC_CALENDAR_TABLE_TYPE_AMRUTATHI_YOGAM = 16;
+    private static final int MAX_PANCHANGAM_FIELDS = 17;
 
     public static final int AYANAMSA_CHITRAPAKSHA = 0;
     public static final int AYANAMSA_LAHIRI = 1;
@@ -387,7 +387,7 @@ public class VedicCalendar extends Calendar {
     public static VedicCalendar getInstance(String localPath, int panchangamType, Calendar calendar,
                                             double locLongitude, double locLatitude,
                                             double timeZone, int prefAyanamsa, int chaandramanaType,
-                                            HashMap<String, String[]> vcLocaleList)
+                                            HashMap<Integer, String[]> vcLocaleList)
             throws InvalidParameterSpecException {
         if (localPath == null) {
             throw new InvalidParameterSpecException("Invalid Local Path!");
@@ -608,7 +608,7 @@ public class VedicCalendar extends Calendar {
      */
     private VedicCalendar(int panchangamType, Calendar refCalendar,
                           double locLongitude, double locLatitude, double timeZone, int prefAyanamsa,
-                          int chaandramanaType, HashMap<String, String[]> vcLocaleList) {
+                          int chaandramanaType, HashMap<Integer, String[]> vcLocaleList) {
         // Create a Dhina Vishesham list for each instance as the locale may change for
         // each instance and thereby helps take care of panchangam as well as reminder texts.
         this.chaandramanaType = chaandramanaType;
@@ -2757,7 +2757,7 @@ public class VedicCalendar extends Calendar {
      *
      * @return  Returns true if all panchangam fields & values are correct, false otherwise.
      */
-    private static boolean isVCLocaleListValid(HashMap<String, String[]> vcLocaleList) {
+    private static boolean isVCLocaleListValid(HashMap<Integer, String[]> vcLocaleList) {
         boolean isValid = false;
 
         if ((vcLocaleList != null) && (vcLocaleList.size() == MAX_PANCHANGAM_FIELDS)) {

@@ -87,7 +87,7 @@ public class RaasiChart extends AppCompatActivity implements
 
         long startTime = System.nanoTime();
         try {
-            HashMap<String, String[]> vedicCalendarLocaleList =
+            HashMap<Integer, String[]> vedicCalendarLocaleList =
                     MainActivity.buildVedicCalendarLocaleList(this);
             int ayanamsaMode = MainActivity.readPrefAyanamsaSelection(this);
             MainActivity.PlacesInfo placesInfo = MainActivity.getLocationDetails(defLocation);

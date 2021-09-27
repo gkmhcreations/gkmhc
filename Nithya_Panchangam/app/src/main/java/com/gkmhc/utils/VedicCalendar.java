@@ -35,7 +35,7 @@ import swisseph.*;
  *
  * @author GKM Heritage Creations, 2021
  *
- * Credits: Source for the Drik calculations is referred from Karanam Ramkumar's link below:
+ * Credits: Source for the Panchangam calculations is referred from Karanam Ramkumar's link below:
  *          https://fdocuments.in/document/panchangam-calculations.html
  *          Source for SwissEph for getting Longitude & Latitude for Ravi & Moon and Udhaya Lagnam:
  *          http://th-mack.de/download/contrib/VedicHouses.java
@@ -729,7 +729,7 @@ public class VedicCalendar extends Calendar {
         // Step 2: Work out ayanam index
         //         - Utharayinam if date is between Makaram start(14th Jan) & Mithunam End (16th Jul)
         //         - Rest is Dhakshinayinam
-        //         Note: Makaram start & Mithinam end dates could change based on planetary
+        //         Note: Makaram start & Mithunam end dates could change based on planetary
         //               positions in a given year.
         // Step 3: Given the keys {ayanamIndex, locale}, find the exact matching
         //         ayanam string (as per the locale) in the ayanam mapping table.
@@ -2171,19 +2171,19 @@ public class VedicCalendar extends Calendar {
     }
 
     /**
-     * Use this API to get the Nalla Neram (auspicious time) within a given Calendar day.
+     * Use this API to get the Shubha Kaalam (auspicious time) within a given Calendar day.
      *
      * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY / MATCH_PANCHANGAM_PROMINENT
      *                      - to get auspicious time(s) for full day based on actual Sunrise.
      *
-     * @return Exact Nalla Neram (auspicious time) as a HTML-formatted string (as per Drik calendar).
+     * @return Exact Shubha Kaalam (auspicious time) as a HTML-formatted string (as per Drik calendar).
      *         It is the caller's responsibility to parse HTML tags in the string and process
      *         the string accordingly. Especially, when this string is being used for display
      *         purposes, it is better to use HTML objects to display the same.
      *
      *         Note: Only HTML line-break tag may be used in the formatted string as output.
      */
-    public String getNallaNeram(int queryType) {
+    public String getShubhaKaalam(int queryType) {
         // Logic:
         // Step 1: Get vaasaramIndex => weekday for the given Calendar date
         // Step 2: Calculate duration_of_day {diff b/w Sunrise & Sunset}

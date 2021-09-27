@@ -403,9 +403,9 @@ public class Panchangam extends Fragment {
         //Log.d("PanchangamProfiler","getAmruthathiYogam()... Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step18: Retrieve Nalla Neram (auspicious time) within the current thithi
+        // Step18: Retrieve Shubha Kaalam (auspicious time) within the current thithi
         //startTime = System.nanoTime();
-        panchangamValues.add(vedicCalendar.getNallaNeram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
+        panchangamValues.add(vedicCalendar.getShubhaKaalam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
         //endTime = System.nanoTime();
         //Log.d("PanchangamProfiler","getNallaNeram()... Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime, endTime));

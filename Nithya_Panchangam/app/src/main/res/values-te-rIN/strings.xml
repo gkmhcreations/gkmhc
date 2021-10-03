@@ -551,4 +551,19 @@
         <item>సిద్ధయోగః</item>
         <item>మరణయోగః</item>
     </string-array>
+
+    <string name="kaala_vibhaagaha">కాల విభాగహా</string>
+    <!-- Kaala Vibhaagaha -->
+    <string-array name="kaala_vibhaagaha_list">
+        <item>బ్రహ్మ ముహూర్తం</item>
+        <item>ప్రాత</item>
+        <item>సంగవ</item>
+        <item>మధ్యహ్న</item>
+        <item>అపారహ్న</item>
+        <item>సాయహ్న</item>
+        <item>ప్రదోష</item>
+        <item>ధినంత</item>
+    </string-array>
+    <string name="kaalam_details">నిత్యకాలాహ</string>
+    <string name="kaalam_heading">కాలహా</string>
 </resources>

@@ -37,25 +37,31 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
     private final Context context;
     private final ArrayList<String> panchangamFields;
     private final ArrayList<String> panchangamValues;
-    private final ArrayList<VedicCalendar.LagnamHoraiInfo> lagnamStr;
-    private final ArrayList<VedicCalendar.LagnamHoraiInfo> lagnamFullDayList;
-    private final ArrayList<VedicCalendar.LagnamHoraiInfo> horaiStr;
-    private final ArrayList<VedicCalendar.LagnamHoraiInfo> horaiFullDayList;
+    private final ArrayList<VedicCalendar.KaalamInfo> lagnamExactList;
+    private final ArrayList<VedicCalendar.KaalamInfo> lagnamFullDayList;
+    private final ArrayList<VedicCalendar.KaalamInfo> kaalamExactList;
+    private final ArrayList<VedicCalendar.KaalamInfo> kaalamFullDayList;
+    private final ArrayList<VedicCalendar.KaalamInfo> horaiExactList;
+    private final ArrayList<VedicCalendar.KaalamInfo> horaiFullDayList;
 
     public PanchangamAdapter(Context context,
                              ArrayList<String> panchangamFields,
                              ArrayList<String> panchangamValues,
-                             ArrayList<VedicCalendar.LagnamHoraiInfo> lagnamStr,
-                             ArrayList<VedicCalendar.LagnamHoraiInfo> lagnamFullDayList,
-                             ArrayList<VedicCalendar.LagnamHoraiInfo> horaiStr,
-                             ArrayList<VedicCalendar.LagnamHoraiInfo> horaiFullDayList) {
+                             ArrayList<VedicCalendar.KaalamInfo> lagnamExactList,
+                             ArrayList<VedicCalendar.KaalamInfo> lagnamFullDayList,
+                             ArrayList<VedicCalendar.KaalamInfo> kaalamExactList,
+                             ArrayList<VedicCalendar.KaalamInfo> kaalamFullDayList,
+                             ArrayList<VedicCalendar.KaalamInfo> horaiExactList,
+                             ArrayList<VedicCalendar.KaalamInfo> horaiFullDayList) {
         super(context, R.layout.panjangam_row, R.id.panchangam_field, panchangamFields);
         this.context = context;
         this.panchangamFields = panchangamFields;
         this.panchangamValues = panchangamValues;
-        this.lagnamStr = lagnamStr;
+        this.lagnamExactList = lagnamExactList;
         this.lagnamFullDayList = lagnamFullDayList;
-        this.horaiStr = horaiStr;
+        this.kaalamExactList = kaalamExactList;
+        this.kaalamFullDayList = kaalamFullDayList;
+        this.horaiExactList = horaiExactList;
         this.horaiFullDayList = horaiFullDayList;
     }
 
@@ -128,13 +134,35 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
         panchangamViewHolder.panchangamField.setText(panchangamFields.get(position));
         panchangamViewHolder.panchangamField.setTextSize(defTextSize);
 
+        // Make "Kaala Vibhaagaha" value clickable to display a range of Kaalam(s) throughout the day!
+        if (position == 3) {
+            // Add Lagnam details
+            // Display Lagnam from the list of Lagnams retrieved.
+            StringBuilder kaalamVal = new StringBuilder();
+            for (int index = 0; index < kaalamExactList.size(); index++) {
+                VedicCalendar.KaalamInfo kaalamInfo = kaalamExactList.get(index);
+                kaalamVal.append(kaalamInfo.name);
+                if (!kaalamInfo.timeValue.isEmpty()) {
+                    kaalamVal.append(" (");
+                    kaalamVal.append(kaalamInfo.timeValue);
+                    kaalamVal.append(") ");
+                    kaalamVal.append(VedicCalendar.ARROW_SYMBOL);
+                }
+            }
+            panchangamViewHolder.panchangamValue.setText(kaalamVal.toString());
+            panchangamViewHolder.panchangamValue.setTextSize(defTextSize);
+            panchangamViewHolder.panchangamValue.setPaintFlags(
+                    panchangamViewHolder.panchangamValue.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            convertView.setOnClickListener(v -> showKaalaVibhaagaha());
+        }
+
         // Make Lagnam value clickable to display a range of lagnams throughout the day!
-        if (position == 16) {
+        else if (position == 17) {
             // Add Lagnam details
             // Display Lagnam from the list of Lagnams retrieved.
             StringBuilder lagnamVal = new StringBuilder();
-            for (int index = 0;index < lagnamStr.size();index++) {
-                VedicCalendar.LagnamHoraiInfo lagnamInfo = lagnamStr.get(index);
+            for (int index = 0; index < lagnamExactList.size(); index++) {
+                VedicCalendar.KaalamInfo lagnamInfo = lagnamExactList.get(index);
                 lagnamVal.append(lagnamInfo.name);
                 if (!lagnamInfo.timeValue.isEmpty()) {
                     lagnamVal.append(" (");
@@ -152,12 +180,12 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             convertView.setOnClickListener(v -> showLagnamDetails());
         }
         // Make Horai value clickable to display a range of horai(s) throughout the day!
-        else if (position == 17) {
+        else if (position == 18) {
             // Add Horai details
             // Display Horai from the list of Horai(s) retrieved.
             StringBuilder horaiVal = new StringBuilder();
-            for (int index = 0;index < horaiStr.size();index++) {
-                VedicCalendar.LagnamHoraiInfo horaiInfo = horaiStr.get(index);
+            for (int index = 0; index < horaiExactList.size(); index++) {
+                VedicCalendar.KaalamInfo horaiInfo = horaiExactList.get(index);
 
                 // Remove the "line break" for better display
                 String horaiParsedVal = horaiInfo.name.replaceAll("<br>", "");
@@ -178,7 +206,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             convertView.setOnClickListener(v -> showHoraiDetails());
         }
         // Align & display "Nalla Neram" in HTML format
-        else if (position == 19) {
+        else if (position == 20) {
             // Add "Nalla Neram" details
             String nallaNeramParsedVal = panchangamValues.get(position);
 
@@ -209,7 +237,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
 
         // Add each lagnam row to the table.
         for (int index = 0;index < horaiFullDayList.size();index++) {
-            VedicCalendar.LagnamHoraiInfo horaiInfo = horaiFullDayList.get(index);
+            VedicCalendar.KaalamInfo horaiInfo = horaiFullDayList.get(index);
 
             TableRow row = new TableRow(getContext());
             TableRow.LayoutParams lp = new TableRow.LayoutParams(
@@ -269,7 +297,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
         TableLayout lagnamTable = lagnamView.findViewById(R.id.lagnam_horai_table);
         String startTime = "";
 
-        VedicCalendar.LagnamHoraiInfo lastLagnamInfo =
+        VedicCalendar.KaalamInfo lastLagnamInfo =
                 lagnamFullDayList.get(lagnamFullDayList.size() - 1);
         if (lastLagnamInfo != null) {
             startTime = lastLagnamInfo.timeValue;
@@ -277,7 +305,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
 
         // Add each lagnam row to the table.
         for (int index = 0;index < lagnamFullDayList.size();index++) {
-            VedicCalendar.LagnamHoraiInfo lagnamInfo = lagnamFullDayList.get(index);
+            VedicCalendar.KaalamInfo lagnamInfo = lagnamFullDayList.get(index);
 
             TableRow row = new TableRow(getContext());
             TableRow.LayoutParams lp = new TableRow.LayoutParams(
@@ -326,6 +354,78 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
 
         AlertDialog alertDialog =
                 new AlertDialog.Builder(getContext()).setView(lagnamView).create();
+        alertDialog.getWindow().setBackgroundDrawableResource(android.R.color.holo_red_dark);
+        alertDialog.show();
+    }
+
+    // Show full-day Kaalam(s) in a tabular form
+    private void showKaalaVibhaagaha() {
+        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+        View kaalamView = layoutInflater.inflate(R.layout.lagnam_horai_layout, null);
+        TableLayout kaalamTable = kaalamView.findViewById(R.id.lagnam_horai_table);
+        TextView titleView = kaalamView.findViewById(R.id.lagnam_horai_hdr);
+        titleView.setText(R.string.kaalam_details);
+        TextView tblHdrTextView = kaalamView.findViewById(R.id.lagnam_horai_table_hdr);
+        tblHdrTextView.setText(R.string.kaalam_heading);
+        String startTime = "";
+
+        VedicCalendar.KaalamInfo lastKaalamInfo =
+                kaalamFullDayList.get(kaalamFullDayList.size() - 1);
+        if (lastKaalamInfo != null) {
+            startTime = lastKaalamInfo.timeValue;
+        }
+
+        // Add each lagnam row to the table.
+        for (int index = 0;index < kaalamFullDayList.size();index++) {
+            VedicCalendar.KaalamInfo lagnamInfo = kaalamFullDayList.get(index);
+
+            TableRow row = new TableRow(getContext());
+            TableRow.LayoutParams lp = new TableRow.LayoutParams(
+                    TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
+            lp.setMargins(1, 1, 1, 1);
+            row.setLayoutParams(lp);
+
+            GradientDrawable border = new GradientDrawable();
+            border.setColor(context.getResources().getColor(R.color.lightSaffron));
+            border.setStroke(1, Color.BLUE);
+
+            // Create a textview & switchcompat fields for each alarm
+            if (lagnamInfo.isCurrent) {
+                border.setColor(context.getResources().getColor(R.color.white));
+            }
+            TextView tv1 = new TextView(getContext());
+            tv1.setText(lagnamInfo.name);
+            tv1.setTextColor(Color.BLUE);
+            tv1.setMaxLines(1);
+            lp.weight = (float) 0.34;
+            tv1.setLayoutParams(lp);
+            tv1.setGravity(Gravity.START);
+            row.addView(tv1);
+
+            TextView tv2 = new TextView(getContext());
+            tv2.setText(startTime);
+            tv2.setTextColor(Color.BLUE);
+            tv2.setMaxLines(1);
+            lp.weight = (float) 0.33;
+            tv2.setLayoutParams(lp);
+            tv2.setGravity(Gravity.CENTER_HORIZONTAL);
+            row.addView(tv2);
+
+            TextView tv3 = new TextView(getContext());
+            tv3.setText(lagnamInfo.timeValue);
+            startTime = lagnamInfo.timeValue;
+            tv3.setTextColor(Color.BLUE);
+            tv3.setMaxLines(1);
+            lp.weight = (float) 0.33;
+            tv3.setLayoutParams(lp);
+            tv3.setGravity(Gravity.CENTER_HORIZONTAL);
+            row.addView(tv3);
+            row.setBackground(border);
+            kaalamTable.addView(row);
+        }
+
+        AlertDialog alertDialog =
+                new AlertDialog.Builder(getContext()).setView(kaalamView).create();
         alertDialog.getWindow().setBackgroundDrawableResource(android.R.color.holo_red_dark);
         alertDialog.show();
     }

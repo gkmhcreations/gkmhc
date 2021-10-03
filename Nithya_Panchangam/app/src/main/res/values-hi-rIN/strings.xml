@@ -551,4 +551,19 @@
         <item>सिद्धयोगः</item>
         <item>मरणयोगः</item>
     </string-array>
+
+    <string name="kaala_vibhaagaha">काल विभाग:</string>
+    <!-- Kaala Vibhaagaha -->
+    <string-array name="kaala_vibhaagaha_list">
+        <item>ब्राह्म मुहूर्तः</item>
+        <item>प्रातः</item>
+        <item>सङ्गवः</item>
+        <item>मध्याह्नः</item>
+        <item>अपराह्णः</item>
+        <item>सायाह्नः</item>
+        <item>प्रदोषः</item>
+        <item>दिनान्तः</item>
+    </string-array>
+    <string name="kaalam_details">नित्यकालाः</string>
+    <string name="kaalam_heading">कालः</string>
 </resources>

@@ -551,4 +551,18 @@
         <item>സിദ്ധയോഗഃ</item>
         <item>മരണയോഗഃ</item>
     </string-array>
+
+    <string name="kaala_vibhaagaha">കാലവിഭാഗം</string>
+    <string-array name="kaala_vibhaagaha_list">
+        <item>ബ്രഹ്മ മുഹൂർത്തം</item>
+        <item>പ്രതാഹ്</item>
+        <item>സംഗവ</item>
+        <item>മാധായന</item>
+        <item>അപരണah</item>
+        <item>സയാന</item>
+        <item>പ്രദോഷ</item>
+        <item>ദിനന്ത</item>
+    </string-array>
+    <string name="kaalam_details">നിത്യകാലാഹ</string>
+    <string name="kaalam_heading">കാലാഹ</string>
 </resources>

@@ -127,7 +127,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
 
         ImageView prevYearView = findViewById(R.id.np_calendar_prevYear);
         prevYearView.setOnClickListener(v -> {
-            calendar.set(npYear, npMonth, npDate);
+            calendar.set(npYear, npMonth, 1);
             calendar.add(Calendar.YEAR, -1);
             npYear = calendar.get(Calendar.YEAR);
             setMonthView();
@@ -139,7 +139,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
 
         ImageView prevMonthView = findViewById(R.id.np_calendar_prevMonth);
         prevMonthView.setOnClickListener(v -> {
-            calendar.set(npYear, npMonth, npDate);
+            calendar.set(npYear, npMonth, 1);
             calendar.add(Calendar.MONTH, -1);
             npMonth = calendar.get(Calendar.MONTH);
             npYear = calendar.get(Calendar.YEAR);
@@ -152,7 +152,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
 
         ImageView nextYearView = findViewById(R.id.np_calendar_nextYear);
         nextYearView.setOnClickListener(v -> {
-            calendar.set(npYear, npMonth, npDate);
+            calendar.set(npYear, npMonth, 1);
             calendar.add(Calendar.YEAR, 1);
             npYear = calendar.get(Calendar.YEAR);
             setMonthView();
@@ -164,7 +164,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
 
         ImageView nextMonthView = findViewById(R.id.np_calendar_nextMonth);
         nextMonthView.setOnClickListener(v -> {
-            calendar.set(npYear, npMonth, npDate);
+            calendar.set(npYear, npMonth, 1);
             calendar.add(Calendar.MONTH, 1);
             npMonth = calendar.get(Calendar.MONTH);
             npYear = calendar.get(Calendar.YEAR);

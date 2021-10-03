@@ -551,4 +551,19 @@
         <item>ಸಿದ್ಧಯೋಗಃ</item>
         <item>ಮರಣಯೋಗಃ</item>
     </string-array>
+
+    <string name="kaala_vibhaagaha">ಕಾಲ ವಿಭಾಗಗಾಹ</string>
+    <!-- Kaala Vibhaagaha -->
+    <string-array name="kaala_vibhaagaha_list">
+        <item>ಬ್ರಹ್ಮ ಮುಹೂರ್ತ</item>
+        <item>ಪ್ರಾತಃ</item>
+        <item>ಸಂಗವ</item>
+        <item>ಮಧ್ಯಹ್ನ</item>
+        <item>ಅಪರಹಣ</item>
+        <item>ಸಾಯಹ್ನಾ</item>
+        <item>ಪ್ರದೋಷ</item>
+        <item>ದಿನಂತ</item>
+    </string-array>
+    <string name="kaalam_details">ನಿತ್ಯಕಲಾಹ</string>
+    <string name="kaalam_heading">ಕಾಳಹಾ</string>
 </resources>

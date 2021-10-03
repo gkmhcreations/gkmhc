@@ -1544,6 +1544,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             // Step16: Amruthathi Yogam
             arrayList = context.getResources().getStringArray(R.array.amruthathi_yogam_list);
             vedicCalendarLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_AMRUTATHI_YOGAM, arrayList);
+
+            // Step17: Kaala Vibhagah
+            arrayList = context.getResources().getStringArray(R.array.kaala_vibhaagaha_list);
+            vedicCalendarLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_KAALA_VIBHAAGAH, arrayList);
         }
 
         return vedicCalendarLocaleList;

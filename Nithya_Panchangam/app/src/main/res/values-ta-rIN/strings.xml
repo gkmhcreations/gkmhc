@@ -564,4 +564,18 @@
         <item>சித்தயோகம்</item>
         <item>மரணயோகம்</item>
     </string-array>
+    <string name="kaala_vibhaagaha">கால விபாகம்</string>
+    <!-- Kaala Vibhaagaha -->
+    <string-array name="kaala_vibhaagaha_list">
+        <item>பிரம்ம முகூர்த்தம்</item>
+        <item>பிராத</item>
+        <item>சங்கவ</item>
+        <item>மத்யான</item>
+        <item>அபரன</item>
+        <item>சயன</item>
+        <item>பிரதோஷம்</item>
+        <item>தினாந்த</item>
+    </string-array>
+    <string name="kaalam_details">தின காலங்கள்</string>
+    <string name="kaalam_heading">காலம்</string>
 </resources>

@@ -66,12 +66,12 @@ public class VedicCalendar extends Calendar {
     private int refYear;
     private int refVaasaram;
 
-    public static class LagnamHoraiInfo {
+    public static class KaalamInfo {
         public final String name;
         public final String timeValue;
         public boolean isCurrent;
 
-        LagnamHoraiInfo(String name, String timeValue, boolean isCurrent) {
+        KaalamInfo(String name, String timeValue, boolean isCurrent) {
             this.name = name;
             this.timeValue = timeValue;
             this.isCurrent = isCurrent;
@@ -100,6 +100,8 @@ public class VedicCalendar extends Calendar {
     private static final int MAX_THITHIS = 30;
     private static final int MAX_VAASARAMS = 7;
     private static final int MAX_AMRUTHATHI_YOGAMS = 3;
+    private static final int MAX_KAALAMS = 8;
+    public static final int BRAHMA_MUHURTHAM_DURATION = 96; // In Minutes
     private static final int KARANAM_DEGREES = 6;
     private static final int REF_UTHARAYINAM_START_MONTH = 3;
     private static final int REF_DHAKSHINAYINAM_START_MONTH = 8;
@@ -166,7 +168,8 @@ public class VedicCalendar extends Calendar {
     public static final int VEDIC_CALENDAR_TABLE_TYPE_DHINAM = 14;
     public static final int VEDIC_CALENDAR_TABLE_TYPE_HORAI = 15;
     public static final int VEDIC_CALENDAR_TABLE_TYPE_AMRUTATHI_YOGAM = 16;
-    private static final int MAX_PANCHANGAM_FIELDS = 17;
+    public static final int VEDIC_CALENDAR_TABLE_TYPE_KAALA_VIBHAAGAH = 17;
+    private static final int MAX_PANCHANGAM_FIELDS = 18;
 
     public static final int AYANAMSA_CHITRAPAKSHA = 0;
     public static final int AYANAMSA_LAHIRI = 1;
@@ -2294,7 +2297,7 @@ public class VedicCalendar extends Calendar {
      * @return @return List of Horai(s) & their span (as per Drik calendar)
      *         It is the caller's responsibility to parse horai list and interpret accordingly.
      */
-    public ArrayList<LagnamHoraiInfo> getHorai(int queryType) {
+    public ArrayList<KaalamInfo> getHorai(int queryType) {
         // Logic:
         // Step 1: Gather given Time from refCalendar
         //         Note: Given vaaram(week) is the starting Horai of the day
@@ -2305,7 +2308,7 @@ public class VedicCalendar extends Calendar {
         // Get Sunrise timings
         calcSunrise(queryType);
 
-        ArrayList<LagnamHoraiInfo> horaiInfoList = new ArrayList<>();
+        ArrayList<KaalamInfo> horaiInfoList = new ArrayList<>();
         int refTotalMins = (refHour * MAX_MINS_IN_HOUR) + refMin;
         int sunRiseTotalHours = (int)(sunRiseTotalMins / MAX_MINS_IN_HOUR);
 
@@ -2370,7 +2373,7 @@ public class VedicCalendar extends Calendar {
             nextiterHorai += horaiList[currWeekday - 1];
             nextiterHorai += "</font>" + "<br>";
 
-            LagnamHoraiInfo horaiInfo = new LagnamHoraiInfo(iterHorai,
+            KaalamInfo horaiInfo = new KaalamInfo(iterHorai,
                     formatTimeHHMM(horaiStartTime), false);
             // If caller has requested for Exact / Approximate horai then respond with only that
             // Otherwise, provide details in the format: current_horai (span) > next_horai
@@ -2381,7 +2384,7 @@ public class VedicCalendar extends Calendar {
                     horaiInfoList.clear();
                     horaiInfo.isCurrent = true;
                     horaiInfoList.add(horaiInfo);
-                    horaiInfoList.add(new LagnamHoraiInfo(nextiterHorai, "", false));
+                    horaiInfoList.add(new KaalamInfo(nextiterHorai, "", false));
                     break;
                 } else {
                     horaiInfo.isCurrent = true;
@@ -2408,7 +2411,7 @@ public class VedicCalendar extends Calendar {
      * @return Exact list of lagnams & their span (as per Drik calendar)
      *         It is the caller's responsibility to parse horai list and interpret accordingly.
      */
-    public ArrayList<LagnamHoraiInfo> getLagnam(int queryType) {
+    public ArrayList<KaalamInfo> getLagnam(int queryType) {
         // Logic:
         // Step 1: Gather given Time from refCalendar
         //         Note: Given vaaram(week) is the starting Horai of the day
@@ -2417,7 +2420,7 @@ public class VedicCalendar extends Calendar {
         //         For Ex: (Given_hour - Udhaya_Lagnam) / 2 ==> Number of Raasi's Ravi has moved
         //         from Udhaya Lagnam
         //long startTime = System.nanoTime();
-        ArrayList<LagnamHoraiInfo> lagnamInfoList = new ArrayList<>();
+        ArrayList<KaalamInfo> lagnamInfoList = new ArrayList<>();
         int refTotalMins = (refHour * MAX_MINS_IN_HOUR) + refMin;
 
         // Get Sunrise timings
@@ -2473,8 +2476,8 @@ public class VedicCalendar extends Calendar {
             }
             String lagnamStr = raasiList[(udhayaLagnam) % MAX_RAASIS];
             String nextLagnamStr = raasiList[(udhayaLagnam + 1) % MAX_RAASIS];
-            LagnamHoraiInfo lagnamInfo =
-                    new LagnamHoraiInfo(lagnamStr, timeStr, false);
+            KaalamInfo lagnamInfo =
+                    new KaalamInfo(lagnamStr, timeStr, false);
 
             // Retrieve lagnam that corresponds to current local time
             if ((curTotalMins >= prevLagnamEnd) && (curTotalMins <= lagnamStartOfDay)) {
@@ -2482,7 +2485,7 @@ public class VedicCalendar extends Calendar {
                     lagnamInfoList.clear();
                     lagnamInfo.isCurrent = true;
                     lagnamInfoList.add(lagnamInfo);
-                    lagnamInfoList.add(new LagnamHoraiInfo(nextLagnamStr, "", false));
+                    lagnamInfoList.add(new KaalamInfo(nextLagnamStr, "", false));
                     break;
                 } else {
                     lagnamInfo.isCurrent = true;
@@ -2511,6 +2514,98 @@ public class VedicCalendar extends Calendar {
         //        VedicCalendar.getTimeTaken(startTime, endTime));
         //System.out.println("VedicCalendar", "get_lagnam: Lagnam => " + strLagnams);
         return lagnamInfoList;
+    }
+
+    /**
+     * Use this API to get the Kaala Vibhaagam for the given time in a given Calendar day.
+     *
+     * @param queryType MATCH_SANKALPAM_EXACT
+     *                      - to get exact Kaalam that matches current time.
+     *                  MATCH_PANCHANGAM_FULLDAY / MATCH_PANCHANGAM_PROMINENT
+     *                      - to get Kaalam(s) for full-day.
+     *
+     * @return Exact list of Kaalams & their span (as per Drik calendar)
+     *         It is the caller's responsibility to parse Kaalam list and interpret accordingly.
+     */
+    public ArrayList<KaalamInfo> getKaalaVibhaagam(int queryType) {
+        // Logic:
+        // Step 1: Gather given Time from refCalendar
+        //         Note: Given vaaram(week) is the starting Horai of the day
+        // Step 2: Use Udhaya Lagnam (Raasi at sunrise) and offset the raasi from sunrise to
+        //         the given time to arrive at the lagnam for the given hour
+        //         For Ex: (Given_hour - Udhaya_Lagnam) / 2 ==> Number of Raasi's Ravi has moved
+        //         from Udhaya Lagnam
+        //long startTime = System.nanoTime();
+        ArrayList<KaalamInfo> kaalamInfoList = new ArrayList<>();
+        int refTotalMins = (refHour * MAX_MINS_IN_HOUR) + refMin;
+
+        // Get Sunrise timings
+        calcSunrise(MATCH_PANCHANGAM_FULLDAY);
+        calcSunset(MATCH_PANCHANGAM_FULLDAY);
+
+        int numKaalam = 0;
+        // 1/5 of the difference b/w Sunrise & Sunset during the day time.
+        double kaalamDurationDayTime = (sunSetTotalMins - sunRiseTotalMins) / 5;
+        // 1/8 of the difference b/w Sunset of present day & Sunrise of next day.
+        double kaalamDurationNightTime = ((MAX_MINS_IN_DAY - sunSetTotalMins) + sunRiseTotalMins) / 8;
+        double kaalamStartOfDay = sunRiseTotalMins;
+        kaalamStartOfDay -= BRAHMA_MUHURTHAM_DURATION;
+        double prevKaalamEnd = kaalamStartOfDay;
+
+        double curTotalMins = refTotalMins;
+        if (curTotalMins < sunRiseTotalMins) {
+            curTotalMins += MAX_MINS_IN_DAY;
+        }
+
+        String[] kaalamList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_KAALA_VIBHAAGAH);
+        while (numKaalam < MAX_KAALAMS) {
+            String timeStr;
+            if (numKaalam == 0) {
+                kaalamStartOfDay += BRAHMA_MUHURTHAM_DURATION;
+            } else if (numKaalam == 6) {
+                // 2/8 of night time kaalam is "Pradosha"
+                kaalamStartOfDay += (kaalamDurationNightTime * 2);
+            } else if (numKaalam == 7) {
+                // 5/8 of night time kaalam is "Dhinantha"
+                kaalamStartOfDay += (kaalamDurationNightTime * 5);
+            } else {
+                kaalamStartOfDay += kaalamDurationDayTime;
+            }
+            if (kaalamStartOfDay > MAX_MINS_IN_DAY) {
+                timeStr = formatTimeHHMM((kaalamStartOfDay - MAX_MINS_IN_DAY));
+            } else {
+                timeStr = formatTimeHHMM(kaalamStartOfDay);
+            }
+            String kaalamStr = kaalamList[(numKaalam) % MAX_KAALAMS];
+            String nextKaalamStr = kaalamList[(numKaalam + 1) % MAX_KAALAMS];
+            KaalamInfo kaalamInfo =
+                    new KaalamInfo(kaalamStr, timeStr, false);
+
+            // Retrieve kaalam that corresponds to current local time
+            if ((curTotalMins >= prevKaalamEnd) && (curTotalMins <= kaalamStartOfDay)) {
+                if (queryType == MATCH_SANKALPAM_EXACT) {
+                    kaalamInfoList.clear();
+                    kaalamInfo.isCurrent = true;
+                    kaalamInfoList.add(kaalamInfo);
+                    kaalamInfoList.add(new KaalamInfo(nextKaalamStr, "", false));
+                    break;
+                } else {
+                    kaalamInfo.isCurrent = true;
+                    kaalamInfoList.add(kaalamInfo);
+                }
+            } else {
+                kaalamInfoList.add(kaalamInfo);
+            }
+
+            numKaalam += 1;
+            prevKaalamEnd = kaalamStartOfDay;
+        }
+
+        //long endTime = System.nanoTime();
+        //System.out.println("VedicCalendarProf" + " getKaalam() for Sun... Time Taken: " +
+        //        VedicCalendar.getTimeTaken(startTime, endTime));
+        //System.out.println("VedicCalendar", "get_kaalam: Kaalam => " + strKaalam);
+        return kaalamInfoList;
     }
 
     /**
@@ -2616,29 +2711,35 @@ public class VedicCalendar extends Calendar {
         }
 
         // 2) Match any of all of the below tuples in the same order:
+        //    Type-1  - Match for {Thithi} --- 5 matches!
         //    Type-2  - Match for Three tuples {SauramaanaMaasam, DinaAnkam} --- 6 matches!
         //    Type-3A - Match for Three tuples {SauramaanaMaasam, Paksham, Thithi} --- 6 matches!
-        //    Type-3B - Match for Three tuples {ChaandramanaMaasam, Paksham, Thithi} --- 19 matches!
-        //    Type-4A - Match for Three tuples {SauramaanaMaasam, Paksham, Nakshatram} --- 11 matches!
+        //    Type-3B - Match for Three tuples {ChaandramanaMaasam, Paksham, Thithi} --- 20 matches!
+        //    Type-4A - Match for Three tuples {SauramaanaMaasam, Paksham, Nakshatram} --- 4 matches!
         //    Type-4B - Match for Three tuples {ChaandramanaMaasam, Paksham, Nakshatram} --- 2 matches!
         //    Type-5  - Match for 2 tuples {Paksham, Thithi} --- 1 match!
-        //    Type-6A - Match for 2 tuples {SauramaanaMaasam, Vaasaram} --- No Match for now!
+        //    Type-6A - Match for 2 tuples {SauramaanaMaasam, Vaasaram} --- Unused so far!
         //    Type-6B - Match for 2 tuples {ChaandramanaMaasam, Vaasaram} --- 1 match!
-        //    Type-7A - Match for 2 tuples {SauramaanaMaasam, Nakshatram} --- 3 matches!
-        //    Type-7B - Match for 2 tuples {ChaandramanaMaasam, Nakshatram} --- No Match for now!
+        //    Type-7A - Match for 2 tuples {SauramaanaMaasam, Nakshatram} --- 9 matches!
+        //    Type-7B - Match for 2 tuples {ChaandramanaMaasam, Nakshatram} --- Unused so far!
         //System.out.println("getDinaVishesham: Keys: " + dhinaVisheshamList.keySet());
         //System.out.println("getDinaVishesham: Values: " + dhinaVisheshamList.values());
 
-        //    Type-3B - Match for Three tuples {ChaandramanaMaasam, Paksham, Thithi} --- 19 matches!
+        //    Type-3B - Match for Three tuples {ChaandramanaMaasam, Paksham, Thithi} --- 20 matches!
         if ((val = dhinaVisheshamList.get(chaandramanaMaasam + paksham + thithiStr)) != null) {
             //System.out.println("getDinaVishesham: Type-3B MATCH!!! Value = " + val);
             dhinaSpecialCode.add(val);
         }
 
-        //    Type-4A - Match for Three tuples {SauramaanaMaasam, Paksham, Nakshatram} --- 11 matches!
-        if ((val = dhinaVisheshamList.get(sauramaanaMaasam + paksham + nakshatram)) != null) {
-            //System.out.println("getDinaVishesham: Type-4A MATCH!!! Value = " + val);
-            dhinaSpecialCode.add(val);
+        //    Type-7A - Match for 2 tuples {SauramaanaMaasam, Nakshatram} --- 9 matches!
+        if ((val = dhinaVisheshamList.get(sauramaanaMaasam + nakshatram)) != null) {
+            //System.out.println("getDinaVishesham: Type-7 MATCH!!! Value = " + val);
+
+            // If a Vishesham matches based on nakshatram then it may occur twice within in a
+            // 27-nakshatram cycle if the below match happens at the beginning of the month.
+            if (dinaAnkam > 3) {
+                dhinaSpecialCode.add(val);
+            }
         }
 
         //    Type-3A - Match for Three tuples {SauramaanaMaasam, Paksham, Thithi} --- 6 matches!
@@ -2653,15 +2754,10 @@ public class VedicCalendar extends Calendar {
             dhinaSpecialCode.add(val);
         }
 
-        //    Type-7A - Match for 2 tuples {SauramaanaMaasam, Nakshatram} --- 3 matches!
-        if ((val = dhinaVisheshamList.get(sauramaanaMaasam + nakshatram)) != null) {
-            //System.out.println("getDinaVishesham: Type-7 MATCH!!! Value = " + val);
-
-            // If a Vishesham matches based on nakshatram then it may occur twice within in a
-            // 27-nakshatram cycle if the below match happens at the beginning of the month.
-            if (dinaAnkam > 3) {
-                dhinaSpecialCode.add(val);
-            }
+        //    Type-4A - Match for Three tuples {SauramaanaMaasam, Paksham, Nakshatram} --- 4 matches!
+        if ((val = dhinaVisheshamList.get(sauramaanaMaasam + paksham + nakshatram)) != null) {
+            //System.out.println("getDinaVishesham: Type-4A MATCH!!! Value = " + val);
+            dhinaSpecialCode.add(val);
         }
 
         //    Type-4B - Match for Three tuples {ChaandramanaMaasam, Paksham, Nakshatram} --- 2 matches!
@@ -2781,6 +2877,8 @@ public class VedicCalendar extends Calendar {
             String[] horaiList = vcLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_HORAI);
             String[] ayogamList =
                     vcLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_AMRUTATHI_YOGAM);
+            String[] kaalamList =
+                    vcLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_KAALA_VIBHAAGAH);
             if (((samvatsaramList != null) && (samvatsaramList.length == SAMVATSARAM_NUM_YEARS)) &&
                 ((ayanamList != null) && (ayanamList.length == MAX_AYANAMS)) &&
                 ((rithuList != null) && (rithuList.length == MAX_RITHUS)) &&
@@ -2797,7 +2895,8 @@ public class VedicCalendar extends Calendar {
                 ((vaasaramList != null) && (vaasaramList.length == MAX_VAASARAMS)) &&
                 ((dhinamList != null) && (dhinamList.length == MAX_VAASARAMS)) &&
                 ((horaiList != null) && (horaiList.length == MAX_VAASARAMS)) &&
-                ((ayogamList != null) && (ayogamList.length == MAX_AMRUTHATHI_YOGAMS))) {
+                ((ayogamList != null) && (ayogamList.length == MAX_AMRUTHATHI_YOGAMS)) &&
+                ((kaalamList != null) && (kaalamList.length == MAX_KAALAMS))) {
                 isValid = true;
             }
         }
@@ -2817,13 +2916,13 @@ public class VedicCalendar extends Calendar {
         //    Type-1  - Match for {Thithi} --- 5 matches!
         //    Type-2  - Match for Three tuples {SauramaanaMaasam, DinaAnkam} --- 6 matches!
         //    Type-3A - Match for Three tuples {SauramaanaMaasam, Paksham, Thithi} --- 6 matches!
-        //    Type-3B - Match for Three tuples {ChaandramanaMaasam, Paksham, Thithi} --- 19 matches!
-        //    Type-4A - Match for Three tuples {SauramaanaMaasam, Paksham, Nakshatram} --- 11 matches!
+        //    Type-3B - Match for Three tuples {ChaandramanaMaasam, Paksham, Thithi} --- 20 matches!
+        //    Type-4A - Match for Three tuples {SauramaanaMaasam, Paksham, Nakshatram} --- 4 matches!
         //    Type-4B - Match for Three tuples {ChaandramanaMaasam, Paksham, Nakshatram} --- 2 matches!
         //    Type-5  - Match for 2 tuples {Paksham, Thithi} --- 1 match!
         //    Type-6A - Match for 2 tuples {SauramaanaMaasam, Vaasaram} --- Unused so far!
         //    Type-6B - Match for 2 tuples {ChaandramanaMaasam, Vaasaram} --- 1 match!
-        //    Type-7A - Match for 2 tuples {SauramaanaMaasam, Nakshatram} --- 5 matches!
+        //    Type-7A - Match for 2 tuples {SauramaanaMaasam, Nakshatram} --- 9 matches!
         //    Type-7B - Match for 2 tuples {ChaandramanaMaasam, Nakshatram} --- Unused so far!
         if (dhinaVisheshamList == null) {
             String[] sauramanaMaasamList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_SAURAMANA_MAASAM);
@@ -2874,10 +2973,10 @@ public class VedicCalendar extends Calendar {
             dhinaVisheshamList.put(sauramanaMaasamList[9] + "1", PANCHANGAM_DHINA_VISHESHAM_MAKARA_SANKARANTHI);
 
             // Thai Poosam -
-            // {SauramaanaMaasam - Makara, Paksham - Shukla, Nakshatram - Poosam}
-            // (Type-4A match)
-            dhinaVisheshamList.put(sauramanaMaasamList[9] + shuklaPaksham +
-                    nakshatramList[7], PANCHANGAM_DHINA_VISHESHAM_THAI_POOSAM);
+            // {SauramaanaMaasam - Makara, Nakshatram - Poosam}
+            // (Type-7A match)
+            dhinaVisheshamList.put(sauramanaMaasamList[9] + nakshatramList[7],
+                    PANCHANGAM_DHINA_VISHESHAM_THAI_POOSAM);
 
             // Vasantha Panchami -
             // {ChaandramanaMaasam - Magha, Paksham - Shukla, Thithi - Panchami}
@@ -2904,9 +3003,9 @@ public class VedicCalendar extends Calendar {
                     PANCHANGAM_DHINA_VISHESHAM_MAASI_MAGAM);
 
             // Bala Periyava Jayanthi -
-            // {SauramaanaMaasam - Kumbha, Paksham - Krishna, Nakshatram - Uthiradam}
-            // (Type-4A match)
-            dhinaVisheshamList.put(chaandramanaMaasamList[10] + krishnaPaksham + nakshatramList[20],
+            // {SauramaanaMaasam - Kumbha, Nakshatram - Uthiradam}
+            // (Type-7A match)
+            dhinaVisheshamList.put(sauramanaMaasamList[10] + nakshatramList[20],
                     PANCHANGAM_DHINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
 
             // Maha Sivarathiri -
@@ -2992,16 +3091,16 @@ public class VedicCalendar extends Calendar {
                     nakshatramList[15], PANCHANGAM_DHINA_VISHESHAM_VAIKASI_VISHAKAM);
 
             // Maha Periyava Jayanthi -
-            // {SauramaanaMaasam - Rishabha, Paksham - Shukla, Nakshatram - Anusham}
-            // (Type-4A match)
-            dhinaVisheshamList.put(sauramanaMaasamList[1] + shuklaPaksham +
-                    nakshatramList[16], PANCHANGAM_DHINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
+            // {SauramaanaMaasam - Rishabha, Nakshatram - Anusham}
+            // (Type-7A match)
+            dhinaVisheshamList.put(sauramanaMaasamList[1] + nakshatramList[16],
+                    PANCHANGAM_DHINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
 
             // Puthu Periyava Jayanthi -
-            // {SauramaanaMaasam - Kataka, Paksham - Krishna, Nakshatram - Avittam}
-            // (Type-4A match)
-            dhinaVisheshamList.put(sauramanaMaasamList[3] + krishnaPaksham +
-                    nakshatramList[22], PANCHANGAM_DHINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
+            // {SauramaanaMaasam - Kataka, Nakshatram - Avittam}
+            // (Type-7A match)
+            dhinaVisheshamList.put(sauramanaMaasamList[3] + nakshatramList[22],
+                    PANCHANGAM_DHINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
 
             // Aadi Perukku -
             // {SauramaanaMaasam - Kataka, Dina-Ankham - 18}

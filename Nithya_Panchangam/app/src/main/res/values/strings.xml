@@ -224,8 +224,8 @@
     <string name="bala_periyava_jayanthi">Shri Shankara Vijayendra Saraswathi Swamigal Jayanthi</string>
     <string name="sringeri_periyava_jayanthi">Jagadguru Shri Mahaasannidaanam Shri Bharathi Theertha Swaminaha Vardhanthi</string>
     <string name="appayya_dikshitar_jayanthi">Shri Appayya Dikshitar Jayanthi</string>
-    <string name="lagnam_details">Dina Lagnams</string>
-    <string name="horai_details">Dina Horai(s)</string>
+    <string name="lagnam_details">Dhina Lagnams</string>
+    <string name="horai_details">Dhina Horai(s)</string>
     <string name="start_time">Start Time</string>
     <string name="end_time">End Time</string>
     <string name="cancel">Cancel</string>
@@ -662,4 +662,19 @@
         <item>Siddhayogam</item>
         <item>Maranayogam</item>
     </string-array>
+
+    <string name="kaala_vibhaagaha">Kaala Vibhaagaha</string>
+    <!-- Kaala Vibhaagaha -->
+    <string-array name="kaala_vibhaagaha_list">
+        <item>Brahma muhurta</item>
+        <item>Pratah</item>
+        <item>Sangava</item>
+        <item>Madhyahna</item>
+        <item>Aparahna</item>
+        <item>Sayahna</item>
+        <item>Pradosha</item>
+        <item>Dhinanta</item>
+    </string-array>
+    <string name="kaalam_details">Nithya Kaalam</string>
+    <string name="kaalam_heading">Kaalam</string>
 </resources>

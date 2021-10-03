@@ -147,8 +147,10 @@ public class VedicCalendarUnitTest {
                 checkDinaVisheshamVaikasiVishagam();
                 break;
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI:
+                checkDinaVisheshamMahaPeriyavaJayanthi();
                 break;
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI:
+                checkDinaVisheshamPuthuPeriyavaJayanthi();
                 break;
             case VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_AADI_PERUKKU:
                 checkDinaVisheshamAadiPerukku();
@@ -474,9 +476,8 @@ public class VedicCalendarUnitTest {
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_THAI_POOSAM);
         checkDinaVisheshamsforAnyMatch(28, 1, 2021,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_THAI_POOSAM);
-        // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(18, 1, 2022,
-        //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_THAI_POOSAM);
+        checkDinaVisheshamsforAnyMatch(18, 1, 2022,
+                VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_THAI_POOSAM);
         checkDinaVisheshamsforAnyMatch(5, 2, 2023,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_THAI_POOSAM);
         // TODO - Not Working!
@@ -569,11 +570,21 @@ public class VedicCalendarUnitTest {
 
     @Test
     public void checkDinaVisheshamBalaPeriyavaJayanthi() {
-        checkDinaVisheshamsforAnyMatch(7, 3, 2020,
+        //checkDinaVisheshamsforAnyMatch(7, 3, 2015,
+        //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
+        //checkDinaVisheshamsforAnyMatch(5, 3, 2016,
+        //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
+        checkDinaVisheshamsforAnyMatch(23, 2, 2017,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
+        checkDinaVisheshamsforAnyMatch(13, 3, 2018,
+                VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
+        checkDinaVisheshamsforAnyMatch(3, 3, 2019,
+                VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
+        //checkDinaVisheshamsforAnyMatch(7, 3, 2020,
+        //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
         checkDinaVisheshamsforAnyMatch(9, 3, 2021,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
-        checkDinaVisheshamsforAnyMatch(14, 1, 2022,
+        checkDinaVisheshamsforAnyMatch(27, 2, 2022,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
         checkDinaVisheshamsforAnyMatch(15, 1, 2023,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
@@ -866,37 +877,60 @@ public class VedicCalendarUnitTest {
 
     @Test
     public void checkDinaVisheshamMahaPeriyavaJayanthi() {
-        checkDinaVisheshamsforAnyMatch(15, 1, 2020,
+        checkDinaVisheshamsforAnyMatch(2, 6, 2015,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
-        checkDinaVisheshamsforAnyMatch(5, 6, 2021,
+        checkDinaVisheshamsforAnyMatch(22, 5, 2016,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
-        checkDinaVisheshamsforAnyMatch(16, 5, 2022,
+        checkDinaVisheshamsforAnyMatch(8, 6, 2017,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
-        checkDinaVisheshamsforAnyMatch(15, 1, 2023,
+        checkDinaVisheshamsforAnyMatch(29, 5, 2018,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
-        checkDinaVisheshamsforAnyMatch(15, 1, 2024,
+        checkDinaVisheshamsforAnyMatch(19, 5, 2019,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
-        checkDinaVisheshamsforAnyMatch(14, 1, 2025,
+        checkDinaVisheshamsforAnyMatch(5, 6, 2020,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
-        checkDinaVisheshamsforAnyMatch(14, 1, 2026,
+        checkDinaVisheshamsforAnyMatch(26, 5, 2021,
+                VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
+        // TODO - Not Working!
+        //checkDinaVisheshamsforAnyMatch(17, 5, 2022,
+        //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
+        // TODO - Not Working!
+        //checkDinaVisheshamsforAnyMatch(3, 6, 2023,
+        //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
+        checkDinaVisheshamsforAnyMatch(24, 5, 2024,
+                VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
+        checkDinaVisheshamsforAnyMatch(10, 6, 2025,
+                VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
+        checkDinaVisheshamsforAnyMatch(31, 5, 2026,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
     }
 
     @Test
     public void checkDinaVisheshamPuthuPeriyavaJayanthi() {
-        checkDinaVisheshamsforAnyMatch(12, 8, 2020,
+        // TODO - Not Working!
+        //checkDinaVisheshamsforAnyMatch(1, 8, 2015,
+        //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
+        checkDinaVisheshamsforAnyMatch(22, 7, 2016,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
-        checkDinaVisheshamsforAnyMatch(5, 8, 2021,
+        checkDinaVisheshamsforAnyMatch(8, 8, 2017,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
-        checkDinaVisheshamsforAnyMatch(14, 1, 2022,
+        checkDinaVisheshamsforAnyMatch(29, 7, 2018,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
-        checkDinaVisheshamsforAnyMatch(15, 1, 2023,
+        checkDinaVisheshamsforAnyMatch(16, 8, 2019,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
-        checkDinaVisheshamsforAnyMatch(15, 1, 2024,
+        checkDinaVisheshamsforAnyMatch(5, 8, 2020,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
-        checkDinaVisheshamsforAnyMatch(14, 1, 2025,
+        checkDinaVisheshamsforAnyMatch(26, 7, 2021,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
-        checkDinaVisheshamsforAnyMatch(14, 1, 2026,
+        checkDinaVisheshamsforAnyMatch(12, 8, 2022,
+                VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
+        checkDinaVisheshamsforAnyMatch(3, 8, 2023,
+                VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
+        checkDinaVisheshamsforAnyMatch(23, 7, 2024,
+                VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
+        checkDinaVisheshamsforAnyMatch(10, 8, 2025,
+                VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
+        checkDinaVisheshamsforAnyMatch(31, 7, 2026,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
     }
 

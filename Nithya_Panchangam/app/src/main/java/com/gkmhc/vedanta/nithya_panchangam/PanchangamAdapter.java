@@ -142,9 +142,9 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             for (int index = 0; index < kaalamExactList.size(); index++) {
                 VedicCalendar.KaalamInfo kaalamInfo = kaalamExactList.get(index);
                 kaalamVal.append(kaalamInfo.name);
-                if (!kaalamInfo.timeValue.isEmpty()) {
+                if (!kaalamInfo.endTime.isEmpty()) {
                     kaalamVal.append(" (");
-                    kaalamVal.append(kaalamInfo.timeValue);
+                    kaalamVal.append(kaalamInfo.endTime);
                     kaalamVal.append(") ");
                     kaalamVal.append(VedicCalendar.ARROW_SYMBOL);
                 }
@@ -164,9 +164,9 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             for (int index = 0; index < lagnamExactList.size(); index++) {
                 VedicCalendar.KaalamInfo lagnamInfo = lagnamExactList.get(index);
                 lagnamVal.append(lagnamInfo.name);
-                if (!lagnamInfo.timeValue.isEmpty()) {
+                if (!lagnamInfo.endTime.isEmpty()) {
                     lagnamVal.append(" (");
-                    lagnamVal.append(lagnamInfo.timeValue);
+                    lagnamVal.append(lagnamInfo.endTime);
                     lagnamVal.append(") ");
                     lagnamVal.append(VedicCalendar.ARROW_SYMBOL);
                 }
@@ -190,9 +190,9 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
                 // Remove the "line break" for better display
                 String horaiParsedVal = horaiInfo.name.replaceAll("<br>", "");
                 horaiVal.append(horaiParsedVal);
-                if (!horaiInfo.timeValue.isEmpty()) {
+                if (!horaiInfo.endTime.isEmpty()) {
                     horaiVal.append(" (");
-                    horaiVal.append(horaiInfo.timeValue);
+                    horaiVal.append(horaiInfo.endTime);
                     horaiVal.append(") ");
                     horaiVal.append(VedicCalendar.ARROW_SYMBOL);
                 }
@@ -233,7 +233,6 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
         titleView.setText(R.string.horai_details);
         TextView tblHdrTextView = horaiView.findViewById(R.id.lagnam_horai_table_hdr);
         tblHdrTextView.setText(R.string.horai_heading);
-        String startTime = "";
 
         // Add each lagnam row to the table.
         for (int index = 0;index < horaiFullDayList.size();index++) {
@@ -263,7 +262,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             row.addView(tv1);
 
             TextView tv2 = new TextView(getContext());
-            tv2.setText(startTime);
+            tv2.setText(horaiInfo.startTime);
             tv2.setTextColor(Color.BLUE);
             tv2.setMaxLines(1);
             lp.weight = (float) 0.33;
@@ -272,8 +271,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             row.addView(tv2);
 
             TextView tv3 = new TextView(getContext());
-            tv3.setText(horaiInfo.timeValue);
-            startTime = horaiInfo.timeValue;
+            tv3.setText(horaiInfo.endTime);
             tv3.setTextColor(Color.BLUE);
             tv3.setMaxLines(1);
             lp.weight = (float) 0.33;
@@ -295,13 +293,6 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
         LayoutInflater layoutInflater = LayoutInflater.from(getContext());
         View lagnamView = layoutInflater.inflate(R.layout.lagnam_horai_layout, null);
         TableLayout lagnamTable = lagnamView.findViewById(R.id.lagnam_horai_table);
-        String startTime = "";
-
-        VedicCalendar.KaalamInfo lastLagnamInfo =
-                lagnamFullDayList.get(lagnamFullDayList.size() - 1);
-        if (lastLagnamInfo != null) {
-            startTime = lastLagnamInfo.timeValue;
-        }
 
         // Add each lagnam row to the table.
         for (int index = 0;index < lagnamFullDayList.size();index++) {
@@ -331,7 +322,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             row.addView(tv1);
 
             TextView tv2 = new TextView(getContext());
-            tv2.setText(startTime);
+            tv2.setText(lagnamInfo.startTime);
             tv2.setTextColor(Color.BLUE);
             tv2.setMaxLines(1);
             lp.weight = (float) 0.33;
@@ -340,8 +331,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             row.addView(tv2);
 
             TextView tv3 = new TextView(getContext());
-            tv3.setText(lagnamInfo.timeValue);
-            startTime = lagnamInfo.timeValue;
+            tv3.setText(lagnamInfo.endTime);
             tv3.setTextColor(Color.BLUE);
             tv3.setMaxLines(1);
             lp.weight = (float) 0.33;
@@ -367,17 +357,10 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
         titleView.setText(R.string.kaalam_details);
         TextView tblHdrTextView = kaalamView.findViewById(R.id.lagnam_horai_table_hdr);
         tblHdrTextView.setText(R.string.kaalam_heading);
-        String startTime = "";
-
-        VedicCalendar.KaalamInfo lastKaalamInfo =
-                kaalamFullDayList.get(kaalamFullDayList.size() - 1);
-        if (lastKaalamInfo != null) {
-            startTime = lastKaalamInfo.timeValue;
-        }
 
         // Add each lagnam row to the table.
         for (int index = 0;index < kaalamFullDayList.size();index++) {
-            VedicCalendar.KaalamInfo lagnamInfo = kaalamFullDayList.get(index);
+            VedicCalendar.KaalamInfo kaalamInfo = kaalamFullDayList.get(index);
 
             TableRow row = new TableRow(getContext());
             TableRow.LayoutParams lp = new TableRow.LayoutParams(
@@ -390,11 +373,11 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             border.setStroke(1, Color.BLUE);
 
             // Create a textview & switchcompat fields for each alarm
-            if (lagnamInfo.isCurrent) {
+            if (kaalamInfo.isCurrent) {
                 border.setColor(context.getResources().getColor(R.color.white));
             }
             TextView tv1 = new TextView(getContext());
-            tv1.setText(lagnamInfo.name);
+            tv1.setText(kaalamInfo.name);
             tv1.setTextColor(Color.BLUE);
             tv1.setMaxLines(1);
             lp.weight = (float) 0.34;
@@ -403,7 +386,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             row.addView(tv1);
 
             TextView tv2 = new TextView(getContext());
-            tv2.setText(startTime);
+            tv2.setText(kaalamInfo.startTime);
             tv2.setTextColor(Color.BLUE);
             tv2.setMaxLines(1);
             lp.weight = (float) 0.33;
@@ -412,8 +395,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             row.addView(tv2);
 
             TextView tv3 = new TextView(getContext());
-            tv3.setText(lagnamInfo.timeValue);
-            startTime = lagnamInfo.timeValue;
+            tv3.setText(kaalamInfo.endTime);
             tv3.setTextColor(Color.BLUE);
             tv3.setMaxLines(1);
             lp.weight = (float) 0.33;

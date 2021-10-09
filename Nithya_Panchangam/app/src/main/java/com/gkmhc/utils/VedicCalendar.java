@@ -68,12 +68,14 @@ public class VedicCalendar extends Calendar {
 
     public static class KaalamInfo {
         public final String name;
-        public final String timeValue;
+        public final String startTime;
+        public final String endTime;
         public boolean isCurrent;
 
-        KaalamInfo(String name, String timeValue, boolean isCurrent) {
+        KaalamInfo(String name, String startTime, String endTime, boolean isCurrent) {
             this.name = name;
-            this.timeValue = timeValue;
+            this.startTime = startTime;
+            this.endTime = endTime;
             this.isCurrent = isCurrent;
         }
     }
@@ -2330,19 +2332,20 @@ public class VedicCalendar extends Calendar {
             iterHorai = "";
             double perHoraiSpan = 0;
             if ((horaiStartTime < sunRiseTotalMins) ||
-                    ((horaiStartTime + perHoraiSpan) > sunSetTotalMins)) {
+                ((horaiStartTime + perHoraiSpan) > sunSetTotalMins)) {
                 perHoraiSpan = perHoraiNightSpan;
             } else {
                 perHoraiSpan = perHoraiDaySpan;
             }
 
+            String startTimeStr = formatTimeHHMM(horaiStartTime);
             boolean isCurHorai = false;
 
             // Check if the current time falls between a horai's span and
             // Else, take care of midnight timings.
             // if yes, then mark the row as "current".
             if ((horaiStartTime <= refTotalMins) &&
-                    ((horaiStartTime + perHoraiSpan) >= refTotalMins)) {
+                ((horaiStartTime + perHoraiSpan) >= refTotalMins)) {
                 isCurHorai = true;
             } else if (numHours == 0) {
                 if (refTotalMins <= horaiStartTime) {
@@ -2350,6 +2353,7 @@ public class VedicCalendar extends Calendar {
                 }
             }
             horaiStartTime += perHoraiSpan;
+            String endTimeStr = formatTimeHHMM(horaiStartTime);
 
             int currWeekday = curCalendar.get(Calendar.DAY_OF_WEEK);
             String horaiVal = horaiList[currWeekday - 1];
@@ -2364,17 +2368,16 @@ public class VedicCalendar extends Calendar {
             curCalendar.add(Calendar.DAY_OF_WEEK, -2);
             currWeekday = curCalendar.get(Calendar.DAY_OF_WEEK);
             isSubhaHorai = horaisubhamTable[currWeekday - 1];
-            String nextiterHorai;
+            String nextIterHorai;
             if (isSubhaHorai == HORAI_SUBHAM) {
-                nextiterHorai = "<font color='blue'>";
+                nextIterHorai = "<font color='blue'>";
             } else {
-                nextiterHorai = "<font color='red'>";
+                nextIterHorai = "<font color='red'>";
             }
-            nextiterHorai += horaiList[currWeekday - 1];
-            nextiterHorai += "</font>" + "<br>";
+            nextIterHorai += horaiList[currWeekday - 1];
+            nextIterHorai += "</font>" + "<br>";
 
-            KaalamInfo horaiInfo = new KaalamInfo(iterHorai,
-                    formatTimeHHMM(horaiStartTime), false);
+            KaalamInfo horaiInfo = new KaalamInfo(iterHorai, startTimeStr, endTimeStr, false);
             // If caller has requested for Exact / Approximate horai then respond with only that
             // Otherwise, provide details in the format: current_horai (span) > next_horai
             if (isCurHorai) {
@@ -2384,7 +2387,7 @@ public class VedicCalendar extends Calendar {
                     horaiInfoList.clear();
                     horaiInfo.isCurrent = true;
                     horaiInfoList.add(horaiInfo);
-                    horaiInfoList.add(new KaalamInfo(nextiterHorai, "", false));
+                    horaiInfoList.add(new KaalamInfo(nextIterHorai, "", "", false));
                     break;
                 } else {
                     horaiInfo.isCurrent = true;
@@ -2394,6 +2397,12 @@ public class VedicCalendar extends Calendar {
                 horaiInfoList.add(horaiInfo);
             }
             numHours += 1;
+        }
+
+        // If the query for exact Horai but if there is no exact match, then it is better to show
+        // nothing!
+        if ((queryType == MATCH_SANKALPAM_EXACT) && (horaiInfoList.size() != 2)) {
+            horaiInfoList.clear();
         }
 
         //System.out.println("VedicCalendar", "get_horai: Horai => " + horaiStr);
@@ -2467,17 +2476,20 @@ public class VedicCalendar extends Calendar {
 
         String[] raasiList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_RAASI);
         while (numLagnams < MAX_RAASIS) {
-            String timeStr;
-            lagnamStartOfDay += lagnamDurationTable[udhayaLagnam];
+            double lagnamDuration = lagnamDurationTable[udhayaLagnam];
+            String startTimeStr = formatTimeHHMM(lagnamStartOfDay);
             if (lagnamStartOfDay > MAX_MINS_IN_DAY) {
-                timeStr = formatTimeHHMM((lagnamStartOfDay - MAX_MINS_IN_DAY));
-            } else {
-                timeStr = formatTimeHHMM(lagnamStartOfDay);
+                startTimeStr = formatTimeHHMM((lagnamStartOfDay - MAX_MINS_IN_DAY));
+            }
+            lagnamStartOfDay += lagnamDuration;
+            String endTimeStr = formatTimeHHMM(lagnamStartOfDay);
+            if (lagnamStartOfDay > MAX_MINS_IN_DAY) {
+                endTimeStr = formatTimeHHMM((lagnamStartOfDay - MAX_MINS_IN_DAY));
             }
             String lagnamStr = raasiList[(udhayaLagnam) % MAX_RAASIS];
             String nextLagnamStr = raasiList[(udhayaLagnam + 1) % MAX_RAASIS];
             KaalamInfo lagnamInfo =
-                    new KaalamInfo(lagnamStr, timeStr, false);
+                    new KaalamInfo(lagnamStr, startTimeStr, endTimeStr, false);
 
             // Retrieve lagnam that corresponds to current local time
             if ((curTotalMins >= prevLagnamEnd) && (curTotalMins <= lagnamStartOfDay)) {
@@ -2485,7 +2497,7 @@ public class VedicCalendar extends Calendar {
                     lagnamInfoList.clear();
                     lagnamInfo.isCurrent = true;
                     lagnamInfoList.add(lagnamInfo);
-                    lagnamInfoList.add(new KaalamInfo(nextLagnamStr, "", false));
+                    lagnamInfoList.add(new KaalamInfo(nextLagnamStr, "", "", false));
                     break;
                 } else {
                     lagnamInfo.isCurrent = true;
@@ -2507,6 +2519,12 @@ public class VedicCalendar extends Calendar {
             udhayaLagnam += 1;
             udhayaLagnam %= MAX_RAASIS;
             prevLagnamEnd = lagnamStartOfDay;
+        }
+
+        // If the query for exact Lagnam but if there is no exact match, then it is better to show
+        // nothing!
+        if ((queryType == MATCH_SANKALPAM_EXACT) && (lagnamInfoList.size() != 2)) {
+            lagnamInfoList.clear();
         }
 
         //long endTime = System.nanoTime();
@@ -2559,27 +2577,28 @@ public class VedicCalendar extends Calendar {
 
         String[] kaalamList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_KAALA_VIBHAAGAH);
         while (numKaalam < MAX_KAALAMS) {
-            String timeStr;
+            String startTimeStr = formatTimeHHMM(kaalamStartOfDay);
+            String endTimeStr;
             if (numKaalam == 0) {
                 kaalamStartOfDay += BRAHMA_MUHURTHAM_DURATION;
             } else if (numKaalam == 6) {
                 // 2/8 of night time kaalam is "Pradosha"
                 kaalamStartOfDay += (kaalamDurationNightTime * 2);
             } else if (numKaalam == 7) {
-                // 5/8 of night time kaalam is "Dhinantha"
-                kaalamStartOfDay += (kaalamDurationNightTime * 5);
+                // 3/8 of night time kaalam is "Dhinantha"
+                kaalamStartOfDay += (kaalamDurationNightTime * 3);
             } else {
                 kaalamStartOfDay += kaalamDurationDayTime;
             }
             if (kaalamStartOfDay > MAX_MINS_IN_DAY) {
-                timeStr = formatTimeHHMM((kaalamStartOfDay - MAX_MINS_IN_DAY));
+                endTimeStr = formatTimeHHMM((kaalamStartOfDay - MAX_MINS_IN_DAY));
             } else {
-                timeStr = formatTimeHHMM(kaalamStartOfDay);
+                endTimeStr = formatTimeHHMM(kaalamStartOfDay);
             }
             String kaalamStr = kaalamList[(numKaalam) % MAX_KAALAMS];
             String nextKaalamStr = kaalamList[(numKaalam + 1) % MAX_KAALAMS];
             KaalamInfo kaalamInfo =
-                    new KaalamInfo(kaalamStr, timeStr, false);
+                    new KaalamInfo(kaalamStr, startTimeStr, endTimeStr, false);
 
             // Retrieve kaalam that corresponds to current local time
             if ((curTotalMins >= prevKaalamEnd) && (curTotalMins <= kaalamStartOfDay)) {
@@ -2587,7 +2606,7 @@ public class VedicCalendar extends Calendar {
                     kaalamInfoList.clear();
                     kaalamInfo.isCurrent = true;
                     kaalamInfoList.add(kaalamInfo);
-                    kaalamInfoList.add(new KaalamInfo(nextKaalamStr, "", false));
+                    kaalamInfoList.add(new KaalamInfo(nextKaalamStr, "", "", false));
                     break;
                 } else {
                     kaalamInfo.isCurrent = true;
@@ -2599,6 +2618,12 @@ public class VedicCalendar extends Calendar {
 
             numKaalam += 1;
             prevKaalamEnd = kaalamStartOfDay;
+        }
+
+        // If the query for exact Kaalam but if there is no exact match, then it is better to show
+        // nothing!
+        if ((queryType == MATCH_SANKALPAM_EXACT) && (kaalamInfoList.size() != 2)) {
+            kaalamInfoList.clear();
         }
 
         //long endTime = System.nanoTime();
@@ -3761,6 +3786,9 @@ public class VedicCalendar extends Calendar {
         double diff = (jdTo - jdFrom) * MAX_24HOURS;
         diff += defTimezone;
         diff *= MAX_MINS_IN_HOUR;
+        if (diff < 0) {
+            diff += MAX_MINS_IN_DAY;
+        }
         return diff;
     }
 
@@ -3773,6 +3801,13 @@ public class VedicCalendar extends Calendar {
      * @return String in SS:MS:US format
      */
     public static String getTimeTaken(long startTime, long endTime) {
+        if (startTime < 0) {
+            startTime += MAX_MINS_IN_DAY;
+        }
+        if (endTime < 0) {
+            endTime += MAX_MINS_IN_DAY;
+        }
+
         long duration = (endTime - startTime);
         long us = duration / 1000;
         long ms = us / 1000;
@@ -3797,6 +3832,9 @@ public class VedicCalendar extends Calendar {
      * @return String in HH:MM format
      */
     private static String formatTimeHHMM(double time) {
+        if (time < 0) {
+            time += MAX_MINS_IN_DAY;
+        }
         int hour = (int) (time / MAX_MINS_IN_HOUR);
         int min = (int) time % MAX_MINS_IN_HOUR;
         return String.format("%02d:%02d", hour, min);

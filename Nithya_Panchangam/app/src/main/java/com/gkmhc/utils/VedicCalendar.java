@@ -83,10 +83,6 @@ public class VedicCalendar extends Calendar {
     // Static Variables & Constants
     private static SwissEph swissEphInst = null;
     private static final double INDIAN_STANDARD_TIME = 5.5;
-    private static final int REF_YEAR = 1987;
-    private static final int REF_MONTH = 4;
-    private static final int REF_DATE = 14;
-
     private static final int SAMVATSARAM_NUM_YEARS = 60;
     private static final int MAX_NAKSHATHRAMS = 27;
     private static final int MAX_AYANAM_MINUTES = 21600; // 30deg * 60 mins per degree
@@ -709,10 +705,22 @@ public class VedicCalendar extends Calendar {
     public String getSamvatsaram() {
 
         // Logic:
-        // Step 1: Get the differential years between given date & reference date
-        // Step 2: Given the keys {samvatsaram_index, locale}, find the exact matching
-        //         samvatsaram string (as per the locale) in the samvatsaram mapping table.
-        int diffYears = calcDiffYears(refDate, refMonth, refYear);
+        // Step 1: Divide given year by 60 (number of samvatsarams)
+        // Step 2: Subtract 6 from the remainder
+        // Step 3: Align to samvatsaram_index (Array index starts from ZERO)
+        // Step 4: Sauramaanam months 9-12 when aligned to Gregorian calendar, works out to
+        //         previous Samvatsaram. Hence, subtract samvatsaram_index by 1 only for these months.
+        // Step 5: Given the key {samvatsaram_index}, find the exact matching
+        //         samvatsaram string in the samvatsaram mapping table.
+        int diffYears = (refYear % SAMVATSARAM_NUM_YEARS) - 7;
+        if (diffYears < 0) {
+            diffYears += SAMVATSARAM_NUM_YEARS;
+        }
+
+        int maasamIndex = getSauramaanamMaasamIndex(MATCH_PANCHANGAM_FULLDAY);
+        if (maasamIndex > 8) {
+            diffYears -= 1;
+        }
 
         // System.out.println("VedicCalendar: get_samvatsaram --- Diff Years: " + diffYears);
         String[] samvatsaramList =
@@ -3326,52 +3334,6 @@ public class VedicCalendar extends Calendar {
         //        " Maasam => " + maasamIndex + " Span: " + raasiSpanHour + ":" + raasiSpanMin);
 
         return (maasamIndex % MAX_RAASIS);
-    }
-
-    /**
-     * Utility function to get the number of samvatsaram year have elapsed in a 60-year cycle
-     *
-     *
-     * @param currDate A Calendar date as per Gregorian Calendar
-     * @param currMonth A Calendar Month as per Gregorian Calendar
-     * @param currYear A Calendar Year as per Gregorian Calendar
-     *
-     * @return number of samvatsaram years as a number (Range: 0 to 59)
-     */
-    private int calcDiffYears(int currDate, int currMonth, int currYear) {
-        // Logic:
-        // Return difference in number of samvatsaram years between given date & reference date
-
-        //System.out.println("VedicCalendar", "calcDiffYears: Current Date => " +
-        //        currDate + "-" + currMonth + "-" + currYear);
-
-        int diffYears = currYear - REF_YEAR;
-        diffYears %= SAMVATSARAM_NUM_YEARS;
-
-        // Scenario 1: If diffMonths < 0, it means we are in the same year but current month is
-        //             prior to reference month
-        // Scenario 2: If diffMonths == 0, then it means we are in the same month but current date
-        //             is prior to reference date
-        // In both above scenarios, reduce a year so that number of years calculation is accurate
-        // Don't take action in all other scenarios.
-        int diffMonths = currMonth - REF_MONTH;
-        int diffDays = currDate - REF_DATE;
-        if (diffMonths < 0) {
-            diffYears -= 1;
-        } else if (diffMonths == 0) {
-            if (diffDays < 0) {
-                diffYears -= 1;
-            }
-        }
-
-        // Reference is 14th April 1987
-        // Scenario 1: Current Year is 2021, then 2021-1987=13. Array Index+34 ==> Saarvari
-        // Scenario 2: Current Year is 1981, then 1981-1987=-6 (60-6=54). Array Index+54 ==> Raudri
-        if (diffYears < 0) {
-            diffYears = SAMVATSARAM_NUM_YEARS + diffYears;
-        }
-
-        return Math.abs(diffYears);
     }
 
     /**

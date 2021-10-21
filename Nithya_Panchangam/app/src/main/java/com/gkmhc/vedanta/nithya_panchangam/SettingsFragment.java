@@ -33,6 +33,7 @@ public class SettingsFragment extends PreferenceFragment {
     public static final String PREF_LOCATION_DEF_VAL_KEY = "PREF_LOCATION_DEF_VAL_KEY";
     public static final String PREF_LOCATION_SETTINGS_KEY = "PREF_LOCATION_SETTINGS_KEY";
     public static final String PREF_APP_LAUNCH_FIRST_TIME_KEY = "PREF_APP_LAUNCH_FIRST_TIME_KEY";
+    public static final String PREF_TIMEFORMAT_KEY = "PREF_TIMEFORMAT_KEY";
     private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
 
     @Override
@@ -65,7 +66,8 @@ public class SettingsFragment extends PreferenceFragment {
                 case PREF_SANKALPAM_TYPE_KEY:
                 case PREF_PANCHANGAM_KEY:
                 case PREF_CHAANDRAMANA_CALENDAR_KEY:
-                case PREF_AYANAMSA_KEY: {
+                case PREF_AYANAMSA_KEY:
+                case PREF_TIMEFORMAT_KEY: {
                     Preference preference = findPreference(key);
                     preference.setSummary(sharedPreferences.getString(key, ""));
                     break;
@@ -120,6 +122,9 @@ public class SettingsFragment extends PreferenceFragment {
 
             preference = findPreference(PREF_AYANAMSA_KEY);
             preference.setSummary(sharedPreferences.getString(PREF_AYANAMSA_KEY, getString(R.string.pref_def_ayanamsa)));
+
+            preference = findPreference(PREF_TIMEFORMAT_KEY);
+            preference.setSummary(sharedPreferences.getString(PREF_TIMEFORMAT_KEY, getString(R.string.pref_def_timeformat)));
         } catch (Exception e) {
             // Do Nothing
         }

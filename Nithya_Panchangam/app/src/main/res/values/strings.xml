@@ -80,6 +80,10 @@
         <item>@string/pref_lunar_calendar_type_amanta</item>
         <item>@string/pref_lunar_calendar_type_purnimanta</item>
     </string-array>
+    <string-array name="pref_timeformat_list">
+        <item>@string/pref_timeformat_hhmm</item>
+        <item>@string/pref_timeformat_nazhigai</item>
+    </string-array>
     <string name="samvatsaram_heading">Samvatsaram (Year)</string>
     <string name="aayanam_heading">Ayanam (6-month cycle)</string>
     <string name="rithou_heading">Rithu (Season)</string>
@@ -245,6 +249,12 @@
     <string name="confirm_selection" translatable="false">Confirm Selection</string>
     <string name="gregorian_calendar_day" translatable="false">Gregorian Calendar Day</string>
     <string name="panchangam_calendar_day" translatable="false">Panchangam Calendar Day</string>
+    <string name="pref_timeformat" translatable="false">Time Format</string>
+    <string name="pref_timeformat_key" translatable="false">PREF_TIMEFORMAT_KEY</string>
+    <string name="pref_timeformat_options" translatable="false">Time Format(s)</string>
+    <string name="pref_def_timeformat" translatable="false">@string/pref_timeformat_hhmm</string>
+    <string name="pref_timeformat_hhmm" translatable="false">HH:MM</string>
+    <string name="pref_timeformat_nazhigai" translatable="false">Nazhigai.Vinaadi</string>
     <string name="raasi_chart">Raasi Chart</string>
     <string name="kaala_vibhaagah">Kaala Vibhaagah</string>
     <string name="kaalam_daytime">Daytime</string>

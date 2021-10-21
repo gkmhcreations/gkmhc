@@ -69,4 +69,14 @@
         android:defaultValue="@string/pref_def_ayanamsa"
         android:summary="Choose Preferred Ayanamsa type"/>
 
+    <PreferenceCategory
+        android:title="@string/pref_timeformat"/>
+    <ListPreference
+        android:key="@string/pref_timeformat_key"
+        android:title="@string/pref_timeformat_options"
+        android:entries="@array/pref_timeformat_list"
+        android:entryValues="@array/pref_timeformat_list"
+        android:defaultValue="@string/pref_def_timeformat"
+        android:summary="Choose Preferred Time Format"/>
+
 </PreferenceScreen>

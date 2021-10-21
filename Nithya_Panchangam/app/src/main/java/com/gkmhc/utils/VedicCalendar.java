@@ -74,6 +74,7 @@ public class VedicCalendar extends Calendar {
     private double chandraSpudam;               // Vaakhyam
     private double suryaGathi;                  // Vaakhyam
     private double chandraGathi;                // Vaakhyam
+    private int timeFormatSettings = PANCHANGAM_TIME_FORMAT_HHMM;
 
     public static class KaalamInfo {
         public final String name;
@@ -151,6 +152,10 @@ public class VedicCalendar extends Calendar {
     public static final int MATCH_PANCHANGAM_FULLDAY = 0;   // To get Full-day details
     public static final int MATCH_SANKALPAM_EXACT = 1;      // To get details as per current time
     public static final int MATCH_PANCHANGAM_PROMINENT = 2; // To get details as per prominence
+
+    // Time Format
+    public static final int PANCHANGAM_TIME_FORMAT_HHMM = 0;        // HH:MM time format
+    public static final int PANCHANGAM_TIME_FORMAT_NAZHIGAI = 1;    // Nazhigai.Vinaadi time format
 
     // Planet Types
     public static final int SURYA = 0;
@@ -928,6 +933,21 @@ public class VedicCalendar extends Calendar {
     }
 
     /**
+     * Use this API to set the time format
+     *
+     * @param timeFormat    PANCHANGAM_TIME_FORMAT_HHMM - change time format to HH:MM (or)
+     *                      PANCHANGAM_TIME_FORMAT_NAZHIGAI - change time format to Nazigai.Vinaadi.
+     */
+    public void setTimeFormat(int timeFormat) {
+        switch (timeFormat) {
+            case PANCHANGAM_TIME_FORMAT_HHMM:
+            case PANCHANGAM_TIME_FORMAT_NAZHIGAI:
+                timeFormatSettings = timeFormat;
+                break;
+        }
+    }
+
+    /**
      * Use this API to get the value of the given calendar field in VedicCalendar.
      *
      * @param field     The given calendar field
@@ -1398,13 +1418,17 @@ public class VedicCalendar extends Calendar {
             int index = findVaakhyamMaasamIndex();
             if (index != -1) {
                 maasamIndex = index;
+                maasamIndexAtSunset = maasamIndex;
                 maasamSpan = vaakhyamMaasamDurationTable[index + 1] - KaliOffsetSinceYearStart;
+                maasamSpan *= MAX_MINS_IN_HOUR;
+                maasamSpan *= MAX_MINS_IN_NAZHIGAI;
+                if (maasamSpan < sunSetTotalMins) {
+                    maasamIndexAtSunset += 1;
+                }
+                maasamSpanHour = (int) (maasamSpan / MAX_MINS_IN_HOUR);
+                maasamSpanMin = (int) (maasamSpan % MAX_MINS_IN_HOUR);
             }
         } else {
-            // Get Sunrise & Sunset timings
-            //calcSunrise(queryType);
-            //calcSunset(queryType);
-
             double earthMinFor1RaviCelMin = (MAX_MINS_IN_DAY / dailyRaviMotion);
             double timeLeftToSunset = sunSetTotalMins - (defTimezone * MAX_MINS_IN_HOUR);
             double raviAyanamAtSunset = refRaviAyanamAtDayStart +
@@ -1419,10 +1443,8 @@ public class VedicCalendar extends Calendar {
 
             // 2) Find the Earth Hours during the day based on daily motion of Ravi & Chandra.
             maasamSpan /= dailyRaviMotion;
-
             maasamSpan *= MAX_24HOURS;
             maasamSpan += defTimezone;
-
             if (maasamSpan < 0) {
                 double raviAyanamNextDayAtDayStart = refRaviAyanamAtDayStart + dailyRaviMotion;
                 maasamRef = Math.ceil(raviAyanamNextDayAtDayStart / MAX_RAASI_MINUTES);
@@ -1433,7 +1455,6 @@ public class VedicCalendar extends Calendar {
                 maasamSpan /= dailyRaviMotion;
                 maasamSpan *= MAX_24HOURS;
                 maasamSpan += defTimezone;
-
                 if (maasamSpan < 0) {
                     maasamSpan += MAX_24HOURS;
                 }
@@ -1454,29 +1475,24 @@ public class VedicCalendar extends Calendar {
 
         String[] sauramanaMaasamList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_SAURAMANA_MAASAM);
         String[] raasiList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_RAASI);
-        String maasamStr = raasiList[(maasamIndex % MAX_RAASIS)];
-        String nextMaasamStr = raasiList[((maasamIndex + 1) % MAX_RAASIS)];
-        if (queryType != MATCH_SANKALPAM_EXACT) {
-            maasamStr = sauramanaMaasamList[(maasamIndex % MAX_RAASIS)];
-            nextMaasamStr = sauramanaMaasamList[((maasamIndex + 1) % MAX_RAASIS)];
-        }
-
+        String maasamStr = sauramanaMaasamList[(maasamIndex % MAX_RAASIS)];
+        String nextMaasamStr = sauramanaMaasamList[((maasamIndex + 1) % MAX_RAASIS)];
         if (queryType == MATCH_PANCHANGAM_FULLDAY) {
             if (maasamIndex != maasamIndexAtSunset) {
-                maasamStr += String.format(" (%02d:%02d)", maasamSpanHour, maasamSpanMin);
+                maasamStr += " (" + formatTimeInTimeFormat(maasamSpan) + ")";
                 maasamStr += ARROW_SYMBOL + nextMaasamStr;
             } else {
                 if (maasamSpanHour < APPROX_HOURS_TILL_NEXTDAY_SUNRISE) {
-                    maasamStr += String.format(" (%02d:%02d)", maasamSpanHour, maasamSpanMin);
+                    maasamStr += " (" + formatTimeInTimeFormat(maasamSpan) + ")";
                     maasamStr += ARROW_SYMBOL + nextMaasamStr;
                 }
             }
         } else if (queryType == MATCH_SANKALPAM_EXACT) {
-            maasamStr = sauramanaMaasamList[maasamIndex];
+            maasamStr = raasiList[(maasamIndex % MAX_RAASIS)];
 
             // MATCH_SANKALPAM_EXACT - Identify Thithi based on exact time of query
             if ((refHour >= maasamSpanHour)) {
-                nextMaasamStr = sauramanaMaasamList[(maasamIndex + 1) % MAX_THITHIS];
+                nextMaasamStr = raasiList[(maasamIndex + 1) % MAX_THITHIS];
                 maasamStr = nextMaasamStr;
             }
         }
@@ -1493,7 +1509,6 @@ public class VedicCalendar extends Calendar {
 
         // There are 3 possibilities here:
         // a) Sankaramanam to new Raasi has already happened within the lunar month
-        //
         // b) Sankaramanam to new Raasi is yet to happen within the lunar month
         //    Given the key {maasamIndex}, find the exact matching maasam string in the
         //    chaandramanam maasam mapping table.
@@ -1507,6 +1522,11 @@ public class VedicCalendar extends Calendar {
         //         chaandramanam maasam mapping table.
         // Step 4:
 
+        int maasamIndex = 0;
+        boolean isAdhikaMaasam = false;
+        int maasamIndexAtChaandramanaMaasamStart = 0;
+        int maasamIndexAtChaandramanaMaasamEnd = 0;
+
         // Step 1: Get selected day's thithi number
         int thithiNum = getThithiNum();
         int daysToNextChaandramanaMaasam = MAX_THITHIS - thithiNum;
@@ -1515,22 +1535,30 @@ public class VedicCalendar extends Calendar {
             daysToNextChaandramanaMaasam = 0;
         }
 
-        double raviAyanamAtChaandramanaMaasamStart =
-                refRaviAyanamAtDayStart - (thithiNum * dailyRaviMotion);
-        if (raviAyanamAtChaandramanaMaasamStart < 0) {
-            raviAyanamAtChaandramanaMaasamStart += MAX_AYANAM_MINUTES;
+        // For Vaakhyam
+        if ((panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR) ||
+            (panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNAR)) {
+            // 1) Find today's thithi & note down today's maasamIndex
+            // 2) Find maasamIndex at Chaandramanan month start
+            // 3) Find maasamIndex at Chaandramanan month end
+        } else {
+            double raviAyanamAtChaandramanaMaasamStart =
+                    refRaviAyanamAtDayStart - (thithiNum * dailyRaviMotion);
+            if (raviAyanamAtChaandramanaMaasamStart < 0) {
+                raviAyanamAtChaandramanaMaasamStart += MAX_AYANAM_MINUTES;
+            }
+            maasamIndexAtChaandramanaMaasamStart =
+                    (int) (raviAyanamAtChaandramanaMaasamStart / MAX_RAASI_MINUTES);
+
+            double raviAyanamAtChaandramanaMaasamEnd =
+                    refRaviAyanamAtDayStart + (daysToNextChaandramanaMaasam * dailyRaviMotion);
+            raviAyanamAtChaandramanaMaasamEnd %= MAX_AYANAM_MINUTES;
+            maasamIndexAtChaandramanaMaasamEnd =
+                    (int) (raviAyanamAtChaandramanaMaasamEnd / MAX_RAASI_MINUTES);
+
+            maasamIndex = (int) (refRaviAyanamAtDayStart / MAX_RAASI_MINUTES);
         }
-        int maasamIndexAtChaandramanaMaasamStart =
-                (int) (raviAyanamAtChaandramanaMaasamStart / MAX_RAASI_MINUTES);
 
-        double raviAyanamAtChaandramanaMaasamEnd =
-                refRaviAyanamAtDayStart + (daysToNextChaandramanaMaasam * dailyRaviMotion);
-        raviAyanamAtChaandramanaMaasamEnd %= MAX_AYANAM_MINUTES;
-        int maasamIndexAtChaandramanaMaasamEnd =
-                (int) (raviAyanamAtChaandramanaMaasamEnd / MAX_RAASI_MINUTES);
-
-        boolean isAdhikaMaasam = false;
-        int maasamIndex = (int) (refRaviAyanamAtDayStart / MAX_RAASI_MINUTES);
         if (maasamIndexAtChaandramanaMaasamStart != maasamIndexAtChaandramanaMaasamEnd) {
             maasamIndex = maasamIndexAtChaandramanaMaasamEnd;
         } else {
@@ -1545,7 +1573,6 @@ public class VedicCalendar extends Calendar {
                 vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_CHAANDRAMANA_MAASAM);
         String maasamStr = chaandramanaMaasamList[(maasamIndex % MAX_RAASIS)];
         String nextMaasamStr = chaandramanaMaasamList[((maasamIndex + 1) % MAX_RAASIS)];
-
         if (isAdhikaMaasam) {
             maasamStr += " (Adhik)";
         }
@@ -1690,6 +1717,7 @@ public class VedicCalendar extends Calendar {
 
         // 1) Calculate the Thithi index & mapping string for the given calendar day
         // Day Start is 00:00 hours!
+        double thithiSpan;
         int thithiSpanHour = 0;
         int thithiSpanMin = 0;
         int thithiAtDayStart = 0;
@@ -1707,16 +1735,15 @@ public class VedicCalendar extends Calendar {
             if (thithiAtDayStart < 0) {
                 thithiAtDayStart += MAX_THITHIS;
             }
-            double thithiRemaining = (thithiSpudam % MAX_THITHI_MINUTES);
-            thithiRemaining *= MAX_MINS_IN_HOUR;
-            thithiRemaining /= thithiGathi;
-            thithiRemaining = MAX_MINS_IN_HOUR - thithiRemaining;
-            thithiSpanMin = (int)(thithiRemaining * MAX_MINS_IN_NAZHIGAI);
-            thithiSpanMin += sunRiseTotalMins;
-            thithiSpanHour = thithiSpanMin / MAX_MINS_IN_HOUR;
-            thithiSpanMin %= MAX_MINS_IN_HOUR;
+            thithiSpan = (thithiSpudam % MAX_THITHI_MINUTES);
+            thithiSpan *= MAX_MINS_IN_HOUR;
+            thithiSpan /= thithiGathi;
+            thithiSpan = MAX_MINS_IN_HOUR - thithiSpan;
+            thithiSpan *= MAX_MINS_IN_NAZHIGAI;
+            thithiSpan += sunRiseTotalMins;
+            thithiSpanHour = (int) thithiSpan / MAX_MINS_IN_HOUR;
+            thithiSpanMin = (int) thithiSpan % MAX_MINS_IN_HOUR;
         } else {
-            double thithiSpan;
             double chandraRaviDistance = refChandraAyanamAtDayStart - refRaviAyanamAtDayStart;
             if (chandraRaviDistance < 0) {
                 chandraRaviDistance += MAX_AYANAM_MINUTES;
@@ -1779,7 +1806,7 @@ public class VedicCalendar extends Calendar {
         //      next_nakshatram}
         //    - Sankalpam needs the exact Thithi at the time of the current query
         if (queryType == MATCH_PANCHANGAM_FULLDAY) {
-            thithiStr += String.format(" (%02d:%02d)", thithiSpanHour, thithiSpanMin);
+            thithiStr += " (" + formatTimeInTimeFormat(thithiSpan) + ")";
             if (thithiSpanHour < MAX_24HOURS) {
                 thithiStr += ARROW_SYMBOL + secondThithiStr;
             }
@@ -1822,149 +1849,173 @@ public class VedicCalendar extends Calendar {
      * @return Exact Thithi as a number (as per Drik calendar)
      */
     private int getThithiNum() {
-        double earthMinFor1RaviCelMin = (MAX_MINS_IN_DAY / dailyRaviMotion);
-        double earthMinFor1ChandraCelMin = (MAX_MINS_IN_DAY / dailyChandraMotion);
+        int thithiIndex = 0;
+        if ((panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR) ||
+            (panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNAR)) {
+            double thithiGathi = chandraGathi - suryaGathi;
+            double thithiSpudam = chandraSpudam - suryaSpudam;
+            if (thithiSpudam < 0) {
+                thithiSpudam += MAX_AYANAM_MINUTES;
+            }
 
-        double chandraRaviDistance = refChandraAyanamAtDayStart - refRaviAyanamAtDayStart;
-        if (chandraRaviDistance < 0) {
-            chandraRaviDistance += MAX_AYANAM_MINUTES;
-        }
-        int thithiIndex = (int) (chandraRaviDistance / MAX_THITHI_MINUTES);
-        thithiIndex %= MAX_THITHIS;
-
-        // Calculate Current day's thithi at Sunrise.
-        // Find time left to Sunrise as per local timezone.
-        // For example, Ravi Longitude at DayStart is at 00:00 hours (UTC).
-        // This means that for IST, this is already showing Ravi's longitude at 05:30 hours.
-        // If Sunrise is at 06:00 hours in the morning, then
-        // Ravi's Longitude at Sunrise (IST) =
-        //      Ravi's Daystart longitude + ((06:00 - 05:30) hours * factor)
-        double timeLeftToSunrise = sunRiseTotalMins - (defTimezone * MAX_MINS_IN_HOUR);
-        double curRaviAyanamAtSunrise = refRaviAyanamAtDayStart +
-                (timeLeftToSunrise / earthMinFor1RaviCelMin);
-        double curChandraAyanamAtSunrise = refChandraAyanamAtDayStart +
-                (timeLeftToSunrise / earthMinFor1ChandraCelMin);
-        double curChandraRaviDistanceAtSunrise = curChandraAyanamAtSunrise - curRaviAyanamAtSunrise;
-        if (curChandraRaviDistanceAtSunrise < 0) {
-            curChandraRaviDistanceAtSunrise += MAX_AYANAM_MINUTES;
-        }
-        int curThithiAtSunrise = (int) (curChandraRaviDistanceAtSunrise / MAX_THITHI_MINUTES);
-        curThithiAtSunrise %= MAX_THITHIS;
-
-        // Calculate Current day's thithi at Sunset
-        double timeLeftToSunset = sunSetTotalMins - (defTimezone * MAX_MINS_IN_HOUR);
-        double curRaviAyanamAtSunset = refRaviAyanamAtDayStart +
-                (timeLeftToSunset / earthMinFor1RaviCelMin);
-        double curChandraAyanamAtSunset = refChandraAyanamAtDayStart +
-                (timeLeftToSunset / earthMinFor1ChandraCelMin);
-        double curChandraRaviDistanceAtSunset = curChandraAyanamAtSunset - curRaviAyanamAtSunset;
-        if (curChandraRaviDistanceAtSunset < 0) {
-            curChandraRaviDistanceAtSunset += MAX_AYANAM_MINUTES;
-        }
-        int curThithiAtSunset = (int) (curChandraRaviDistanceAtSunset / MAX_THITHI_MINUTES);
-        curThithiAtSunset %= MAX_THITHIS;
-
-        // Calculate previous day's thithi at Sunrise
-        double prevDayRaviAyanamAtSunrise = curRaviAyanamAtSunrise - dailyRaviMotion;
-        double prevDayChandraAyanamAtSunrise = curChandraAyanamAtSunrise - dailyChandraMotion;
-        double prevDayChandraRaviDistanceAtSunrise = prevDayChandraAyanamAtSunrise - prevDayRaviAyanamAtSunrise;
-        if (prevDayChandraRaviDistanceAtSunrise < 0) {
-            prevDayChandraRaviDistanceAtSunrise += MAX_AYANAM_MINUTES;
-        }
-        int prevDayThithiAtSunrise = (int) (prevDayChandraRaviDistanceAtSunrise / MAX_THITHI_MINUTES);
-        prevDayThithiAtSunrise %= MAX_THITHIS;
-
-        // Calculate previous day's thithi at Sunset
-        double prevDayRaviAyanamAtSunset = curRaviAyanamAtSunset - dailyRaviMotion;
-        double prevDayChandraAyanamAtSunset = curChandraAyanamAtSunset - dailyChandraMotion;
-        double prevDayChandraRaviDistanceAtSunset = prevDayChandraAyanamAtSunset - prevDayRaviAyanamAtSunset;
-        if (prevDayChandraRaviDistanceAtSunset < 0) {
-            prevDayChandraRaviDistanceAtSunset += MAX_AYANAM_MINUTES;
-        }
-        int prevDayThithiAtSunset = (int) (prevDayChandraRaviDistanceAtSunset / MAX_THITHI_MINUTES);
-        prevDayThithiAtSunset %= MAX_THITHIS;
-
-        // MATCH_PANCHANGAM_PROMINENT - Identify the prominent Thithi of the day.
-        // Scenarios possible:
-        // 1) Thithi spans full-day
-        //      --> Prominent Thithi: Thithi of the day!
-        // 2) Thithi spans before Sunrise but changes afterwards
-        //       --> Prominent Thithi: Thithi at Sunrise
-        // 3) Thithi spans till after Sunset but changes afterwards
-        //       --> Prominent Thithi: Thithi at Sunrise
-        // 4) Thithi spans before Sunset but changes afterwards
-        //       --> Prominent Thithi:
-        //           Except Chathurthi, Sashti, Thrayodashi rest of the thithi(s) would
-        //           follow the prominent thithi at Sunrise
-        //    Thithi Prominence at Sunrise --> Prathama, Dvithiya, Thrithiya, Panchami, Saptami,
-        //      Ashtami, Navami, Dashami, Ekadashi, Dvadashi, Chathurdashi, Pournami, Amavasai
-        //    Thithi Prominence at Sunset --> Chathurthi, Sashti, Thrayodashi
-        // 5) Thithi spans till sometime after Sunrise but changes afterwards
-        //       --> Prominent Thithi:
-        //           Except Chathurthi, Sashti, Thrayodashi rest of the thithi(s) would
-        //           follow the prominent thithi at Sunrise
-        // Logic is as follows:
-        // 1) Is thithi(at day start - 00:00 hours) present at Sunrise?
-        //    If yes,
-        //        2) Is thithi present at Sunset?
-        //           If yes,
-        //    Else, choose next thithi as the "prominent" thithi for the day
-        //
-        //
-        // Note: It is impossible for 3 thithi(s) to occur within the same day!
-        //       For example, (below scenario is unrealistic!)
-        //       thithi-1 at day-start, thithi-2 at Sunrise, thithi-3 at Sunset or beyond
-        //       why?
-        //       A thithi spans 12 degrees(720 celestial mins, i.e ~19-26 Earth hours!)
-        //       So, it is impossible for a day to have more than 2 thithi(s).
-        if (isSunsetProminentThithi(curThithiAtSunset)) {
-            // For Sunset-Prominent Thithi(s) occurring at Sunset
-            // Scenarios include:
-            // 1) Thrayodashi at Sunset, Thrayodashi at PrevDay Sunset => Prominent: Thrayodashi
-            // 2) Thrayodashi at Sunset, Dvadashi at Sunrise => Prominent: Thrayodashi
-            // 3) Chathurthi at Sunset, Thrithiya at PrevDay Sunrise,
-            //    Panchami at PrevDay prevDay Sunrise
-            //      => Prominent: Sashti
-            // 4) Chathurthi at Sunrise, Thrithiya at prevDay Sunrise,
-            //    Panchami at PrevDay prevDay Sunset
-            //      => Prominent: Sashti
-            if (prevDayThithiAtSunset == curThithiAtSunset) {
-                // 1) Thrayodashi at Sunset, Thrayodashi at PrevDay Sunset
-                //      => Prominent: Thrayodashi
-                thithiIndex += 1;
-            } else {
-                thithiIndex = curThithiAtSunset;
+            thithiIndex = (int)(thithiSpudam / MAX_THITHI_MINUTES);
+            double thithiRemaining = (thithiSpudam % MAX_THITHI_MINUTES);
+            thithiRemaining *= MAX_MINS_IN_HOUR;
+            thithiRemaining /= thithiGathi;
+            thithiRemaining = MAX_MINS_IN_HOUR - thithiRemaining;
+            int thithiSpanMin = (int)(thithiRemaining * MAX_MINS_IN_NAZHIGAI);
+            thithiSpanMin += sunRiseTotalMins;
+            if (thithiSpanMin <= sunSetTotalMins) {
+                thithiIndex -= 1;
+                if (thithiIndex < 0) {
+                    thithiIndex += MAX_THITHIS;
+                }
             }
         } else {
-            // For Sunrise-Prominent Thithi(s) occurring at Sunset
-            // Scenarios include:
-            // 1) *Prathama* at Sunset, Prathama at Sunrise => Prominent: *Prathama*
-            // 2) *Dvithiya* at Sunset, Prathama at Sunrise => Prominent: *Prathama*
-            // 3) *Saptami* at Sunset, Sashti at Sunrise, Panchami at PrevDay Sunset
-            //      => Prominent: *Sashti*
-            // 4) *Chathurdashi* at Sunset, Thrayodashi at Sunrise, Thrayodashi at PrevDay Sunset
-            //      => Prominent: *Chathurdashi*
-            if (curThithiAtSunrise == curThithiAtSunset) {
-                // 1) Prathama at Sunset, Prathama at Sunrise => Prominent: Prathama
-                thithiIndex = curThithiAtSunrise;
-            } else {
-                if (isSunsetProminentThithi(curThithiAtSunrise)) {
-                    // Special situation where there are 3 Thithi(s) in 36 hours!
-                    // For ex: Panchami at prevDay Sunset, Sashti at curDay Sunrise &
-                    //         Saptami at curDay Sunset
-                    if ((prevDayThithiAtSunset != curThithiAtSunset) &&
-                        (prevDayThithiAtSunset != curThithiAtSunrise)) {
-                        // 3) Saptami at Sunset, Sashti at Sunrise, Panchami at PrevDay Sunset
-                        //      => Prominent: Sashti
-                        thithiIndex = curThithiAtSunrise;
-                    } else {
-                        // 4) Chathurdashi at Sunset, Thrayodashi at Sunrise, Thrayodashi at PrevDay Sunset
-                        //      => Prominent: Chathurdashi
-                        thithiIndex = curThithiAtSunset;
-                    }
+            double earthMinFor1RaviCelMin = (MAX_MINS_IN_DAY / dailyRaviMotion);
+            double earthMinFor1ChandraCelMin = (MAX_MINS_IN_DAY / dailyChandraMotion);
+
+            double chandraRaviDistance = refChandraAyanamAtDayStart - refRaviAyanamAtDayStart;
+            if (chandraRaviDistance < 0) {
+                chandraRaviDistance += MAX_AYANAM_MINUTES;
+            }
+            thithiIndex = (int) (chandraRaviDistance / MAX_THITHI_MINUTES);
+            thithiIndex %= MAX_THITHIS;
+
+            // Calculate Current day's thithi at Sunrise.
+            // Find time left to Sunrise as per local timezone.
+            // For example, Ravi Longitude at DayStart is at 00:00 hours (UTC).
+            // This means that for IST, this is already showing Ravi's longitude at 05:30 hours.
+            // If Sunrise is at 06:00 hours in the morning, then
+            // Ravi's Longitude at Sunrise (IST) =
+            //      Ravi's Daystart longitude + ((06:00 - 05:30) hours * factor)
+            double timeLeftToSunrise = sunRiseTotalMins - (defTimezone * MAX_MINS_IN_HOUR);
+            double curRaviAyanamAtSunrise = refRaviAyanamAtDayStart +
+                    (timeLeftToSunrise / earthMinFor1RaviCelMin);
+            double curChandraAyanamAtSunrise = refChandraAyanamAtDayStart +
+                    (timeLeftToSunrise / earthMinFor1ChandraCelMin);
+            double curChandraRaviDistanceAtSunrise = curChandraAyanamAtSunrise - curRaviAyanamAtSunrise;
+            if (curChandraRaviDistanceAtSunrise < 0) {
+                curChandraRaviDistanceAtSunrise += MAX_AYANAM_MINUTES;
+            }
+            int curThithiAtSunrise = (int) (curChandraRaviDistanceAtSunrise / MAX_THITHI_MINUTES);
+            curThithiAtSunrise %= MAX_THITHIS;
+
+            // Calculate Current day's thithi at Sunset
+            double timeLeftToSunset = sunSetTotalMins - (defTimezone * MAX_MINS_IN_HOUR);
+            double curRaviAyanamAtSunset = refRaviAyanamAtDayStart +
+                    (timeLeftToSunset / earthMinFor1RaviCelMin);
+            double curChandraAyanamAtSunset = refChandraAyanamAtDayStart +
+                    (timeLeftToSunset / earthMinFor1ChandraCelMin);
+            double curChandraRaviDistanceAtSunset = curChandraAyanamAtSunset - curRaviAyanamAtSunset;
+            if (curChandraRaviDistanceAtSunset < 0) {
+                curChandraRaviDistanceAtSunset += MAX_AYANAM_MINUTES;
+            }
+            int curThithiAtSunset = (int) (curChandraRaviDistanceAtSunset / MAX_THITHI_MINUTES);
+            curThithiAtSunset %= MAX_THITHIS;
+
+            // Calculate previous day's thithi at Sunrise
+            double prevDayRaviAyanamAtSunrise = curRaviAyanamAtSunrise - dailyRaviMotion;
+            double prevDayChandraAyanamAtSunrise = curChandraAyanamAtSunrise - dailyChandraMotion;
+            double prevDayChandraRaviDistanceAtSunrise = prevDayChandraAyanamAtSunrise - prevDayRaviAyanamAtSunrise;
+            if (prevDayChandraRaviDistanceAtSunrise < 0) {
+                prevDayChandraRaviDistanceAtSunrise += MAX_AYANAM_MINUTES;
+            }
+            int prevDayThithiAtSunrise = (int) (prevDayChandraRaviDistanceAtSunrise / MAX_THITHI_MINUTES);
+            prevDayThithiAtSunrise %= MAX_THITHIS;
+
+            // Calculate previous day's thithi at Sunset
+            double prevDayRaviAyanamAtSunset = curRaviAyanamAtSunset - dailyRaviMotion;
+            double prevDayChandraAyanamAtSunset = curChandraAyanamAtSunset - dailyChandraMotion;
+            double prevDayChandraRaviDistanceAtSunset = prevDayChandraAyanamAtSunset - prevDayRaviAyanamAtSunset;
+            if (prevDayChandraRaviDistanceAtSunset < 0) {
+                prevDayChandraRaviDistanceAtSunset += MAX_AYANAM_MINUTES;
+            }
+            int prevDayThithiAtSunset = (int) (prevDayChandraRaviDistanceAtSunset / MAX_THITHI_MINUTES);
+            prevDayThithiAtSunset %= MAX_THITHIS;
+
+            // MATCH_PANCHANGAM_PROMINENT - Identify the prominent Thithi of the day.
+            // Scenarios possible:
+            // 1) Thithi spans full-day
+            //      --> Prominent Thithi: Thithi of the day!
+            // 2) Thithi spans before Sunrise but changes afterwards
+            //       --> Prominent Thithi: Thithi at Sunrise
+            // 3) Thithi spans till after Sunset but changes afterwards
+            //       --> Prominent Thithi: Thithi at Sunrise
+            // 4) Thithi spans before Sunset but changes afterwards
+            //       --> Prominent Thithi:
+            //           Except Chathurthi, Sashti, Thrayodashi rest of the thithi(s) would
+            //           follow the prominent thithi at Sunrise
+            //    Thithi Prominence at Sunrise --> Prathama, Dvithiya, Thrithiya, Panchami, Saptami,
+            //      Ashtami, Navami, Dashami, Ekadashi, Dvadashi, Chathurdashi, Pournami, Amavasai
+            //    Thithi Prominence at Sunset --> Chathurthi, Sashti, Thrayodashi
+            // 5) Thithi spans till sometime after Sunrise but changes afterwards
+            //       --> Prominent Thithi:
+            //           Except Chathurthi, Sashti, Thrayodashi rest of the thithi(s) would
+            //           follow the prominent thithi at Sunrise
+            // Logic is as follows:
+            // 1) Is thithi(at day start - 00:00 hours) present at Sunrise?
+            //    If yes,
+            //        2) Is thithi present at Sunset?
+            //           If yes,
+            //    Else, choose next thithi as the "prominent" thithi for the day
+            //
+            //
+            // Note: It is impossible for 3 thithi(s) to occur within the same day!
+            //       For example, (below scenario is unrealistic!)
+            //       thithi-1 at day-start, thithi-2 at Sunrise, thithi-3 at Sunset or beyond
+            //       why?
+            //       A thithi spans 12 degrees(720 celestial mins, i.e ~19-26 Earth hours!)
+            //       So, it is impossible for a day to have more than 2 thithi(s).
+            if (isSunsetProminentThithi(curThithiAtSunset)) {
+                // For Sunset-Prominent Thithi(s) occurring at Sunset
+                // Scenarios include:
+                // 1) Thrayodashi at Sunset, Thrayodashi at PrevDay Sunset => Prominent: Thrayodashi
+                // 2) Thrayodashi at Sunset, Dvadashi at Sunrise => Prominent: Thrayodashi
+                // 3) Chathurthi at Sunset, Thrithiya at PrevDay Sunrise,
+                //    Panchami at PrevDay prevDay Sunrise
+                //      => Prominent: Sashti
+                // 4) Chathurthi at Sunrise, Thrithiya at prevDay Sunrise,
+                //    Panchami at PrevDay prevDay Sunset
+                //      => Prominent: Sashti
+                if (prevDayThithiAtSunset == curThithiAtSunset) {
+                    // 1) Thrayodashi at Sunset, Thrayodashi at PrevDay Sunset
+                    //      => Prominent: Thrayodashi
+                    thithiIndex += 1;
                 } else {
-                    // 2) Dvithiya at Sunset, Prathama at Sunrise => Prominent: Prathama
+                    thithiIndex = curThithiAtSunset;
+                }
+            } else {
+                // For Sunrise-Prominent Thithi(s) occurring at Sunset
+                // Scenarios include:
+                // 1) *Prathama* at Sunset, Prathama at Sunrise => Prominent: *Prathama*
+                // 2) *Dvithiya* at Sunset, Prathama at Sunrise => Prominent: *Prathama*
+                // 3) *Saptami* at Sunset, Sashti at Sunrise, Panchami at PrevDay Sunset
+                //      => Prominent: *Sashti*
+                // 4) *Chathurdashi* at Sunset, Thrayodashi at Sunrise, Thrayodashi at PrevDay Sunset
+                //      => Prominent: *Chathurdashi*
+                if (curThithiAtSunrise == curThithiAtSunset) {
+                    // 1) Prathama at Sunset, Prathama at Sunrise => Prominent: Prathama
                     thithiIndex = curThithiAtSunrise;
+                } else {
+                    if (isSunsetProminentThithi(curThithiAtSunrise)) {
+                        // Special situation where there are 3 Thithi(s) in 36 hours!
+                        // For ex: Panchami at prevDay Sunset, Sashti at curDay Sunrise &
+                        //         Saptami at curDay Sunset
+                        if ((prevDayThithiAtSunset != curThithiAtSunset) &&
+                                (prevDayThithiAtSunset != curThithiAtSunrise)) {
+                            // 3) Saptami at Sunset, Sashti at Sunrise, Panchami at PrevDay Sunset
+                            //      => Prominent: Sashti
+                            thithiIndex = curThithiAtSunrise;
+                        } else {
+                            // 4) Chathurdashi at Sunset, Thrayodashi at Sunrise, Thrayodashi at PrevDay Sunset
+                            //      => Prominent: Chathurdashi
+                            thithiIndex = curThithiAtSunset;
+                        }
+                    } else {
+                        // 2) Dvithiya at Sunset, Prathama at Sunrise => Prominent: Prathama
+                        thithiIndex = curThithiAtSunrise;
+                    }
                 }
             }
         }
@@ -2051,10 +2102,10 @@ public class VedicCalendar extends Calendar {
             nakshatramSpan *= MAX_MINS_IN_HOUR;
             nakshatramSpan /= chandraGathi;
             nakshatramSpan = MAX_MINS_IN_HOUR - nakshatramSpan;
-            nakshatramSpanMin = (int)(nakshatramSpan * MAX_MINS_IN_NAZHIGAI);
-            nakshatramSpanMin += sunRiseTotalMins;
-            nakshatramSpanHour = (int) nakshatramSpanMin / MAX_MINS_IN_HOUR;
-            nakshatramSpanMin %= MAX_MINS_IN_HOUR;
+            nakshatramSpan *= MAX_MINS_IN_NAZHIGAI;
+            nakshatramSpan += sunRiseTotalMins;
+            nakshatramSpanHour = (int) nakshatramSpan / MAX_MINS_IN_HOUR;
+            nakshatramSpanMin = (int) nakshatramSpan % MAX_MINS_IN_HOUR;
         } else {
             // 1) Calculate the Nakshatram index(current & next) & mapping string for the given
             //    calendar day
@@ -2108,8 +2159,7 @@ public class VedicCalendar extends Calendar {
         //      next_nakshatram}
         //    - Sankalpam needs the exact nakshatram at the time of the current query
         if (queryType == MATCH_PANCHANGAM_FULLDAY) {
-            nakshatramStr += String.format(" (%02d:%02d)", nakshatramSpanHour,
-                    nakshatramSpanMin);
+            nakshatramStr += " (" + formatTimeInTimeFormat(nakshatramSpan) + ")";
             if (nakshatramSpanHour < MAX_24HOURS) {
                 nakshatramStr += ARROW_SYMBOL + secondNakshatramStr;
             }
@@ -2199,10 +2249,10 @@ public class VedicCalendar extends Calendar {
             nakshatramSpan *= MAX_MINS_IN_HOUR;
             nakshatramSpan /= chandraGathi;
             nakshatramSpan = MAX_MINS_IN_HOUR - nakshatramSpan;
-            nakshatramSpanMin = (int)(nakshatramSpan * MAX_MINS_IN_NAZHIGAI);
-            nakshatramSpanMin += sunRiseTotalMins;
-            nakshatramSpanHour = (int) nakshatramSpanMin / MAX_MINS_IN_HOUR;
-            nakshatramSpanMin %= MAX_MINS_IN_HOUR;
+            nakshatramSpan *= MAX_MINS_IN_NAZHIGAI;
+            nakshatramSpan += sunRiseTotalMins;
+            nakshatramSpanHour = (int) nakshatramSpan / MAX_MINS_IN_HOUR;
+            nakshatramSpanMin = (int) nakshatramSpan % MAX_MINS_IN_HOUR;
         } else {
             // 1) Calculate the Nakshatram index(current & next) & mapping string for the given
             //    calendar day
@@ -2267,8 +2317,7 @@ public class VedicCalendar extends Calendar {
         //      next_nakshatram}
         //    - Sankalpam needs the exact nakshatram at the time of the current query
         if (queryType == MATCH_PANCHANGAM_FULLDAY) {
-            nakshatramStr += String.format(" (%02d:%02d)", nakshatramSpanHour,
-                    nakshatramSpanMin);
+            nakshatramStr += " (" + formatTimeInTimeFormat(nakshatramSpan) + ")";
             if (nakshatramSpanHour < MAX_24HOURS) {
                 nakshatramStr += ARROW_SYMBOL + secondNakshatramStr;
             }
@@ -2334,25 +2383,51 @@ public class VedicCalendar extends Calendar {
         //         raasi string (as per the locale) in the raasi mapping table.
         // Step 8: Align remaining minutes as per the given Calendar day's Sun Rise Time
 
-        // 1) Calculate the Raasi index(current & next) & mapping string
-        //    for the given calendar day
-        int raasiIndex = (int) (refChandraAyanamAtDayStart / MAX_RAASI_MINUTES);
-        raasiIndex %= MAX_RAASIS;
+        int raasiIndex = 0;
+        int raasiSpanHour = 0;
+        int raasiSpanMin = 0;
+        double raasiSpan = 0;
 
-        String[] raasiList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_RAASI);
+        // For Vaakhyam
+        if ((panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR) ||
+            (panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNAR)) {
+            raasiIndex = (int) chandraSpudam / MAX_RAASI_MINUTES;
+            raasiIndex -= 1;
+            if (raasiIndex < 0) {
+                raasiIndex += MAX_RAASIS;
+            }
+            raasiSpan = (chandraSpudam % MAX_RAASI_MINUTES);
+            raasiSpan *= MAX_MINS_IN_HOUR;
+            raasiSpan /= chandraGathi;
+            if (raasiSpan < MAX_MINS_IN_HOUR) {
+                raasiSpan = MAX_MINS_IN_HOUR - raasiSpan;
+                raasiSpan *= MAX_MINS_IN_NAZHIGAI;
+                raasiSpan += sunRiseTotalMins;
+                raasiSpanHour = (int) raasiSpan / MAX_MINS_IN_HOUR;
+                raasiSpanMin = (int) raasiSpan % MAX_MINS_IN_HOUR;
+            } else {
+                raasiSpanHour = MAX_24HOURS;
+                raasiSpanMin = 0;
+            }
+        } else {
+            // 1) Calculate the Raasi index(current & next) & mapping string
+            //    for the given calendar day
+            raasiIndex = (int) (refChandraAyanamAtDayStart / MAX_RAASI_MINUTES);
+            raasiIndex %= MAX_RAASIS;
 
-        // 2) Get 1st Raasi span for the given calendar day
-        double raasiSpan = getRaasiSpan(raasiIndex, SweConst.SE_MOON, false);
-        if (raasiSpan < sunRiseTotalMins) {
-            raasiIndex += 1;
-            raasiIndex %= MAX_NAKSHATHRAMS;
-            raasiSpan = getNakshatramSpan(raasiIndex, false);
-            System.out.println("VedicCalendar: Negative getRaasi() : " + raasiSpan);
+            // 2) Get 1st Raasi span for the given calendar day
+            raasiSpan = getRaasiSpan(raasiIndex, SweConst.SE_MOON, false);
+            if (raasiSpan < sunRiseTotalMins) {
+                raasiIndex += 1;
+                raasiIndex %= MAX_NAKSHATHRAMS;
+                raasiSpan = getNakshatramSpan(raasiIndex, false);
+                System.out.println("VedicCalendar: Negative getRaasi() : " + raasiSpan);
+            }
+            raasiSpanHour = (int) (raasiSpan / MAX_MINS_IN_HOUR);
+            raasiSpanMin = (int) (raasiSpan % MAX_MINS_IN_HOUR);
         }
 
-        int raasiSpanHour = (int) (raasiSpan / MAX_MINS_IN_HOUR);
-        int raasiSpanMin = (int) (raasiSpan % MAX_MINS_IN_HOUR);
-
+        String[] raasiList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_RAASI);
         String raasiStr = raasiList[(raasiIndex % MAX_RAASIS)];
         String secondRaasiStr = raasiList[((raasiIndex + 1) % MAX_RAASIS)];
 
@@ -2361,7 +2436,7 @@ public class VedicCalendar extends Calendar {
         // But for Sankalpam, exact nakshatram given the current time would be desirable.
         if (queryType == MATCH_PANCHANGAM_FULLDAY) {
             if (raasiSpanHour < MAX_24HOURS) {
-                raasiStr += String.format(" (%02d:%02d)", raasiSpanHour, raasiSpanMin);
+                raasiStr += " (" + formatTimeInTimeFormat(raasiSpan) + ")";
                 raasiStr += ARROW_SYMBOL + secondRaasiStr;
             }
         } else if (queryType == MATCH_SANKALPAM_EXACT) {
@@ -2445,10 +2520,10 @@ public class VedicCalendar extends Calendar {
             yogamSpan *= MAX_MINS_IN_HOUR;
             yogamSpan /= yogaGathi;
             yogamSpan = MAX_MINS_IN_HOUR - yogamSpan;
-            yogamSpanMin = (int)(yogamSpan * MAX_MINS_IN_NAZHIGAI);
-            yogamSpanMin += sunRiseTotalMins;
-            yogamSpanHour = (int) yogamSpanMin / MAX_MINS_IN_HOUR;
-            yogamSpanMin %= MAX_MINS_IN_HOUR;
+            yogamSpan *= MAX_MINS_IN_NAZHIGAI;
+            yogamSpan += sunRiseTotalMins;
+            yogamSpanHour = (int) yogamSpan / MAX_MINS_IN_HOUR;
+            yogamSpanMin = (int) yogamSpan % MAX_MINS_IN_HOUR;
         } else {
             int sumAyanam = (int) (refChandraAyanamAtDayStart + refRaviAyanamAtDayStart);
             sumAyanam %= MAX_AYANAM_MINUTES;
@@ -2479,7 +2554,7 @@ public class VedicCalendar extends Calendar {
         //    - Panchangam needs full day's yogam details {yogam (HH:MM) > next_yogam}
         //    - Sankalpam needs the exact yogam at the time of the current query
         if (queryType == MATCH_PANCHANGAM_FULLDAY) {
-            yogamStr += String.format(" (%02d:%02d)", yogamSpanHour, yogamSpanMin);
+            yogamStr += " (" + formatTimeInTimeFormat(yogamSpan) + ")";
             if (yogamSpanHour < MAX_24HOURS) {
                 yogamStr += ARROW_SYMBOL + secondYogamStr;
             }
@@ -2569,11 +2644,11 @@ public class VedicCalendar extends Calendar {
             karanamSpan *= MAX_MINS_IN_HOUR;
             karanamSpan /= thithiGathi;
             karanamSpan = MAX_MINS_IN_HOUR - karanamSpan;
+            karanamSpan *= MAX_MINS_IN_NAZHIGAI;
             karanamSpan /= 2;
-            karanamSpanMin = (int)(karanamSpan * MAX_MINS_IN_NAZHIGAI);
-            karanamSpanMin += sunRiseTotalMins;
-            karanamSpanHour = karanamSpanMin / MAX_MINS_IN_HOUR;
-            karanamSpanMin %= MAX_MINS_IN_HOUR;
+            karanamSpan += sunRiseTotalMins;
+            karanamSpanHour = (int) karanamSpan / MAX_MINS_IN_HOUR;
+            karanamSpanMin = (int) karanamSpan % MAX_MINS_IN_HOUR;
         } else {
             double chandraRaviDistance = refChandraAyanamAtDayStart - refRaviAyanamAtDayStart;
             if (chandraRaviDistance < 0) {
@@ -2606,7 +2681,7 @@ public class VedicCalendar extends Calendar {
         //    - Panchangam needs full day's karanam details {karanam (HH:MM) > next_karanam}
         //    - Sankalpam needs the exact karanam at the time of the current query
         if (queryType == MATCH_PANCHANGAM_FULLDAY) {
-            karanamStr += String.format(" (%02d:%02d)", karanamSpanHour, karanamSpanMin);
+            karanamStr += " (" + formatTimeInTimeFormat(karanamSpan) + ")";
             if (karanamSpanHour < MAX_24HOURS) {
                 karanamStr += ARROW_SYMBOL + karanamSecHalfStr;
             }
@@ -2685,10 +2760,10 @@ public class VedicCalendar extends Calendar {
             nakshatramSpan *= MAX_MINS_IN_HOUR;
             nakshatramSpan /= chandraGathi;
             nakshatramSpan = MAX_MINS_IN_HOUR - nakshatramSpan;
-            nakshatramSpanMin = (int)(nakshatramSpan * MAX_MINS_IN_NAZHIGAI);
-            nakshatramSpanMin += sunRiseTotalMins;
-            nakshatramSpanHour = (int) nakshatramSpanMin / MAX_MINS_IN_HOUR;
-            nakshatramSpanMin %= MAX_MINS_IN_HOUR;
+            nakshatramSpan *= MAX_MINS_IN_NAZHIGAI;
+            nakshatramSpan += sunRiseTotalMins;
+            nakshatramSpanHour = (int) nakshatramSpan / MAX_MINS_IN_HOUR;
+            nakshatramSpanMin = (int) nakshatramSpan % MAX_MINS_IN_HOUR;
         } else {
             // 1) Calculate the Nakshatram index(current & next) & mapping string for the given
             //    calendar day
@@ -2720,8 +2795,7 @@ public class VedicCalendar extends Calendar {
         //    - Sankalpam needs the exact yogam at the time of the current query
         if (queryType == MATCH_PANCHANGAM_FULLDAY) {
             if (!ayogamStr.equalsIgnoreCase(secondAyogamStr)) {
-                ayogamStr +=
-                        String.format(" (%02d:%02d)", nakshatramSpanHour, nakshatramSpanMin);
+                ayogamStr += " (" + formatTimeInTimeFormat(nakshatramSpan) + ")";
                 if (nakshatramSpanHour < MAX_24HOURS) {
                     ayogamStr += ARROW_SYMBOL + secondAyogamStr;
                 }
@@ -2771,7 +2845,8 @@ public class VedicCalendar extends Calendar {
         double raahuStartingTime = sunRiseTotalMins +
                 (durationOfDay * raahuKaalamTable[refVaasaram - 1]);
         double raahuEndingTime = raahuStartingTime + raahuKaalamDuration;
-        return formatTimeHHMM(raahuStartingTime) + " - " + formatTimeHHMM(raahuEndingTime);
+        return formatTimeInTimeFormat(raahuStartingTime) + " - " +
+                formatTimeInTimeFormat(raahuEndingTime);
     }
 
     /**
@@ -2797,7 +2872,8 @@ public class VedicCalendar extends Calendar {
         double yamakandamStartingTime = sunRiseTotalMins +
                 (durationOfDay * yamakandamTable[refVaasaram - 1]);
         double yamakandamEndingTime = yamakandamStartingTime + yamakandamDuration;
-        return formatTimeHHMM(yamakandamStartingTime) + " - " + formatTimeHHMM(yamakandamEndingTime);
+        return formatTimeInTimeFormat(yamakandamStartingTime) + " - " +
+               formatTimeInTimeFormat(yamakandamEndingTime);
     }
 
     /**
@@ -2823,7 +2899,8 @@ public class VedicCalendar extends Calendar {
         double kuligaiStartingTime = sunRiseTotalMins +
                 (durationOfDay * kuligaiTable[refVaasaram - 1]);
         double kuligaiEndingTime = kuligaiStartingTime + kuligaiDuration;
-        return formatTimeHHMM(kuligaiStartingTime) + " - " + formatTimeHHMM(kuligaiEndingTime);
+        return formatTimeInTimeFormat(kuligaiStartingTime) + " - " +
+               formatTimeInTimeFormat(kuligaiEndingTime);
     }
 
     /**
@@ -2915,9 +2992,9 @@ public class VedicCalendar extends Calendar {
                     endSubham = dayMins;
                     isSubhaHoraiRunning = false;
                     amritathiYogamStr
-                            .append(formatTimeHHMM(startSubham))
+                            .append(formatTimeInTimeFormat(startSubham))
                             .append(" - ")
-                            .append(formatTimeHHMM(endSubham))
+                            .append(formatTimeInTimeFormat(endSubham))
                             .append("<br>");
                 }
             }
@@ -2926,9 +3003,9 @@ public class VedicCalendar extends Calendar {
         if (isSubhaHoraiRunning) {
             endSubham = dayMins;
             amritathiYogamStr
-                    .append(formatTimeHHMM(startSubham))
+                    .append(formatTimeInTimeFormat(startSubham))
                     .append(" - ")
-                    .append(formatTimeHHMM(endSubham))
+                    .append(formatTimeInTimeFormat(endSubham))
                     .append("<br>");
         }
 
@@ -2982,7 +3059,7 @@ public class VedicCalendar extends Calendar {
                 perHoraiSpan = perHoraiDaySpan;
             }
 
-            String startTimeStr = formatTimeHHMM(horaiStartTime);
+            String startTimeStr = formatTimeInTimeFormat(horaiStartTime);
             boolean isCurHorai = false;
 
             // Check if the current time falls between a horai's span and
@@ -2997,7 +3074,7 @@ public class VedicCalendar extends Calendar {
                 }
             }
             horaiStartTime += perHoraiSpan;
-            String endTimeStr = formatTimeHHMM(horaiStartTime);
+            String endTimeStr = formatTimeInTimeFormat(horaiStartTime);
 
             int currWeekday = curCalendar.get(Calendar.DAY_OF_WEEK);
             String horaiVal = horaiList[currWeekday - 1];
@@ -3118,14 +3195,14 @@ public class VedicCalendar extends Calendar {
         String[] raasiList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_RAASI);
         while (numLagnams < MAX_RAASIS) {
             double lagnamDuration = lagnamDurationTable[udhayaLagnam];
-            String startTimeStr = formatTimeHHMM(lagnamStartOfDay);
+            String startTimeStr = formatTimeInTimeFormat(lagnamStartOfDay);
             if (lagnamStartOfDay > MAX_MINS_IN_DAY) {
-                startTimeStr = formatTimeHHMM((lagnamStartOfDay - MAX_MINS_IN_DAY));
+                startTimeStr = formatTimeInTimeFormat((lagnamStartOfDay - MAX_MINS_IN_DAY));
             }
             lagnamStartOfDay += lagnamDuration;
-            String endTimeStr = formatTimeHHMM(lagnamStartOfDay);
+            String endTimeStr = formatTimeInTimeFormat(lagnamStartOfDay);
             if (lagnamStartOfDay > MAX_MINS_IN_DAY) {
-                endTimeStr = formatTimeHHMM((lagnamStartOfDay - MAX_MINS_IN_DAY));
+                endTimeStr = formatTimeInTimeFormat((lagnamStartOfDay - MAX_MINS_IN_DAY));
             }
             String lagnamStr = raasiList[(udhayaLagnam) % MAX_RAASIS];
             String nextLagnamStr = raasiList[(udhayaLagnam + 1) % MAX_RAASIS];
@@ -3214,7 +3291,7 @@ public class VedicCalendar extends Calendar {
 
         String[] kaalamList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_KAALA_VIBHAAGAH);
         while (numKaalam < MAX_KAALAMS) {
-            String startTimeStr = formatTimeHHMM(kaalamStartOfDay);
+            String startTimeStr = formatTimeInTimeFormat(kaalamStartOfDay);
             String endTimeStr;
             if (numKaalam == 0) {
                 kaalamStartOfDay += BRAHMA_MUHURTHAM_DURATION;
@@ -3228,9 +3305,9 @@ public class VedicCalendar extends Calendar {
                 kaalamStartOfDay += kaalamDurationDayTime;
             }
             if (kaalamStartOfDay > MAX_MINS_IN_DAY) {
-                endTimeStr = formatTimeHHMM((kaalamStartOfDay - MAX_MINS_IN_DAY));
+                endTimeStr = formatTimeInTimeFormat((kaalamStartOfDay - MAX_MINS_IN_DAY));
             } else {
-                endTimeStr = formatTimeHHMM(kaalamStartOfDay);
+                endTimeStr = formatTimeInTimeFormat(kaalamStartOfDay);
             }
             String kaalamStr = kaalamList[(numKaalam) % MAX_KAALAMS];
             String nextKaalamStr = kaalamList[(numKaalam + 1) % MAX_KAALAMS];
@@ -3282,7 +3359,7 @@ public class VedicCalendar extends Calendar {
         String sunRise = "";
         calcSunrise(MATCH_SANKALPAM_EXACT);
         if (sunRiseTotalMins > 0) {
-            sunRise = formatTimeHHMM(sunRiseTotalMins);
+            sunRise = formatTimeInTimeFormat(sunRiseTotalMins);
         }
 
         //System.out.println("VedicCalendar", "get_sunrise: SunRise => " + sunRise);
@@ -3301,7 +3378,7 @@ public class VedicCalendar extends Calendar {
         String sunSet = "";
         calcSunset(MATCH_SANKALPAM_EXACT);
         if (sunSetTotalMins > 0) {
-            sunSet = formatTimeHHMM(sunSetTotalMins);
+            sunSet = formatTimeInTimeFormat(sunSetTotalMins);
         }
 
         //System.out.println("VedicCalendar", "get_sunset: SunRise => " + sunRise);
@@ -3917,7 +3994,7 @@ public class VedicCalendar extends Calendar {
 
     /**
      * Utility function to get the maasam index as per solar calendar.
-     * 
+     *
      * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY
      *                      - to get maasam index based on actual Sunrise.
      *                  MATCH_PANCHANGAM_PROMINENT
@@ -4428,18 +4505,29 @@ public class VedicCalendar extends Calendar {
     }
 
     /**
-     * Utility function to format minutes in HH:MM format
+     * Utility function to format time in HH:MM format or Nazhigai:Vinaadi
      *
-     * @param time Date & time as a number
+     * @param time          Date & time as a number
      *
-     * @return String in HH:MM format
+     * @return Time as a string in HH:MM or Na.Vi format
      */
-    private static String formatTimeHHMM(double time) {
+    private String formatTimeInTimeFormat(double time) {
         if (time < 0) {
             time += MAX_MINS_IN_DAY;
         }
-        int hour = (int) (time / MAX_MINS_IN_HOUR);
-        int min = (int) time % MAX_MINS_IN_HOUR;
-        return String.format("%02d:%02d", hour, min);
+
+        if (timeFormatSettings == PANCHANGAM_TIME_FORMAT_HHMM) {
+            int hour = (int) (time / MAX_MINS_IN_HOUR);
+            int min = (int) time % MAX_MINS_IN_HOUR;
+            return String.format("%02d:%02d", hour, min);
+        }
+
+        time -= sunRiseTotalMins;
+        if (time < 0) {
+            time += MAX_MINS_IN_DAY;
+        }
+        int nazhigai = (int) (time / MAX_MINS_IN_NAZHIGAI);
+        int vinaadi = (int) (time % MAX_MINS_IN_NAZHIGAI);
+        return String.format("%02d.%02d", nazhigai, vinaadi);
     }
 }

@@ -143,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private int prefAyanamsa = VedicCalendar.AYANAMSA_CHITRAPAKSHA;
     private int prefChaandramanamType = VedicCalendar.CHAANDRAMAANAM_TYPE_AMANTA;
     private int prefPanchangamType = VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM_LUNI_SOLAR;
+    private int prefTimeFormat = VedicCalendar.PANCHANGAM_TIME_FORMAT_HHMM;
     private static String prefSankalpamType = "";
     private static String selLocale = "en";
     private static String curLocationCity = "";
@@ -458,6 +459,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                     readPrefPanchangamType(this), currCalendar, placesInfo.longitude,
                     placesInfo.latitude, placesInfo.timezone, ayanamsaMode,
                     readPrefChaandramanaType(this), vedicCalendarLocaleList);
+            int selectedTimeFormat = readPrefTimeFormat(this);
+            vedicCalendar.setTimeFormat(selectedTimeFormat);
         } catch (Exception e) {
             e.printStackTrace();
             vedicCalendar = null;
@@ -479,15 +482,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         // 2) If Activity results is for Alarm, then create Alarm based on alarm type
         // Ignore the rest
         if (requestCode == SETTINGS_REQUEST_CODE) {
+            boolean refreshPanchangam = true;
+
             // If Manual location has changed, then refresh the tabs
             String selectedLocation = readDefLocationSetting(getApplicationContext());
             if (!selectedLocation.equalsIgnoreCase(curLocationCity)) {
                 curLocationCity = selectedLocation;
                 refreshLocation();
-                refreshPanchangamDetails();
-
-                // Send broadcast Intent to widget(s) to refresh!
-                sendBroadcastToWidget(this);
             }
 
             // If there is change in location preferences, then refresh location & the fragments.
@@ -495,23 +496,24 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             if (prefLocationType != prefToUpdate) {
                 prefLocationType = prefToUpdate;
                 refreshLocation();
-                refreshPanchangamDetails();
-
-                // Send broadcast Intent to widget(s) to refresh!
-                sendBroadcastToWidget(this);
             }
 
-            // If there is change in locale preferences, then refresh location & the fragments.
-            String defLocale = readPrefLocale();
-            if (!defLocale.equals(selLocale)) {
-                refreshPanchangamDetails();
-                refreshTab(NPAdapter.NP_TAB_ALARM);
-                refreshTab(NPAdapter.NP_TAB_REMINDER);
-                Objects.requireNonNull(getSupportActionBar()).setTitle(Html.fromHtml("<font color='#0000FF'>" +
-                        getString(R.string.app_name) + "</font>"));
+            // If there is change in Ayanamsa preferences, then refresh location & the fragments.
+            int selectedAyanamsa = readPrefAyanamsaSelection(this);
+            if (prefAyanamsa != selectedAyanamsa) {
+                prefAyanamsa = selectedAyanamsa;
+            }
 
-                // Send broadcast Intent to widget(s) to refresh!
-                sendBroadcastToWidget(this);
+            // If there is change in Chaandramanam preferences, then refresh location & the fragments.
+            int selectedChaandramanamType = readPrefChaandramanaType(this);
+            if (prefChaandramanamType != selectedChaandramanamType) {
+                prefChaandramanamType = selectedChaandramanamType;
+            }
+
+            // If there is change in Panchangam preferences, then refresh location & the fragments.
+            int selectedPanchangamType = readPrefPanchangamType(this);
+            if (prefPanchangamType != selectedPanchangamType) {
+                prefPanchangamType = selectedPanchangamType;
             }
 
             // If there is change in sankalpam preferences, then refresh location & the fragments.
@@ -519,37 +521,33 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             if (!prefSankalpamType.equals(sankalpamType)) {
                 prefSankalpamType = sankalpamType;
                 refreshTab(NPAdapter.NP_TAB_SANKALPAM);
+                refreshPanchangam = false;
                 // No need to inform widget here for Sankalpam change!
             }
 
-            // If there is change in Ayanamsa preferences, then refresh location & the fragments.
-            int selectedAyanamsa = readPrefAyanamsaSelection(this);
-            if (prefAyanamsa != selectedAyanamsa) {
-                prefAyanamsa = selectedAyanamsa;
+            // If there is change in Time Format preferences, then refresh panchangam fragment.
+            int selectedTimeFormat = readPrefTimeFormat(this);
+            if (prefTimeFormat != selectedTimeFormat) {
+                prefTimeFormat = selectedTimeFormat;
+                vedicCalendar.setTimeFormat(prefTimeFormat);
+                refreshTab(NPAdapter.NP_TAB_PANCHANGAM);
+                refreshPanchangam = false;
+            }
+
+            String defLocale = readPrefLocale();
+            if (refreshPanchangam) {
                 refreshPanchangamDetails();
 
                 // Send broadcast Intent to widget(s) to refresh!
                 sendBroadcastToWidget(this);
             }
 
-            // If there is change in Chaandramanam preferences, then refresh location & the fragments.
-            int selectedChaandramanamType = readPrefChaandramanaType(this);
-            if (prefChaandramanamType != selectedChaandramanamType) {
-                prefChaandramanamType = selectedChaandramanamType;
-                refreshPanchangamDetails();
-
-                // Send broadcast Intent to widget(s) to refresh!
-                sendBroadcastToWidget(this);
-            }
-
-            // If there is change in Panchangam preferences, then refresh location & the fragments.
-            int selectedPanchangamType = readPrefPanchangamType(this);
-            if (prefPanchangamType != selectedPanchangamType) {
-                prefPanchangamType = selectedPanchangamType;
-                refreshPanchangamDetails();
-
-                // Send broadcast Intent to widget(s) to refresh!
-                sendBroadcastToWidget(this);
+            // If there is change in locale preferences, then refresh location & the fragments.
+            if (!defLocale.equals(selLocale)) {
+                refreshTab(NPAdapter.NP_TAB_ALARM);
+                refreshTab(NPAdapter.NP_TAB_REMINDER);
+                Objects.requireNonNull(getSupportActionBar()).setTitle(Html.fromHtml("<font color='#0000FF'>" +
+                        getString(R.string.app_name) + "</font>"));
             }
         } else if (requestCode == CALENDAR_REQUEST_CODE) {
             if (data != null) {
@@ -744,6 +742,29 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             location = context.getString(R.string.pref_def_location_val);
         }
         return location;
+    }
+
+    /**
+     * Utility function to get the preferred time format from the shared preferences.
+     *
+     * @return Preferred Timeformat.
+     */
+    public static int readPrefTimeFormat(Context context) {
+        String timeFormat = context.getString(R.string.pref_def_timeformat);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        if (preferences != null) {
+            timeFormat = preferences.getString(SettingsFragment.PREF_TIMEFORMAT_KEY,
+                            context.getString(R.string.pref_def_timeformat));
+        }
+
+        if (timeFormat.isEmpty()) {
+            timeFormat = context.getString(R.string.pref_def_timeformat);
+        }
+
+        if (timeFormat.equalsIgnoreCase(context.getString(R.string.pref_timeformat_hhmm))) {
+            return VedicCalendar.PANCHANGAM_TIME_FORMAT_HHMM;
+        }
+        return VedicCalendar.PANCHANGAM_TIME_FORMAT_NAZHIGAI;
     }
 
     /**

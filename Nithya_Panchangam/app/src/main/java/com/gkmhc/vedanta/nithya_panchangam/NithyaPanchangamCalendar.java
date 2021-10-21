@@ -101,7 +101,9 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
             refDate = npDate;
             vedicCalendar = VedicCalendar.getInstance(
                     MainActivity.copyAssetsToLocalDir(getApplicationContext()),
+                    // TODO - Vakhyam takes less time. This needs to be fixed!
                     MainActivity.readPrefPanchangamType(this), calendar,
+                    //VedicCalendar.PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR, calendar,
                     placesInfo.longitude, placesInfo.latitude, placesInfo.timezone, ayanamsaMode,
                     MainActivity.readPrefChaandramanaType(this), vedicCalendarLocaleList);
         } catch (Exception e) {
@@ -262,7 +264,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
                     int dinaAnkham =
                             vedicCalendar.getDinaAnkam(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
                     //endTime = System.nanoTime();
-                    //Log.d("NPCalProfiler","getDinaankham()... Time Taken: " +
+                    //Log.d("NPCalProfiler","getDinaAnkam()... Time Taken: " +
                     //        VedicCalendar.getTimeTaken(startTime, endTime));
                     drikDaysInMonth.add(String.valueOf(dinaAnkham));
 
@@ -321,7 +323,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
                     //        strThithi + " " + dinaSpecialStr);
                     calendarIter.add(Calendar.DATE, 1);
                 } catch (Exception e) {
-                    // No Nothing!
+                    e.printStackTrace();
                 }
             }
             //long mEndTime = System.nanoTime();

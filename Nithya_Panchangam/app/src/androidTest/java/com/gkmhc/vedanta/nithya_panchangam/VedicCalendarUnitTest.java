@@ -41,7 +41,7 @@ public class VedicCalendarUnitTest {
             try {
                 vedicCalendar = VedicCalendar.getInstance(
                         MainActivity.copyAssetsToLocalDir(appContext),
-                        VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM, currCalendar,
+                        VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM_LUNI_SOLAR, currCalendar,
                         placesInfo.longitude, placesInfo.latitude,
                         placesInfo.timezone, VedicCalendar.AYANAMSA_CHITRAPAKSHA,
                         VedicCalendar.CHAANDRAMAANAM_TYPE_AMANTA, vedicCalendarLocaleList);

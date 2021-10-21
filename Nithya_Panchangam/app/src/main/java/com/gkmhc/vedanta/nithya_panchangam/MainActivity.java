@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private int prefLocationType = LOCATION_MANUAL;
     private int prefAyanamsa = VedicCalendar.AYANAMSA_CHITRAPAKSHA;
     private int prefChaandramanamType = VedicCalendar.CHAANDRAMAANAM_TYPE_AMANTA;
+    private int prefPanchangamType = VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM_LUNI_SOLAR;
     private static String prefSankalpamType = "";
     private static String selLocale = "en";
     private static String curLocationCity = "";
@@ -276,21 +277,20 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private final BroadcastReceiver alarmMsgReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent != null) {
-                String action = intent.getAction();
-                if (action.equalsIgnoreCase(NPBroadcastReceiver.STOP_ALARM)) {
-                    boolean alarmType = intent.getBooleanExtra(
-                            NPBroadcastReceiver.EXTRA_NOTIFICATION_ALARM_TYPE,
-                            Alarm.ALARM_TYPE_STANDARD);
-                    Log.d("MainActivity","STOP Alarm Received!");
+        if (intent != null) {
+            String action = intent.getAction();
+            if (action.equalsIgnoreCase(NPBroadcastReceiver.STOP_ALARM)) {
+                boolean alarmType = intent.getBooleanExtra(
+                        NPBroadcastReceiver.EXTRA_NOTIFICATION_ALARM_TYPE,
+                        Alarm.ALARM_TYPE_STANDARD);
 
-                    if (alarmType == Alarm.ALARM_TYPE_STANDARD) {
-                        refreshTab(NPAdapter.NP_TAB_ALARM);
-                    } else if (alarmType == Alarm.ALARM_TYPE_VEDIC) {
-                        refreshTab(NPAdapter.NP_TAB_REMINDER);
-                    }
+                if (alarmType == Alarm.ALARM_TYPE_STANDARD) {
+                    refreshTab(NPAdapter.NP_TAB_ALARM);
+                } else if (alarmType == Alarm.ALARM_TYPE_VEDIC) {
+                    refreshTab(NPAdapter.NP_TAB_REMINDER);
                 }
             }
+        }
         }
     };
 
@@ -522,6 +522,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 // No need to inform widget here for Sankalpam change!
             }
 
+            // If there is change in Ayanamsa preferences, then refresh location & the fragments.
             int selectedAyanamsa = readPrefAyanamsaSelection(this);
             if (prefAyanamsa != selectedAyanamsa) {
                 prefAyanamsa = selectedAyanamsa;
@@ -531,9 +532,20 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 sendBroadcastToWidget(this);
             }
 
+            // If there is change in Chaandramanam preferences, then refresh location & the fragments.
             int selectedChaandramanamType = readPrefChaandramanaType(this);
             if (prefChaandramanamType != selectedChaandramanamType) {
                 prefChaandramanamType = selectedChaandramanamType;
+                refreshPanchangamDetails();
+
+                // Send broadcast Intent to widget(s) to refresh!
+                sendBroadcastToWidget(this);
+            }
+
+            // If there is change in Panchangam preferences, then refresh location & the fragments.
+            int selectedPanchangamType = readPrefPanchangamType(this);
+            if (prefPanchangamType != selectedPanchangamType) {
+                prefPanchangamType = selectedPanchangamType;
                 refreshPanchangamDetails();
 
                 // Send broadcast Intent to widget(s) to refresh!
@@ -639,18 +651,22 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
      * @return Selected panchangam type as an integer value.
      */
     public static int readPrefPanchangamType(Context context) {
-        int defPanchangamType = VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM;
+        int defPanchangamType = VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM_LUNI_SOLAR;
         String defPanchangamTypeStr = context.getString(R.string.pref_def_panchangam);
         SharedPreferences localPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         if (localPreferences != null) {
-            defPanchangamTypeStr = localPreferences.getString(SettingsFragment.PREF_PANCHANGAM_KEY, defPanchangamTypeStr);
+            defPanchangamTypeStr = localPreferences.getString(SettingsFragment.PREF_PANCHANGAM_KEY,
+                                                              defPanchangamTypeStr);
 
             if (defPanchangamTypeStr.equalsIgnoreCase(
-                    context.getString(R.string.pref_panchangam_telugu_panchangam))) {
-                defPanchangamType = VedicCalendar.PANCHANGAM_TYPE_TELUGU_PANCHANGAM;
+                    context.getString(R.string.pref_panchangam_tamil_vakhyam))) {
+                defPanchangamType = VedicCalendar.PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR;
             } else if (defPanchangamTypeStr.equalsIgnoreCase(
-                    context.getString(R.string.pref_panchangam_kannada_panchangam))) {
-                defPanchangamType = VedicCalendar.PANCHANGAM_TYPE_KANNADA_PANCHANGAM;
+                    context.getString(R.string.pref_panchangam_drik_telugu_lunar))) {
+                defPanchangamType = VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM_LUNAR;
+            } else if (defPanchangamTypeStr.equalsIgnoreCase(
+                    context.getString(R.string.pref_panchangam_drik_kannada_lunar))) {
+                defPanchangamType = VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM_LUNAR;
             }
         }
 

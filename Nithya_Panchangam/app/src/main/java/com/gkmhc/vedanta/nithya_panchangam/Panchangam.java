@@ -478,10 +478,12 @@ public class Panchangam extends Fragment {
      */
     private void updatePanchangamFragment(View root) {
         long pStartTime = System.nanoTime();
+        int pos = panchangamListView.getFirstVisiblePosition();
         PanchangamAdapter panchangamAdapter = new PanchangamAdapter(getContext(),
                 panchangamFields, panchangamValues, lagnamExactList, lagnamFullDayList,
                 kaalamExactList, kaalamVibhaagahList, horaiExactList, horaiFullDayList);
         panchangamListView.setAdapter(panchangamAdapter);
+        panchangamListView.setSelection(pos);
 
         updateCurLocation(mainActivity.getLocationCity());
 

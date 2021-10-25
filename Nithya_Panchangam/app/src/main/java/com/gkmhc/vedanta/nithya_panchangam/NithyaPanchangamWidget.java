@@ -14,7 +14,6 @@ import android.widget.RemoteViews;
 
 import com.gkmhc.utils.VedicCalendar;
 
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -48,7 +47,7 @@ public class NithyaPanchangamWidget extends AppWidgetProvider {
         try {
             int ayanamsaMode = MainActivity.readPrefAyanamsaSelection(context);
             VedicCalendar vedicCalendar = VedicCalendar.getInstance(
-                    MainActivity.copyAssetsToLocalDir(context),
+                    MainActivity.getPathToLocalAssets(context),
                     MainActivity.readPrefPanchangamType(context), currCalendar, placesInfo.longitude,
                     placesInfo.latitude, placesInfo.timezone, ayanamsaMode,
                     MainActivity.readPrefChaandramanaType(context), vedicCalendarLocaleList);

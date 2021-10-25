@@ -41,7 +41,7 @@
     <string name="sankalpam_srardham_end_1">விஷ்ணு யோக விஷ்ணு கரன ஏவம் குண விஷேஷன விஶிஷ்டாயாம் அஸ்யாம்</string>
     <string name="sankalpam_srardham_end_2">(பூணல் இடம்) ............  கோத்ராணாம், வஸுருத்ரதித்யஸ்வரூபாணாம் அஸ்மத் பித்ரு பிதாமஹ ப்ரபிதாமஹானாம் --- (தாயார் இருப்பவர்கள்) பிதாமஹீ, பிது: பிதாமஹீ, பிது: ப்ரபிதாமஹீனாம் (அல்லது) (தாயார் இல்லாதவர்கள்) மாத்ரு, பிதாமஹீ, ப்ரபிதாமஹீனாம் (தாயார் பிறந்த கோத்ரம் சொல்லவும்) ............ கோத்ராணாம், ஸபத்னீக, மாதாமஹ, மாது: பிதாமஹ:, மாது: ப்ரபிதாமஹானாம் உபயவம்ஸ பித்ரூணாம் அக்ஷய்ய த்ருப்த்யர்தம்</string>
     <string name="sankalpam_srardham_end_3">புண்யகாலே தர்ஶஶ்ராத்தம் ஹிரண்ய ரூபேண அத்ய கரிஷ்யே</string>
-    <string name="amruthathi_yogam_heading">அம்ருதாதி யோகம்</string>
+    <string name="amruthathi_yogam_heading">அமிர்தாதி யோகம்</string>
     <string name="vaasaram_suffix">வாஸர</string>
     <string name="solar_calendar">ஸௌரமானம்</string>
     <string name="sunrise_heading">ஸூர்யோதயம்</string>
@@ -560,7 +560,7 @@
 
     <!-- Amruthathi Yogam used to indicate auspiciousness of the Day -->
     <string-array name="amruthathi_yogam_list">
-        <item>அம்ருதயோகம்</item>
+        <item>அமிர்தயோகம்</item>
         <item>சித்தயோகம்</item>
         <item>மரணயோகம்</item>
     </string-array>

@@ -100,7 +100,7 @@ public class Sankalpam extends Fragment {
         try {
             refreshSankalpam(false);
         } catch (Exception exception) {
-            Log.e("Sankalpam:","Exception --- onResume()!");
+            exception.printStackTrace();
         }
     }
 
@@ -160,7 +160,6 @@ public class Sankalpam extends Fragment {
                 prefSankalpamType = MainActivity.readPrefSankalpamType(requireContext());
                 updateSankalpamFragment(root, prefSankalpamType, selLocale);
             } catch (Exception ex) {
-                Log.e("Sankalpam","Exception in refreshSankalpam()");
                 ex.printStackTrace();
             }
         }, 50);

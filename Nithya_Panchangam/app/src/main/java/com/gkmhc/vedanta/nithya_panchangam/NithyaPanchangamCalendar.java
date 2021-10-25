@@ -100,7 +100,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
             npDate = calendar.get(Calendar.DATE);
             refDate = npDate;
             vedicCalendar = VedicCalendar.getInstance(
-                    MainActivity.copyAssetsToLocalDir(getApplicationContext()),
+                    MainActivity.getPathToLocalAssets(getApplicationContext()),
                     // TODO - Vakhyam takes less time. This needs to be fixed!
                     MainActivity.readPrefPanchangamType(this), calendar,
                     //VedicCalendar.PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR, calendar,
@@ -108,11 +108,6 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
                     MainActivity.readPrefChaandramanaType(this), vedicCalendarLocaleList);
         } catch (Exception e) {
             // Nothing to do here.
-        }
-
-        String defLocation = MainActivity.readDefLocationSetting(this);
-        if (defLocation.isEmpty()) {
-            defLocation = getString(R.string.pref_def_location_val);
         }
 
         super.onCreate(savedInstanceState);

@@ -145,7 +145,7 @@ public class Panchangam extends Fragment {
         try {
             refreshPanchangam(false);
         } catch (Exception exception) {
-            Log.e("Panchangam","Exception --- onResume()!");
+            exception.printStackTrace();
         }
     }
 
@@ -204,7 +204,7 @@ public class Panchangam extends Fragment {
                 updatePanchangamFieldsHeader();
                 updatePanchangamFragment(root);
             } catch (final Exception ex) {
-                Log.e("Panchangam","Exception in refreshPanchangam()");
+                ex.printStackTrace();
             }
         }, 50);
     }
@@ -338,7 +338,7 @@ public class Panchangam extends Fragment {
 
         // Step11: Retrieve Vaasaram for the given calendar day
         //startTime = System.nanoTime();
-        vaasaramStr = vedicCalendar.getVaasaram(VedicCalendar.MATCH_SANKALPAM_EXACT);
+        vaasaramStr = vedicCalendar.getVaasaram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
         panchangamValues.add(vaasaramStr);
         //endTime = System.nanoTime();
         //Log.d("PanchangamProfiler","getVaasaram()... Time Taken: " +

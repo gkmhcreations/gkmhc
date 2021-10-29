@@ -195,8 +195,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         // Step 1: Get the preferred locale from preferences and update activity.
         prefSankalpamType = readPrefSankalpamType(this);
         updateAppLocale();
-        Objects.requireNonNull(getSupportActionBar()).setTitle(Html.fromHtml("<font color='#0000FF'>" +
-                getString(R.string.app_name) + "</font>"));
+        setAppTitle();
 
         // Step 2: Sort out the toolbar icon & logos
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -204,8 +203,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         getSupportActionBar().setLogo(R.mipmap.ic_launcher_round);
         getSupportActionBar().setBackgroundDrawable(
                 ResourcesCompat.getDrawable(getResources(), R.drawable.default_background, null));
-        getSupportActionBar().setTitle(Html.fromHtml("<font color='#0000FF'>" +
-                getString(R.string.app_name) + "</font>"));
 
         initVedicCalendar();
 
@@ -262,6 +259,23 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         //Log.d("MainActivity","initSwissEph()... Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime, endTime));
+    }
+
+    private void setAppTitle() {
+        int panchangamType = readPrefPanchangamType(this);
+        String strTitle = "";
+        switch (panchangamType) {
+            case VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM_LUNI_SOLAR:
+            case VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM_LUNAR:
+                strTitle = getString(R.string.thiru_ganitha_panchangam);
+                break;
+            case VedicCalendar.PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR:
+            case VedicCalendar.PANCHANGAM_TYPE_VAKHYAM_LUNAR:
+                strTitle = getString(R.string.vakhya_panchangam);
+                break;
+        }
+        Objects.requireNonNull(getSupportActionBar()).setTitle(Html.fromHtml(
+                "<font color='#0000FF'>" + strTitle + "</font>"));
     }
 
     // Copy all the SwissEph assets to the local directory.
@@ -514,6 +528,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             int selectedPanchangamType = readPrefPanchangamType(this);
             if (prefPanchangamType != selectedPanchangamType) {
                 prefPanchangamType = selectedPanchangamType;
+                setAppTitle();
             }
 
             // If there is change in sankalpam preferences, then refresh location & the fragments.
@@ -546,8 +561,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             if (!defLocale.equals(selLocale)) {
                 refreshTab(NPAdapter.NP_TAB_ALARM);
                 refreshTab(NPAdapter.NP_TAB_REMINDER);
-                Objects.requireNonNull(getSupportActionBar()).setTitle(Html.fromHtml("<font color='#0000FF'>" +
-                        getString(R.string.app_name) + "</font>"));
+                setAppTitle();
             }
         } else if (requestCode == CALENDAR_REQUEST_CODE) {
             if (data != null) {
@@ -657,7 +671,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                                                               defPanchangamTypeStr);
 
             if (defPanchangamTypeStr.equalsIgnoreCase(
-                    context.getString(R.string.pref_panchangam_tamil_vakhyam))) {
+                    context.getString(R.string.pref_panchangam_tamil_vakyam))) {
                 defPanchangamType = VedicCalendar.PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR;
             } else if (defPanchangamTypeStr.equalsIgnoreCase(
                     context.getString(R.string.pref_panchangam_drik_telugu_lunar))) {

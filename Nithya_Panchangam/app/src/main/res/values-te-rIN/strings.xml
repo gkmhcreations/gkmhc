@@ -566,4 +566,6 @@
     </string-array>
     <string name="kaalam_details">నిత్యకాలాహ</string>
     <string name="kaalam_heading">కాలహా</string>
+    <string name="thiru_ganitha_panchangam">దృక్ గణిత పంచాంగం</string>
+    <string name="vakhya_panchangam">వాక్య పంచాంగం</string>
 </resources>

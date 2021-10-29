@@ -578,4 +578,6 @@
     </string-array>
     <string name="kaalam_details">தின காலங்கள்</string>
     <string name="kaalam_heading">காலம்</string>
+    <string name="vakhya_panchangam">வாக்ய பஞ்சாங்கம்</string>
+    <string name="thiru_ganitha_panchangam">திருக்கணித பஞ்சாங்கம்</string>
 </resources>

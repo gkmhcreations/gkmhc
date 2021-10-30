@@ -568,4 +568,6 @@
     <string name="kaalam_heading">కాలహా</string>
     <string name="thiru_ganitha_panchangam">దృక్ గణిత పంచాంగం</string>
     <string name="vakhya_panchangam">వాక్య పంచాంగం</string>
+    <string name="telugu_panchangam">తెలుగు  పంచాంగం</string>
+    <string name="kannada_panchangam">కన్నడ  పంచాంగం</string>
 </resources>

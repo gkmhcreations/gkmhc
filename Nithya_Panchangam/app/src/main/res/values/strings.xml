@@ -691,4 +691,6 @@
     <string name="kaalam_heading">Kaalam</string>
     <string name="thiru_ganitha_panchangam">Drik Ganitha Panchangam</string>
     <string name="vakhya_panchangam">Vakya Panchangam</string>
+    <string name="telugu_panchangam">Telugu Panchangam</string>
+    <string name="kannada_panchangam">Kannada Panchangam</string>
 </resources>

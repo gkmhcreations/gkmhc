@@ -4341,12 +4341,7 @@ public class VedicCalendar extends Calendar {
         if (sunRiseTotalMins == 0) {
             if ((panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR) ||
                 (panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNAR)) {
-                // For Indian locations, no need to calculate sunrise for Vakhyam.
-                if (defTimezone == INDIAN_STANDARD_TIME) {
-                    sunRiseTotalMins = SUNRISE_TOTAL_MINS;
-                } else {
-                    sunRiseTotalMins = calcPlanetRise(SweConst.SE_SUN);
-                }
+                sunRiseTotalMins = calcPlanetRise(SweConst.SE_SUN);
             } else {
                 if (queryType != MATCH_PANCHANGAM_PROMINENT) {
                     sunRiseTotalMins = calcPlanetRise(SweConst.SE_SUN);
@@ -4373,10 +4368,7 @@ public class VedicCalendar extends Calendar {
         if (sunSetTotalMins == 0) {
             if ((panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR) ||
                 (panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNAR)) {
-                // For Indian locations, no need to calculate sunrise for Vakhyam.
-                if (defTimezone != INDIAN_STANDARD_TIME) {
-                    calculateSunset = true;
-                }
+                calculateSunset = true;
             } else {
                 // For Drik Panchangam, don't calculate sunset for "Prominent" option ONLY.
                 // This is typically used in monthly calendar where it may take time to load.

@@ -262,18 +262,25 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     private void setAppTitle() {
-        int panchangamType = readPrefPanchangamType(this);
-        String strTitle = "";
-        switch (panchangamType) {
-            case VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM_LUNI_SOLAR:
-            case VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM_LUNAR:
-                strTitle = getString(R.string.thiru_ganitha_panchangam);
-                break;
-            case VedicCalendar.PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR:
-            case VedicCalendar.PANCHANGAM_TYPE_VAKHYAM_LUNAR:
+        String strTitle = getString(R.string.thiru_ganitha_panchangam);
+        String defPanchangamTypeStr = getString(R.string.pref_def_panchangam);
+        SharedPreferences localPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (localPreferences != null) {
+            defPanchangamTypeStr = localPreferences.getString(SettingsFragment.PREF_PANCHANGAM_KEY,
+                    defPanchangamTypeStr);
+
+            if (defPanchangamTypeStr.equalsIgnoreCase(
+                    getString(R.string.pref_panchangam_tamil_vakyam))) {
                 strTitle = getString(R.string.vakhya_panchangam);
-                break;
+            } else if (defPanchangamTypeStr.equalsIgnoreCase(
+                    getString(R.string.pref_panchangam_drik_telugu_lunar))) {
+                strTitle = getString(R.string.telugu_panchangam);
+            } else if (defPanchangamTypeStr.equalsIgnoreCase(
+                    getString(R.string.pref_panchangam_drik_kannada_lunar))) {
+                strTitle = getString(R.string.kannada_panchangam);
+            }
         }
+
         Objects.requireNonNull(getSupportActionBar()).setTitle(Html.fromHtml(
                 "<font color='#0000FF'>" + strTitle + "</font>"));
     }

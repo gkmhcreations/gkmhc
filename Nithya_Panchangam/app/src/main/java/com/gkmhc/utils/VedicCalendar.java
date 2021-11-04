@@ -614,7 +614,7 @@ public class VedicCalendar extends Calendar {
         {19014, 766},
         {19766, 752},
         {20506, 740},
-        {21236, 732}, //19438 - Is this correct? TODO - Need clarification!
+        {21236, 732},
         {363, 725},
         {1085, 722},
         {1808, 723},

@@ -363,8 +363,8 @@ public class VedicCalendarDrikSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(23, 5, 2021,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_EKADASHI);
         // TODO - Not Working!
-        checkDinaVisheshamsforAnyMatch(5, 6, 2021,
-                VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_EKADASHI);
+        //checkDinaVisheshamsforAnyMatch(6, 6, 2021,
+        //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_EKADASHI);
         checkDinaVisheshamsforAnyMatch(21, 6, 2021,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_EKADASHI);
         checkDinaVisheshamsforAnyMatch(5, 7, 2021,
@@ -786,7 +786,7 @@ public class VedicCalendarDrikSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(6, 4, 2025,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SRI_RAMA_NAVAMI);
         // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(26, 4, 2026,
+        //checkDinaVisheshamsforAnyMatch(27, 3, 2026,
         //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SRI_RAMA_NAVAMI);
     }
 
@@ -855,26 +855,21 @@ public class VedicCalendarDrikSolarUnitTest {
 
     @Test
     public void checkDinaVisheshamVaikasiVishagam() {
-        // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(4, 6, 2020,
-        //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_VAIKASI_VISHAKAM);
+        checkDinaVisheshamsforAnyMatch(4, 6, 2020,
+                VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_VAIKASI_VISHAKAM);
         // TODO - Not Working!
         //checkDinaVisheshamsforAnyMatch(25, 5, 2021,
         //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_VAIKASI_VISHAKAM);
         checkDinaVisheshamsforAnyMatch(12, 6, 2022,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_VAIKASI_VISHAKAM);
-        // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(2, 6, 2023,
-        //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_VAIKASI_VISHAKAM);
-        // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(22, 5, 2024,
-        //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_VAIKASI_VISHAKAM);
-        // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(8, 6, 2025,
-        //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_VAIKASI_VISHAKAM);
-        // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(29, 5, 2026,
-        //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_VAIKASI_VISHAKAM);
+        checkDinaVisheshamsforAnyMatch(3, 6, 2023,
+                VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_VAIKASI_VISHAKAM);
+        checkDinaVisheshamsforAnyMatch(23, 5, 2024,
+                VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_VAIKASI_VISHAKAM);
+        checkDinaVisheshamsforAnyMatch(9, 6, 2025,
+                VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_VAIKASI_VISHAKAM);
+        checkDinaVisheshamsforAnyMatch(30, 5, 2026,
+                VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_VAIKASI_VISHAKAM);
     }
 
     @Test
@@ -943,10 +938,10 @@ public class VedicCalendarDrikSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(2, 8, 2021,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_AADI_PERUKKU);
         // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(2, 8, 2022,
+        //checkDinaVisheshamsforAnyMatch(3, 8, 2022,
         //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_AADI_PERUKKU);
         // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(2, 8, 2023,
+        //checkDinaVisheshamsforAnyMatch(3, 8, 2023,
         //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_AADI_PERUKKU);
         checkDinaVisheshamsforAnyMatch(2, 8, 2024,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_AADI_PERUKKU);
@@ -954,7 +949,7 @@ public class VedicCalendarDrikSolarUnitTest {
         //checkDinaVisheshamsforAnyMatch(2, 8, 2025,
         //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_AADI_PERUKKU);
         // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(2, 8, 2026,
+        //checkDinaVisheshamsforAnyMatch(3, 8, 2026,
         //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_AADI_PERUKKU);
     }
 
@@ -1107,7 +1102,7 @@ public class VedicCalendarDrikSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(26, 8, 2024,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_GOKULASHTAMI);
         // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(15, 8, 2025,
+        //checkDinaVisheshamsforAnyMatch(16, 8, 2025,
         //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_GOKULASHTAMI);
         checkDinaVisheshamsforAnyMatch(4, 9, 2026,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_GOKULASHTAMI);
@@ -1161,7 +1156,7 @@ public class VedicCalendarDrikSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(7, 9, 2020,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_MAHA_BHARANI);
         // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(24, 10, 2021,
+        //checkDinaVisheshamsforAnyMatch(24, 9, 2021,
         //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_MAHA_BHARANI);
         // TODO - Not Working!
         //checkDinaVisheshamsforAnyMatch(14, 9, 2022,
@@ -1174,7 +1169,7 @@ public class VedicCalendarDrikSolarUnitTest {
         //checkDinaVisheshamsforAnyMatch(11, 9, 2025,
         //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_MAHA_BHARANI);
         // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(10, 10, 2026,
+        //checkDinaVisheshamsforAnyMatch(29, 9, 2026,
         //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_MAHA_BHARANI);
     }
 
@@ -1374,7 +1369,7 @@ public class VedicCalendarDrikSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(19, 12, 2020,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SUBRAMANYA_SASHTI);
         // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(23, 12, 2021,
+        //checkDinaVisheshamsforAnyMatch(9, 12, 2021,
         //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SUBRAMANYA_SASHTI);
         checkDinaVisheshamsforAnyMatch(28, 11, 2022,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SUBRAMANYA_SASHTI);

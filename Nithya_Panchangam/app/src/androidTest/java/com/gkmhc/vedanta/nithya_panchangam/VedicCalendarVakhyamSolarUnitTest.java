@@ -295,9 +295,8 @@ public class VedicCalendarVakhyamSolarUnitTest {
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SANKATA_HARA_CHATHURTHI);
         checkDinaVisheshamsforAnyMatch(29, 5, 2021,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SANKATA_HARA_CHATHURTHI);
-        // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(27, 6, 2021,
-        //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SANKATA_HARA_CHATHURTHI);
+        checkDinaVisheshamsforAnyMatch(27, 6, 2021,
+                VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SANKATA_HARA_CHATHURTHI);
         checkDinaVisheshamsforAnyMatch(27, 7, 2021,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SANKATA_HARA_CHATHURTHI);
         checkDinaVisheshamsforAnyMatch(25, 8, 2021,
@@ -320,9 +319,8 @@ public class VedicCalendarVakhyamSolarUnitTest {
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SASHTI_VRATHAM);
         checkDinaVisheshamsforAnyMatch(19, 3, 2021,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SASHTI_VRATHAM);
-        // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(18, 4, 2021,
-        //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SASHTI_VRATHAM);
+        checkDinaVisheshamsforAnyMatch(17, 4, 2021, // Deviation
+                VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SASHTI_VRATHAM);
         checkDinaVisheshamsforAnyMatch(17, 5, 2021,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_SASHTI_VRATHAM);
         checkDinaVisheshamsforAnyMatch(16, 6, 2021,

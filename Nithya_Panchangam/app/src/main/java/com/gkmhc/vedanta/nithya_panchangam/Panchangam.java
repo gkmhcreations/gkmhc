@@ -159,6 +159,10 @@ public class Panchangam extends Fragment {
                 boolean toRefresh = false;
                 VedicCalendar vedicCalendarTemp = mainActivity.getVedicCalendar();
 
+                if (mainActivity != null) {
+                    mainActivity.updateAppLocale();
+                }
+
                 /*
                  * Refresh Panchangam only when there is a change in one or all of the following
                  * settings:

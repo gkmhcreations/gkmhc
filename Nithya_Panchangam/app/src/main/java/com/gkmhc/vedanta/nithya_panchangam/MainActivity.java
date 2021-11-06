@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private NPAdapter myAdapter;
     private int selTabPos = 0;
     private int prefLocationType = LOCATION_MANUAL;
-    private int prefAyanamsa = VedicCalendar.AYANAMSA_CHITRAPAKSHA;
+    private int prefAyanamsaType = VedicCalendar.AYANAMSA_CHITRAPAKSHA;
     private int prefChaandramanamType = VedicCalendar.CHAANDRAMAANAM_TYPE_AMANTA;
     private int prefPanchangamType = VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM_LUNI_SOLAR;
     private int prefTimeFormat = VedicCalendar.PANCHANGAM_TIME_FORMAT_HHMM;
@@ -194,6 +194,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         // Step 1: Get the preferred locale from preferences and update activity.
         prefSankalpamType = readPrefSankalpamType(this);
+        prefLocationType = readPrefLocationSelection();
+        prefAyanamsaType = readPrefAyanamsaSelection(this);
+        prefChaandramanamType = readPrefChaandramanaType(this);
+        prefPanchangamType = readPrefPanchangamType(this);
+        prefTimeFormat = readPrefTimeFormat(this);
         updateAppLocale();
         setAppTitle();
 
@@ -503,13 +508,22 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         // 2) If Activity results is for Alarm, then create Alarm based on alarm type
         // Ignore the rest
         if (requestCode == SETTINGS_REQUEST_CODE) {
-            boolean refreshPanchangam = true;
+            boolean refreshPanchangam = false;
 
             // If Manual location has changed, then refresh the tabs
             String selectedLocation = readDefLocationSetting(getApplicationContext());
             if (!selectedLocation.equalsIgnoreCase(curLocationCity)) {
                 curLocationCity = selectedLocation;
                 refreshLocation();
+                refreshPanchangam = true;
+            }
+
+            // If there is change in sankalpam preferences, then refresh location & the fragments.
+            String sankalpamType = readPrefSankalpamType(this);
+            if (!prefSankalpamType.equalsIgnoreCase(sankalpamType)) {
+                prefSankalpamType = sankalpamType;
+                refreshTab(NPAdapter.NP_TAB_SANKALPAM);
+                // No need to inform widget here for Sankalpam change!
             }
 
             // If there is change in location preferences, then refresh location & the fragments.
@@ -517,58 +531,51 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             if (prefLocationType != prefToUpdate) {
                 prefLocationType = prefToUpdate;
                 refreshLocation();
+                refreshPanchangam = true;
             }
 
             // If there is change in Ayanamsa preferences, then refresh location & the fragments.
             int selectedAyanamsa = readPrefAyanamsaSelection(this);
-            if (prefAyanamsa != selectedAyanamsa) {
-                prefAyanamsa = selectedAyanamsa;
+            if (prefAyanamsaType != selectedAyanamsa) {
+                prefAyanamsaType = selectedAyanamsa;
+                refreshPanchangam = true;
             }
 
             // If there is change in Chaandramanam preferences, then refresh location & the fragments.
             int selectedChaandramanamType = readPrefChaandramanaType(this);
             if (prefChaandramanamType != selectedChaandramanamType) {
                 prefChaandramanamType = selectedChaandramanamType;
+                refreshPanchangam = true;
             }
 
             // If there is change in Panchangam preferences, then refresh location & the fragments.
             int selectedPanchangamType = readPrefPanchangamType(this);
             if (prefPanchangamType != selectedPanchangamType) {
                 prefPanchangamType = selectedPanchangamType;
-                setAppTitle();
-            }
-
-            // If there is change in sankalpam preferences, then refresh location & the fragments.
-            String sankalpamType = readPrefSankalpamType(this);
-            if (!prefSankalpamType.equals(sankalpamType)) {
-                prefSankalpamType = sankalpamType;
-                refreshTab(NPAdapter.NP_TAB_SANKALPAM);
-                refreshPanchangam = false;
-                // No need to inform widget here for Sankalpam change!
+                refreshPanchangam = true;
             }
 
             // If there is change in Time Format preferences, then refresh panchangam fragment.
             int selectedTimeFormat = readPrefTimeFormat(this);
             if (prefTimeFormat != selectedTimeFormat) {
                 prefTimeFormat = selectedTimeFormat;
-                vedicCalendar.setTimeFormat(prefTimeFormat);
-                refreshTab(NPAdapter.NP_TAB_PANCHANGAM);
-                refreshPanchangam = false;
-            }
-
-            String defLocale = readPrefLocale();
-            if (refreshPanchangam) {
-                refreshPanchangamDetails();
-
-                // Send broadcast Intent to widget(s) to refresh!
-                sendBroadcastToWidget(this);
+                refreshPanchangam = true;
             }
 
             // If there is change in locale preferences, then refresh location & the fragments.
-            if (!defLocale.equals(selLocale)) {
+            String defLocale = readPrefLocale();
+            if (!defLocale.equalsIgnoreCase(selLocale)) {
                 refreshTab(NPAdapter.NP_TAB_ALARM);
                 refreshTab(NPAdapter.NP_TAB_REMINDER);
+                refreshPanchangam = true;
+            }
+
+            if (refreshPanchangam) {
+                refreshPanchangamDetails();
                 setAppTitle();
+
+                // Send broadcast Intent to widget(s) to refresh!
+                sendBroadcastToWidget(this);
             }
         } else if (requestCode == CALENDAR_REQUEST_CODE) {
             if (data != null) {

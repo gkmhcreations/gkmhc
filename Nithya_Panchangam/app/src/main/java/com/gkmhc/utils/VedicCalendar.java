@@ -926,15 +926,15 @@ public class VedicCalendar extends Calendar {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, date, hourOfDay, minute);
 
+        initRaviChandraLongitudes(calendar);
+        initVakyamKaliDinam();
+
         // Get Sunrise & Sunset timings
         // TODO - This needs to be fixed properly!
         // This is being commented for Calendar scenario where fetching sunrise &
         // sunset atleast 30 times leads to slow loading!
         //calcSunrise(MATCH_PANCHANGAM_FULLDAY);
         //calcSunset(MATCH_PANCHANGAM_FULLDAY);
-
-        initRaviChandraLongitudes(calendar);
-        initVakyamKaliDinam();
     }
 
     /**
@@ -1009,14 +1009,14 @@ public class VedicCalendar extends Calendar {
             case Calendar.MINUTE:
                 curCalendar.set(field, value);
 
+                initRaviChandraLongitudes(curCalendar);
+                initVakyamKaliDinam();
+
                 // Get Sunrise & Sunset timings
                 sunRiseTotalMins = 0;
                 sunSetTotalMins = 0;
                 calcSunrise(MATCH_PANCHANGAM_FULLDAY);
                 calcSunset(MATCH_PANCHANGAM_FULLDAY);
-
-                initRaviChandraLongitudes(curCalendar);
-                initVakyamKaliDinam();
                 break;
         }
     }
@@ -1040,14 +1040,14 @@ public class VedicCalendar extends Calendar {
             case Calendar.MINUTE:
                 curCalendar.add(field, amount);
 
+                initRaviChandraLongitudes(curCalendar);
+                initVakyamKaliDinam();
+
                 // Get Sunrise & Sunset timings
                 sunRiseTotalMins = 0;
                 sunSetTotalMins = 0;
                 calcSunrise(MATCH_PANCHANGAM_FULLDAY);
                 calcSunset(MATCH_PANCHANGAM_FULLDAY);
-
-                initRaviChandraLongitudes(curCalendar);
-                initVakyamKaliDinam();
                 break;
         }
     }
@@ -1164,14 +1164,14 @@ public class VedicCalendar extends Calendar {
         double[] geoPos = new double[] {vcLongitude, vcLatitude, 0};
         swissEphInst.swe_set_topo(geoPos[0], geoPos[1], geoPos[2]);
 
+        initRaviChandraLongitudes(refCalendar);
+        initVakyamKaliDinam();
+
         // Get Sunrise & Sunset timings
         sunRiseTotalMins = 0;
         sunSetTotalMins = 0;
         calcSunrise(MATCH_PANCHANGAM_FULLDAY);
         calcSunset(MATCH_PANCHANGAM_FULLDAY);
-
-        initRaviChandraLongitudes(refCalendar);
-        initVakyamKaliDinam();
 
         //System.out.println("VedicCalendar" + "Ref Ravi => " + refRaviAyanamAtDayStart +
         //        " Prev Day Ravi => " + nextDay_ravi_ayanam + " DRM: " + dailyRaviMotion);
@@ -1237,67 +1237,64 @@ public class VedicCalendar extends Calendar {
     private void initVakyamKaliDinam() {
         // Vakyam Calculations
         // 1) Calculate Kali Dinam for the given Calendar day (A)
-        if ((panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR) ||
-            (panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNAR)) {
-            // Vakyam
-            double kaliDinamAtYearStart = refYear + JUL_TO_KALI_VARUDAM_OFFSET;
+        // Vakyam
+        double kaliDinamAtYearStart = refYear + JUL_TO_KALI_VARUDAM_OFFSET;
+        kaliDinamAtYearStart *= MAX_KALI_NAAL;
+        kaliDinamAtYearStart -= KALI_NAAL_OFFSET;
+        kaliDinamAtYearStart = Math.ceil(kaliDinamAtYearStart);
+
+        // 2) Calculate Kali Dinam for the given Calendar year (B)
+        // Vakyam
+        double kaliDinam = SweDate.getJulDay(refYear, refMonth, refDate, 0);
+        kaliDinam -= JUL_TO_KALI_DHINAM_OFFSET;
+        kaliDinam = Math.ceil(kaliDinam);
+
+        // 3) kaliOffsetSinceYearStart = (B) - (A)
+        kaliOffsetSinceYearStart = kaliDinam - kaliDinamAtYearStart;
+        if (kaliOffsetSinceYearStart < 0) {
+            kaliDinamAtYearStart = (refYear - 1) + JUL_TO_KALI_VARUDAM_OFFSET;
             kaliDinamAtYearStart *= MAX_KALI_NAAL;
             kaliDinamAtYearStart -= KALI_NAAL_OFFSET;
-            kaliDinamAtYearStart = Math.ceil(kaliDinamAtYearStart);
-
-            // 2) Calculate Kali Dinam for the given Calendar year (B)
-            // Vakyam
-            double kaliDinam = SweDate.getJulDay(refYear, refMonth, refDate, 0);
-            kaliDinam -= JUL_TO_KALI_DHINAM_OFFSET;
-            kaliDinam = Math.ceil(kaliDinam);
-
-            // 3) kaliOffsetSinceYearStart = (B) - (A)
+            //kaliDinamAtYearStart = Math.ceil(kaliDinamAtYearStart);
             kaliOffsetSinceYearStart = kaliDinam - kaliDinamAtYearStart;
-            if (kaliOffsetSinceYearStart < 0) {
-                kaliDinamAtYearStart = (refYear - 1) + JUL_TO_KALI_VARUDAM_OFFSET;
-                kaliDinamAtYearStart *= MAX_KALI_NAAL;
-                kaliDinamAtYearStart -= KALI_NAAL_OFFSET;
-                //kaliDinamAtYearStart = Math.ceil(kaliDinamAtYearStart);
-                kaliOffsetSinceYearStart = kaliDinam - kaliDinamAtYearStart;
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(refYear, (refMonth - 1), refDate, 0, 0, 0);
+        calendar.add(Calendar.DATE, 1);
+        int date = calendar.get(Calendar.DATE);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        double nextDayKaliDinam = calculateKaliDinam(date, (month + 1), year);
+        double spanAtSunset = nextDayKaliDinam - kaliOffsetSinceYearStart;
+        if (spanAtSunset < 0) {
+            spanAtSunset += MAX_KALI_NAAL;
+        }
+        spanAtSunset /= MAX_24HOURS;
+        spanAtSunset *= 12;
+
+        // 4) Calculate {SuryaSpudam, ChandraSpudam} and {SuryaGathi, ChandraGathi}
+        int maasamIndex = findVakyamMaasamIndex((kaliOffsetSinceYearStart + spanAtSunset));
+        if (maasamIndex != -1) {
+            int dinaAnkham = getDinaAnkam(MATCH_PANCHANGAM_PROMINENT);
+            int suryaSpudamIndex = (refYear + JUL_TO_KALI_VARUDAM_OFFSET) % 58;
+            double suryaSpudamVal1 = vakyamSuryaSpudamTable1[(dinaAnkham - 1)][maasamIndex];
+            double suryaSpudamVal2 = vakyamSuryaSpudamTable2[suryaSpudamIndex][maasamIndex];
+            suryaSpudam = suryaSpudamVal1 + suryaSpudamVal2;
+            double dhinaVakyam = kaliDinam + 1;
+            double vakyamChandraDuruvam = 0;
+            while (dhinaVakyam > VAKHYAM_KANDA_THOGAI_MAX_VAL) {
+                int matchingIndex = findMaxFitKandaThogaiIndex(dhinaVakyam);
+                dhinaVakyam -= vakyamKandaThogaiTable[matchingIndex][0];
+                vakyamChandraDuruvam += vakyamKandaThogaiTable[matchingIndex][1];
             }
 
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(refYear, (refMonth - 1), refDate, 0, 0, 0);
-            calendar.add(Calendar.DATE, 1);
-            int date = calendar.get(Calendar.DATE);
-            int month = calendar.get(Calendar.MONTH);
-            int year = calendar.get(Calendar.YEAR);
-            double nextDayKaliDinam = calculateKaliDinam(date, (month + 1), year);
-            double spanAtSunset = nextDayKaliDinam - kaliOffsetSinceYearStart;
-            if (spanAtSunset < 0) {
-                spanAtSunset += MAX_KALI_NAAL;
-            }
-            spanAtSunset /= MAX_24HOURS;
-            spanAtSunset *= 12;
-
-            // 4) Calculate {SuryaSpudam, ChandraSpudam} and {SuryaGathi, ChandraGathi}
-            int maasamIndex = findVakyamMaasamIndex((kaliOffsetSinceYearStart + spanAtSunset));
-            if (maasamIndex != -1) {
-                int dinaAnkham = getDinaAnkam(MATCH_PANCHANGAM_PROMINENT);
-                int suryaSpudamIndex = (refYear + JUL_TO_KALI_VARUDAM_OFFSET) % 58;
-                double suryaSpudamVal1 = vakyamSuryaSpudamTable1[(dinaAnkham - 1)][maasamIndex];
-                double suryaSpudamVal2 = vakyamSuryaSpudamTable2[suryaSpudamIndex][maasamIndex];
-                suryaSpudam = suryaSpudamVal1 + suryaSpudamVal2;
-                double dhinaVakyam = kaliDinam + 1;
-                double vakyamChandraDuruvam = 0;
-                while (dhinaVakyam > VAKHYAM_KANDA_THOGAI_MAX_VAL) {
-                    int matchingIndex = findMaxFitKandaThogaiIndex(dhinaVakyam);
-                    dhinaVakyam -= vakyamKandaThogaiTable[matchingIndex][0];
-                    vakyamChandraDuruvam += vakyamKandaThogaiTable[matchingIndex][1];
-                }
-
-                // Post the above loop, what remains is the Dhina Vakyam
-                vakyamChandraDuruvam += vakyamChandraDuruvamTable[(int) (dhinaVakyam - 1)][0];
-                vakyamChandraDuruvam += vakyamMaanyathiKalaiTable[(dinaAnkham - 1)][maasamIndex];
-                chandraSpudam = vakyamChandraDuruvam - (MAX_AYANAM_MINUTES * 2);
-                chandraGathi = vakyamChandraDuruvamTable[(int) (dhinaVakyam - 1)][1];
-                suryaGathi = vakyamSuryaGathiTable[maasamIndex];
-            }
+            // Post the above loop, what remains is the Dhina Vakyam
+            vakyamChandraDuruvam += vakyamChandraDuruvamTable[(int) (dhinaVakyam - 1)][0];
+            vakyamChandraDuruvam += vakyamMaanyathiKalaiTable[(dinaAnkham - 1)][maasamIndex];
+            chandraSpudam = vakyamChandraDuruvam - (MAX_AYANAM_MINUTES * 2);
+            chandraGathi = vakyamChandraDuruvamTable[(int) (dhinaVakyam - 1)][1];
+            suryaGathi = vakyamSuryaGathiTable[maasamIndex];
         }
     }
 
@@ -1988,12 +1985,29 @@ public class VedicCalendar extends Calendar {
             thithiSpan *= MAX_MINS_IN_NAZHIGAI;
             thithiSpan += sunRiseTotalMins;
             curThithiAtSunrise = thithiIndex;
+
+            /*
+             * Rules as follows to identify prominent thithi for the day:
+             * 1) If thithi-1 is present at Sunrise + 6 Nazhigai and beyond Sunset + 6 Nazhigai,
+             *     then SunriseThithi & SunsetThithi both are thithi-1
+             * 2) If thithi-1 is present at Sunrise + 6 Nazhigai but NOT present at Sunset + 6 Nazhigai,
+             *     then SunriseThithi is thithi-1 and SunsetThithi is thithi-2
+             * 3) If thithi-1 is present at Sunrise + 6 Nazhigai and present at Sunset
+             *    but NOT present Sunset + 6 Nazhigai,
+             *     then SunriseThithi & SunsetThithi both are thithi-1
+             */
+
             if (thithiSpan < (sunRiseTotalMins + SIX_NAZHIGAI)) {
                 curThithiAtSunrise += 1;
                 curThithiAtSunrise %= MAX_THITHIS;
             }
 
             curThithiAtSunset = thithiIndex;
+
+            /*
+             * 2) If thithi-1 is present at Sunrise + 6 Nazhigai but NOT present at Sunset + 6 Nazhigai,
+             *     then SunriseThithi is thithi-1 and SunsetThithi is thithi-2
+             */
             if (thithiSpan < (sunSetTotalMins + SIX_NAZHIGAI)) {
                 thithiIndex += 1;
                 thithiIndex %= MAX_THITHIS;
@@ -4388,12 +4402,7 @@ public class VedicCalendar extends Calendar {
 
         // Retrieve Sunrise timings only once as it is performance-intensive to do this repeatedly.
         if (sunRiseTotalMins == 0) {
-            if ((panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR) ||
-                (panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNAR)) {
-                sunRiseTotalMins = calcPlanetRise(SweConst.SE_SUN);
-            } else {
-                sunRiseTotalMins = calcPlanetRise(SweConst.SE_SUN);
-            }
+            sunRiseTotalMins = calcPlanetRise(SweConst.SE_SUN);
         }
     }
 
@@ -4408,56 +4417,42 @@ public class VedicCalendar extends Calendar {
         // Using SWEDate Library, get sunrise of the given day with the following inputs:
         // { Longitude, Latitude, calendar Date}
 
-        boolean calculateSunset = false;
         // Retrieve Sunset timings only once as it is performance-intensive to do this repeatedly.
         if (sunSetTotalMins == 0) {
-            if ((panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR) ||
-                (panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNAR)) {
-                calculateSunset = true;
-            } else {
-                // For Drik Panchangam, don't calculate sunset for "Prominent" option ONLY.
-                // This is typically used in monthly calendar where it may take time to load.
-                calculateSunset = true;
-            }
+            StringBuffer serr = new StringBuffer();
+            double[] geoPos = new double[]{vcLongitude, vcLatitude, 0};
+            DblObj ddlObj = new DblObj();
 
-            if (calculateSunset) {
-                StringBuffer serr = new StringBuffer();
-                double[] geoPos = new double[]{vcLongitude, vcLatitude, 0};
-                DblObj ddlObj = new DblObj();
+            int flags = SweConst.SE_CALC_SET | SweConst.SE_BIT_NO_REFRACTION |
+                    SweConst.SE_BIT_DISC_CENTER;
 
-                int flags = SweConst.SE_CALC_SET | SweConst.SE_BIT_NO_REFRACTION |
-                        SweConst.SE_BIT_DISC_CENTER;
+            double tjd = SweDate.getJulDay(refYear, refMonth, refDate, 0, SweDate.SE_GREG_CAL);
+            double dt = geoPos[0] / 360.0;
+            tjd = tjd - dt;
 
-                double tjd = SweDate.getJulDay(refYear, refMonth, refDate, 0, SweDate.SE_GREG_CAL);
-                double dt = geoPos[0] / 360.0;
-                tjd = tjd - dt;
+            int retVal = swissEphInst.swe_rise_trans(tjd, SweConst.SE_SUN, null,
+                    SweConst.SEFLG_SWIEPH, flags, geoPos, 0, 0, ddlObj, serr);
+            if (retVal == 0) {
+                SweDate sd = new SweDate();
+                sd.setJulDay(ddlObj.val);
 
-                int retVal = swissEphInst.swe_rise_trans(tjd, SweConst.SE_SUN, null,
-                        SweConst.SEFLG_SWIEPH, flags, geoPos, 0, 0, ddlObj, serr);
-                if (retVal == 0) {
-                    SweDate sd = new SweDate();
-                    sd.setJulDay(ddlObj.val);
-
-                    // Calculate given day's Sunset timings (Hour & Mins)
-                    String sunSetTimeStr = getSDTime(sd.getJulDay() + defTimezone / 24.);
-                    if (!sunSetTimeStr.equals("")) {
-                        String[] sunSetTimeArr = sunSetTimeStr.split(":");
-                        if (sunSetTimeArr.length >= 2) {
-                            int hours = Integer.parseInt(sunSetTimeArr[0]);
-                            int mins = Integer.parseInt(sunSetTimeArr[1]);
-                            sunSetTotalMins = (hours * MAX_MINS_IN_HOUR) + mins;
-                        }
+                // Calculate given day's Sunset timings (Hour & Mins)
+                String sunSetTimeStr = getSDTime(sd.getJulDay() + defTimezone / 24.);
+                if (!sunSetTimeStr.equals("")) {
+                    String[] sunSetTimeArr = sunSetTimeStr.split(":");
+                    if (sunSetTimeArr.length >= 2) {
+                        int hours = Integer.parseInt(sunSetTimeArr[0]);
+                        int mins = Integer.parseInt(sunSetTimeArr[1]);
+                        sunSetTotalMins = (hours * MAX_MINS_IN_HOUR) + mins;
                     }
-                } else {
-                    if (serr.length() > 0) {
-                        System.out.println("VedicCalendar, Warning: " + serr);
-                    } else {
-                        System.out.println("VedicCalendar" +
-                                String.format("Warning, different flags used (0x%x)", retVal));
-                    }
-                    sunSetTotalMins = SUNSET_TOTAL_MINS;
                 }
             } else {
+                if (serr.length() > 0) {
+                    System.out.println("VedicCalendar, Warning: " + serr);
+                } else {
+                    System.out.println("VedicCalendar" +
+                            String.format("Warning, different flags used (0x%x)", retVal));
+                }
                 sunSetTotalMins = SUNSET_TOTAL_MINS;
             }
         }

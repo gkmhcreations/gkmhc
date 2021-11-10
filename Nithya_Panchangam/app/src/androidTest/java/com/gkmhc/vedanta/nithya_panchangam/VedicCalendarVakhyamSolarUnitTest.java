@@ -440,6 +440,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(16, 11, 2021,
                 VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_PRADOSHAM);
         // TODO - Not Working!
+        // Reason: Thrayodashi till Sunset
         //checkDinaVisheshamsforAnyMatch(2, 12, 2021,
         //        VedicCalendar.PANCHANGAM_DHINA_VISHESHAM_PRADOSHAM);
         checkDinaVisheshamsforAnyMatch(16, 12, 2021,

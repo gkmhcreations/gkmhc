@@ -583,8 +583,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 int calMonth = data.getIntExtra("Calendar_Month", 0);
                 int calDate = data.getIntExtra("Calendar_Date", 0);
                 vedicCalendar.setDate(calDate, calMonth, calYear, 0, 0);
-                refreshTab(NPAdapter.NP_TAB_PANCHANGAM);
-                refreshTab(NPAdapter.NP_TAB_SANKALPAM);
+                refreshPanchangamDetails();
 
                 // No need to inform widget here for calendar date change!
             }

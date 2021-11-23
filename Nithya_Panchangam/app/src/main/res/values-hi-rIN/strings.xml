@@ -570,4 +570,5 @@
     <string name="vakhya_panchangam">वाक्य पञ्चाङ्गः</string>
     <string name="telugu_panchangam">तेलुगु पञ्चाङ्गः</string>
     <string name="kannada_panchangam">कन्नड पञ्चाङ्गः</string>
+    <string name="vakyam_calendar_unavailable">अगले साल के लिए वाक्य पंचांगम कैलेंडर अभी उपलब्ध नहीं है!</string>
 </resources>

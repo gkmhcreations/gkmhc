@@ -570,4 +570,5 @@
     <string name="vakhya_panchangam">వాక్య పంచాంగం</string>
     <string name="telugu_panchangam">తెలుగు  పంచాంగం</string>
     <string name="kannada_panchangam">కన్నడ  పంచాంగం</string>
+    <string name="vakyam_calendar_unavailable">వచ్చే ఏడాది వాక్య పంచాంగం క్యాలెండర్ ఇంకా అందుబాటులో లేదు!</string>
 </resources>

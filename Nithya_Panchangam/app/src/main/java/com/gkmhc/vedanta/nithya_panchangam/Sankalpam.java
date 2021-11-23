@@ -206,7 +206,7 @@ public class Sankalpam extends Fragment {
         pakshamStr = vedicCalendar.getPaksham();
 
         // Step6: Retrieve correct thithi  given current system time
-        thithiStr = vedicCalendar.getThithi(VedicCalendar.MATCH_SANKALPAM_EXACT);
+        thithiStr = vedicCalendar.getTithi(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
         // Step7: Retrieve correct vaasaram for the current thithi
         vaasaramStr = vedicCalendar.getVaasaram(VedicCalendar.MATCH_SANKALPAM_EXACT);

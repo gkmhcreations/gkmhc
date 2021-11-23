@@ -42,15 +42,19 @@ public class CopyToAssets {
 
             String outdir = context.getFilesDir() + File.separator + "/ephe";
             boolean retCode = new File(outdir).mkdirs();
-            if (retCode) {
-                outdir += File.separator;
+            if (!retCode) {
+                Log.e("CopyToAssets", "Failed to create dir: " + retCode);
+            }
 
-                for (String filename : files) {
-                    if (new File(outdir + filename).exists() ||
-                            !filename.matches(patternToMatch)) {
-                        continue;
-                    }
+            outdir += File.separator;
+            for (String filename : files) {
+                /*if (new File(outdir + filename).exists() ||
+                        !filename.matches(patternToMatch)) {
+                    continue;
+                }*/
 
+                // Copy the assets regardless of whether they are already present or not.
+                if (filename.matches(patternToMatch)) {
                     InputStream in;
                     OutputStream out;
                     try {
@@ -62,12 +66,12 @@ public class CopyToAssets {
                         out.flush();
                         out.close();
                     } catch (Exception e) {
-                        Log.e("tag", "Failed to copy asset file: " + filename, e);
+                        Log.e("CopyToAssets", "Failed to copy asset file: " + filename, e);
                     }
                 }
             }
         } catch (Exception e) {
-            Log.e("tag", "Failed to get asset file list.", e);
+            Log.e("CopyToAssets", "Failed to get asset file list!", e);
         }
     }
 

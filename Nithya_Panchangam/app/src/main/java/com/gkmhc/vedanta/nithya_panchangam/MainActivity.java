@@ -148,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private static String selLocale = "en";
     private static String curLocationCity = "";
     private static final double INDIAN_STANDARD_TIME = 5.5;
+    private static final String DINA_VISHESHAM_RULES_FILE = "nithya_panchangam.toml";
     public static final String NP_UPDATE_WIDGET = "Nithya_Panchangam_Update_Widget";
     public static final String NP_CHANNEL_ID = "Nithya_Panchangam";
     public static final int LOCATION_MANUAL = 0;
@@ -183,6 +184,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //new CopyToAssets(".*\\.se1", getApplicationContext()).copy();
+        //new CopyToAssets(".*\\.txt", getApplicationContext()).copy();
+        //new CopyToAssets(".*?\\.(se1|xml?)", getApplicationContext()).copy();
+        new CopyToAssets(".*?\\.(se1|xml|toml?)", getApplicationContext()).copy();
 
         createNotificationChannel();
 
@@ -254,10 +260,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
-        //new CopyToAssets(".*\\.se1", getApplicationContext()).copy();
-        //new CopyToAssets(".*\\.txt", getApplicationContext()).copy();
-        //new CopyToAssets(".*?\\.(se1|xml?)", getApplicationContext()).copy();
-        //String localpath = getApplicationContext().getFilesDir() + File.separator + "/ephe";
 
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(alarmMsgReceiver, new IntentFilter(NPBroadcastReceiver.STOP_ALARM));
@@ -297,7 +299,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     // SwissEph assets needs to be copied to the local directory as per the local platform
     // on VedicCalendar is being used.
     public static String getPathToLocalAssets(Context context) {
-        new CopyToAssets(".*?\\.(se1|xml?)", context).copy();
+        //new CopyToAssets(".*?\\.(se1|xml|toml?)", context).copy();
         return context.getFilesDir() + File.separator + "ephe";
     }
 
@@ -329,10 +331,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     private void refreshLocation() {
-        // If Manual option is selected, then provide a way select a location
-        // Use geocoder to retrieve {Location, longitude, latitude}
         updateManualLocation(curLocationCity);
-        if (LOCATION_MANUAL != readPrefLocationSelection()) {
+        if (LOCATION_MANUAL == readPrefLocationSelection()) {
+            // If Manual option is selected, then provide a way select a location
+            // Use geocoder to retrieve {Location, longitude, latitude}
+            // Also, stop the updates from network provider.
+            LocationManager locationManager =
+                    (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+            locationManager.removeUpdates(this::onLocationChanged);
+        } else {
             // If GPS option is selected, then seek permissions and retrieve
             // {Location, longitude, latitude} from LocationListener
             initGPSLocation();
@@ -476,17 +483,20 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         try {
             String location = readDefLocationSetting(this);
+            String assetsLocation = getPathToLocalAssets(this);
             int ayanamsaMode = readPrefAyanamsaSelection(this);
             PlacesInfo placesInfo = getLocationDetails(location);
             vedicCalendarLocaleList.clear();
             vedicCalendarLocaleList = buildVedicCalendarLocaleList(this);
-            vedicCalendar = VedicCalendar.getInstance(
-                    getPathToLocalAssets(this),
+            vedicCalendar = VedicCalendar.getInstance(assetsLocation,
                     readPrefPanchangamType(this), currCalendar, placesInfo.longitude,
                     placesInfo.latitude, placesInfo.timezone, ayanamsaMode,
                     readPrefChaandramanaType(this), vedicCalendarLocaleList);
             int selectedTimeFormat = readPrefTimeFormat(this);
             vedicCalendar.setTimeFormat(selectedTimeFormat);
+
+            // Configure Dina Vishesham Rules
+            vedicCalendar.configureDinaVisheshamRules(assetsLocation + "/" + DINA_VISHESHAM_RULES_FILE);
         } catch (Exception e) {
             e.printStackTrace();
             vedicCalendar = null;
@@ -1567,11 +1577,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
             // Step6: Thithi
             arrayList = context.getResources().getStringArray(R.array.thithi_list);
-            vedicCalendarLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_THITHI, arrayList);
+            vedicCalendarLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_TITHI, arrayList);
 
             // Step7: Sankalpa Thithi
             arrayList = context.getResources().getStringArray(R.array.sankalpa_thithi_list);
-            vedicCalendarLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_THITHI, arrayList);
+            vedicCalendarLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_TITHI, arrayList);
 
             // Step8: Raasi
             arrayList = context.getResources().getStringArray(R.array.raasi_list);
@@ -1599,7 +1609,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
             // Step14: Dhinam
             arrayList = context.getResources().getStringArray(R.array.dhinam_list);
-            vedicCalendarLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_DHINAM, arrayList);
+            vedicCalendarLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_DINAM, arrayList);
 
             // Step15: Horai
             arrayList = context.getResources().getStringArray(R.array.horai_list);

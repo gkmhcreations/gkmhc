@@ -569,4 +569,5 @@
     <string name="vakhya_panchangam">വാക് യപഞ്ചാംഗം</string>
     <string name="kannada_panchangam">കന്നഡ  പഞ്ചാംഗം</string>
     <string name="telugu_panchangam">തെലുങ്ക്  പഞ്ചാംഗം</string>
+    <string name="vakyam_calendar_unavailable">അടുത്ത വർഷത്തേക്കുള്ള വാക്യപഞ്ചാംഗ കലണ്ടർ ഇതുവരെ ലഭ്യമല്ല!</string>
 </resources>

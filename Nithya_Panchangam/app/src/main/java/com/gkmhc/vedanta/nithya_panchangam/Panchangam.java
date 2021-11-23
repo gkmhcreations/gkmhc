@@ -335,7 +335,7 @@ public class Panchangam extends Fragment {
 
         // Step10: Retrieve Thithi for the given calendar day
         //startTime = System.nanoTime();
-        panchangamValues.add(vedicCalendar.getThithi(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
+        panchangamValues.add(vedicCalendar.getTithi(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
         //endTime = System.nanoTime();
         //Log.d("PanchangamProfiler","getThithi()... Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime, endTime));
@@ -446,8 +446,7 @@ public class Panchangam extends Fragment {
         vedicCalendar.getPlanetsRise();
 
         //startTime = System.nanoTime();
-        List<Integer> dhinaVisheshamCodeList =
-                vedicCalendar.getDinaVishesham(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
+        List<Integer> dhinaVisheshamCodeList = vedicCalendar.getDinaVisheshams();
         String dhinaSpecialStr;
         if (dhinaVisheshamCodeList.size() > 0) {
             // Form a list of Dina Vishesham(s) in case there is more than 1 occuring in a

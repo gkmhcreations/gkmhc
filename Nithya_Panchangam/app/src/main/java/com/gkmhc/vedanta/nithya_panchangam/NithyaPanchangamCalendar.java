@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.gkmhc.utils.VedicCalendar;
@@ -83,6 +84,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
         String location = MainActivity.readDefLocationSetting(getApplicationContext());
         int ayanamsaMode = MainActivity.readPrefAyanamsaSelection(getApplicationContext());
         MainActivity.PlacesInfo placesInfo = MainActivity.getLocationDetails(location);
+        int panchangamType = MainActivity.readPrefPanchangamType(this);
         try {
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
             getSupportActionBar().setIcon(R.mipmap.ic_launcher_round);
@@ -101,11 +103,9 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
             refDate = npDate;
             vedicCalendar = VedicCalendar.getInstance(
                     MainActivity.getPathToLocalAssets(getApplicationContext()),
-                    // TODO - Vakhyam takes less time. This needs to be fixed!
-                    MainActivity.readPrefPanchangamType(this), calendar,
-                    //VedicCalendar.PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR, calendar,
-                    placesInfo.longitude, placesInfo.latitude, placesInfo.timezone, ayanamsaMode,
-                    MainActivity.readPrefChaandramanaType(this), vedicCalendarLocaleList);
+                    panchangamType, calendar, placesInfo.longitude, placesInfo.latitude,
+                    placesInfo.timezone, ayanamsaMode, MainActivity.readPrefChaandramanaType(this),
+                    vedicCalendarLocaleList);
         } catch (Exception e) {
             // Nothing to do here.
         }
@@ -149,6 +149,22 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
 
         ImageView nextYearView = findViewById(R.id.np_calendar_nextYear);
         nextYearView.setOnClickListener(v -> {
+            // Vakyam calendar shall be revealed every Mar of the year for the next year
+            // so that there is no financial trouble for Vakyam calendar makers.
+            if ((panchangamType == VedicCalendar.PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR) ||
+                (panchangamType == VedicCalendar.PANCHANGAM_TYPE_VAKHYAM_LUNAR)) {
+                if (npYear >= refYear) {
+                    if (npMonth > 2) {
+                        Toast.makeText(this, R.string.vakyam_calendar_unavailable,
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    } else if (npYear > refYear) {
+                        Toast.makeText(this, R.string.vakyam_calendar_unavailable,
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+            }
             calendar.set(npYear, npMonth, 1);
             calendar.add(Calendar.YEAR, 1);
             npYear = calendar.get(Calendar.YEAR);
@@ -161,6 +177,25 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
 
         ImageView nextMonthView = findViewById(R.id.np_calendar_nextMonth);
         nextMonthView.setOnClickListener(v -> {
+            // Vakyam calendar shall be revealed every Mar of the year for the next year
+            // so that there is no financial trouble for Vakyam calendar makers.
+            if ((panchangamType == VedicCalendar.PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR) ||
+                (panchangamType == VedicCalendar.PANCHANGAM_TYPE_VAKHYAM_LUNAR)) {
+                if (npYear == (refYear + 1)) {
+                    if (refMonth == 2) {
+                        Toast.makeText(this, R.string.vakyam_calendar_unavailable,
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    } else {
+                        if (npMonth == 2) {
+                            Toast.makeText(this, R.string.vakyam_calendar_unavailable,
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                }
+            }
+
             calendar.set(npYear, npMonth, 1);
             calendar.add(Calendar.MONTH, 1);
             npMonth = calendar.get(Calendar.MONTH);
@@ -235,7 +270,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
         int firstDate = (calendarIter.get(Calendar.DAY_OF_WEEK) - 1);
         long dStartTime = System.nanoTime();
         for (int index = 0; index < 42; index++) {
-            //long mStartTime = System.nanoTime();
+            long mStartTime = System.nanoTime();
             if ((index < firstDate) || (index >= (numDaysInMonth + firstDate))) {
                 gregDaysInMonth.add("");
                 drikDaysInMonth.add("");
@@ -254,48 +289,51 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
                     //        VedicCalendar.getTimeTaken(startTime, endTime));
 
                     // 1) Add Dinaankham
-                    //startTime = System.nanoTime();
-                    vedicCalendar.setDate((index - firstDate + 1), npMonth, npYear, 0, 0);
+                    //startTime = endTime;
+                    vedicCalendar.setCalendarDate((index - firstDate + 1), npMonth, npYear, 0, 0);
+                    //endTime = System.nanoTime();
+                    //Log.d("NPCalProfiler","setDate()... Time Taken: " +
+                    //        VedicCalendar.getTimeTaken(startTime, endTime));
+                    //startTime = endTime;
                     int dinaAnkham =
-                            vedicCalendar.getDinaAnkam(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
+                            vedicCalendar.getDinaAnkam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
                     //endTime = System.nanoTime();
                     //Log.d("NPCalProfiler","getDinaAnkam()... Time Taken: " +
                     //        VedicCalendar.getTimeTaken(startTime, endTime));
                     drikDaysInMonth.add(String.valueOf(dinaAnkham));
 
                     // 2) Get Thithi
-                    //startTime = System.nanoTime();
+                    //startTime = endTime;
                     String strThithi =
-                            vedicCalendar.getThithi(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
+                            vedicCalendar.getTithi(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
                     //endTime = System.nanoTime();
-                    //Log.d("NPCalProfiler","getThithi()... Time Taken: " +
+                    //Log.d("NPCalProfiler","getTithi()... Time Taken: " +
                     //        VedicCalendar.getTimeTaken(startTime, endTime));
                     drikDinam.add(strThithi);
 
                     // 3) Get Maasam
-                    //startTime = System.nanoTime();
+                    //startTime = endTime;
                     String strMaasam =
-                            vedicCalendar.getMaasam(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
+                            vedicCalendar.getMaasam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
                     //endTime = System.nanoTime();
                     //Log.d("NPCalProfiler","getMaasam()... Time Taken: " +
                     //        VedicCalendar.getTimeTaken(startTime, endTime));
                     drikMaasam.add(strMaasam);
 
                     // 4) Get Natchathiram
-                    //startTime = System.nanoTime();
+                    //startTime = endTime;
                     String strNakshatram =
-                            vedicCalendar.getNakshatram(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
+                            vedicCalendar.getNakshatram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
                     //endTime = System.nanoTime();
-                    //Log.d("NPCalProfiler","getNatchathiram()... Time Taken: " +
+                    //Log.d("NPCalProfiler","getNakshatram()... Time Taken: " +
                     //        VedicCalendar.getTimeTaken(startTime, endTime));
                     drikNatchathiram.add(strNakshatram);
 
                     // 5) Get a list of dina vishesham(s)
                     //    Add list of strings & icons associated with each vishesham for the given
                     //    calendar day.
-                    //startTime = System.nanoTime();
-                    List<Integer> dinaVisheshamCodeList =
-                            vedicCalendar.getDinaVishesham(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
+                    //startTime = endTime;
+                    List<Integer> dinaVisheshamCodeList = vedicCalendar.getDinaVisheshams();
                     List<String> dinaVisheshamStrList = new ArrayList<>();
                     List<Integer> dinaVisheshamImgList = new ArrayList<>();
                     for (int code = 0; code < dinaVisheshamCodeList.size(); code++) {
@@ -310,12 +348,8 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
                     dinaSpecialStr = dinaSpecialStr.substring(1, dinaSpecialStr.length() - 1);
                     drikDinaVishesham.add(dinaSpecialStr);
                     //endTime = System.nanoTime();
-                    //Log.d("NPCalProfiler","getDinaVishesham()... Time Taken: " +
+                    //Log.d("NPCalProfiler","getDinaVisheshams()... Time Taken: " +
                     //        VedicCalendar.getTimeTaken(startTime, endTime));
-
-                    //int date = calendarIter.get(Calendar.DATE);
-                    //Log.d("NPCalProfiler", date + "/" + npMonth + "/" + npYear + " " +
-                    //        strThithi + " " + dinaSpecialStr);
                     calendarIter.add(Calendar.DATE, 1);
                 } catch (Exception e) {
                     e.printStackTrace();

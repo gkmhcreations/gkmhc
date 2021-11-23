@@ -924,8 +924,7 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
                     MainActivity.readPrefAyanamsaSelection(context),
                     MainActivity.readPrefChaandramanaType(context),
                     vedicCalendarLocaleList);
-            dhinaSpecialCodeList =
-                    vedicCalendar.getDinaVishesham(VedicCalendar.MATCH_PANCHANGAM_PROMINENT);
+            dhinaSpecialCodeList = vedicCalendar.getDinaVisheshams();
             if (dhinaSpecialCodeList != null) {
                 Log.d("NPBcastReceiver", "Dina Vishesham: " +
                         dhinaSpecialCodeList.toString() + " for " + location +

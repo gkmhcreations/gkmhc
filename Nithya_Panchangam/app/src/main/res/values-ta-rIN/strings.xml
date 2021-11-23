@@ -58,7 +58,7 @@
     <string name="ammavasai">அமாவாஸை</string>
     <string name="pournami">பௌர்ணமீ</string>
     <string name="sri_rama_navami">ஸ்ரீ ராம நவமீ</string>
-    <string name="subramanya_sashti">சுப்ரமண்ய ஷஷ்டீ</string>
+    <string name="subramanya_sashti">கந்த ஷஷ்டீ</string>
     <string name="ekadasi">ஏகாதசி</string>
     <string name="pradosham">ப்ரதோஷம்</string>
     <string name="makara_sankaranthi">மகர ஸங்கராந்தி, பொங்கல்</string>
@@ -582,4 +582,5 @@
     <string name="thiru_ganitha_panchangam">திருக்கணித பஞ்சாங்கம்</string>
     <string name="telugu_panchangam">தெலுங்கு  பஞ்சாங்கம்</string>
     <string name="kannada_panchangam">கன்னட பஞ்சாங்கம்</string>
+    <string name="vakyam_calendar_unavailable">அடுத்த ஆண்டுக்கான வாக்ய பஞ்சாங்கம் நாட்காட்டி இன்னும் கிடைக்கவில்லை!</string>
 </resources>

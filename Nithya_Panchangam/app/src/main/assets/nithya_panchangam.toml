@@ -93,7 +93,7 @@ copyright="© GKM Heritage Creations, 2021"
 
     [dina_vishesham.pradosham]
         dina_vishesham_title="Pradosham"
-        dina_vishesham_description="Pradosham is observed every month, in Shukla paksha, when Thrayodashi tithi prevails during Pradosha kaalam."
+        dina_vishesham_description="Pradosham is observed every month, in Shukla paksha, when Thrayodashi tithi prevails during Dhinanta kaalam."
 
         [dina_vishesham.pradosham.rule]
             dina_vishesham_match_criteria="tithi"
@@ -125,7 +125,7 @@ copyright="© GKM Heritage Creations, 2021"
 
     [dina_vishesham.thai_poosam]
         dina_vishesham_title="Thai Poosam"
-        dina_vishesham_description="Thai Poosam is celebrated during the sauramaanam maasam of Thai / Makara, when Poosam nakshatram prevails during Pratah kaalam."
+        dina_vishesham_description="Thai Poosam is celebrated during the sauramaanam maasam of Thai / Makara, when Poosam nakshatram prevails during Sangava kaalam."
 
         [dina_vishesham.thai_poosam.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
@@ -134,7 +134,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.thai_poosam.rule]
             dina_vishesham_match_criteria="nakshatram"
             dina_vishesham_match_value=8                  # 8 - indicates Poosa "nakshatram"
-            dina_vishesham_kaala_sambhavaha=3             # 2 - indicates Pratah kaalam
+            dina_vishesham_kaala_sambhavaha=3             # 2 - indicates Sangava kaalam
             dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
 
     [dina_vishesham.vasantha_panchami]
@@ -492,7 +492,7 @@ copyright="© GKM Heritage Creations, 2021"
 
     [dina_vishesham.avani_avittam_rig]
         dina_vishesham_title="Avani Avittam (Rig)"
-        dina_vishesham_description="Avani Avittam (Rig Vedam) is observed during the chaandramaana maasam of Shravana, in Shukla paksham when Shravana nakshatram prevails during Pradosha kaalam."
+        dina_vishesham_description="Avani Avittam (Rig Vedam) is observed during the chaandramaana maasam of Shravana, in Shukla paksham when Shravana nakshatram prevails during Dhinanta kaalam."
 
         [dina_vishesham.avani_avittam_rig.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
@@ -746,7 +746,7 @@ copyright="© GKM Heritage Creations, 2021"
 
     [dina_vishesham.karthigai_deepam]
         dina_vishesham_title="Karthigai Deepam"
-        dina_vishesham_description="Karthigai Deepam is celebrated in the sauramaana maasam of Karthikai when Karthigai nakshatram prevails during Madhyahna kaalam."
+        dina_vishesham_description="Karthigai Deepam is celebrated in the sauramaana maasam of Karthikai when Karthigai nakshatram prevails during Pradosha kaalam."
 
         [dina_vishesham.karthigai_deepam.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
@@ -755,12 +755,12 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.karthigai_deepam.rule]
             dina_vishesham_match_criteria="nakshatram"
             dina_vishesham_match_value=3                  # 3 - indicates Karthiga "nakshatram"
-            dina_vishesham_kaala_sambhavaha=7             # 4 - indicates Madhyahna kaalam
+            dina_vishesham_kaala_sambhavaha=7             # 4 - indicates Pradosha kaalam
             dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
 
     [dina_vishesham.subramanya_sashti]
         dina_vishesham_title="Kandha Sashti"
-        dina_vishesham_description="Kandha Sashti is celebrated in the chaandramaana maasam of Margashirsha when shukla sashti tithi prevails during Aparahna kaalam."
+        dina_vishesham_description="Kandha Sashti is celebrated in the chaandramaana maasam of Margashirsha when shukla sashti tithi prevails during Pradosha kaalam."
 
         [dina_vishesham.subramanya_sashti.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"

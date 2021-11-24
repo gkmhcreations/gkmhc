@@ -1,23 +1,127 @@
 # Nithya Panchangam Dina Vishesham Rules File
 #
 # Note: All dina_vishesham_match_value that are numbers, shall start from ONE.
-# For ex:
-#     - If dina_vishesham_match_criteria is ""sauramaana_maasam"", then
-#       dina_vishesham_match_value ranges from 1 to 12.
-#     - If dina_vishesham_match_criteria is ""chaandramaana_maasam"", then
-#       dina_vishesham_match_value ranges from 1 to 12.
-#     - If dina_vishesham_match_criteria is ""tithi"", then
-#       dina_vishesham_match_value ranges from 1 to 30.
-#     - If dina_vishesham_match_criteria is ""nakshatram"", then
-#       dina_vishesham_match_value ranges from 1 to 27.
-#     - If dina_vishesham_match_criteria is ""dina_ankham"", then
-#       dina_vishesham_match_value ranges from 1 to 33.
-#     - If dina_vishesham_match_criteria is ""paksham"", then
-#       dina_vishesham_match_value ranges from 1 to 2.
-#     - If dina_vishesham_match_criteria is ""vaasaram"", then
-#       dina_vishesham_match_value ranges from 1 to 7.
 #
-
+# Options for "dina_vishesham_match_value" when dina_vishesham_match_criteria is "sauramaana_maasam":
+#    1 - Mesha
+#    2 - Rishabha
+#    3 - Mithuna
+#    4 - Kataka
+#    5 - Simha
+#    6 - Kanni
+#    7 - Thula
+#    8 - Vrichiga
+#    9 - Dhanusu
+#    10 - Makara
+#    11 - Kumbha
+#    12 - Meena
+#
+# Options for "dina_vishesham_match_value" when dina_vishesham_match_criteria is "chaandramaana_maasam":
+#    1 - Chaitra
+#    2 - Vaishakha
+#    3 - Jyeshta
+#    4 - Aashadha
+#    5 - Shraavana
+#    6 - Bhadrapada
+#    7 - Ashwina
+#    8 - Kaartika
+#    9 - Margashirsha
+#    10 - Pausha
+#    11 - Maagha
+#    12 - Phaalguna
+#
+# Options for "dina_vishesham_match_value" when dina_vishesham_match_criteria is "tithi":
+#    1 - Prathama
+#    2 - Dvithiya
+#    3 - Thrithiya
+#    4 - Chathurthi
+#    5 - Panchami
+#    6 - Sashti
+#    7 - Sapthami
+#    8 - Ashtami
+#    9 - Navami
+#    10 - Dashami
+#    11 - Ekadashi
+#    12 - Dvadashi
+#    13 - Thrayodashi
+#    14 - Chathurdashi
+#    15 - Pournami
+#    16 - Prathama
+#    17 - Dvithiya
+#    18 - Thrithiya
+#    19 - Chathurthi
+#    20 - Panchami
+#    21 - Sashti
+#    22 - Sapthami
+#    23 - Ashtami
+#    24 - Navami
+#    25 - Dashami
+#    26 - Ekadashi
+#    27 - Dvadashi
+#    28 - Thrayodashi
+#    29 - Chathurdashi
+#    30 - Amavasya
+#
+# Options for "dina_vishesham_match_value" when dina_vishesham_match_criteria is "nakshatram":
+#    1 - Ashwini
+#    2 - Bharani
+#    3 - Karthikai
+#    4 - Rohini
+#    5 - Mrigashirisham
+#    6 - Thiruvathirai
+#    7 - Punarpoosam
+#    8 - Poosam
+#    9 - Ayilyam
+#    10 - Magam
+#    11 - Pooram
+#    12 - Uthiram
+#    13 - Hastham
+#    14 - Chithirai
+#    15 - Swathi
+#    16 - Visaka
+#    17 - Anusham
+#    18 - Kettai
+#    19 - Moolam
+#    20 - Pooradam
+#    21 - Uthiradam
+#    22 - Thiruvonam
+#    23 - Avittam
+#    24 - Sadhayam
+#    25 - Poorattathi
+#    26 - Uthirattathi
+#    27 - Revathi
+#
+# Options for "dina_vishesham_match_value" when dina_vishesham_match_criteria is "paksham":
+#    1 - Shukla
+#    2 - Krishna
+#
+# Options for "dina_vishesham_match_value" when dina_vishesham_match_criteria is "vaasaram":
+#    1 - Bhanu (Sunday)
+#    2 - Indhu (Monday)
+#    3 - Bhouma (Tuesday)
+#    4 - Soumya (Wednesday)
+#    5 - Guru (Thursday)
+#    6 - Brughu (Friday)
+#    7 - Sthira (Saturday)
+#
+# Options for "dina_vishesham_kaala_sambhavaha":
+#    1 - Brahma muhurta
+#    2 - Pratah
+#    3 - Sangava
+#    4 - Madhyahna
+#    5 - Aparahna
+#    6 - Sayahna
+#    7 - Pradosha
+#    8 - Dhinanta
+#
+# Options for "dina_vishesham_selection_criteria"
+#    1 - purva
+#    2 - para
+#    3 - vyaapti
+#
+# Options for "dina_vishesham_match_type":
+#    1 - match the last occurrence of specified "vaasaram" before the given tithi (used for varalakshmi vratham)
+#
 [panchangam_info]
 panchangam_title="Nithya Panchangam Dina Visheshams"
 panchangam_description="Dina Vishesham calculations for Nithya Panchangam App"
@@ -39,7 +143,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=30                 # 30 - indicates Amavaasai
             dina_vishesham_kaala_sambhavaha=2             # 2 - indicates Pratah kaalam
-            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.pournami]
         dina_vishesham_title="Pournami"
@@ -49,7 +153,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=15                 # 15 - indicates Pournami
             dina_vishesham_kaala_sambhavaha=2             # 2 - indicates Pratah kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.sankata_hara_chathurthi]
         dina_vishesham_title="Sankata Hara Chathurthi"
@@ -59,7 +163,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=19                 # 19 - indicates Krishna Chathurthi
             dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.sashti_vratham]
         dina_vishesham_title="Sashti Vratham"
@@ -69,7 +173,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=6                  # 6 - indicates Shukla Sashti
             dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
-            dina_vishesham_selection_criteria=2           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=2           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.ekadashi]
         dina_vishesham_title="Ekadashi"
@@ -79,7 +183,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=11                 # 11 - indicates Shukla Ekadashi
             dina_vishesham_kaala_sambhavaha=2             # 2 - indicates Pratah kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.ekadashi]
         dina_vishesham_title="Ekadashi"
@@ -89,7 +193,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=26                 # 26 - indicates Krishna Ekadashi
             dina_vishesham_kaala_sambhavaha=2             # 2 - indicates Pratah kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.pradosham]
         dina_vishesham_title="Pradosham"
@@ -99,7 +203,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=13                 # 13 - indicates Shukla Thrayodashi
             dina_vishesham_kaala_sambhavaha=8             # 8 - indicates Dhinanta kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.pradosham]
         dina_vishesham_title="Pradosham"
@@ -109,7 +213,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=28                 # 28 - indicates Krishna Thrayodashi
             dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.makara_sankaranthi]
         dina_vishesham_title="Makara Sankaranthi, Pongal"
@@ -135,7 +239,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="nakshatram"
             dina_vishesham_match_value=8                  # 8 - indicates Poosa "nakshatram"
             dina_vishesham_kaala_sambhavaha=3             # 2 - indicates Sangava kaalam
-            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.vasantha_panchami]
         dina_vishesham_title="Vasantha Panchami"
@@ -149,7 +253,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=5                  # 5 - indicates Panchami
             dina_vishesham_kaala_sambhavaha=4             # 4 - indicates Madhyahna kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.ratha_sapthami]
         dina_vishesham_title="Ratha Sapthami"
@@ -163,7 +267,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=7                  # 7 - indicates Sapthami
             dina_vishesham_kaala_sambhavaha=1             # 1 - indicates Brahma muhurta kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.bhishma_ashtami]
         dina_vishesham_title="Bhishmashtami"
@@ -177,7 +281,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=8                  # 8 - indicates Ashtami
             dina_vishesham_kaala_sambhavaha=4             # 4 - indicates Madhyahna kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.maasi_magam]
         dina_vishesham_title="Maasi Magam"
@@ -191,7 +295,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="nakshatram"
             dina_vishesham_match_value=10                 # 10 - indicates Magha "nakshatram"
             dina_vishesham_kaala_sambhavaha=3             # 3 - indicates Sangava kaalam
-            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.bala_periyava_jayanthi]
         dina_vishesham_title="Shri Shankara Vijayendra Saraswathi Swamigal Jayanthi"
@@ -205,7 +309,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="nakshatram"
             dina_vishesham_match_value=21                 # 21 - indicates Uthiradam "nakshatram"
             dina_vishesham_kaala_sambhavaha=3             # 3 - indicates Sangava kaalam
-            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.maha_shivarathri]
         dina_vishesham_title="Maha Shivarathri"
@@ -219,7 +323,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=29                 # 29 - indicates Krishna Chathurdashi
             dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.karadaiyan_nombhu]
         dina_vishesham_title="Karadaiyan Nombu"
@@ -245,7 +349,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=6                  # 6 - indicates Shukla Sashti
             dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.panguni_uthiram]
         dina_vishesham_title="Panguni Uthiram"
@@ -259,7 +363,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="nakshatram"
             dina_vishesham_match_value=12                 # 12 - indicates Uthiram "nakshatram"
             dina_vishesham_kaala_sambhavaha=2             # 2 - indicates Pratah kaalam
-            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.ugadi]
         dina_vishesham_title="Ugadi"
@@ -273,7 +377,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=1                  # 1 - indicates Shukla Prathamai
             dina_vishesham_kaala_sambhavaha=2             # 2 - indicates Pratah kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.tamil_puthandu]
         dina_vishesham_title="Tamil Puthandu"
@@ -303,7 +407,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="nakshatram"
             dina_vishesham_match_value=6                  # 6 - indicates Arthra "nakshatram"
             dina_vishesham_kaala_sambhavaha=3             # 3 - indicates Sangava kaalam
-            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.shri_rama_navami]
         dina_vishesham_title="Shri Rama Navami"
@@ -317,7 +421,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=9                  # 9 - indicates Shukla Navami "tithi"
             dina_vishesham_kaala_sambhavaha=4             # 4 - indicates Madhyahna kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.chithra_pournami]
         dina_vishesham_title="Chithra Pournami"
@@ -331,7 +435,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=15                 # 15 - indicates Pournami "tithi"
             dina_vishesham_kaala_sambhavaha=2             # 2 - indicates Pratah kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.akshaya_thrithiyai]
         dina_vishesham_title="Akshaya Thrithiyai"
@@ -345,7 +449,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=3                 # 3 - indicates Shukla Thrithiyai "tithi"
             dina_vishesham_kaala_sambhavaha=2             # 2 - indicates Pratah kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.agni_nakshatram_start]
         dina_vishesham_title="Agni Nakshathiran Begins"
@@ -383,7 +487,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=5                  # 5 - indicates Shukla Panchami "tithi"
             dina_vishesham_kaala_sambhavaha=2             # 2 - indicates Pratah kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.vaikasi_vishakam]
         dina_vishesham_title="Vaikasi Vishakam"
@@ -401,7 +505,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="nakshatram"
             dina_vishesham_match_value=16                 # 16 - indicates Vishaka "nakshatram"
             dina_vishesham_kaala_sambhavaha=1             # 1 - indicates Brahma muhurta kaalam
-            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.maha_periyava_jayanthi]
         dina_vishesham_title="Shri Chandrasekharendra Saraswati Mahaswamigal Jayanthi"
@@ -415,7 +519,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="nakshatram"
             dina_vishesham_match_value=17                 # 16 - indicates Anusham "nakshatram"
             dina_vishesham_kaala_sambhavaha=3             # 3 - indicates Sangava kaalam
-            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.puthu_periyava_jayanthi]
         dina_vishesham_title="Shri Jayendra Saraswathi Swamigal Jayanthi"
@@ -429,7 +533,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="nakshatram"
             dina_vishesham_match_value=23                 # 23 - indicates Avittam "nakshatram"
             dina_vishesham_kaala_sambhavaha=3             # 3 - indicates Sangava kaalam
-            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.aadi_perukku]
         dina_vishesham_title="Aadi Perukku"
@@ -455,7 +559,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="nakshatram"
             dina_vishesham_match_value=11
             dina_vishesham_kaala_sambhavaha=2             # 2 - indicates Pratah kaalam
-            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.garuda_panchami]
         dina_vishesham_title="Garuda Panchami"
@@ -469,7 +573,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=5                  # 5 - indicates Shukla Panchami "tithi"
             dina_vishesham_kaala_sambhavaha=2             # 2 - indicates Pratah kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.varalakshmi_vratham]
         dina_vishesham_title="Varalakshmi Vratham"
@@ -487,12 +591,12 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=15                 # 15 - indicates Pournami
             dina_vishesham_kaala_sambhavaha=2             # 2 - indicates Pratah kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
             dina_vishesham_match_type=1                   # 1 - indicates match the last occurrence of specified "vaasaram" before the given tithi
 
     [dina_vishesham.avani_avittam_rig]
         dina_vishesham_title="Avani Avittam (Rig)"
-        dina_vishesham_description="Avani Avittam (Rig Vedam) is observed during the chaandramaana maasam of Shravana, in Shukla paksham when Shravana nakshatram prevails during Dhinanta kaalam."
+        dina_vishesham_description="Avani Avittam (Rig Vedam) is observed during the chaandramaana maasam of Shravana, in Shukla paksham when Thiruvonam / Shravana nakshatram prevails during Pratah kaalam."
 
         [dina_vishesham.avani_avittam_rig.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
@@ -504,9 +608,9 @@ copyright="© GKM Heritage Creations, 2021"
 
         [dina_vishesham.avani_avittam_rig.rule]
             dina_vishesham_match_criteria="nakshatram"
-            dina_vishesham_match_value=23                 # 22 - indicates Shravana "nakshatram"
-            dina_vishesham_kaala_sambhavaha=8             # 8 - indicates Dhinanta kaalam
-            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_match_value=22                 # 22 - indicates Thiruvonam / Shravana "nakshatram"
+            dina_vishesham_kaala_sambhavaha=2             # 7 - indicates Pratah kaalam
+            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.avani_avittam_yajur]
         dina_vishesham_title="Avani Avittam (Yajur)"
@@ -520,7 +624,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=15                 # 15 - indicates Pournami
             dina_vishesham_kaala_sambhavaha=5             # 5 - indicates Aparahna kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.onam]
         dina_vishesham_title="Onam"
@@ -538,7 +642,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="nakshatram"
             dina_vishesham_match_value=22                 # 22 - indicates Thiruvonam "nakshatram"
             dina_vishesham_kaala_sambhavaha=4             # 4 - indicates Madhyahna kaalam
-            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.maha_sankata_hara_chathurthi]
         dina_vishesham_title="Maha Sankata Hara Chathurthi"
@@ -552,7 +656,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=19                 # 19 - indicates Krishna Chathurthi
             dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.gokulashtami]
         dina_vishesham_title="Gokulashtami / Janmashtami"
@@ -566,7 +670,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=23                 # 23 - indicates Krishna Ashtami "tithi"
             dina_vishesham_kaala_sambhavaha=6             # 6 - indicates Sayahna kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.avani_avittam_sama]
         dina_vishesham_title="Avani Avittam (Sam)"
@@ -584,7 +688,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="nakshatram"
             dina_vishesham_match_value=13                 # 13 - indicates Hastha "nakshatram"
             dina_vishesham_kaala_sambhavaha=5             # 5 - indicates Aparahna kaalam
-            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.vinayaga_chathurthi]
         dina_vishesham_title="Vinayaga Chathurthi"
@@ -598,7 +702,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=4                  # 4 - indicates Shukla Chathurthi "tithi"
             dina_vishesham_kaala_sambhavaha=4             # 4 - indicates Madhyahna kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.appayya_dikshitar_jayanthi]
         dina_vishesham_title="Shri Appayya Dikshitar Jayanthi"
@@ -612,7 +716,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=16                 # 16 - indicates Krishna Prathamai "tithi"
             dina_vishesham_kaala_sambhavaha=4             # 4 - indicates Madhyahna kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.mahalayam_start]
         dina_vishesham_title="Mahalaya Paksham Starts"
@@ -626,11 +730,11 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=16                 # 16 - indicates Krishna Prathamai "tithi"
             dina_vishesham_kaala_sambhavaha=3             # 3 - indicates Sangava kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.maha_bharani]
         dina_vishesham_title="Maha Bharani"
-        dina_vishesham_description="Maha Bharani is observed during krishna paksham of the chaandramaana maasam of Bhadrapada when Bharanai nakshatram prevails during Aparahna kaalam."
+        dina_vishesham_description="Maha Bharani is observed during krishna paksham of the chaandramaana maasam of Bhadrapada when Bharanai nakshatram prevails during Sayahna kaalam."
 
         [dina_vishesham.maha_bharani.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
@@ -643,8 +747,8 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.maha_bharani.rule]
             dina_vishesham_match_criteria="nakshatram"
             dina_vishesham_match_value=2                  # 2 - indicates Apabharani "nakshatram"
-            dina_vishesham_kaala_sambhavaha=6             # 5 - indicates Aparahna kaalam
-            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_kaala_sambhavaha=6             # 6 - indicates Sayahna kaalam
+            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.mahalaya_amavaasai]
         dina_vishesham_title="Mahalaya Amavaasai"
@@ -658,7 +762,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=30                 # 30 - indicates Amavaasai
             dina_vishesham_kaala_sambhavaha=2             # 2 - indicates Pratah kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.navathri]
         dina_vishesham_title="Navarathri"
@@ -672,7 +776,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=1                  # 1 - indicates Shukla Prathamai "tithi"
             dina_vishesham_kaala_sambhavaha=2             # 2 - indicates Pratah kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.saraswathi_poojai]
         dina_vishesham_title="Saraswathi Poojai"
@@ -686,7 +790,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=9                  # 9 - indicates Shukla Navami "tithi"
             dina_vishesham_kaala_sambhavaha=2             # 2 - indicates Pratah kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.vijaya_dashami]
         dina_vishesham_title="Vijaya Dashami"
@@ -700,7 +804,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=10                 # 10 - indicates Shukla Dashami "tithi"
             dina_vishesham_kaala_sambhavaha=2             # 2 - indicates Pratah kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.naraka_chathurdashi]
         dina_vishesham_title="Naraka Chathurdashi"
@@ -714,7 +818,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=29                 # 29 - indicates Krishna Chathurdashi "tithi"
             dina_vishesham_kaala_sambhavaha=1             # 1 - indicates Brahma muhurta kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.deepavali]
         dina_vishesham_title="Deepavali"
@@ -728,7 +832,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=29                 # 29 - indicates Krishna Chathurdashi "tithi"
             dina_vishesham_kaala_sambhavaha=1             # 1 - indicates Brahma muhurta kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.soora_samhaaram]
         dina_vishesham_title="Soora Samhaaram"
@@ -742,7 +846,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=6                 # 6 - indicates Shukla Sashti "tithi"
             dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.karthigai_deepam]
         dina_vishesham_title="Karthigai Deepam"
@@ -756,7 +860,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="nakshatram"
             dina_vishesham_match_value=3                  # 3 - indicates Karthiga "nakshatram"
             dina_vishesham_kaala_sambhavaha=7             # 4 - indicates Pradosha kaalam
-            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.subramanya_sashti]
         dina_vishesham_title="Kandha Sashti"
@@ -770,7 +874,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=6                  # 6 - indicates Shukla Sashti "tithi"
             dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.arudhra_darshan]
         dina_vishesham_title="Arudhra Darshan"
@@ -784,7 +888,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="nakshatram"
             dina_vishesham_match_value=6                  # 6 - indicates Arthra "nakshatram"
             dina_vishesham_kaala_sambhavaha=2             # 2 - indicates Pratah kaalam
-            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
     [dina_vishesham.shri_hanumath_jayanthi]
         dina_vishesham_title="Shri Hanumath Jayanthi"
@@ -798,7 +902,7 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=30                 # 30 - indicates Amavaasai "tithi"
             dina_vishesham_kaala_sambhavaha=2             # 2 - indicates Pratah kaalam
-            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - para (or) 3 - "vyaapti"
+            dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
 [contact]
 email_contact="gkmhcreations@gmail.com"

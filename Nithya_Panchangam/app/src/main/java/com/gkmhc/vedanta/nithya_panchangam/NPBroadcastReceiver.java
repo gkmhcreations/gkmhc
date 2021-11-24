@@ -916,14 +916,17 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
             }
             HashMap<Integer, String[]> vedicCalendarLocaleList =
                     MainActivity.buildVedicCalendarLocaleList(context);
+            String assetsLocation = MainActivity.getPathToLocalAssets(context);
             VedicCalendar vedicCalendar = VedicCalendar.getInstance(
-                    MainActivity.getPathToLocalAssets(context),
-                    MainActivity.readPrefPanchangamType(context),
-                    currCalendar,
+                    assetsLocation, MainActivity.readPrefPanchangamType(context), currCalendar,
                     placesInfo.longitude, placesInfo.latitude, placesInfo.timezone,
                     MainActivity.readPrefAyanamsaSelection(context),
                     MainActivity.readPrefChaandramanaType(context),
                     vedicCalendarLocaleList);
+            // Configure Dina Vishesham Rules
+            vedicCalendar.configureDinaVisheshamRules(assetsLocation + "/" +
+                    MainActivity.DINA_VISHESHAM_RULES_FILE);
+
             dhinaSpecialCodeList = vedicCalendar.getDinaVisheshams();
             if (dhinaSpecialCodeList != null) {
                 Log.d("NPBcastReceiver", "Dina Vishesham: " +

@@ -29,7 +29,6 @@ public class VedicCalendarVakhyamSolarUnitTest {
     private int numPassedTCs = 0;
     private VedicCalendar vedicCalendar = null;
     private final Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-    private static final String DINA_VISHESHAM_RULES_FILE = "nithya_panchangam.toml";
 
     public VedicCalendarVakhyamSolarUnitTest() {
         new CopyToAssets(".*?\\.(se1|xml|toml?)", appContext).copy();
@@ -52,7 +51,8 @@ public class VedicCalendarVakhyamSolarUnitTest {
                     placesInfo.longitude, placesInfo.latitude,
                     placesInfo.timezone, VedicCalendar.AYANAMSA_CHITRAPAKSHA,
                     VedicCalendar.CHAANDRAMAANAM_TYPE_AMANTA, vedicCalendarLocaleList);
-            vedicCalendar.configureDinaVisheshamRules(assetsLocation + "/" + DINA_VISHESHAM_RULES_FILE);
+            vedicCalendar.configureDinaVisheshamRules(assetsLocation + "/" +
+                    MainActivity.DINA_VISHESHAM_RULES_FILE);
         } catch (Exception e) {
             e.printStackTrace();
             fail();
@@ -1514,28 +1514,24 @@ public class VedicCalendarVakhyamSolarUnitTest {
         //checkDinaVisheshamsforAnyMatch(26, 7, 2020,
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AVANI_AVITTAM_RIG);
         numTCs++;
-        // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(21, 8, 2021,
-        //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AVANI_AVITTAM_RIG);
+        checkDinaVisheshamsforAnyMatch(21, 8, 2021,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AVANI_AVITTAM_RIG);
         numTCs++;
         // TODO - Not Working!
         //checkDinaVisheshamsforAnyMatch(3, 8, 2022,
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AVANI_AVITTAM_RIG);
         numTCs++;
-        // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(29, 8, 2023,
-        //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AVANI_AVITTAM_RIG);
+        checkDinaVisheshamsforAnyMatch(29, 8, 2023,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AVANI_AVITTAM_RIG);
         numTCs++;
-        // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(19, 8, 2024,
-        //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AVANI_AVITTAM_RIG);
+        checkDinaVisheshamsforAnyMatch(19, 8, 2024,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AVANI_AVITTAM_RIG);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(9, 8, 2025,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AVANI_AVITTAM_RIG);
         numTCs++;
-        // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(26, 8, 2026,
-        //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AVANI_AVITTAM_RIG);
+        checkDinaVisheshamsforAnyMatch(26, 8, 2026,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AVANI_AVITTAM_RIG);
         numTCs++;
         System.out.println("Dina Vishesham Avani Avittam - Rig (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");

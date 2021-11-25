@@ -31,4 +31,9 @@
         android:id="@+id/about_np"
         android:contentDescription="@null"
         app:showAsAction="collapseActionView" />
+    <item
+        android:title="@string/learn_more"
+        android:id="@+id/learn_more_np"
+        android:contentDescription="@null"
+        app:showAsAction="collapseActionView" />
 </menu>

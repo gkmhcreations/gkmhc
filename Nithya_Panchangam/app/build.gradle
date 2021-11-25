@@ -30,8 +30,8 @@ android {
         applicationId "com.gkmhc.vedanta.nithya_panchangam"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 34
-        versionName "0.0.34 Beta"
+        versionCode 101
+        versionName "1.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

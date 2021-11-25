@@ -694,4 +694,5 @@
     <string name="telugu_panchangam">Telugu Panchangam</string>
     <string name="kannada_panchangam">Kannada Panchangam</string>
     <string name="vakyam_calendar_unavailable">Vakya Panchangam Calendar for next year is NOT yet available!</string>
+    <string name="learn_more">Learn More</string>
 </resources>

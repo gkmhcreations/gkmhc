@@ -270,7 +270,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
         int firstDate = (calendarIter.get(Calendar.DAY_OF_WEEK) - 1);
         long dStartTime = System.nanoTime();
         for (int index = 0; index < 42; index++) {
-            long mStartTime = System.nanoTime();
+            //long mStartTime = System.nanoTime();
             if ((index < firstDate) || (index >= (numDaysInMonth + firstDate))) {
                 gregDaysInMonth.add("");
                 drikDaysInMonth.add("");

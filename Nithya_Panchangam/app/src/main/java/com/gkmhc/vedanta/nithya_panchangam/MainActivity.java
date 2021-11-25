@@ -446,6 +446,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         } else if (itemID == R.id.about_np) {
             startActivityForResult(new Intent(this, AboutActivity.class),
                     ABOUT_REQUEST_CODE);
+        } else if (itemID == R.id.learn_more_np) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://www.gkmhc.in/gkm-heritage-creations/apps-games/nithya-panchangam"));
+            startActivity(browserIntent);
         } else if (itemID == R.id.calendar_np) {
             // Create a dialog for displaying Calender with "English" as default locale
             Locale locale = new Locale("EN");

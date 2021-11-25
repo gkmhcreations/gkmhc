@@ -39,6 +39,8 @@ import swisseph.*;
  *          https://fdocuments.in/document/panchangam-calculations.html
  *          Source for SwissEph for getting Longitude & Latitude for Ravi & Moon and Udhaya Lagnam:
  *          http://th-mack.de/download/contrib/VedicHouses.java
+ *          Thanks to Shri. Karthik Raman, IIT Madras (stotrasamhita@gmail.com) for his guidance & support.
+ *          Thanks to Shri. Srinivasan, for his consultation & guidance for Vakya Panchangam.
  *
  * This whole software project is distributed under GNU GPL:
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html

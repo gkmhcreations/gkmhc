@@ -118,6 +118,9 @@ public class Panchangam extends Fragment {
                     alertDialog.dismiss();
                     mainActivity.initVedicCalendar();
                     refreshPanchangam(true);
+
+                    // Refresh Sankalpam as well when there is a location change.
+                    mainActivity.refreshTab(NPAdapter.NP_TAB_SANKALPAM);
                 } else {
                     Toast.makeText(getContext(), "Invalid Location: " + cityToSearch,
                             Toast.LENGTH_SHORT).show();

@@ -8,11 +8,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -91,8 +93,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
             getSupportActionBar().setLogo(R.mipmap.ic_launcher_round);
             getSupportActionBar().setBackgroundDrawable(
                     ResourcesCompat.getDrawable(getResources(), R.drawable.default_background, null));
-            getSupportActionBar().setTitle(Html.fromHtml("<font color='#0000FF'>" +
-                    getString(R.string.app_name) + "</font>"));
+            setAppTitle();
 
             calendar = Calendar.getInstance();
             npYear = calendar.get(Calendar.YEAR);
@@ -499,5 +500,29 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
             }
             updateVisbilityForMenuItem(false);
         }).show();
+    }
+
+    private void setAppTitle() {
+        String strTitle = getString(R.string.thiru_ganitha_panchangam);
+        String defPanchangamTypeStr = getString(R.string.pref_def_panchangam);
+        SharedPreferences localPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (localPreferences != null) {
+            defPanchangamTypeStr = localPreferences.getString(SettingsFragment.PREF_PANCHANGAM_KEY,
+                    defPanchangamTypeStr);
+
+            if (defPanchangamTypeStr.equalsIgnoreCase(
+                    getString(R.string.pref_panchangam_tamil_vakyam))) {
+                strTitle = getString(R.string.vakhya_panchangam);
+            } else if (defPanchangamTypeStr.equalsIgnoreCase(
+                    getString(R.string.pref_panchangam_drik_telugu_lunar))) {
+                strTitle = getString(R.string.telugu_panchangam);
+            } else if (defPanchangamTypeStr.equalsIgnoreCase(
+                    getString(R.string.pref_panchangam_drik_kannada_lunar))) {
+                strTitle = getString(R.string.kannada_panchangam);
+            }
+        }
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle(Html.fromHtml(
+                "<font color='#0000FF'>" + strTitle + "</font>"));
     }
 }

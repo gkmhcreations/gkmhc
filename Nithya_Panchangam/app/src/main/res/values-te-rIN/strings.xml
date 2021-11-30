@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sankalpam_shubam_begin">మమోపాత్త-సమస్త-దురితక్షయద్వారా శ్రీ పరమేశ్వర-ప్రీత్యర్థం శుభే శోభనే ముహూర్తే అద్య బ్రహ్మణః ద్వితీయపరార్ధే శ్వేతవరాహకల్పే వైవస్వత-మన్వంతరే అష్టావింశతితమే కలియుగే ప్రథమే పాదే జంబూద్వీపే భారతవర్షే భరతఖండే మేరోః దక్షిణే పార్శ్వే శకాబ్దే అస్మిన్ వర్తమానే వ్యావహారికే ప్రభవాదీనాం షష్ట్యాః సంవత్సరాణాం మధ్యే</string>
+    <string name="sankalpam_shubam_begin_part1">"మమో పథ, సమస్త దురిత క్షయద్వార శ్రీ పరమేశ్వర ప్రీత్యర్థం శుభే శోభనే ముహూర్తే అధ్యబ్రాహ్మణః ద్వితీయ-పరార్ధే శ్వేత వరాహ కల్పే వైవస్వత మన్వంతరే అష్ట వింశతి తామే కలియుగే ప్రథమే పదే "</string>
     <string name="app_name">నిత్య పంచాంగం</string>
     <string name="nithya_panchangam_header">నిత్య పంచాంగః</string>
     <string name="samvatsaram_heading">సంవత్సరః</string>
@@ -571,4 +571,7 @@
     <string name="telugu_panchangam">తెలుగు  పంచాంగం</string>
     <string name="kannada_panchangam">కన్నడ  పంచాంగం</string>
     <string name="vakyam_calendar_unavailable">వచ్చే ఏడాది వాక్య పంచాంగం క్యాలెండర్ ఇంకా అందుబాటులో లేదు!</string>
+    <string name="sankalpam_shubam_begin_part2">"జంబూద్వీపే భారత వర్షే భరత ఖండే మేరోహో దక్షిణే పార్శ్వే "</string>
+    <string name="sankalpam_shubam_begin_part3">శకబ్ధే అస్మిన్ వర్థమానే వ్యవహారికే ప్రభవాధీనాం షష్ట్యాః సంవత్సరాణాం మధ్యే</string>
+    <string name="sankalpam_shubam_begin_part2_north_america">"క్రౌంచ ద్వీపే, రమణక వర్షే, ఐంద్ర ఖండే, మేరోహో పశ్చిమే పార్శ్వ దిగ్భాగే "</string>
 </resources>

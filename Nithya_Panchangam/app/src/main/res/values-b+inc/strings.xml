@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sankalpam_shubam_begin">Mamopātta-samasta-duritakṣayadvārā śrī parameśvara-prītyarthaṃ śubhe śobhane muhūrte adya brahmaṇaḥ dvitīyaparārdhe śvetavarāhakalpe vaivasvata-manvantare aṣṭāviṃśatitame kaliyuge prathame pāde jambūdvīpe bhāratavarṣe bharatakhaṇḍe meroḥ dakṣiṇe pārśve śakābde asmin vartamāne vyāvahārike prabhavādīnāṃ ṣaṣṭyāḥ saṃvatsarāṇāṃ madhye</string>
+    <string name="sankalpam_shubam_begin_part1">"Mamopātta-samasta-duritakṣayadvārā śrī parameśvara-prītyarthaṃ śubhe śobhane muhūrte adya brahmaṇaḥ dvitīyaparārdhe śvetavarāhakalpe vaivasvata-manvantare aṣṭāviṃśatitame kaliyuge prathame pāde "</string>
     <string name="app_name">Nitya pañcāṅgaṃ</string>
     <string name="nithya_panchangam_header">Nitya pañcāṅgaḥ</string>
     <string name="samvatsaram_heading">Saṃvatsaraḥ</string>
@@ -25,7 +25,7 @@
     <string name="stopwatch_tab_heading">Virāmaghaṭī</string>
     <string name="splash_screen_banner">Svāmiye śaraṇaṃ ayyappā</string>
 
-    <string name="sankalpam_shubam_end">evaṃ guṇa viśeṣaṇa viśiṣṭāyām asyām **** śubhatithau asmākam sarveṣāṃ sahakuṭumbāṇām kṣema, sthairya, vīrya, vijaya, āyuḥ ārogya abhivṛddhyartham, mama gṛhe mahālakṣmī nitya nivāsa siddhyartham, mama iṣṭa kāmya phala siddhyartham, mama vyāpāra, vyavahāra, udyoga abhivṛddhi siddhyartham, samasta maṅgala avāptyartham, śarīre vartamāna kāla vartiṣyamāna sakala roga parihāra dvārā kṣipra ārogya saukhyam siddhyartham</string>
+    <string name="sankalpam_shubam_end">evaṃ guṇa viśeṣaṇa viśiṣṭāyām asyām **** śubhatithau asmākam sarveṣāṃ sahakuṭumbāṇām kṣema, sthairya, vīrya, vijaya, āyuḥ ārogya, aiśvarya, abhivṛddhyartham, mama gṛhe mahālakṣmī nitya nivāsa siddhyartham, mama iṣṭa kāmya phala siddhyartham, mama vyāpāra, vyavahāra, udyoga abhivṛddhi siddhyartham, samasta maṅgala avāptyartham, śarīre vartamāna kāla vartiṣyamāna sakala roga parihāra dvārā kṣipra ārogya saukhyam siddhyartham</string>
     <string name="sankalpam_nama_samvathsare">nāma saṃvatsare</string>
     <string name="sankalpam_maase">māse</string>
     <string name="sankalpam_subha_thithou">Śubhatithau</string>

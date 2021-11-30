@@ -54,7 +54,7 @@ public class NithyaPanchangamWidget extends AppWidgetProvider {
             int refDinaangam =
                     vedicCalendar.getDinaAnkam(VedicCalendar.MATCH_SANKALPAM_EXACT);
             String vaasaramStr =
-                    vedicCalendar.getVaasaram(VedicCalendar.MATCH_SANKALPAM_EXACT);
+                    vedicCalendar.getVaasaram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
             String maasamStr =
                     vedicCalendar.getSauramaanamMaasam(VedicCalendar.MATCH_SANKALPAM_EXACT);
             float textSize = 12f;

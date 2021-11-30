@@ -32,6 +32,6 @@ public class AboutActivity extends AppCompatActivity {
         resources.updateConfiguration(config, resources.getDisplayMetrics());
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash_screen);
+        setContentView(R.layout.activity_about);
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sankalpam_shubam_begin">മമോപാത്ത-സമസ്ത-ദുരിതക്ഷയദ്വാരാ ശ്രീ പരമേശ്വര-പ്രീത്യര്‍ഥം ശുഭേ ശോഭനേ മുഹൂര്‍തേ അദ്യ ബ്രഹ്മണഃ ദ്വിതീയപരാര്‍ധേ ശ്വേതവരാഹകല്പേ വൈവസ്വത-മന്വന്തരേ അഷ്ടാവിംശതിതമേ കലിയുഗേ പ്രഥമേ പാദേ ജംബൂദ്വീപേ ഭാരതവര്‍ഷേ ഭരതഖണ്ഡേ മേരോഃ ദക്ഷിണേ പാര്‍ശ്വേ ശകാബ്ദേ അസ്മിന് വര്‍തമാനേ വ്യാവഹാരികേ പ്രഭവാദീനാം ഷഷ്ട്യാഃ സംവത്സരാണാം മധ്യേ</string>
+    <string name="sankalpam_shubam_begin_part1">മമോ പാത, സമസ്ത ദുരിത ക്ഷയദ്വാര ശ്രീ പരമേശ്വര പ്രീത്യാർത്ഥം ശുഭേ ശോഭനേ മുഹൂർത്തേ അധ്യബ്രാഹ്മണഃ ദ്വിതീയ-പരാർധേ ശ്വേത വരാഹ കൽപേ വൈവസ്വത മന്വന്തരേ അഷ്ട വിംശതി താമേ കലിയുഗേ പ്രഥമ പദേ</string>
     <string name="app_name">നിത്യ പഞ്ചാങ്ഗം</string>
     <string name="nithya_panchangam_header">നിത്യ പഞ്ചാങ്ഗഃ</string>
     <string name="samvatsaram_heading">സംവത്സരഃ</string>
@@ -570,4 +570,7 @@
     <string name="kannada_panchangam">കന്നഡ  പഞ്ചാംഗം</string>
     <string name="telugu_panchangam">തെലുങ്ക്  പഞ്ചാംഗം</string>
     <string name="vakyam_calendar_unavailable">അടുത്ത വർഷത്തേക്കുള്ള വാക്യപഞ്ചാംഗ കലണ്ടർ ഇതുവരെ ലഭ്യമല്ല!</string>
+    <string name="sankalpam_shubam_begin_part2">"ജംബുദ്വീപേ ഭാരത വർഷേ ഭരത ഖണ്ഡേ മേരോഹോ ദക്ഷിണേ പാർശ്വേ "</string>
+    <string name="sankalpam_shubam_begin_part3">"ശകാബ്ധേ അസ്മിൻ വർത്തമാനേ വ്യവഹാരികേ പ്രഭവാധിനാം ഷഷ്ട്യാഹ സംവത്സരാണാം മധ്യേ "</string>
+    <string name="sankalpam_shubam_begin_part2_north_america">"ക്രൗഞ്ച ദ്വീപേ, രമണക വർഷേ, ഐന്ദ്ര ഖണ്ഡേ, മേരോഹോ പശ്ചിമേ പാർശ്വ ദിഗ്ഭാഗേ "</string>
 </resources>

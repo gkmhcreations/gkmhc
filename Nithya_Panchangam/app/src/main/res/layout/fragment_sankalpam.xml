@@ -29,6 +29,8 @@
             android:textStyle="bold"
             android:textColor="@color/blue"
             android:textSize="20sp"
+            android:lineSpacingExtra="5dp"
+            android:justificationMode="inter_word"
             android:text="" />
     </ScrollView>
 

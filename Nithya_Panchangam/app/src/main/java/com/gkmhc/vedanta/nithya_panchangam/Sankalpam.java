@@ -240,12 +240,50 @@ public class Sankalpam extends Fragment {
         // Step 2: Middle part that are specific to the location, region, space, time etc
         // Step 3: Final part that involves common constructs as per sankalpam type
         long pStartTime = System.nanoTime();
+        String htmlFontHdrStart = "<font color='#990000'>";
+        String htmlFontHdrEnd = "</font>";
         int currYear = vedicCalendar.get(Calendar.YEAR);
         int currDate = vedicCalendar.get(Calendar.DATE);
 
         // Step 1: Beginning part that involves common constructs as per sankalpam type
         begSankalpamTextView = root.findViewById(R.id.sankalpam_res_begin);
-        String sankalpamStr = getString(R.string.sankalpam_shubam_begin) + " ... ";
+        String sankalpamStr = getString(R.string.sankalpam_shubam_begin_part1);
+
+        // Change sankalpam location information based on the continent.
+        String location = MainActivity.readDefLocationSetting(requireContext());
+        MainActivity.PlacesInfo placesInfo = MainActivity.getLocationDetails(location);
+        switch (placesInfo.continent) {
+            /*case MainActivity.TIMEZONE_OCEANIA:
+                sankalpamStr += htmlFontHdrStart +
+                        getString(R.string.sankalpam_shubam_begin_part2_oceania) + htmlFontHdrEnd;
+                break;
+            case MainActivity.TIMEZONE_AUSTRALIA:
+                sankalpamStr += htmlFontHdrStart +
+                        getString(R.string.sankalpam_shubam_begin_part2_australia) + htmlFontHdrEnd;
+                break;
+            case MainActivity.TIMEZONE_AFRICA:
+                sankalpamStr += htmlFontHdrStart +
+                        getString(R.string.sankalpam_shubam_begin_part2_africa) + htmlFontHdrEnd;
+                break;
+            case MainActivity.TIMEZONE_SOUTH_AMERICA:
+                sankalpamStr += htmlFontHdrStart +
+                        getString(R.string.sankalpam_shubam_begin_part2_south_america) + htmlFontHdrEnd;
+                break;
+            case MainActivity.TIMEZONE_AMERICA:
+                sankalpamStr += htmlFontHdrStart +
+                        getString(R.string.sankalpam_shubam_begin_part2_north_america) + htmlFontHdrEnd;
+                break;
+            case MainActivity.TIMEZONE_EUROPE:
+                sankalpamStr += htmlFontHdrStart +
+                        getString(R.string.sankalpam_shubam_begin_part2_europe) + htmlFontHdrEnd;
+                break;*/
+            default:
+                // For Asia, by default!
+                sankalpamStr += htmlFontHdrStart +
+                        getString(R.string.sankalpam_shubam_begin_part2) + htmlFontHdrEnd;
+                break;
+        }
+        sankalpamStr += getString(R.string.sankalpam_shubam_begin_part3) + " ... ";
         if (prefSankalpamType.equals(getString(R.string.pref_sankalpam_type_srardham))) {
             sankalpamStr = getString(R.string.sankalpam_srardham_begin) + " ... ";
         }
@@ -263,8 +301,6 @@ public class Sankalpam extends Fragment {
         String sanskritVaasaramStr = vaasaramStr + getString(R.string.vaasaram_suffix);
         String sanskritNatchathiramStr = natchathiramStr;
         String sanskritYogamStr = yogamStr;
-        String htmlFontHdrStart = "<font color='#990000'>";
-        String htmlFontHdrEnd = "</font>";
 
         // Change last 1 or 2 alphabets in the suffix of below strings as per the grammar of the
         // given locale.

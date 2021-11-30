@@ -3,11 +3,11 @@
     <string name="nithya_panchangam_header">
         "Nithya Panchangam"
     </string>
-    <string name="sankalpam_shubam_begin">Mamo patha, samastha duritha kshayadwara Shri Parameshwara preethyartham shubhe shobhane muhoorthe adhyabrahmanaha dwithiya-parardhe shwetha varaha kalpe vaivasvatha manvanthare ashta vimshathi thame kaliyuge prathame pade jambudweepe bhaaratha varshe bharatha khande meroho dakshine parshwe shakabdhe asmin varthamane vyavahaarike prabhavadhinaam shashtyaaha samvatsaranaam madhye</string>
+    <string name="sankalpam_shubam_begin_part1">"Mamo patha, samastha duritha kshayadwara Shri Parameshwara preethyartham shubhe shobhane muhoorthe adhyabrahmanaha dwithiya-parardhe shwetha varaha kalpe vaivasvatha manvanthare ashta vimshathi thame kaliyuge prathame pade "</string>
     <string name="sankalpam_shubam_var_mid_portion" translatable="false">
         "**** nama samvathsare Uttarayane/Dakshinayane **** rithou **** maase Krishnapakshe/Shuklapakshe **** shubha thithou ****vasara yuktaayaam **** nakshatra yuktaayaam **** nama yoga yuktaayaam, **** karana yuktaayaam"
     </string>
-    <string name="sankalpam_shubam_end">evam guna visheshana vishishtayaam asyaam **** shubha thithou asmaakam, sarveshaam, sakudumbanaam, kshema, sthairya, veerya, vijaya, ayur arogya, abhivriddhyartham, mama gruhe mahalakshmi nitya nivaasa siddhyartham, mama ishta kaamya phala siddhyartham, mama vyaapaara, vyavahaara, udyoga abhivriddhi siddhyartham samastha mangala avaapthyartham, sharire vartamaanakaala varthishyamaana sakala rogha parihara dwara kshipra arogya saukhya siddhyartham</string>
+    <string name="sankalpam_shubam_end">evam guna visheshana vishishtayaam asyaam **** shubha thithou asmaakam, sarveshaam, sakudumbanaam, kshema, sthairya, veerya, vijaya, ayur arogya, aishwarya, abhivriddhyartham, mama gruhe mahalakshmi nitya nivaasa siddhyartham, mama ishta kaamya phala siddhyartham, mama vyaapaara, vyavahaara, udyoga abhivriddhi siddhyartham samastha mangala avaapthyartham, sharire vartamaanakaala varthishyamaana sakala rogha parihara dwara kshipra arogya saukhya siddhyartham</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="gkm_copyright">© GKM Heritage Creations, 2021</string>
@@ -695,4 +695,13 @@
     <string name="kannada_panchangam">Kannada Panchangam</string>
     <string name="vakyam_calendar_unavailable">Vakya Panchangam Calendar for next year is NOT yet available!</string>
     <string name="learn_more">Learn More</string>
+    <string name="humble_namaskarams">The primary aim of this app is to enable people to conveniently reckon the daily panchaangam, as well as various festivals &amp; observances. We apologise for any inadvertent errors that may have crept in, and request feedback for improvement. We dedicate this App to scholars and Panchaanga-karta(s) across the country, who have mastered these calculations and participate in "Panchanga Sadas" across the country, debating the nitty-gritties of various aspects of Panchangam(s). We request all app users to continue to support their traditional Panchanga(s), Panchanga-karta(s), and family Vathiyar(s). 🙏 Pls send your feedback to gkmhcreations@gmail.com.</string>
+    <string name="sankalpam_shubam_begin_part2">"jambudweepe bhaaratha varshe bharatha khande meroho dakshine parshwe "</string>
+    <string name="sankalpam_shubam_begin_part3">shakabdhe asmin varthamane vyavahaarike prabhavadhinaam shashtyaaha samvatsaranaam madhye</string>
+    <string name="sankalpam_shubam_begin_part2_north_america">kraunchadweepe, ramanaka varshe, aindra khande, meroho pashchime parshwa digbhage</string>
+    <string name="sankalpam_shubam_begin_part2_oceania">kushadweepe, ramanaka varshe, aindra khande, meroho pashchime parshwa digbhage</string>
+    <string name="sankalpam_shubam_begin_part2_australia">shalmalidweepe, ramanaka varshe, aindra khande, meroho pashchime parshwa digbhage</string>
+    <string name="sankalpam_shubam_begin_part2_africa">pushkaradweepe, ramanaka varshe, aindra khande, meroho pashchime parshwa digbhage</string>
+    <string name="sankalpam_shubam_begin_part2_south_america">plaskadweepe, ramanaka varshe, aindra khande, meroho pashchime parshwa digbhage</string>
+    <string name="sankalpam_shubam_begin_part2_europe">shakadweepe, ramanaka varshe, aindra khande, meroho pashchime parshwa digbhage</string>
 </resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="thiru_ganitha_panchangam">Dṛggaṇita-Pañchāṅgam</string>
+    <string name="vakhya_panchangam">Vākya Pañcāṅgaṁ</string>
+    <string name="telugu_panchangam">Telugu pan̄cāṅgaṁ</string>
+    <string name="kannada_panchangam">Kannaḍa pan̄cāṅgaṁ</string>
+    <string name="vakyam_calendar_unavailable">Vakya Panchangam Calendar for next year is NOT yet available!</string>
+    <string name="sankalpam_shubam_begin_part2">"jambūdvīpe bhāratavarṣe bharatakhaṇḍe meroḥ dakṣiṇe pārśve "</string>
+    <string name="sankalpam_shubam_begin_part3">śakābde asmin vartamāne vyāvahārike prabhavādīnāṃ ṣaṣṭyāḥ saṃvatsarāṇāṃ madhye</string>
+    <string name="sankalpam_shubam_begin_part2_north_america">"kraun̄ca dvīpē, ramaṇaka varṣē, aindra khaṇḍē, mērōhō paścimē pārśva digbhāgē "</string>
+    <string name="humble_namaskarams">The primary aim of this app is to enable people to conveniently reckon the daily panchaangam, as well as various festivals &amp; observances. We apologise for any inadvertent errors that may have crept in, and request feedback for improvement. We dedicate this App to scholars and Panchaanga-karta(s) across the country, who have mastered these calculations and participate in Panchanga Sadas across the country, debating the nitty-gritties of various aspects of Panchangam(s). We request all app users to continue to support their traditional Panchanga(s), Panchanga-karta(s), and family Vathiyar(s). 🙏 Pls send your feedback to gkmhcreations@gmail.com.</string>
+</resources>

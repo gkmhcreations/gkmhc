@@ -900,6 +900,19 @@ public class VedicCalendarDinaVisheshamRuleEngine {
         if (tokens.length == FIELD_VALUE_MAX_TOKENS) {
             startTime = Integer.parseInt(tokens[0]) * VedicCalendar.MAX_MINS_IN_HOUR;
             startTime += Integer.parseInt(tokens[1]);
+
+            /*
+             * Brahma Muhurtam is calculated as follows:
+             * StartTime: Sunrise - 2 Muhurtams (96 mins)
+             * Duration: 1 muhurtam (48 mins)
+             *
+             * Hence, there is a gap of 1 muhurtam between Brahma Muhurtam end time &
+             * Pratah kaalam start time. To fill this gap, we are accomodating 1 muhurtam
+             * into pratah kaalam for "Dina Vishesham" calculations purposes ONLY.
+             */
+            if (kaalamInfo.index == 1) {
+                startTime -= VedicCalendar.BRAHMA_MUHURTHAM_DURATION;
+            }
         }
 
         tokens = kaalamInfo.endTime.split(HHMM_DELIMITER);

@@ -225,10 +225,10 @@
     <string name="sankata_hara_chathurthi">Sankata Hara Chathurthi</string>
     <string name="nothing_special">Nothing Special!</string>
     <string name="hanuman_jayanthi">Shri Hanumath Jayanthi</string>
-    <string name="maha_periyava_jayanthi">Shri Chandrasekharendra Saraswati Mahaswamigal Jayanthi</string>
-    <string name="puthu_periyava_jayanthi">Shri Jayendra Saraswathi Swamigal Jayanthi</string>
-    <string name="bala_periyava_jayanthi">Shri Shankara Vijayendra Saraswathi Swamigal Jayanthi</string>
-    <string name="sringeri_periyava_jayanthi">Jagadguru Shri Mahaasannidaanam Shri Bharathi Theertha Swaminaha Vardhanthi</string>
+    <string name="shri_chandrasekharendra_saraswati_mahaswamigal_jayanthi">Shri Chandrasekharendra Saraswati Mahaswamigal Jayanthi</string>
+    <string name="shri_jayendra_saraswathi_swamigal_jayanthi">Shri Jayendra Saraswathi Swamigal Jayanthi</string>
+    <string name="shri_shankara_vijayendra_saraswathi_swamigal_jayanthi">Shri Shankara Vijayendra Saraswathi Swamigal Jayanthi</string>
+    <string name="shri_bharathi_theertha_swaminaha_vardhanthi">Jagadguru Shri Mahaasannidaanam Shri Bharathi Theertha Swaminaha Vardhanthi</string>
     <string name="appayya_dikshitar_jayanthi">Shri Appayya Dikshitar Jayanthi</string>
     <string name="lagnam_details">Dhina Lagnams</string>
     <string name="horai_details">Dhina Horai(s)</string>

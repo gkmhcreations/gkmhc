@@ -112,7 +112,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
             case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAASI_MAGAM:
                 checkDinaVisheshamMaasiMagam();
                 break;
-            case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI:
+            case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_SHANKARA_VIJAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI:
                 checkDinaVisheshamBalaPeriyavaJayanthi();
                 break;
             case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAHA_SIVARATHIRI:
@@ -121,7 +121,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
             case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_KARADAIYAN_NOMBHU:
                 checkDinaVisheshamKaradaiyanNombu();
                 break;
-            case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SRINGERI_PERIYAVA_VARDHANTHI:
+            case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_BHARATHI_ThEERTHA_SWAMINAHA_VARDHANTI:
                 checkDinaVisheshamSringeriPeriyavaVardanthi();
                 break;
             case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_PANGUNI_UTHIRAM:
@@ -157,10 +157,10 @@ public class VedicCalendarVakhyamSolarUnitTest {
             case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_VAIKASI_VISHAKAM:
                 checkDinaVisheshamVaikasiVishagam();
                 break;
-            case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI:
+            case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_CHANDRASEKHARENDRA_SARASWATHI_MAHASWAMIGAL_JAYANTHI:
                 checkDinaVisheshamMahaPeriyavaJayanthi();
                 break;
-            case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI:
+            case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_JAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI:
                 checkDinaVisheshamPuthuPeriyavaJayanthi();
                 break;
             case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AADI_PERUKKU:
@@ -797,26 +797,26 @@ public class VedicCalendarVakhyamSolarUnitTest {
         int numTCs = 0;
         int tempGlobalNumTCs = numPassedTCs;
         checkDinaVisheshamsforAnyMatch(17, 2, 2015,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_SHANKARA_VIJAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(5, 3, 2016,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_SHANKARA_VIJAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(23, 2, 2017,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_SHANKARA_VIJAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(13, 3, 2018,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_SHANKARA_VIJAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
         numTCs++;
         // TODO - Not Working!
         //checkDinaVisheshamsforAnyMatch(3, 3, 2019,
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(21, 2, 2020,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_SHANKARA_VIJAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(9, 3, 2021,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_SHANKARA_VIJAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
         numTCs++;
         // TODO - Not Working!
         // Reason: Not clear!
@@ -824,16 +824,16 @@ public class VedicCalendarVakhyamSolarUnitTest {
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(18, 2, 2023,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_SHANKARA_VIJAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(7, 3, 2024,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_SHANKARA_VIJAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(25, 2, 2025,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_SHANKARA_VIJAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(14, 3, 2026,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_SHANKARA_VIJAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
         numTCs++;
         System.out.println("Dina Vishesham Bala Periyava Jayanthi (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
@@ -913,16 +913,14 @@ public class VedicCalendarVakhyamSolarUnitTest {
         int numTCs = 0;
         int tempGlobalNumTCs = numPassedTCs;
         checkDinaVisheshamsforAnyMatch(30, 3, 2020,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SRINGERI_PERIYAVA_VARDHANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_BHARATHI_ThEERTHA_SWAMINAHA_VARDHANTI);
         numTCs++;
         // TODO - Not Working!
         //checkDinaVisheshamsforAnyMatch(18, 4, 2021,
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SRINGERI_PERIYAVA_VARDHANTHI);
         numTCs++;
-        // TODO - Not Working!
-        // Reason: Selection Criteria to be used here!
-        //checkDinaVisheshamsforAnyMatch(6, 4, 2022,
-        //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SRINGERI_PERIYAVA_VARDHANTHI);
+        checkDinaVisheshamsforAnyMatch(6, 4, 2022,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_BHARATHI_ThEERTHA_SWAMINAHA_VARDHANTI);
         numTCs++;
         // TODO - Not Working!
         //checkDinaVisheshamsforAnyMatch(26, 3, 2023,
@@ -933,12 +931,10 @@ public class VedicCalendarVakhyamSolarUnitTest {
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SRINGERI_PERIYAVA_VARDHANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(3, 4, 2025,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SRINGERI_PERIYAVA_VARDHANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_BHARATHI_ThEERTHA_SWAMINAHA_VARDHANTI);
         numTCs++;
-        // TODO - Not Working!
-        // Reason: Selection Criteria to be used here!
-        //checkDinaVisheshamsforAnyMatch(24, 3, 2026,
-        //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SRINGERI_PERIYAVA_VARDHANTHI);
+        checkDinaVisheshamsforAnyMatch(24, 3, 2026,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_BHARATHI_ThEERTHA_SWAMINAHA_VARDHANTI);
         numTCs++;
         System.out.println("Dina Vishesham Sringeri Periyava Vardhanthi (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
@@ -1297,40 +1293,40 @@ public class VedicCalendarVakhyamSolarUnitTest {
         int numTCs = 0;
         int tempGlobalNumTCs = numPassedTCs;
         checkDinaVisheshamsforAnyMatch(2, 6, 2015,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_CHANDRASEKHARENDRA_SARASWATHI_MAHASWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(22, 5, 2016,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_CHANDRASEKHARENDRA_SARASWATHI_MAHASWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(8, 6, 2017,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_CHANDRASEKHARENDRA_SARASWATHI_MAHASWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(29, 5, 2018,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_CHANDRASEKHARENDRA_SARASWATHI_MAHASWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(19, 5, 2019,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_CHANDRASEKHARENDRA_SARASWATHI_MAHASWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(5, 6, 2020,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_CHANDRASEKHARENDRA_SARASWATHI_MAHASWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(26, 5, 2021,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_CHANDRASEKHARENDRA_SARASWATHI_MAHASWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(17, 5, 2022,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_CHANDRASEKHARENDRA_SARASWATHI_MAHASWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(3, 6, 2023,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_CHANDRASEKHARENDRA_SARASWATHI_MAHASWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(24, 5, 2024,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_CHANDRASEKHARENDRA_SARASWATHI_MAHASWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(10, 6, 2025,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_CHANDRASEKHARENDRA_SARASWATHI_MAHASWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(31, 5, 2026,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_CHANDRASEKHARENDRA_SARASWATHI_MAHASWAMIGAL_JAYANTHI);
         numTCs++;
         System.out.println("Dina Vishesham Maha Periyava Jayanthi (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
@@ -1345,38 +1341,38 @@ public class VedicCalendarVakhyamSolarUnitTest {
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(22, 7, 2016,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_JAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(8, 8, 2017,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_JAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(29, 7, 2018,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_JAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
         numTCs++;
         // TODO - Not Working!
         //checkDinaVisheshamsforAnyMatch(16, 8, 2019,
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(5, 8, 2020,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_JAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(26, 7, 2021,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_JAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(12, 8, 2022,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_JAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(3, 8, 2023,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_JAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(23, 7, 2024,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_JAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(10, 8, 2025,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_JAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(31, 7, 2026,
-                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_JAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
         numTCs++;
         System.out.println("Dina Vishesham Puthu Periayava Jayanthi (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
@@ -1386,13 +1382,11 @@ public class VedicCalendarVakhyamSolarUnitTest {
     public void checkDinaVisheshamAadiPerukku() {
         int numTCs = 0;
         int tempGlobalNumTCs = numPassedTCs;
-        // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(2, 8, 2020,
-        //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AADI_PERUKKU);
+        checkDinaVisheshamsforAnyMatch(3, 8, 2020,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AADI_PERUKKU);
         numTCs++;
-        // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(2, 8, 2021,
-        //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AADI_PERUKKU);
+        checkDinaVisheshamsforAnyMatch(3, 8, 2021,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AADI_PERUKKU);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(3, 8, 2022,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AADI_PERUKKU);
@@ -1405,9 +1399,8 @@ public class VedicCalendarVakhyamSolarUnitTest {
         //checkDinaVisheshamsforAnyMatch(2, 8, 2024,
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AADI_PERUKKU);
         numTCs++;
-        // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(2, 8, 2025,
-        //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AADI_PERUKKU);
+        checkDinaVisheshamsforAnyMatch(3, 8, 2025,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AADI_PERUKKU);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(3, 8, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AADI_PERUKKU);

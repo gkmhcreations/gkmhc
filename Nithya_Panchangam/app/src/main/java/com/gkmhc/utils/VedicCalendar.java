@@ -77,12 +77,14 @@ public class VedicCalendar extends Calendar {
     private int timeFormatSettings = PANCHANGAM_TIME_FORMAT_HHMM;
 
     public static class KaalamInfo {
+        public final int index;
         public final String name;
         public final String startTime;
         public final String endTime;
         public boolean isCurrent;
 
-        KaalamInfo(String name, String startTime, String endTime, boolean isCurrent) {
+        KaalamInfo(int index, String name, String startTime, String endTime, boolean isCurrent) {
+            this.index = index;
             this.name = name;
             this.startTime = startTime;
             this.endTime = endTime;
@@ -110,7 +112,8 @@ public class VedicCalendar extends Calendar {
     private static final int MAX_VAASARAMS = 7;
     private static final int MAX_AMRUTHATHI_YOGAMS = 3;
     private static final int MAX_KAALAMS = 8;
-    private static final int BRAHMA_MUHURTHAM_DURATION = 96; // In Minutes
+    private static final int BRAHMA_MUHURTHAM_OFFSET = 96; // 2 Muhurtams In Minutes
+    public static final int BRAHMA_MUHURTHAM_DURATION = 48; // 1 Muhurtam In Minutes
     private static final int KARANAM_DEGREES = 6;
     private static final int REF_UTHARAYINAM_START_MONTH = 3;
     private static final int REF_DHAKSHINAYINAM_START_MONTH = 8;
@@ -155,7 +158,6 @@ public class VedicCalendar extends Calendar {
     // Panchangam Query/Match Types
     public static final int MATCH_PANCHANGAM_FULLDAY = 0;   // To get Full-day details
     public static final int MATCH_SANKALPAM_EXACT = 1;      // To get details as per current time
-    public static final int MATCH_PANCHANGAM_PROMINENT = 2; // To get details as per prominence
 
     // Time Format
     public static final int PANCHANGAM_TIME_FORMAT_HHMM = 0;        // HH:MM time format
@@ -324,10 +326,10 @@ public class VedicCalendar extends Calendar {
     public static final int PANCHANGAM_DINA_VISHESHAM_RATHA_SAPTHAMI = 9;
     public static final int PANCHANGAM_DINA_VISHESHAM_BHISHMA_ASHTAMI = 10;
     public static final int PANCHANGAM_DINA_VISHESHAM_MAASI_MAGAM = 11;
-    public static final int PANCHANGAM_DINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI = 12;
+    public static final int PANCHANGAM_DINA_VISHESHAM_SHRI_SHANKARA_VIJAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI = 12;
     public static final int PANCHANGAM_DINA_VISHESHAM_MAHA_SIVARATHIRI = 13;
     public static final int PANCHANGAM_DINA_VISHESHAM_KARADAIYAN_NOMBHU = 14;
-    public static final int PANCHANGAM_DINA_VISHESHAM_SRINGERI_PERIYAVA_VARDHANTHI = 15;
+    public static final int PANCHANGAM_DINA_VISHESHAM_SHRI_BHARATHI_ThEERTHA_SWAMINAHA_VARDHANTI = 15;
     public static final int PANCHANGAM_DINA_VISHESHAM_PANGUNI_UTHIRAM = 16;
     public static final int PANCHANGAM_DINA_VISHESHAM_UGADI = 17;
     public static final int PANCHANGAM_DINA_VISHESHAM_TAMIL_PUTHANDU = 18;
@@ -339,8 +341,8 @@ public class VedicCalendar extends Calendar {
     public static final int PANCHANGAM_DINA_VISHESHAM_AKSHAYA_THRITHIYAI = 24;
     public static final int PANCHANGAM_DINA_VISHESHAM_ADI_SANKARA_JAYANTHI = 25;
     public static final int PANCHANGAM_DINA_VISHESHAM_VAIKASI_VISHAKAM = 26;
-    public static final int PANCHANGAM_DINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI = 27;
-    public static final int PANCHANGAM_DINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI = 28;
+    public static final int PANCHANGAM_DINA_VISHESHAM_SHRI_CHANDRASEKHARENDRA_SARASWATHI_MAHASWAMIGAL_JAYANTHI = 27;
+    public static final int PANCHANGAM_DINA_VISHESHAM_SHRI_JAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI = 28;
     public static final int PANCHANGAM_DINA_VISHESHAM_AADI_PERUKKU = 29;
     public static final int PANCHANGAM_DINA_VISHESHAM_AADI_POORAM = 30;
     public static final int PANCHANGAM_DINA_VISHESHAM_GARUDA_PANCHAMI = 31;
@@ -837,6 +839,9 @@ public class VedicCalendar extends Calendar {
     /**
      * Use this API to get the Ayanam (half-year).
      *
+     * @param queryType MATCH_PANCHANGAM_FULLDAY - to get Ayanam for the whole day (or)
+     *                  MATCH_SANKALPAM_EXACT - to get exact Ayanam at the current time of day.
+     *
      * @return Exact Ayanam as a string (as per Drik calendar)
      */
     public String getAyanam(int queryType) {
@@ -865,6 +870,9 @@ public class VedicCalendar extends Calendar {
     /**
      * Use this API to get the Rithu (season).
      *
+     * @param queryType MATCH_PANCHANGAM_FULLDAY - to get Rithu for the whole day (or)
+     *                  MATCH_SANKALPAM_EXACT - to get exact Rithu at the current time of day.
+     *
      * @return Exact Rithu as a string (as per Drik calendar)
      */
     public String getRithu(int queryType) {
@@ -883,6 +891,9 @@ public class VedicCalendar extends Calendar {
     /**
      * Use this API to get the Maasam (solar or lunar month) depending on selected preference.
      *
+     * @param queryType MATCH_PANCHANGAM_FULLDAY - to get Maasam for the whole day (or)
+     *                  MATCH_SANKALPAM_EXACT - to get exact Maasam at the current time of day.
+     *
      * @return Exact Maasam as a string (as per Drik calendar)
      */
     public String getMaasam(int queryType) {
@@ -900,6 +911,9 @@ public class VedicCalendar extends Calendar {
 
     /**
      * Use this API to get the Maasam (solar month).
+     *
+     * @param queryType MATCH_PANCHANGAM_FULLDAY - to get Sauramaana Maasam for the whole day (or)
+     *                  MATCH_SANKALPAM_EXACT - to get exact Sauramaana Maasam at the current time of day.
      *
      * @return Exact Maasam as a string (as per Drik calendar)
      */
@@ -997,6 +1011,8 @@ public class VedicCalendar extends Calendar {
     /**
      * Use this API to get the Sauramaanam Maasam Index.
      *
+     * @param maasam - Sauramaana Maasam as a string
+     *
      * @return Exact Maasam as a number, ranging from 0 to 11 (or) -1 in case of error(s).
      */
     public int getSauramanaMaasamIndex(String maasam) {
@@ -1007,6 +1023,9 @@ public class VedicCalendar extends Calendar {
 
     /**
      * Use this API to get the Maasam (Lunar month).
+     *
+     * @param queryType MATCH_PANCHANGAM_FULLDAY - to get Chaandramaana Maasam for the whole day (or)
+     *                  MATCH_SANKALPAM_EXACT - to get exact Chaandramaana Maasam at the current time of day.
      *
      * @return Exact Maasam as a string (as per Drik calendar)
      */
@@ -1131,6 +1150,8 @@ public class VedicCalendar extends Calendar {
     /**
      * Use this API to get the Chaandramaanam Maasam Index.
      *
+     * @param maasam - Chaandramaana Maasam as a string
+     *
      * @return Exact Maasam as a number, ranging from 0 to 11 (or) -1 in case of error(s).
      */
     public int getChaandramaanamMaasamIndex(String maasam) {
@@ -1182,7 +1203,6 @@ public class VedicCalendar extends Calendar {
      *
      * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY
      *                      - to get exact thithi number based on actual Sunrise on a given day.
-     *                  MATCH_PANCHANGAM_PROMINENT - to get prominent thithi number on a given day.
      *
      * @return Exact Date as a number (as per Drik calendar)
      */
@@ -1244,8 +1264,6 @@ public class VedicCalendar extends Calendar {
      *                      - to get exact Tithi based on actual Sunrise on a given day.
      *                  MATCH_PANCHANGAM_FULLDAY
      *                      - to get Tithi(s) for full day based on actual Sunrise.
-     *                  MATCH_PANCHANGAM_PROMINENT
-     *                  - to get prominent Tithi on a given day.
      *
      * @return Exact Tithi as a string (as per Drik calendar)
      */
@@ -1572,7 +1590,7 @@ public class VedicCalendar extends Calendar {
     /**
      * Use this API to get the Vaasaram (weekday).
      *
-     * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY / MATCH_PANCHANGAM_PROMINENT
+     * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY
      *                      - to get exact Vaasaram
      *
      * @return Exact Vaasaram as a string (as per Drik calendar)
@@ -1610,8 +1628,6 @@ public class VedicCalendar extends Calendar {
      *                      - to get exact Nakshatram based on actual Sunrise on a given day.
      *                  MATCH_PANCHANGAM_FULLDAY
      *                      - to get Nakshatram(s) for full day based on actual Sunrise.
-     *                  MATCH_PANCHANGAM_PROMINENT
-     *                  - to get prominent Nakshatram on a given day.
      *
      * @return Exact Nakshatram as a string (as per Drik calendar)
      */
@@ -1710,12 +1726,8 @@ public class VedicCalendar extends Calendar {
                 nakshatramStr = secondNakshatramStr;
             }
         } else {
-            // MATCH_PANCHANGAM_PROMINENT - Identify prominent Nakshatram of the day.
-            if (nakshatramSpanHour < MAX_24HOURS) {
-                if (nakshatramSpan < sunRiseTotalMins) {
-                    nakshatramStr = secondNakshatramStr;
-                }
-            }
+            // Only options supported are MATCH_PANCHANGAM_FULLDAY (or) MATCH_SANKALPAM_EXACT
+            nakshatramStr = "";
         }
 
         //System.out.println("VedicCalendar", "get_nakshatram: Nakshatram => " + nakshatramStr +
@@ -1744,8 +1756,6 @@ public class VedicCalendar extends Calendar {
      *                      - to get exact Nakshatram based on actual Sunrise on a given day.
      *                  MATCH_PANCHANGAM_FULLDAY
      *                      - to get Nakshatram(s) for full day based on actual Sunrise.
-     *                  MATCH_PANCHANGAM_PROMINENT
-     *                  - to get prominent Nakshatram on a given day.
      *
      * @return Exact Chandrashtama Nakshatram as a string (as per Drik calendar)
      */
@@ -1857,12 +1867,8 @@ public class VedicCalendar extends Calendar {
                 nakshatramStr = secondNakshatramStr;
             }
         } else {
-            // MATCH_PANCHANGAM_PROMINENT - Identify prominent Nakshatram of the day.
-            if (nakshatramSpanHour < MAX_24HOURS) {
-                if (nakshatramSpan < sunRiseTotalMins) {
-                    nakshatramStr = secondNakshatramStr;
-                }
-            }
+            // Only options supported are MATCH_PANCHANGAM_FULLDAY (or) MATCH_SANKALPAM_EXACT
+            nakshatramStr = "";
         }
 
         /*System.out.println("VedicCalendar" + " getChandrashtamaNakshatram: " + "" +
@@ -1880,8 +1886,6 @@ public class VedicCalendar extends Calendar {
      *                      - to get exact Raasi based on actual Sunrise on a given day.
      *                  MATCH_PANCHANGAM_FULLDAY
      *                      - to get Raasi(s) for full day based on actual Sunrise.
-     *                  MATCH_PANCHANGAM_PROMINENT
-     *                  - to get prominent Raasi on a given day.
      *
      * @return Exact Raasi as a string (as per Drik calendar)
      */
@@ -1951,13 +1955,8 @@ public class VedicCalendar extends Calendar {
                 raasiStr = secondRaasiStr;
             }
         } else {
-            // MATCH_PANCHANGAM_PROMINENT - Identify prominent Raasi of the day.
-            if (raasiSpanHour < MAX_24HOURS) {
-                double secondRaasiSpan = MAX_MINS_IN_DAY - raasiSpan;
-                if (secondRaasiSpan > raasiSpan) {
-                    raasiStr = secondRaasiStr;
-                }
-            }
+            // Only options supported are MATCH_PANCHANGAM_FULLDAY (or) MATCH_SANKALPAM_EXACT
+            raasiStr = "";
         }
 
         //System.out.println("VedicCalendar", "get_raasi: Raasi => " + raasiStr +
@@ -1973,8 +1972,6 @@ public class VedicCalendar extends Calendar {
      *                      - to get exact Yogam based on actual Sunrise on a given day.
      *                  MATCH_PANCHANGAM_FULLDAY
      *                      - to get Yogam(s) for full day based on actual Sunrise.
-     *                  MATCH_PANCHANGAM_PROMINENT
-     *                  - to get prominent Yogam on a given day.
      *
      * @return Exact Yogam as a string (as per Drik calendar)
      */
@@ -2050,13 +2047,8 @@ public class VedicCalendar extends Calendar {
                 yogamStr = secondYogamStr;
             }
         } else {
-            // MATCH_PANCHANGAM_PROMINENT - Identify prominent Yogam on a given day.
-            if (yogamSpanHour < MAX_24HOURS) {
-                double secondRaasiSpan = MAX_MINS_IN_DAY - yogamSpan;
-                if (secondRaasiSpan > yogamSpan) {
-                    yogamStr = secondYogamStr;
-                }
-            }
+            // Only options supported are MATCH_PANCHANGAM_FULLDAY (or) MATCH_SANKALPAM_EXACT
+            yogamStr = "";
         }
 
         //System.out.println("VedicCalendar", "get_yogam: Yogam => " + yogamStr +
@@ -2073,8 +2065,6 @@ public class VedicCalendar extends Calendar {
      *                      - to get exact Karanam based on actual Sunrise on a given day.
      *                  MATCH_PANCHANGAM_FULLDAY
      *                      - to get Karanam(s) for full day based on actual Sunrise.
-     *                  MATCH_PANCHANGAM_PROMINENT
-     *                  - to get prominent Karanam on a given day.
      *
      * @return Exact Karanam as a string (as per Drik calendar)
      */
@@ -2155,13 +2145,8 @@ public class VedicCalendar extends Calendar {
                 karanamStr = karanamSecHalfStr;
             }
         } else {
-            // MATCH_PANCHANGAM_PROMINENT - Identify prominent karanam on a given day.
-            if (karanamSpanHour < MAX_24HOURS) {
-                double secondRaasiSpan = MAX_MINS_IN_DAY - karanamSpan;
-                if (secondRaasiSpan > karanamSpan) {
-                    karanamStr = karanamSecHalfStr;
-                }
-            }
+            // Only options supported are MATCH_PANCHANGAM_FULLDAY (or) MATCH_SANKALPAM_EXACT
+            karanamStr = "";
         }
 
         //System.out.println("VedicCalendar", "get_karanam: Karanam => " + karanamStr +
@@ -2175,8 +2160,6 @@ public class VedicCalendar extends Calendar {
      *
      * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY
      *                      - to get Amruthathi Yogam(s) for full day based on actual Sunrise.
-     *                  MATCH_PANCHANGAM_PROMINENT
-     *                  - to get prominent Amruthathi Yogam on a given day.
      *
      * @return Exact Amruthathi Yogam as a string (as per Drik calendar)
      */
@@ -2248,10 +2231,9 @@ public class VedicCalendar extends Calendar {
                     ayogamStr += ARROW_SYMBOL + secondAyogamStr;
                 }
             }
-        } else {
+        } else if (queryType == MATCH_SANKALPAM_EXACT) {
             // Scenarios here:
             // MATCH_SANKALPAM_EXACT - Identify Yogam based on exact time of query
-            // MATCH_PANCHANGAM_PROMINENT - Identify prominent Yogam on a given day.
             if (nakshatramSpanHour < MAX_24HOURS) {
                 double secondRaasiSpan = MAX_MINS_IN_DAY - nakshatramSpan;
                 if (secondRaasiSpan > nakshatramSpan) {
@@ -2260,6 +2242,9 @@ public class VedicCalendar extends Calendar {
             } else if ((refHour >= nakshatramSpanHour)) {
                 ayogamStr = secondAyogamStr;
             }
+        } else {
+            // Only options supported are MATCH_PANCHANGAM_FULLDAY (or) MATCH_SANKALPAM_EXACT
+            ayogamStr = "";
         }
 
         //System.out.println("VedicCalendar", "get_amruthathi_yogam: Yogam => " + ayogamStr +
@@ -2271,7 +2256,7 @@ public class VedicCalendar extends Calendar {
     /**
      * Use this API to get the Raahu kaalam timings.
      *
-     * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY / MATCH_PANCHANGAM_PROMINENT
+     * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY
      *                      - to get Raahu Kaalam timings for full day based on Sunrise & Sunset.
      *
      * @return Raahu kaalam timings as a string (as per Drik calendar)
@@ -2300,7 +2285,7 @@ public class VedicCalendar extends Calendar {
     /**
      * Use this API to get the Yamakandam timings.
      *
-     * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY / MATCH_PANCHANGAM_PROMINENT
+     * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY
      *                      - to get Yamakandam timings for full day based on Sunrise & Sunset.
      *
      * @return Yamakandam timings as a string (as per Drik calendar)
@@ -2327,7 +2312,7 @@ public class VedicCalendar extends Calendar {
     /**
      * Use this API to get the Kuligai timings.
      *
-     * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY / MATCH_PANCHANGAM_PROMINENT
+     * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY
      *                      - to get Kuligai timings for full day based on Sunrise & Sunset.
      *
      * @return Kuligai timings as a string (as per Drik calendar)
@@ -2354,7 +2339,7 @@ public class VedicCalendar extends Calendar {
     /**
      * Use this API to get the Shubha Kaalam (auspicious time) within a given Calendar day.
      *
-     * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY / MATCH_PANCHANGAM_PROMINENT
+     * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY
      *                      - to get auspicious time(s) for full day based on actual Sunrise.
      *
      * @return Exact Shubha Kaalam (auspicious time) as a HTML-formatted string (as per Drik calendar).
@@ -2465,7 +2450,7 @@ public class VedicCalendar extends Calendar {
      *
      * @param queryType MATCH_SANKALPAM_EXACT
      *                      - to get exact Horai that matches current time.
-     *                  MATCH_PANCHANGAM_FULLDAY / MATCH_PANCHANGAM_PROMINENT
+     *                  MATCH_PANCHANGAM_FULLDAY
      *                      - to get Horai(s) for full-day.
      *
      * @return @return List of Horai(s) & their span (as per Drik calendar)
@@ -2495,6 +2480,7 @@ public class VedicCalendar extends Calendar {
                 sunRiseTotalMins;
         perHoraiNightSpan /= 12;
         double horaiStartTime = sunRiseTotalMins - (perHoraiNightSpan * sunRiseTotalHours);
+        int horaiIndex = 0;
         int numHours = 0;
         String iterHorai;
         while (numHours < MAX_24HOURS) {
@@ -2546,7 +2532,8 @@ public class VedicCalendar extends Calendar {
             nextIterHorai += horaiList[currWeekday - 1];
             nextIterHorai += "</font>" + "<br>";
 
-            KaalamInfo horaiInfo = new KaalamInfo(iterHorai, startTimeStr, endTimeStr, false);
+            KaalamInfo horaiInfo = new KaalamInfo(horaiIndex, iterHorai, startTimeStr, endTimeStr, false);
+            horaiIndex += 1;
             // If caller has requested for Exact / Approximate horai then respond with only that
             // Otherwise, provide details in the format: current_horai (span) > next_horai
             if (isCurHorai) {
@@ -2556,7 +2543,7 @@ public class VedicCalendar extends Calendar {
                     horaiInfoList.clear();
                     horaiInfo.isCurrent = true;
                     horaiInfoList.add(horaiInfo);
-                    horaiInfoList.add(new KaalamInfo(nextIterHorai, "", "", false));
+                    horaiInfoList.add(new KaalamInfo(horaiIndex, nextIterHorai, "", "", false));
                     break;
                 } else {
                     horaiInfo.isCurrent = true;
@@ -2583,7 +2570,7 @@ public class VedicCalendar extends Calendar {
      *
      * @param queryType MATCH_SANKALPAM_EXACT
      *                      - to get exact Lagnam that matches current time.
-     *                  MATCH_PANCHANGAM_FULLDAY / MATCH_PANCHANGAM_PROMINENT
+     *                  MATCH_PANCHANGAM_FULLDAY
      *                      - to get Lagnam(s) for full-day.
      *
      * @return Exact list of lagnams & their span (as per Drik calendar)
@@ -2655,7 +2642,7 @@ public class VedicCalendar extends Calendar {
             String lagnamStr = raasiList[(udhayaLagnam) % MAX_RAASIS];
             String nextLagnamStr = raasiList[(udhayaLagnam + 1) % MAX_RAASIS];
             KaalamInfo lagnamInfo =
-                    new KaalamInfo(lagnamStr, startTimeStr, endTimeStr, false);
+                    new KaalamInfo(numLagnams, lagnamStr, startTimeStr, endTimeStr, false);
 
             // Retrieve lagnam that corresponds to current local time
             if ((curTotalMins >= prevLagnamEnd) && (curTotalMins <= lagnamStartOfDay)) {
@@ -2663,7 +2650,7 @@ public class VedicCalendar extends Calendar {
                     lagnamInfoList.clear();
                     lagnamInfo.isCurrent = true;
                     lagnamInfoList.add(lagnamInfo);
-                    lagnamInfoList.add(new KaalamInfo(nextLagnamStr, "", "", false));
+                    lagnamInfoList.add(new KaalamInfo((numLagnams + 1), nextLagnamStr, "", "", false));
                     break;
                 } else {
                     lagnamInfo.isCurrent = true;
@@ -2705,7 +2692,7 @@ public class VedicCalendar extends Calendar {
      *
      * @param queryType MATCH_SANKALPAM_EXACT
      *                      - to get exact Kaalam that matches current time.
-     *                  MATCH_PANCHANGAM_FULLDAY / MATCH_PANCHANGAM_PROMINENT
+     *                  MATCH_PANCHANGAM_FULLDAY
      *                      - to get Kaalam(s) for full-day.
      *
      * @return Exact list of Kaalams & their span (as per Drik calendar)
@@ -2729,7 +2716,7 @@ public class VedicCalendar extends Calendar {
         // 1/8 of the difference b/w Sunset of present day & Sunrise of next day.
         double kaalamDurationNightTime = ((MAX_MINS_IN_DAY - sunSetTotalMins) + sunRiseTotalMins) / 8;
         double kaalamStartOfDay = sunRiseTotalMins;
-        kaalamStartOfDay -= BRAHMA_MUHURTHAM_DURATION;
+        kaalamStartOfDay -= BRAHMA_MUHURTHAM_OFFSET;
         double prevKaalamEnd = kaalamStartOfDay;
 
         double curTotalMins = refTotalMins;
@@ -2752,6 +2739,7 @@ public class VedicCalendar extends Calendar {
             } else {
                 kaalamStartOfDay += kaalamDurationDayTime;
             }
+
             if (kaalamStartOfDay > MAX_MINS_IN_DAY) {
                 endTimeStr = formatTimeInTimeFormat((kaalamStartOfDay - MAX_MINS_IN_DAY));
             } else {
@@ -2760,7 +2748,7 @@ public class VedicCalendar extends Calendar {
             String kaalamStr = kaalamList[(numKaalam) % MAX_KAALAMS];
             String nextKaalamStr = kaalamList[(numKaalam + 1) % MAX_KAALAMS];
             KaalamInfo kaalamInfo =
-                    new KaalamInfo(kaalamStr, startTimeStr, endTimeStr, false);
+                    new KaalamInfo(numKaalam, kaalamStr, startTimeStr, endTimeStr, false);
 
             // Retrieve kaalam that corresponds to current local time
             if ((curTotalMins >= prevKaalamEnd) && (curTotalMins <= kaalamStartOfDay)) {
@@ -2768,7 +2756,7 @@ public class VedicCalendar extends Calendar {
                     kaalamInfoList.clear();
                     kaalamInfo.isCurrent = true;
                     kaalamInfoList.add(kaalamInfo);
-                    kaalamInfoList.add(new KaalamInfo(nextKaalamStr, "", "", false));
+                    kaalamInfoList.add(new KaalamInfo((numKaalam + 1), nextKaalamStr, "", "", false));
                     break;
                 } else {
                     kaalamInfo.isCurrent = true;
@@ -2778,6 +2766,12 @@ public class VedicCalendar extends Calendar {
                 kaalamInfoList.add(kaalamInfo);
             }
 
+            /*
+             * Insert duration of Brahma Muhurtam kaalam as 1 muhurtam
+             */
+            if (numKaalam == 0) {
+                kaalamStartOfDay += BRAHMA_MUHURTHAM_DURATION;
+            }
             numKaalam += 1;
             prevKaalamEnd = kaalamStartOfDay;
         }
@@ -3059,7 +3053,7 @@ public class VedicCalendar extends Calendar {
             // {SauramaanaMaasam - Kumbha, Nakshatram - Uthiradam}
             // (Type-7A match)
             dinaVisheshamList.put("Shri Shankara Vijayendra Saraswathi Swamigal Jayanthi",
-                    PANCHANGAM_DINA_VISHESHAM_BALA_PERIYAVA_JAYANTHI);
+                    PANCHANGAM_DINA_VISHESHAM_SHRI_SHANKARA_VIJAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
 
             // Maha Sivarathiri -
             // {ChaandramanaMaasam - Magha, Paksham - Krishna, Tithi - Chathurdasi}
@@ -3075,7 +3069,7 @@ public class VedicCalendar extends Calendar {
             // {ChaandramanaMaasam - Chaitra, Paksham - Shukla, Tithi - Sashti}
             // (Type-3B match)
             dinaVisheshamList.put("Jagadguru Shri Mahaasannidaanam Shri Bharathi Theertha Swaminaha Vardhanthi",
-                    PANCHANGAM_DINA_VISHESHAM_SRINGERI_PERIYAVA_VARDHANTHI);
+                    PANCHANGAM_DINA_VISHESHAM_SHRI_BHARATHI_ThEERTHA_SWAMINAHA_VARDHANTI);
 
             // Panguni Uthiram -
             // {SauramaanaMaasam - Meena, Nakshatram - Uthiram}
@@ -3137,13 +3131,13 @@ public class VedicCalendar extends Calendar {
             // {SauramaanaMaasam - Rishabha, Nakshatram - Anusham}
             // (Type-7A match)
             dinaVisheshamList.put("Shri Chandrasekharendra Saraswati Mahaswamigal Jayanthi",
-                    PANCHANGAM_DINA_VISHESHAM_MAHA_PERIYAVA_JAYANTHI);
+                    PANCHANGAM_DINA_VISHESHAM_SHRI_CHANDRASEKHARENDRA_SARASWATHI_MAHASWAMIGAL_JAYANTHI);
 
             // Puthu Periyava Jayanthi -
             // {SauramaanaMaasam - Kataka, Nakshatram - Avittam}
             // (Type-7A match)
             dinaVisheshamList.put("Shri Jayendra Saraswathi Swamigal Jayanthi",
-                    PANCHANGAM_DINA_VISHESHAM_PUTHU_PERIYAVA_JAYANTHI);
+                    PANCHANGAM_DINA_VISHESHAM_SHRI_JAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
 
             // Aadi Perukku -
             // {SauramaanaMaasam - Kataka, Dina-Ankham - 18}
@@ -3280,8 +3274,6 @@ public class VedicCalendar extends Calendar {
      *
      * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY
      *                      - to get maasam index based on actual Sunrise.
-     *                  MATCH_PANCHANGAM_PROMINENT
-     *                      - to get prominent maasam index.
      *
      * @return maasam index as a number (Range: 0 to 11)
      */
@@ -3417,7 +3409,7 @@ public class VedicCalendar extends Calendar {
     /**
      * Utility function to get the sunrise time for the given time in a given Calendar day.
      *
-     * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY / MATCH_PANCHANGAM_PROMINENT
+     * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY
      *                      - to get given day's Sunrise timings.
      */
     private void calcSunrise(int queryType) {
@@ -3434,7 +3426,7 @@ public class VedicCalendar extends Calendar {
     /**
      * Utility function to get the sunset time for the given time in a given Calendar day.
      *
-     * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY / MATCH_PANCHANGAM_PROMINENT
+     * @param queryType MATCH_SANKALPAM_EXACT / MATCH_PANCHANGAM_FULLDAY
      *                      - to get given day's Sunset timings.
      */
     private void calcSunset(int queryType) {

@@ -368,11 +368,13 @@ public class VedicCalendar extends Calendar {
     public static final int PANCHANGAM_DINA_VISHESHAM_SUBRAMANYA_SASHTI = 51;
     public static final int PANCHANGAM_DINA_VISHESHAM_ARUDHRA_DARSHAN = 52;
     public static final int PANCHANGAM_DINA_VISHESHAM_HANUMATH_JAYANTHI = 53;
+    public static final int PANCHANGAM_DINA_VISHESHAM_VAIKUNTA_EKADASHI = 54;
+    public static final int PANCHANGAM_DINA_VISHESHAM_BODHAYANA_AMAVAASAI = 55;
 
     // ADD PANCHANGAM DINA VISHESHAM CODES ABOVE THIS LINE & UPDATE
     // PANCHANGAM_DINA_VISHESHAM_RANGE_END
     public static final int PANCHANGAM_DINA_VISHESHAM_RANGE_END =
-            (PANCHANGAM_DINA_VISHESHAM_HANUMATH_JAYANTHI + 1);
+            (PANCHANGAM_DINA_VISHESHAM_BODHAYANA_AMAVAASAI + 1);
 
     /**
      * Use this API to create an instance of SwissEph library
@@ -3266,6 +3268,16 @@ public class VedicCalendar extends Calendar {
             // {SauramaanaMaasam - Dhanusu, Paksham - Krishna, Tithi - Amavaasai}
             // (Type-3A match)
             dinaVisheshamList.put("Shri Hanumath Jayanthi", PANCHANGAM_DINA_VISHESHAM_HANUMATH_JAYANTHI);
+
+            // Vaikunta Ekadashi -
+            // {SauramaanaMaasam - Dhanusu, Paksham - Shukla, Tithi - Ekadashi}
+            // (Type-3A match)
+            dinaVisheshamList.put("Vaikunta Ekadashi", PANCHANGAM_DINA_VISHESHAM_VAIKUNTA_EKADASHI);
+
+            // Bodhayana Amavaasai -
+            // {Tithi - Amavaasai}
+            // (Type-1 match)
+            dinaVisheshamList.put("Bodhayana Amavaasai", PANCHANGAM_DINA_VISHESHAM_BODHAYANA_AMAVAASAI);
         }
     }
 

@@ -25,7 +25,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class VedicCalendarVakhyamSolarUnitTest {
-    private static final int TOTAL_TCS = 452;
+    private static int totalTCs = 0;
     private int numPassedTCs = 0;
     private VedicCalendar vedicCalendar = null;
     private final Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
@@ -70,8 +70,8 @@ public class VedicCalendarVakhyamSolarUnitTest {
             System.out.println("DONE ====");
         }
 
-        System.out.println("Summary Report: " + numPassedTCs + "/" + TOTAL_TCS + " = " +
-                String.format("%2.2f", (((double)numPassedTCs / TOTAL_TCS) * 100)) + "%");
+        System.out.println("Summary Report: " + numPassedTCs + "/" + totalTCs + " = " +
+                String.format("%2.2f", (((double)numPassedTCs / totalTCs) * 100)) + "%");
     }
 
     public void triggerDinaVishesham(int visheshamCode) {
@@ -238,6 +238,12 @@ public class VedicCalendarVakhyamSolarUnitTest {
             case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_HANUMATH_JAYANTHI:
                 checkDinaVisheshamHanumathJayanthi();
                 break;
+            case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_VAIKUNTA_EKADASHI:
+                checkDinaVisheshamVaikuntaEkadashi();
+                break;
+            case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BODHAYANA_AMAVAASAI:
+                checkDinaVisheshamBodhayanaAmavaasai();
+                break;
         }
     }
 
@@ -281,6 +287,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(4, 12, 2021,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AMAVAASAI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Amavaasai (" + (numPassedTCs - tempGlobalNumTCs) + "/" +
                 numTCs + ")" + " PASSED!!!");
     }
@@ -325,6 +332,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(19, 12, 2021,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_POURNAMI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Pournami (" + (numPassedTCs - tempGlobalNumTCs) + "/" +
                 numTCs + ")" + " PASSED!!!");
     }
@@ -371,6 +379,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(22, 12, 2021,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SANKATA_HARA_CHATHURTHI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Sankata Hara Chathurthi (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -418,6 +427,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(9, 12, 2021,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SASHTI_VRATHAM);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Sashti (" + (numPassedTCs - tempGlobalNumTCs) + "/" +
                 numTCs + ")" + " PASSED!!!");
     }
@@ -505,6 +515,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(30, 12, 2021,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_EKADASHI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Ekadashi (" + (numPassedTCs - tempGlobalNumTCs) + "/" +
                 numTCs + ")" + " PASSED!!!");
     }
@@ -594,6 +605,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(31, 12, 2021,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_PRADOSHAM);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Pradosham (" + (numPassedTCs - tempGlobalNumTCs) + "/" +
                 numTCs + ")" + " PASSED!!!");
     }
@@ -624,6 +636,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         //checkDinaVisheshamsforAnyMatch(14, 1, 2026,
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAKARA_SANKARANTHI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Makara Sankaranthi (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -654,6 +667,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(1, 2, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_THAI_POOSAM);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Thai Poosam (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -688,6 +702,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(23, 1, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_VASANTHA_PANCHAMI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Vasantha Panchami (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -721,6 +736,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(25, 1, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_RATHA_SAPTHAMI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Ratha Sapthami (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -755,6 +771,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(26, 1, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BHISHMA_ASHTAMI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Bhishmastami (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -788,6 +805,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         //checkDinaVisheshamsforAnyMatch(3, 3, 2026,
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAASI_MAGAM);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Maasi Magam (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -835,6 +853,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(14, 3, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_SHANKARA_VIJAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Bala Periyava Jayanthi (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -869,6 +888,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(15, 2, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAHA_SIVARATHIRI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Maha Sivarathiri (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -904,6 +924,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         //checkDinaVisheshamsforAnyMatch(14, 3, 2026,
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_KARADAIYAN_NOMBHU);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Karadaiyan Nombhu (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -936,6 +957,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(24, 3, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_BHARATHI_ThEERTHA_SWAMINAHA_VARDHANTI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Sringeri Periyava Vardhanthi (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -965,6 +987,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(1, 4, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_PANGUNI_UTHIRAM);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Panguni Uthiram (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -996,6 +1019,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         //checkDinaVisheshamsforAnyMatch(19, 3, 2026,
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_UGADI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Ugadi (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1031,6 +1055,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         //checkDinaVisheshamsforAnyMatch(14, 4, 2026,
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_TAMIL_PUTHANDU);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Tamil Puthandu (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1065,6 +1090,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         //checkDinaVisheshamsforAnyMatch(4, 5, 2026,
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AGNI_NAKSHATHRAM_BEGIN);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Agni Nakshatram Begin (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1100,6 +1126,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(28, 5, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AGNI_NAKSHATHRAM_END);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Agni Nakshatram End (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1131,6 +1158,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(22, 4, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_RAMANUJA_JAYANTHI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Ramanuja Jayanthi (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1162,6 +1190,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         //checkDinaVisheshamsforAnyMatch(26, 3, 2026,
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SRI_RAMA_NAVAMI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Shri Rama Navami (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1191,6 +1220,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(1, 5, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_CHITHRA_POURNAMI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Chithra Pournami (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1224,6 +1254,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         //checkDinaVisheshamsforAnyMatch(19, 4, 2026,
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AKSHAYA_THRITHIYAI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Akshaya Thrithiyai (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1253,6 +1284,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(21, 4, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_ADI_SANKARA_JAYANTHI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Adi Sankara Jayanthi (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1284,6 +1316,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(30, 5, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_VAIKASI_VISHAKAM);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Vaikasi Vishakam (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1328,6 +1361,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(31, 5, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_CHANDRASEKHARENDRA_SARASWATHI_MAHASWAMIGAL_JAYANTHI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Maha Periyava Jayanthi (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1374,6 +1408,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(31, 7, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SHRI_JAYENDRA_SARASWATHI_SWAMIGAL_JAYANTHI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Puthu Periayava Jayanthi (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1405,6 +1440,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(3, 8, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AADI_PERUKKU);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Aadi Perukku (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1435,6 +1471,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         //checkDinaVisheshamsforAnyMatch(14, 8, 2026,
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AADI_POORAM);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Aadi Pooram (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1464,6 +1501,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(17, 8, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_GARUDA_PANCHAMI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Garuda Panchami (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1493,6 +1531,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(21, 8, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_VARALAKSHMI_VRATHAM);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Varalakshmi Vratham (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1524,6 +1563,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(26, 8, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AVANI_AVITTAM_RIG);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Avani Avittam - Rig (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1553,6 +1593,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(27, 8, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AVANI_AVITTAM_YAJUR);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Avani Avittam - Yajur (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1582,6 +1623,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(26, 8, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_ONAM);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Onam (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1613,6 +1655,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(31, 8, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAHA_SANKATA_HARA_CHATHURTHI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Maha Sankata Hara Chathurthi (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1642,6 +1685,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(4, 9, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_GOKULASHTAMI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Gokulashtami (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1673,6 +1717,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         //checkDinaVisheshamsforAnyMatch(12, 9, 2026,
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AVANI_AVITTAM_SAM);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Avani Avittam - Sam (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1702,6 +1747,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(14, 9, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_VINAYAGAR_CHATHURTHI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Vinayagar Chathurthi (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1732,6 +1778,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(27, 9, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAHALAYA_START);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Mahayalam Start (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1761,6 +1808,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(27, 9, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_APPAYYA_DIKSHITAR_JAYANTHI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Shri Appayya Dikshitar Jayanthi (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1791,6 +1839,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(29, 9, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAHA_BHARANI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Maha Bharani (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1820,6 +1869,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(10, 10, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAHALAYA_AMMAVASAI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Mahalaya Amavaasai (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1849,6 +1899,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(11, 10, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_NAVARATHRI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Navarathri (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1879,6 +1930,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(20, 10, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SARASWATHI_POOJAI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Saraswathi Poojai (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1909,6 +1961,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(21, 10, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_VIJAYA_DASHAMI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Vijaya Dashami (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1939,6 +1992,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(8, 11, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_NARAKA_CHATHURDASI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Naraka Chathurdashi (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1969,6 +2023,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(8, 11, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_DEEPAVALI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Deepavali (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -1998,6 +2053,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(15, 11, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SOORA_SAMHAARAM);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Soora Samhaaram (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -2028,6 +2084,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(24, 11, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_KARTHIGAI_DEEPAM);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Karthigai Deepam (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -2061,6 +2118,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         //checkDinaVisheshamsforAnyMatch(15, 12, 2026,
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SUBRAMANYA_SASHTI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Kanda Sashti (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -2117,6 +2175,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(24, 12, 2026,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_ARUDHRA_DARSHAN);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Arudhra Darshan (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
     }
@@ -2155,8 +2214,90 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(27, 12, 2027,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_HANUMATH_JAYANTHI);
         numTCs++;
+        totalTCs += numTCs;
         System.out.println("Dina Vishesham Shri Hanumath Jayanthi (" +
                 (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
+    }
+
+    @Test
+    public void checkDinaVisheshamVaikuntaEkadashi() {
+        int numTCs = 0;
+        int tempGlobalNumTCs = numPassedTCs;
+        checkDinaVisheshamsforAnyMatch(6, 1, 2020,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_VAIKUNTA_EKADASHI);
+        numTCs++;
+        checkDinaVisheshamsforAnyMatch(25, 12, 2020,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_VAIKUNTA_EKADASHI);
+        numTCs++;
+        checkDinaVisheshamsforAnyMatch(13, 1, 2022,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_VAIKUNTA_EKADASHI);
+        numTCs++;
+        checkDinaVisheshamsforAnyMatch(2, 1, 2023,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_VAIKUNTA_EKADASHI);
+        numTCs++;
+        checkDinaVisheshamsforAnyMatch(23, 12, 2023,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_VAIKUNTA_EKADASHI);
+        numTCs++;
+        checkDinaVisheshamsforAnyMatch(10, 1, 2025,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_VAIKUNTA_EKADASHI);
+        numTCs++;
+        // TODO - Not Working!
+        //checkDinaVisheshamsforAnyMatch(31, 12, 2025,
+        // Reason: Ekadashi not present during Pratah kaalam on both consecutive days!
+        //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_VAIKUNTA_EKADASHI);
+        numTCs++;
+        checkDinaVisheshamsforAnyMatch(20, 12, 2026,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_VAIKUNTA_EKADASHI);
+        numTCs++;
+        totalTCs += numTCs;
+        System.out.println("Dina Vishesham Vaikunta Ekadashi (" +
+                (numPassedTCs - tempGlobalNumTCs) + "/" + numTCs + ")" + " PASSED!!!");
+    }
+
+    @Test
+    public void checkDinaVisheshamBodhayanaAmavaasai() {
+        int numTCs = 0;
+        int tempGlobalNumTCs = numPassedTCs;
+        checkDinaVisheshamsforAnyMatch(12, 1, 2021,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BODHAYANA_AMAVAASAI);
+        numTCs++;
+        checkDinaVisheshamsforAnyMatch(11, 2, 2021,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BODHAYANA_AMAVAASAI);
+        numTCs++;
+        checkDinaVisheshamsforAnyMatch(12, 3, 2021,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BODHAYANA_AMAVAASAI);
+        numTCs++;
+        checkDinaVisheshamsforAnyMatch(11, 4, 2021,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BODHAYANA_AMAVAASAI);
+        numTCs++;
+        checkDinaVisheshamsforAnyMatch(11, 5, 2021,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BODHAYANA_AMAVAASAI);
+        numTCs++;
+        checkDinaVisheshamsforAnyMatch(9, 6, 2021,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BODHAYANA_AMAVAASAI);
+        numTCs++;
+        checkDinaVisheshamsforAnyMatch(9, 7, 2021,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BODHAYANA_AMAVAASAI);
+        numTCs++;
+        checkDinaVisheshamsforAnyMatch(8, 8, 2021, // To be checked!
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BODHAYANA_AMAVAASAI);
+        numTCs++;
+        checkDinaVisheshamsforAnyMatch(6, 9, 2021,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BODHAYANA_AMAVAASAI);
+        numTCs++;
+        // TODO - Not Working!
+        //checkDinaVisheshamsforAnyMatch(5, 10, 2021,
+        //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BODHAYANA_AMAVAASAI);
+        numTCs++;
+        checkDinaVisheshamsforAnyMatch(4, 11, 2021,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BODHAYANA_AMAVAASAI);
+        numTCs++;
+        checkDinaVisheshamsforAnyMatch(3, 12, 2021,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BODHAYANA_AMAVAASAI);
+        numTCs++;
+        totalTCs += numTCs;
+        System.out.println("Dina Vishesham Bodhayana Amavaasai (" + (numPassedTCs - tempGlobalNumTCs) + "/" +
+                numTCs + ")" + " PASSED!!!");
     }
 
     /*

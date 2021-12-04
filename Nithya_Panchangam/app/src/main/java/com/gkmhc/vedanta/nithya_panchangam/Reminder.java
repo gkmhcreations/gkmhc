@@ -126,9 +126,10 @@ public class Reminder extends Fragment {
 
         HashMap<Integer, NPDB.AlarmInfo> remindersDB = NPDB.readAlarmsFromDB(
                 context.getApplicationContext(), Alarm.ALARM_TYPE_VEDIC);
+        int numRemindersInDB = remindersDB.size();
 
         // If there are ZERO reminders in DB, then create DB first-time ONLY! Skip rest of the times.
-        if (remindersDB.size() >= VedicCalendar.PANCHANGAM_DINA_VISHESHAM_RANGE_END) {
+        if (numRemindersInDB >= VedicCalendar.PANCHANGAM_DINA_VISHESHAM_RANGE_END) {
             addToDB = false;
         }
         ArrayList<Integer> reminderAlarmIDList = new ArrayList<>();
@@ -138,7 +139,13 @@ public class Reminder extends Fragment {
             reminderAlarmIDList.add(festivalEventCode);
             labelID = getDinaVisheshamLabel(festivalEventCode);
 
-            if (addToDB) {
+            /*
+             * There are 3 scenarios handled below:
+             * 1) First-time App installation - ZERO reminder found in DB, so create all reminders!
+             * 2) Every time App is launched - Number of Reminders in DB is same as the ones to be created! No-op!
+             * 3) App Upgrade: Create only the (delta) reminders and NOT all!
+             */
+            if (festivalEventCode >= numRemindersInDB) {
                 NPDB.addAlarmToDB(context, Alarm.ALARM_TYPE_VEDIC, festivalEventCode,
                         Alarm.ALARM_STATE_OFF, DEFAULT_REMINDER_HOUR_OF_DAY, DEFAULT_REMINDER_MIN,
                         "Default", false, Alarm.ALARM_REPEAT_EVERY_OCCURRENCE,
@@ -339,6 +346,12 @@ public class Reminder extends Fragment {
             case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_HANUMATH_JAYANTHI:
                 dhinaVishesham = R.string.hanuman_jayanthi;
                 break;
+            case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_VAIKUNTA_EKADASHI:
+                dhinaVishesham = R.string.vaikunta_ekadashi;
+                break;
+            case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BODHAYANA_AMAVAASAI:
+                dhinaVishesham = R.string.bodhayana_amavaasai;
+                break;
             default:
                 dhinaVishesham = R.string.splash_screen_banner;
                 break;
@@ -490,6 +503,12 @@ public class Reminder extends Fragment {
                 break;
             case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_HANUMATH_JAYANTHI:
                 dhinaVisheshamCode = R.drawable.hanuma_jayanthi;
+                break;
+            case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_VAIKUNTA_EKADASHI:
+                dhinaVisheshamCode = R.drawable.ekadashi;
+                break;
+            case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_BODHAYANA_AMAVAASAI:
+                dhinaVisheshamCode = R.drawable.amavaasai;
                 break;
             default:
                 dhinaVisheshamCode = R.drawable.swamy_ayyappan_circle;

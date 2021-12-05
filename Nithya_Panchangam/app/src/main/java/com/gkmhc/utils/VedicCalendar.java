@@ -808,6 +808,13 @@ public class VedicCalendar extends Calendar {
     }
 
     /**
+     * Utility function to initialize Kali Dinam as per Vakhya panchangam.
+     */
+    private void initVakyamKaliDinam() {
+        // Vakyam Calculations
+    }
+
+    /**
      * Use this API to get the Samvatsaram (year).
      *
      * @return Exact Samvatsaram as a string (as per Drik calendar)
@@ -1301,9 +1308,9 @@ public class VedicCalendar extends Calendar {
 
         // 1) Calculate the Tithi index & mapping string for the given calendar day
         // Day Start is 00:00 hours!
-        double thithiSpan;
-        int thithiSpanHour;
-        int thithiAtDayStart;
+        double thithiSpan = 0;
+        int thithiSpanHour = 0;
+        int thithiAtDayStart = 0;
 
         if ((panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR) ||
             (panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNAR)) {
@@ -1429,11 +1436,11 @@ public class VedicCalendar extends Calendar {
      * @return Exact Tithi as a number (as per Drik calendar)
      */
     private int getTithiNum() {
-        int thithiIndex;
-        int curTithiAtSunrise;
-        int curTithiAtSunset;
+        int thithiIndex = 0;
+        int curTithiAtSunrise = 0;
+        int curTithiAtSunset = 0;
         int prevDayTithiAtSunrise;
-        int prevDayTithiAtSunset;
+        int prevDayTithiAtSunset = 0;
         if ((panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR) ||
             (panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNAR)) {
             // Vakyam Calculations!
@@ -1657,9 +1664,9 @@ public class VedicCalendar extends Calendar {
         // Step 7: Given the keys {nakshatramIndex, locale}, find the exact matching
         //         nakshatram string (as per the locale) in the nakshatram mapping table.
         // Step 8: Align remaining minutes as per the given Calendar day's Sun Rise Time
-        double nakshatramSpan;
-        int nakshatramSpanHour;
-        int nakshatramIndex;
+        double nakshatramSpan = 0;
+        int nakshatramSpanHour = 0;
+        int nakshatramIndex = 0;
 
         // For Vakyam
         if ((panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR) ||
@@ -1787,10 +1794,10 @@ public class VedicCalendar extends Calendar {
         // Step 7: Given the keys {cnakshatramIndex, locale}, find the exact matching
         //         nakshatram string (as per the locale) in the nakshatram mapping table.
         // Step 8: Align remaining minutes as per the given Calendar day's Sun Rise Time
-        double nakshatramSpan;
-        int nakshatramSpanHour;
+        double nakshatramSpan = 0;
+        int nakshatramSpanHour = 0;
         int nakshatramIndex;
-        int cnakshatramIndex;
+        int cnakshatramIndex = 0;
 
         if ((panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR) ||
             (panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNAR)) {
@@ -1915,9 +1922,9 @@ public class VedicCalendar extends Calendar {
         //         raasi string (as per the locale) in the raasi mapping table.
         // Step 8: Align remaining minutes as per the given Calendar day's Sun Rise Time
 
-        int raasiIndex;
-        int raasiSpanHour;
-        double raasiSpan;
+        int raasiIndex = 0;
+        int raasiSpanHour = 0;
+        double raasiSpan = 0;
 
         // For Vakyam
         if ((panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR) ||
@@ -2004,9 +2011,9 @@ public class VedicCalendar extends Calendar {
         // Step 7: Given the keys {yogamIndex, locale}, find the exact matching
         //         yogam string (as per the locale) in the yogam mapping table.
         // Step 8: Align remaining minutes as per the given Calendar day's Sun Rise Time
-        int yogamIndex;
-        double yogamSpan;
-        int yogamSpanHour;
+        int yogamIndex = 0;
+        double yogamSpan = 0;
+        int yogamSpanHour = 0;
         if ((panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR) ||
             (panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNAR)) {
             // Vakyam Calculations!
@@ -2100,9 +2107,9 @@ public class VedicCalendar extends Calendar {
         // Step 10: Given the keys {karanam_index, locale}, find the exact matching
         //          karanam string (as per the locale) in the karanam mapping table for given
         //          karanam and for next karanam as well.
-        int firstHalfKaranam;
-        double karanamSpan;
-        int karanamSpanHour;
+        int firstHalfKaranam = 0;
+        double karanamSpan = 0;
+        int karanamSpanHour = 0;
         if ((panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR) ||
             (panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNAR)) {
             // Vakyam Calculations!
@@ -2192,10 +2199,10 @@ public class VedicCalendar extends Calendar {
         //         the given day and the next amruthathi yogam for the rest of the day as well.
         // Step 9: Align remaining minutes as per the given Calendar day's Sun Rise Time
 
-        double nakshatramSpan;
-        int nakshatramIndex;
+        double nakshatramSpan = 0;
+        int nakshatramIndex = 0;
         int secondNakshatramIndex = 0;
-        int nakshatramSpanHour;
+        int nakshatramSpanHour = 0;
         if ((panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR) ||
             (panchangamType == PANCHANGAM_TYPE_VAKHYAM_LUNAR)) {
             // Vakyam Calculations!

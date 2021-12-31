@@ -108,6 +108,7 @@ public class VedicCalendarDinaVisheshamRuleEngine {
     private static final int FIELD_VALUE_UNKNOWN = -1;
     private static final int KAALAM_MIN_VAL = 0;
     private static final int KAALAM_MAX_VAL = 8;
+    private static final int MAX_DINA_ANKHAMS = 33;
     private static final int SELECTION_CRITERIA_PURVA = 1;
     private static final int SELECTION_CRITERIA_PARA = 2;
     private static final int SELECTION_CRITERIA_VYAPTI = 3;
@@ -217,27 +218,27 @@ public class VedicCalendarDinaVisheshamRuleEngine {
                     case FIELD_TO_MATCH_SAURAMAANAM_MAASAM:
                     case FIELD_TO_MATCH_CHAANDRAMAANAM_MAASAM:
                         startRange = 1;
-                        endRange = 12;
+                        endRange = VedicCalendar.MAX_RAASIS;
                         break;
                     case FIELD_TO_MATCH_PAKSHAM:
                         startRange = 1;
-                        endRange = 2;
+                        endRange = VedicCalendar.MAX_PAKSHAMS;
                         break;
                     case FIELD_TO_MATCH_TITHI:
                         startRange = 1;
-                        endRange = 30;
+                        endRange = VedicCalendar.MAX_TITHIS;
                         break;
                     case FIELD_TO_MATCH_NAKSHATRAM:
                         startRange = 1;
-                        endRange = 27;
+                        endRange = VedicCalendar.MAX_NAKSHATHRAMS;
                         break;
                     case FIELD_TO_MATCH_VAASARAM:
                         startRange = 1;
-                        endRange = 7;
+                        endRange = VedicCalendar.MAX_VAASARAMS;
                         break;
                     case FIELD_TO_MATCH_DINA_ANKHAM:
                         startRange = 1;
-                        endRange = 33;
+                        endRange = MAX_DINA_ANKHAMS;
                         break;
                 }
                 if ((fieldValueToMatch >= startRange) && (fieldValueToMatch <= endRange)) {
@@ -863,7 +864,8 @@ public class VedicCalendarDinaVisheshamRuleEngine {
             if (fieldSpanAtKaalam >= expectedKaalam) {
                 return fieldValueIndex;
             }
-            return (fieldValueIndex + 1);
+            int fieldMaxValue = getMaxFieldValue(fieldType);
+            return ((fieldValueIndex + 1) % fieldMaxValue);
         }
 
         return fieldValueIndex;
@@ -961,6 +963,35 @@ public class VedicCalendarDinaVisheshamRuleEngine {
         }
 
         return fieldValueIndex;
+    }
+
+    private int getMaxFieldValue(String fieldType) {
+        int maxFieldValue = 0;
+        switch (fieldType) {
+            case FIELD_TO_MATCH_SAURAMAANAM_MAASAM:
+                maxFieldValue = VedicCalendar.MAX_RAASIS;
+                break;
+            case FIELD_TO_MATCH_CHAANDRAMAANAM_MAASAM:
+                maxFieldValue = VedicCalendar.MAX_RAASIS;
+                break;
+            case FIELD_TO_MATCH_PAKSHAM:
+                maxFieldValue = VedicCalendar.MAX_PAKSHAMS;
+                break;
+            case FIELD_TO_MATCH_TITHI:
+                maxFieldValue = VedicCalendar.MAX_TITHIS;
+                break;
+            case FIELD_TO_MATCH_NAKSHATRAM:
+                maxFieldValue = VedicCalendar.MAX_NAKSHATHRAMS;
+                break;
+            case FIELD_TO_MATCH_DINA_ANKHAM:
+                maxFieldValue = MAX_DINA_ANKHAMS;
+                break;
+            case FIELD_TO_MATCH_VAASARAM:
+                maxFieldValue = VedicCalendar.MAX_VAASARAMS;
+                break;
+        }
+
+        return maxFieldValue;
     }
 
     private String trimLine(String line) {

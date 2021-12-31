@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         setContentView(R.layout.activity_main);
 
         // Copy NP Assets to right directory for VedicCalendar's use.
-        new CopyToAssets(".*?\\.(se1|xml|toml?)", getApplicationContext()).copy();
+        new CopyToAssets(".*?\\.(se1|txt|xml|toml?)", getApplicationContext()).copy();
 
         createNotificationChannel();
 
@@ -766,6 +766,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             String prefAyanamsaStr = sharedPreferences.getString(SettingsFragment.PREF_AYANAMSA_KEY, "");
             if (prefAyanamsaStr.equalsIgnoreCase(context.getString(R.string.pref_ayanamsa_lahiri))) {
                 prefAyanamsa = VedicCalendar.AYANAMSA_LAHIRI;
+            } else if (prefAyanamsaStr.equalsIgnoreCase(context.getString(R.string.pref_ayanamsa_krishnamurti))) {
+                prefAyanamsa = VedicCalendar.AYANAMSA_KRISHNAMURTI;
             }
         }
 

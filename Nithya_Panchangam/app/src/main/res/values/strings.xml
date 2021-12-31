@@ -41,6 +41,7 @@
     <string name="pref_def_sankalpam_type" translatable="false">@string/pref_sankalpam_type_shubam</string>
     <string name="pref_ayanamsa_chitrapaksha" translatable="false">Chitrapaksha</string>
     <string name="pref_ayanamsa_lahiri" translatable="false">Lahiri</string>
+    <string name="pref_ayanamsa_krishnamurti" translatable="false">Krishnamurti</string>
     <string name="pref_def_ayanamsa" translatable="false">@string/pref_ayanamsa_chitrapaksha</string>
     <string name="pref_lunar_calendar_key" translatable="false">PREF_CHAANDRAMANA_CALENDAR_KEY</string>
     <string name="pref_lunar_calendar" translatable="false">Chāndramānam (Lunar Calendar)</string>
@@ -67,6 +68,7 @@
     <string-array name="pref_allowed_ayanamsa_list">
         <item>@string/pref_ayanamsa_chitrapaksha</item>
         <item>@string/pref_ayanamsa_lahiri</item>
+        <item>@string/pref_ayanamsa_krishnamurti</item>
     </string-array>
     <string-array name="pref_location_settings">
         <item>@string/pref_location_manual</item>

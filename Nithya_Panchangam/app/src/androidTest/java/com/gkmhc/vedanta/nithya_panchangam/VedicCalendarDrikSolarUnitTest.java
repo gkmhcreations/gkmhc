@@ -1017,15 +1017,11 @@ public class VedicCalendarDrikSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(14, 4, 2021,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_TAMIL_PUTHANDU);
         numTCs++;
-        // TODO - Not Working!
-        // Reason: Wrong Dina Ankham!
-        //checkDinaVisheshamsforAnyMatch(14, 4, 2022,
-        //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_TAMIL_PUTHANDU);
+        checkDinaVisheshamsforAnyMatch(14, 4, 2022,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_TAMIL_PUTHANDU);
         numTCs++;
-        // TODO - Not Working!
-        // Reason: Wrong Dina Ankham!
-        //checkDinaVisheshamsforAnyMatch(14, 4, 2023,
-        //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_TAMIL_PUTHANDU);
+        checkDinaVisheshamsforAnyMatch(14, 4, 2023,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_TAMIL_PUTHANDU);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(14, 4, 2024,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_TAMIL_PUTHANDU);
@@ -1033,10 +1029,8 @@ public class VedicCalendarDrikSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(14, 4, 2025,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_TAMIL_PUTHANDU);
         numTCs++;
-        // TODO - Not Working!
-        // Reason: Wrong Dina Ankham!
-        //checkDinaVisheshamsforAnyMatch(14, 4, 2026,
-        //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_TAMIL_PUTHANDU);
+        checkDinaVisheshamsforAnyMatch(14, 4, 2026,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_TAMIL_PUTHANDU);
         numTCs++;
         totalTCs += numTCs;
         System.out.println("Dina Vishesham Tamil Puthandu (" +
@@ -1048,9 +1042,8 @@ public class VedicCalendarDrikSolarUnitTest {
         int numTCs = 0;
         int tempGlobalNumTCs = numPassedTCs;
         // TODO - Not Working!
-        // Reason: Wrong Dina Ankham!
-        //checkDinaVisheshamsforAnyMatch(4, 5, 2020,
-        //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AGNI_NAKSHATHRAM_BEGIN);
+        checkDinaVisheshamsforAnyMatch(4, 5, 2020,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AGNI_NAKSHATHRAM_BEGIN);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(4, 5, 2021,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AGNI_NAKSHATHRAM_BEGIN);
@@ -1081,7 +1074,6 @@ public class VedicCalendarDrikSolarUnitTest {
         int numTCs = 0;
         int tempGlobalNumTCs = numPassedTCs;
         // TODO - Not Working!
-        // Reason: Wrong Dina Ankham!
         //checkDinaVisheshamsforAnyMatch(28, 5, 2020,
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AGNI_NAKSHATHRAM_END);
         numTCs++;
@@ -1097,7 +1089,6 @@ public class VedicCalendarDrikSolarUnitTest {
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AGNI_NAKSHATHRAM_END);
         numTCs++;
         // TODO - Not Working!
-        // Reason: Wrong Dina Ankham!
         //checkDinaVisheshamsforAnyMatch(28, 5, 2024,
         //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_AGNI_NAKSHATHRAM_END);
         numTCs++;

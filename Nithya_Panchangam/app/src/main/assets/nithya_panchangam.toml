@@ -31,35 +31,35 @@
 #    12 - Phaalguna
 #
 # Options for "dina_vishesham_match_value" when dina_vishesham_match_criteria is "tithi":
-#    1 - Prathama
-#    2 - Dvithiya
-#    3 - Thrithiya
-#    4 - Chathurthi
-#    5 - Panchami
-#    6 - Sashti
-#    7 - Sapthami
-#    8 - Ashtami
-#    9 - Navami
-#    10 - Dashami
-#    11 - Ekadashi
-#    12 - Dvadashi
-#    13 - Thrayodashi
-#    14 - Chathurdashi
+#    1 - Shukla Prathama
+#    2 - Shukla Dvithiya
+#    3 - Shukla Thrithiya
+#    4 - Shukla Chathurthi
+#    5 - Shukla Panchami
+#    6 - Shukla Sashti
+#    7 - Shukla Sapthami
+#    8 - Shukla Ashtami
+#    9 - Shukla Navami
+#    10 - Shukla Dashami
+#    11 - Shukla Ekadashi
+#    12 - Shukla Dvadashi
+#    13 - Shukla Thrayodashi
+#    14 - Shukla Chathurdashi
 #    15 - Pournami
-#    16 - Prathama
-#    17 - Dvithiya
-#    18 - Thrithiya
-#    19 - Chathurthi
-#    20 - Panchami
-#    21 - Sashti
-#    22 - Sapthami
-#    23 - Ashtami
-#    24 - Navami
-#    25 - Dashami
-#    26 - Ekadashi
-#    27 - Dvadashi
-#    28 - Thrayodashi
-#    29 - Chathurdashi
+#    16 - Krishna Prathama
+#    17 - Krishna Dvithiya
+#    18 - Krishna Thrithiya
+#    19 - Krishna Chathurthi
+#    20 - Krishna Panchami
+#    21 - Krishna Sashti
+#    22 - Krishna Sapthami
+#    23 - Krishna Ashtami
+#    24 - Krishna Navami
+#    25 - Krishna Dashami
+#    26 - Krishna Ekadashi
+#    27 - Krishna Dvadashi
+#    28 - Krishna Thrayodashi
+#    29 - Krishna Chathurdashi
 #    30 - Amavasya
 #
 # Options for "dina_vishesham_match_value" when dina_vishesham_match_criteria is "nakshatram":
@@ -197,7 +197,7 @@ copyright="© GKM Heritage Creations, 2021"
 
     [dina_vishesham.pradosham]
         dina_vishesham_title="Pradosham"
-        dina_vishesham_description="Pradosham is observed every month, in Shukla paksha, when Thrayodashi tithi prevails during Dhinanta kaalam."
+        dina_vishesham_description="Pradosham is also observed every month, in Shukla paksha, when Thrayodashi tithi prevails during Dhinanta kaalam."
 
         [dina_vishesham.pradosham.rule]
             dina_vishesham_match_criteria="tithi"
@@ -207,7 +207,7 @@ copyright="© GKM Heritage Creations, 2021"
 
     [dina_vishesham.pradosham]
         dina_vishesham_title="Pradosham"
-        dina_vishesham_description="Pradosham is observed every month, in Krishna paksha, when Thrayodashi tithi prevails during Pradosha kaalam."
+        dina_vishesham_description="Pradosham is also observed every month, in Krishna paksha, when Thrayodashi tithi prevails during Pradosha kaalam."
 
         [dina_vishesham.pradosham.rule]
             dina_vishesham_match_criteria="tithi"
@@ -386,6 +386,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.tamil_puthandu.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=1                  # 1 - indicates Mesha maasam
+            dina_vishesham_kaala_sambhavaha=6             # 6 - indicates Sayahna kaalam
 
         [dina_vishesham.tamil_puthandu.rule]
             dina_vishesham_match_criteria="dina_ankham"

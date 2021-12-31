@@ -97,7 +97,6 @@ public class VedicCalendar extends Calendar {
     private static VedicCalendarDinaVisheshamRuleEngine vCDinaVisheshamRuleEngine = null;
     private static final double INDIAN_STANDARD_TIME = 5.5;
     private static final int SAMVATSARAM_NUM_YEARS = 60;
-    private static final int MAX_NAKSHATHRAMS = 27;
     private static final int MAX_AYANAM_MINUTES = 21600; // 30deg * 60 mins per degree
     private static final int MAX_TITHI_MINUTES = 720; // 12deg * 60 mins per degree
     private static final int MAX_NAKSHATHRAM_MINUTES = 800; // 13deg 20' * 60 mins per degree
@@ -106,15 +105,17 @@ public class VedicCalendar extends Calendar {
     private static final int MAX_KARANAMS = 60;
     private static final int MAX_RITHUS = 6;
     private static final int MAX_AYANAMS = 2;
-    private static final int MAX_PAKSHAMS = 2;
-    private static final int MAX_RAASIS = 12;
-    private static final int MAX_TITHIS = 30;
-    private static final int MAX_VAASARAMS = 7;
+    public static final int MAX_PAKSHAMS = 2;
+    public static final int MAX_RAASIS = 12;
+    public static final int MAX_TITHIS = 30;
+    public static final int MAX_NAKSHATHRAMS = 27;
+    public static final int MAX_VAASARAMS = 7;
     private static final int MAX_AMRUTHATHI_YOGAMS = 3;
     private static final int MAX_KAALAMS = 8;
     private static final int BRAHMA_MUHURTHAM_OFFSET = 96; // 2 Muhurtams In Minutes
     public static final int BRAHMA_MUHURTHAM_DURATION = 48; // 1 Muhurtam In Minutes
     private static final int KARANAM_DEGREES = 6;
+    private static final int TITHI_DEGREES = 12;
     private static final int REF_UTHARAYINAM_START_MONTH = 3;
     private static final int REF_DHAKSHINAYINAM_START_MONTH = 8;
     private static final int MAX_24HOURS = 24;
@@ -158,6 +159,7 @@ public class VedicCalendar extends Calendar {
     // Panchangam Query/Match Types
     public static final int MATCH_PANCHANGAM_FULLDAY = 0;   // To get Full-day details
     public static final int MATCH_SANKALPAM_EXACT = 1;      // To get details as per current time
+    public static final int MATCH_WIDGET_EXACT = 2;         // To get details for widget as per current time
 
     // Time Format
     public static final int PANCHANGAM_TIME_FORMAT_HHMM = 0;        // HH:MM time format
@@ -197,6 +199,7 @@ public class VedicCalendar extends Calendar {
 
     public static final int AYANAMSA_CHITRAPAKSHA = 0;
     public static final int AYANAMSA_LAHIRI = 1;
+    public static final int AYANAMSA_KRISHNAMURTI = 2;
 
     // To facilitate if Horai is subham or not based on lookup {horaiIndex}
     // Design considerations:
@@ -450,7 +453,8 @@ public class VedicCalendar extends Calendar {
         }
 
         // Chitrapaksha & Lahiri are only supported Ayanamsa Modes
-        if ((prefAyanamsa != AYANAMSA_CHITRAPAKSHA) && (prefAyanamsa != AYANAMSA_LAHIRI)) {
+        if ((prefAyanamsa != AYANAMSA_CHITRAPAKSHA) && (prefAyanamsa != AYANAMSA_LAHIRI) &&
+            (prefAyanamsa != AYANAMSA_KRISHNAMURTI)) {
             throw new InvalidParameterSpecException("Invalid Ayanamsa!");
         }
 
@@ -725,6 +729,9 @@ public class VedicCalendar extends Calendar {
         if (prefAyanamsa == AYANAMSA_CHITRAPAKSHA) {
             // Set sidereal mode: SE_SIDM_TRUE_CITRA for "Drik Ganitham"
             swissEphInst.swe_set_sid_mode(SweConst.SE_SIDM_TRUE_CITRA, 0, 0);
+        } else if (prefAyanamsa == AYANAMSA_KRISHNAMURTI) {
+            // Set sidereal mode: SE_SIDM_KRISHNAMURTI for "Krishnamurti" Ayanamsa
+            swissEphInst.swe_set_sid_mode(SweConst.SE_SIDM_KRISHNAMURTI, 0, 0);
         } else {
             // Set sidereal mode: SE_SIDM_LAHIRI for "Lahiri" Ayanamsa
             swissEphInst.swe_set_sid_mode(SweConst.SE_SIDM_LAHIRI, 0, 0);
@@ -1010,6 +1017,11 @@ public class VedicCalendar extends Calendar {
             // MATCH_SANKALPAM_EXACT - Identify Tithi based on exact time of query
             if ((refHour >= maasamSpanHour)) {
                 nextMaasamStr = raasiList[(maasamIndex + 1) % MAX_RAASIS];
+                maasamStr = nextMaasamStr;
+            }
+        } else if (queryType == MATCH_WIDGET_EXACT) {
+            // MATCH_WIDGET_EXACT - Identify Tithi based on exact time of query (used for widget!)
+            if ((refHour >= maasamSpanHour)) {
                 maasamStr = nextMaasamStr;
             }
         }

@@ -56,7 +56,7 @@ public class NithyaPanchangamWidget extends AppWidgetProvider {
             String vaasaramStr =
                     vedicCalendar.getVaasaram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
             String maasamStr =
-                    vedicCalendar.getSauramaanamMaasam(VedicCalendar.MATCH_SANKALPAM_EXACT);
+                    vedicCalendar.getMaasam(VedicCalendar.MATCH_WIDGET_EXACT);
             float textSize = 12f;
 
             // Increase font size for Sanskrit alone but keep default for Tamil & English

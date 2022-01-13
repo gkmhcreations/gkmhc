@@ -150,16 +150,18 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
 
         ImageView nextYearView = findViewById(R.id.np_calendar_nextYear);
         nextYearView.setOnClickListener(v -> {
-            // Vakyam calendar shall be revealed every Mar of the year for the next year
-            // so that there is no financial trouble for Vakyam calendar makers.
             if ((panchangamType == VedicCalendar.PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR) ||
                 (panchangamType == VedicCalendar.PANCHANGAM_TYPE_VAKHYAM_LUNAR)) {
-                if (npYear >= refYear) {
-                    if (npMonth > 2) {
+                // Vakyam calendar shall be revealed every Mar of the year for the next year
+                // so that there is no financial trouble for Vakyam calendar makers.
+                if (npYear == refYear) {
+                    if (npMonth < 3) {
                         Toast.makeText(this, R.string.vakyam_calendar_unavailable,
                                 Toast.LENGTH_SHORT).show();
                         return;
-                    } else if (npYear > refYear) {
+                    }
+                } else if (npYear == (refYear - 1)) {
+                    if (npMonth > 2) {
                         Toast.makeText(this, R.string.vakyam_calendar_unavailable,
                                 Toast.LENGTH_SHORT).show();
                         return;
@@ -178,21 +180,20 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
 
         ImageView nextMonthView = findViewById(R.id.np_calendar_nextMonth);
         nextMonthView.setOnClickListener(v -> {
-            // Vakyam calendar shall be revealed every Mar of the year for the next year
-            // so that there is no financial trouble for Vakyam calendar makers.
             if ((panchangamType == VedicCalendar.PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR) ||
                 (panchangamType == VedicCalendar.PANCHANGAM_TYPE_VAKHYAM_LUNAR)) {
-                if (npYear == (refYear + 1)) {
-                    if (refMonth == 2) {
+                // Vakyam calendar shall be revealed every Mar of the year for the next year
+                // so that there is no financial trouble for Vakyam calendar makers.
+                // Three Scenarios
+                // 1) Current year: 2021, current month: Apr to Dec, Action: Next Month ==> Allow
+                // 2) Current year: 2022, current month: Jan, Action: Next Month ==> Allow
+                // 3) Current year: 2022, current month: Mar, Action: Next Month ==> Deny
+                if ((npYear == refYear) || (npYear == (refYear + 1))) {
+                    // 3) Current year: 2022, current month: Mar, Action: Next Month ==> Deny
+                    if (npMonth == 2) {
                         Toast.makeText(this, R.string.vakyam_calendar_unavailable,
                                 Toast.LENGTH_SHORT).show();
                         return;
-                    } else {
-                        if (npMonth == 2) {
-                            Toast.makeText(this, R.string.vakyam_calendar_unavailable,
-                                    Toast.LENGTH_SHORT).show();
-                            return;
-                        }
                     }
                 }
             }
@@ -297,7 +298,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
                     //        VedicCalendar.getTimeTaken(startTime, endTime));
                     //startTime = endTime;
                     int dinaAnkham =
-                            vedicCalendar.getDinaAnkam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
+                            vedicCalendar.getDinaAnkam();
                     //endTime = System.nanoTime();
                     //Log.d("NPCalProfiler","getDinaAnkam()... Time Taken: " +
                     //        VedicCalendar.getTimeTaken(startTime, endTime));

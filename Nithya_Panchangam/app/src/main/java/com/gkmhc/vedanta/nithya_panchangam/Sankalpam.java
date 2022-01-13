@@ -50,6 +50,7 @@ public class Sankalpam extends Fragment {
     private String maasamStr;
     private String pakshamStr;
     private String thithiStr;
+    private String shraaddhaTithiStr;
     private int refDinaAnkam = 0;
     private String vaasaramStr;
     private String natchathiramStr;
@@ -186,7 +187,7 @@ public class Sankalpam extends Fragment {
         long pStartTime = System.nanoTime();
 
         // Step1: Calculate Samvatsaram
-        samvatsaramStr = vedicCalendar.getSamvatsaram();
+        samvatsaramStr = vedicCalendar.getSamvatsaram(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
         // Step2: Retrieve correct Ayanam given current system time
         ayanamStr = vedicCalendar.getAyanam(VedicCalendar.MATCH_SANKALPAM_EXACT);
@@ -194,7 +195,7 @@ public class Sankalpam extends Fragment {
         // Step3: Retrieve correct rithou  given current system time
         // Step5: Retrieve correct paksham  given current system time
         // Step6: Retrieve correct thithi  given current system time
-        refDinaAnkam = vedicCalendar.getDinaAnkam(VedicCalendar.MATCH_SANKALPAM_EXACT);
+        refDinaAnkam = vedicCalendar.getDinaAnkam();
 
         // Step3: Retrieve correct rithou  given current system time
         rithouStr = vedicCalendar.getRithu(VedicCalendar.MATCH_SANKALPAM_EXACT);
@@ -202,11 +203,14 @@ public class Sankalpam extends Fragment {
         // Step4: Retrieve correct maasam given current system time
         maasamStr = vedicCalendar.getMaasam(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-        // Step5: Retrieve correct paksham  given current system time
-        pakshamStr = vedicCalendar.getPaksham();
+        // Step5: Retrieve correct paksham given current system time
+        pakshamStr = vedicCalendar.getPaksham(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-        // Step6: Retrieve correct thithi  given current system time
+        // Step6-1: Retrieve correct thithi given current system time
         thithiStr = vedicCalendar.getTithi(VedicCalendar.MATCH_SANKALPAM_EXACT);
+
+        // Step6-2: Retrieve correct shraaddha thithi for the given calendar day
+        shraaddhaTithiStr = vedicCalendar.getShraaddhaTithi(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
         // Step7: Retrieve correct vaasaram for the current thithi
         vaasaramStr = vedicCalendar.getVaasaram(VedicCalendar.MATCH_SANKALPAM_EXACT);
@@ -284,9 +288,6 @@ public class Sankalpam extends Fragment {
                 break;
         }
         sankalpamStr += getString(R.string.sankalpam_shubam_begin_part3) + " ... ";
-        if (prefSankalpamType.equals(getString(R.string.pref_sankalpam_type_srardham))) {
-            sankalpamStr = getString(R.string.sankalpam_srardham_begin) + " ... ";
-        }
         begSankalpamTextView.setOnTouchListener((v, event) -> {
             TextView view = (TextView) v;
             view.bringToFront();
@@ -301,6 +302,11 @@ public class Sankalpam extends Fragment {
         String sanskritVaasaramStr = vaasaramStr + getString(R.string.vaasaram_suffix);
         String sanskritNatchathiramStr = natchathiramStr;
         String sanskritYogamStr = yogamStr;
+
+        if (prefSankalpamType.equals(getString(R.string.pref_sankalpam_type_srardham))) {
+            sankalpamStr = getString(R.string.sankalpam_srardham_begin) + " ... ";
+            sanskritThithiStr = shraaddhaTithiStr;
+        }
 
         // Change last 1 or 2 alphabets in the suffix of below strings as per the grammar of the
         // given locale.
@@ -426,9 +432,11 @@ public class Sankalpam extends Fragment {
         begSankalpamTextView.setText(Html.fromHtml(sankalpamStr));
 
         // Final Step: update Header with today's date in native format (Gregorian format)
+        int dayOfWeek = vedicCalendar.get(Calendar.DAY_OF_WEEK) - 1;
         TextView hdrTextView = root.findViewById(R.id.sankalpam_hdr);
+        String[] dayNames = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
         String npHeader = refDinaAnkam + ", " + vaasaramStr + "-" + maasamStr + " (" +
-                currDate + "-" +
+                dayNames[dayOfWeek] + ", " + currDate + "-" +
                 vedicCalendar.getDisplayName(Calendar.MONTH, Calendar.SHORT,
                         Locale.ENGLISH) + "-" + currYear + ")";
         hdrTextView.setText(npHeader);

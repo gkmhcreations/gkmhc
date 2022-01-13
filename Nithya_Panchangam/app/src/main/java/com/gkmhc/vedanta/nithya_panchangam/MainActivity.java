@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private int prefLocationType = LOCATION_MANUAL;
     private int prefAyanamsaType = VedicCalendar.AYANAMSA_CHITRAPAKSHA;
     private int prefChaandramanamType = VedicCalendar.CHAANDRAMAANAM_TYPE_AMANTA;
-    private int prefPanchangamType = VedicCalendar.PANCHANGAM_TYPE_DRIK_GANITHAM_LUNI_SOLAR;
+    private String prefPanchangamVal = "";
     private int prefTimeFormat = VedicCalendar.PANCHANGAM_TIME_FORMAT_HHMM;
     private static String prefSankalpamType = "";
     private static String selLocale = "en";
@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         prefLocationType = readPrefLocationSelection();
         prefAyanamsaType = readPrefAyanamsaSelection(this);
         prefChaandramanamType = readPrefChaandramanaType(this);
-        prefPanchangamType = readPrefPanchangamType(this);
+        prefPanchangamVal = readPrefPanchangam(this);
         prefTimeFormat = readPrefTimeFormat(this);
         updateAppLocale();
         setAppTitle();
@@ -569,9 +569,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
 
             // If there is change in Panchangam preferences, then refresh location & the fragments.
-            int selectedPanchangamType = readPrefPanchangamType(this);
-            if (prefPanchangamType != selectedPanchangamType) {
-                prefPanchangamType = selectedPanchangamType;
+            String configuredPanchangam = readPrefPanchangam(this);
+            if (!prefPanchangamVal.equalsIgnoreCase(configuredPanchangam)) {
+                prefPanchangamVal = configuredPanchangam;
                 refreshPanchangam = true;
             }
 
@@ -702,7 +702,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         if (localPreferences != null) {
             defPanchangamTypeStr = localPreferences.getString(SettingsFragment.PREF_PANCHANGAM_KEY,
                                                               defPanchangamTypeStr);
-
             if (defPanchangamTypeStr.equalsIgnoreCase(
                     context.getString(R.string.pref_panchangam_tamil_vakyam))) {
                 defPanchangamType = VedicCalendar.PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR;
@@ -716,6 +715,22 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         }
 
         return defPanchangamType;
+    }
+
+    /**
+     * Utility function to get the preferred panchangam from the shared preferences.
+     *
+     * @return Selected panchangam type as a string value.
+     */
+    public static String readPrefPanchangam(Context context) {
+        String defPanchangamTypeStr = context.getString(R.string.pref_def_panchangam);
+        SharedPreferences localPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        if (localPreferences != null) {
+            defPanchangamTypeStr = localPreferences.getString(SettingsFragment.PREF_PANCHANGAM_KEY,
+                    defPanchangamTypeStr);
+        }
+
+        return defPanchangamTypeStr;
     }
 
     /**
@@ -1643,6 +1658,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             // Step17: Kaala Vibhagah
             arrayList = context.getResources().getStringArray(R.array.kaala_vibhaagaha_list);
             vedicCalendarLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_KAALA_VIBHAAGAH, arrayList);
+
+            // Step18: Shooam (Parihaaram)
+            arrayList = context.getResources().getStringArray(R.array.shoolam_parihaaram_list);
+            vedicCalendarLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_SHOOLAM_PARIHAARAM, arrayList);
         }
 
         return vedicCalendarLocaleList;

@@ -287,7 +287,7 @@ public class Panchangam extends Fragment {
 
         // Step4: Retrieve Samvatsaram for the given calendar day
         //startTime = System.nanoTime();
-        panchangamValues.add(vedicCalendar.getSamvatsaram());
+        panchangamValues.add(vedicCalendar.getSamvatsaram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
         //endTime = System.nanoTime();
         //Log.d("PanchangamProfiler","getSamvatsaram()... Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime, endTime));
@@ -301,7 +301,7 @@ public class Panchangam extends Fragment {
 
         // Step6: Retrieve Dina Ankham for the given calendar day
         //startTime = System.nanoTime();
-        refDinaAnkam = vedicCalendar.getDinaAnkam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
+        refDinaAnkam = vedicCalendar.getDinaAnkam();
         //endTime = System.nanoTime();
         //Log.d("PanchangamProfiler","getDinaankham()... Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime, endTime));
@@ -331,16 +331,19 @@ public class Panchangam extends Fragment {
 
         // Step9: Retrieve Paksham for the given calendar day
         //startTime = System.nanoTime();
-        panchangamValues.add(vedicCalendar.getPaksham());
+        panchangamValues.add(vedicCalendar.getPaksham(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
         //endTime = System.nanoTime();
         //Log.d("PanchangamProfiler","getPaksham()... Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step10: Retrieve Thithi for the given calendar day
+        // Step10-1: Retrieve Tithi for the given calendar day
         //startTime = System.nanoTime();
         panchangamValues.add(vedicCalendar.getTithi(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
+
+        // Step10-2: Retrieve Shraadha Tithi for the given calendar day
+        panchangamValues.add(vedicCalendar.getShraaddhaTithi(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
         //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getThithi()... Time Taken: " +
+        //Log.d("PanchangamProfiler","getTithi()... Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime, endTime));
 
         // Step11: Retrieve Vaasaram for the given calendar day
@@ -466,6 +469,7 @@ public class Panchangam extends Fragment {
             dhinaSpecialStr = "";
         }
         panchangamValues.add(0, dhinaSpecialStr);
+        panchangamValues.add(vedicCalendar.getShoolamParihaaram());
         panchangamValues.add("");
         //endTime = System.nanoTime();
         //Log.d("PanchangamProfiler","getDinaVishesham()..." + " Time Taken: " +
@@ -497,8 +501,10 @@ public class Panchangam extends Fragment {
         TextView textView = root.findViewById(R.id.nithya_panchangam_hdr);
         int currYear = vedicCalendar.get(Calendar.YEAR);
         int currDate = vedicCalendar.get(Calendar.DATE);
+        int dayOfWeek = vedicCalendar.get(Calendar.DAY_OF_WEEK) - 1;
+        String[] dayNames = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
         String npHeader = refDinaAnkam + ", " + vaasaramStr + "-" + maasamStr + " (" +
-                currDate + "-" +
+                dayNames[dayOfWeek] + ", " + currDate + "-" +
                 vedicCalendar.getDisplayName(Calendar.MONTH, Calendar.SHORT,
                         Locale.ENGLISH) + "-" + currYear + ")";
         textView.setText(npHeader);
@@ -522,7 +528,8 @@ public class Panchangam extends Fragment {
         panchangamFields.add(getString(R.string.sauramanam_maasam_heading));
         panchangamFields.add(getString(R.string.chaandra_maasam_heading));
         panchangamFields.add(getString(R.string.paksham_heading));
-        panchangamFields.add(getString(R.string.thithi_heading));
+        panchangamFields.add(getString(R.string.tithi_heading));
+        panchangamFields.add(getString(R.string.shraadha_tithi_heading));
         panchangamFields.add(getString(R.string.vaasaram_heading));
         panchangamFields.add(getString(R.string.raasi_heading));
         panchangamFields.add(getString(R.string.nakshatram_heading));
@@ -536,6 +543,7 @@ public class Panchangam extends Fragment {
         panchangamFields.add(getString(R.string.raahu_kaalam_heading));
         panchangamFields.add(getString(R.string.emakandam_heading));
         panchangamFields.add(getString(R.string.kuligai_heading));
+        panchangamFields.add(getString(R.string.shoolam_heading));
         panchangamFields.add("");
     }
 }

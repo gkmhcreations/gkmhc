@@ -579,7 +579,7 @@ public class VedicCalendarDinaVisheshamRuleEngine {
 
     public List<String> getDinaVisheshams(VedicCalendar vedicCalendar) {
         //long startTime1 = System.nanoTime();
-        int dinaAnkam = vedicCalendar.getDinaAnkam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
+        int dinaAnkam = vedicCalendar.getDinaAnkam();
         //long endTime3 = System.nanoTime();
         //System.out.println("VedicCalendarDinaVisheshamRuleEngine" + " getDinaAnkam() Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime1, endTime3));
@@ -598,7 +598,7 @@ public class VedicCalendarDinaVisheshamRuleEngine {
         //endTime3 = System.nanoTime();
         //System.out.println("VedicCalendarDinaVisheshamRuleEngine" + " getChaandramaanamMaasam() Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime3, endTime3));
-        String paksham = vedicCalendar.getPaksham();
+        String paksham = vedicCalendar.getPaksham(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
         //startTime3 = endTime3;
         //endTime3 = System.nanoTime();
         //System.out.println("VedicCalendarDinaVisheshamRuleEngine" + " getPaksham() Time Taken: " +
@@ -933,7 +933,7 @@ public class VedicCalendarDinaVisheshamRuleEngine {
             fieldSpan += Integer.parseInt(tokens[1]);
         }
 
-        return (fieldSpan >= startTime) && (fieldSpan <= endTime);
+        return (fieldSpan >= startTime) && (fieldSpan < endTime);
     }
 
     private int getFieldValueIndex(VedicCalendar vedicCalendar, String fieldType, String fieldValue) {
@@ -955,7 +955,7 @@ public class VedicCalendarDinaVisheshamRuleEngine {
                 fieldValueIndex = vedicCalendar.getNakshatramIndex(fieldValue);
                 break;
             case FIELD_TO_MATCH_DINA_ANKHAM:
-                fieldValueIndex = vedicCalendar.getDinaAnkam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
+                fieldValueIndex = vedicCalendar.getDinaAnkam();
                 break;
             case FIELD_TO_MATCH_VAASARAM:
                 fieldValueIndex = vedicCalendar.getVaasaramIndex();

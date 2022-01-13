@@ -11,4 +11,17 @@
     <string name="humble_namaskarams">The primary aim of this app is to enable people to conveniently reckon the daily panchaangam, as well as various festivals &amp; observances. We apologise for any inadvertent errors that may have crept in, and request feedback for improvement. We dedicate this App to scholars and Panchaanga-karta(s) across the country, who have mastered these calculations and participate in Panchanga Sadas across the country, debating the nitty-gritties of various aspects of Panchangam(s). We request all app users to continue to support their traditional Panchanga(s), Panchanga-karta(s), and family Vathiyar(s). 🙏 Pls send your feedback to gkmhcreations@gmail.com.</string>
     <string name="bodhayana_amavaasai">Bōdhāyana amāvāsya</string>
     <string name="vaikunta_ekadashi">Vaikuṇṭa ēkādaśi</string>
+    <string name="shraadha_tithi_heading">Śrad\'dhā Tithiḥ</string>
+
+    <string name="shoolam_heading">Śūlam (Parihāraḥ)</string>
+    <!-- Kaala Vibhaagaha -->
+    <string-array name="shoolam_parihaaram_list">
+        <item>Pratīchī Dik (Guḍam)</item>
+        <item>Prāchī Dik (Dadhi)</item>
+        <item>Udīchī Dik (Kṣīram)</item>
+        <item>Udīchī Dik (Kṣīram)</item>
+        <item>Dakṣiṇā Dik (Tailam)</item>
+        <item>Pratīchī Dik (Guḍam)</item>
+        <item>Prāchī Dik (Dadhi)</item>
+    </string-array>
 </resources>

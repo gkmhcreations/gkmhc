@@ -52,7 +52,7 @@ public class NithyaPanchangamWidget extends AppWidgetProvider {
                     placesInfo.latitude, placesInfo.timezone, ayanamsaMode,
                     MainActivity.readPrefChaandramanaType(context), vedicCalendarLocaleList);
             int refDinaangam =
-                    vedicCalendar.getDinaAnkam(VedicCalendar.MATCH_SANKALPAM_EXACT);
+                    vedicCalendar.getDinaAnkam();
             String vaasaramStr =
                     vedicCalendar.getVaasaram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
             String maasamStr =

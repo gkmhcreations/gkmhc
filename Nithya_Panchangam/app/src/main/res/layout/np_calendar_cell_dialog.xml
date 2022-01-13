@@ -149,7 +149,7 @@
                 android:maxLines="5"
                 android:textStyle="bold"
                 android:textColor="@color/blue"
-                android:text="@string/thithi_heading"
+                android:text="@string/tithi_heading"
                 android:layout_marginStart="1dp" />
             <TextView
                 android:id="@+id/np_cell_thithi"

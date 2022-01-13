@@ -136,8 +136,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
 
         // Make "Kaala Vibhaagaha" value clickable to display a range of Kaalam(s) throughout the day!
         if (position == 3) {
-            // Add Lagnam details
-            // Display Lagnam from the list of Lagnams retrieved.
+            // Add Kaala Vibhaagam details
             StringBuilder kaalamVal = new StringBuilder();
             for (int index = 0; index < kaalamExactList.size(); index++) {
                 VedicCalendar.KaalamInfo kaalamInfo = kaalamExactList.get(index);
@@ -157,7 +156,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
         }
 
         // Make Lagnam value clickable to display a range of lagnams throughout the day!
-        else if (position == 17) {
+        else if (position == 18) {
             // Add Lagnam details
             // Display Lagnam from the list of Lagnams retrieved.
             StringBuilder lagnamVal = new StringBuilder();
@@ -180,7 +179,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             convertView.setOnClickListener(v -> showLagnamDetails());
         }
         // Make Horai value clickable to display a range of horai(s) throughout the day!
-        else if (position == 18) {
+        else if (position == 19) {
             // Add Horai details
             // Display Horai from the list of Horai(s) retrieved.
             StringBuilder horaiVal = new StringBuilder();
@@ -206,7 +205,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             convertView.setOnClickListener(v -> showHoraiDetails());
         }
         // Align & display "Nalla Neram" in HTML format
-        else if (position == 20) {
+        else if (position == 21) {
             // Add "Nalla Neram" details
             String nallaNeramParsedVal = panchangamValues.get(position);
 

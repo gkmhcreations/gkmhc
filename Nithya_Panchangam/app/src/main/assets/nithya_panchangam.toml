@@ -222,6 +222,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.makara_sankaranthi.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=10                 # 10 - indicates Makara maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.makara_sankaranthi.rule]
             dina_vishesham_match_criteria="dina_ankham"
@@ -234,6 +235,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.thai_poosam.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=10                 # 10 - indicates Makara maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.thai_poosam.rule]
             dina_vishesham_match_criteria="nakshatram"
@@ -248,6 +250,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.vasantha_panchami.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=11                 # 11 - indicates Magha maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.vasantha_panchami.rule]
             dina_vishesham_match_criteria="tithi"
@@ -262,6 +265,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.ratha_sapthami.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=11                 # 11 - indicates Magha maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.ratha_sapthami.rule]
             dina_vishesham_match_criteria="tithi"
@@ -276,6 +280,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.bhishma_ashtami.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=11                 # 11 - indicates Magha maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.bhishma_ashtami.rule]
             dina_vishesham_match_criteria="tithi"
@@ -290,6 +295,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.maasi_magam.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=11                 # 11 - indicates Magha maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.maasi_magam.rule]
             dina_vishesham_match_criteria="nakshatram"
@@ -304,6 +310,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.bala_periyava_jayanthi.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=11                 # 11 - indicates Kumbha maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.bala_periyava_jayanthi.rule]
             dina_vishesham_match_criteria="nakshatram"
@@ -318,6 +325,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.maha_shivarathri.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=11                 # 11 - indicates Magha maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.maha_shivarathri.rule]
             dina_vishesham_match_criteria="tithi"
@@ -332,6 +340,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.karadaiyan_nombhu.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=12                 # 12 - indicates Meena maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.karadaiyan_nombhu.rule]
             dina_vishesham_match_criteria="dina_ankham"
@@ -344,6 +353,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.sringeri_periyava_vardhanthi.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=1                  # 1 - indicates Chaitra maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.sringeri_periyava_vardhanthi.rule]
             dina_vishesham_match_criteria="tithi"
@@ -358,6 +368,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.panguni_uthiram.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=12                 # 12 - indicates Meena maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.panguni_uthiram.rule]
             dina_vishesham_match_criteria="nakshatram"
@@ -372,6 +383,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.ugadi.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=1                  # 1 - indicates Chaitra maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.ugadi.rule]
             dina_vishesham_match_criteria="tithi"
@@ -386,7 +398,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.tamil_puthandu.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=1                  # 1 - indicates Mesha maasam
-            dina_vishesham_kaala_sambhavaha=6             # 6 - indicates Sayahna kaalam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.tamil_puthandu.rule]
             dina_vishesham_match_criteria="dina_ankham"
@@ -399,10 +411,12 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.ramanuja_jayanthi.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=1                  # 1 - indicates Mesha maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.ramanuja_jayanthi.rule]
             dina_vishesham_match_criteria="paksham"
             dina_vishesham_match_value=1                  # 1 - indicate Shukla "paksham"
+            dina_vishesham_kaala_sambhavaha=3             # 3 - indicates Sangava kaalam
 
         [dina_vishesham.ramanuja_jayanthi.rule]
             dina_vishesham_match_criteria="nakshatram"
@@ -417,6 +431,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.shri_rama_navami.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=1                  # 1 - indicates Chaitra maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.shri_rama_navami.rule]
             dina_vishesham_match_criteria="tithi"
@@ -431,6 +446,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.chithra_pournami.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=1                  # 1 - indicates Mesha maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.chithra_pournami.rule]
             dina_vishesham_match_criteria="tithi"
@@ -445,6 +461,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.akshaya_thrithiyai.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=2                  # 2 - indicates Vaishaka maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.akshaya_thrithiyai.rule]
             dina_vishesham_match_criteria="tithi"
@@ -459,6 +476,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.agni_nakshatram_start.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=1                  # 1 - indicates Mesha maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.agni_nakshatram_start.rule]
             dina_vishesham_match_criteria="dina_ankham"
@@ -471,6 +489,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.agni_nakshatram_end.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=2                  # 2 - indicates Rishabha maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.agni_nakshatram_end.rule]
             dina_vishesham_match_criteria="dina_ankham"
@@ -483,6 +502,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.adi_shankara_jayanthi.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=2                  # 2 - indicates Vaishaka maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.adi_shankara_jayanthi.rule]
             dina_vishesham_match_criteria="tithi"
@@ -497,10 +517,12 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.vaikasi_vishakam.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=2                  # 2 - indicates Rishabha maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.vaikasi_vishakam.rule]
             dina_vishesham_match_criteria="paksham"
             dina_vishesham_match_value=1                  # 1 - indicate Shukla "paksham"
+            dina_vishesham_kaala_sambhavaha=2             # 2 - indicates Pratah kaalam
 
         [dina_vishesham.vaikasi_vishakam.rule]
             dina_vishesham_match_criteria="nakshatram"
@@ -515,6 +537,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.maha_periyava_jayanthi.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=2                  # 2 - indicates Rishabha maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.maha_periyava_jayanthi.rule]
             dina_vishesham_match_criteria="nakshatram"
@@ -529,6 +552,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.puthu_periyava_jayanthi.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=4                  # 4 - indicates Kataka maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.puthu_periyava_jayanthi.rule]
             dina_vishesham_match_criteria="nakshatram"
@@ -543,6 +567,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.aadi_perukku.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=4                  # 4 - indicates Kataka maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.aadi_perukku.rule]
             dina_vishesham_match_criteria="dina_ankham"
@@ -555,6 +580,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.aadi_perukku.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=4                  # 4 - indicates Kataka/Aadi maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.aadi_perukku.rule]
             dina_vishesham_match_criteria="nakshatram"
@@ -569,6 +595,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.garuda_panchami.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=5                  # 5 - indicates Shravana maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.garuda_panchami.rule]
             dina_vishesham_match_criteria="tithi"
@@ -583,6 +610,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.varalakshmi_vratham.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=5                  # 5 - indicates Shravana maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.varalakshmi_vratham.rule]
             dina_vishesham_match_criteria="vaasaram"
@@ -602,10 +630,12 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.avani_avittam_rig.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=5                  # 5 - indicates Shravana maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.avani_avittam_rig.rule]
             dina_vishesham_match_criteria="paksham"
             dina_vishesham_match_value=1                  # 1 - indicate Shukla "paksham"
+            dina_vishesham_kaala_sambhavaha=2             # 7 - indicates Pratah kaalam
 
         [dina_vishesham.avani_avittam_rig.rule]
             dina_vishesham_match_criteria="nakshatram"
@@ -620,6 +650,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.avani_avittam_yajur.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=5                  # 5 - indicates Shravana maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.avani_avittam_yajur.rule]
             dina_vishesham_match_criteria="tithi"
@@ -634,10 +665,12 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.onam.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=5                  # 5 - indicates Simha maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.onam.rule]
             dina_vishesham_match_criteria="paksham"
             dina_vishesham_match_value=1                  # 1 - indicate Shukla "paksham"
+            dina_vishesham_kaala_sambhavaha=4             # 4 - indicates Madhyahna kaalam
 
         [dina_vishesham.onam.rule]
             dina_vishesham_match_criteria="nakshatram"
@@ -652,6 +685,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.maha_sankata_hara_chathurthi.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=5                  # 5 - indicates Shravana maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.onam.rule]
             dina_vishesham_match_criteria="tithi"
@@ -666,6 +700,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.gokulashtami.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=5                  # 5 - indicates Shravana maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.gokulashtami.rule]
             dina_vishesham_match_criteria="tithi"
@@ -680,10 +715,12 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.avani_avittam_sama.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=6                  # 6 - indicates Bhadrapada maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.avani_avittam_sama.rule]
             dina_vishesham_match_criteria="paksham"
             dina_vishesham_match_value=1                  # 1 - indicate Shukla "paksham"
+            dina_vishesham_kaala_sambhavaha=5             # 5 - indicates Aparahna kaalam
 
         [dina_vishesham.avani_avittam_sama.rule]
             dina_vishesham_match_criteria="nakshatram"
@@ -698,6 +735,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.vinayaga_chathurthi.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=6                  # 6 - indicates Bhadrapada maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.vinayaga_chathurthi.rule]
             dina_vishesham_match_criteria="tithi"
@@ -712,6 +750,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.appayya_dikshitar_jayanthi.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=6                  # 6 - indicates Kanni maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.appayya_dikshitar_jayanthi.rule]
             dina_vishesham_match_criteria="tithi"
@@ -726,6 +765,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.mahalayam_start.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=6                  # 6 - indicates Bhadrapada maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.mahalayam_start.rule]
             dina_vishesham_match_criteria="tithi"
@@ -740,10 +780,12 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.maha_bharani.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=6                  # 6 - indicates Bhadrapada maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.maha_bharani.rule]
             dina_vishesham_match_criteria="paksham"
             dina_vishesham_match_value=2                  # 2 - indicate Krishna "paksham"
+            dina_vishesham_kaala_sambhavaha=6             # 6 - indicates Sayahna kaalam
 
         [dina_vishesham.maha_bharani.rule]
             dina_vishesham_match_criteria="nakshatram"
@@ -758,6 +800,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.mahalaya_amavaasai.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=6                  # 6 - indicates Bhadrapada maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.mahalaya_amavaasai.rule]
             dina_vishesham_match_criteria="tithi"
@@ -772,6 +815,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.navathri.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=7                  # 7 - indicates Ashwina maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.navathri.rule]
             dina_vishesham_match_criteria="tithi"
@@ -786,6 +830,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.saraswathi_poojai.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=7                  # 7 - indicates Ashwina maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.saraswathi_poojai.rule]
             dina_vishesham_match_criteria="tithi"
@@ -800,6 +845,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.vijaya_dashami.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=7                  # 7 - indicates Ashwina maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.vijaya_dashami.rule]
             dina_vishesham_match_criteria="tithi"
@@ -814,6 +860,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.naraka_chathurdashi.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=7                  # 7 - indicates Ashwina maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.naraka_chathurdashi.rule]
             dina_vishesham_match_criteria="tithi"
@@ -828,6 +875,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.deepavali.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=7                  # 7 - indicates Ashwina maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.deepavali.rule]
             dina_vishesham_match_criteria="tithi"
@@ -842,6 +890,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.soora_samhaaram.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=8                  # 8 - indicates Kaartika maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.soora_samhaaram.rule]
             dina_vishesham_match_criteria="tithi"
@@ -856,6 +905,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.karthigai_deepam.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=8                  # 8 - indicates Vrichiga maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.karthigai_deepam.rule]
             dina_vishesham_match_criteria="nakshatram"
@@ -870,6 +920,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.subramanya_sashti.rule]
             dina_vishesham_match_criteria="chaandramaana_maasam"
             dina_vishesham_match_value=9                  # 9 - indicates Margashirsha maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.subramanya_sashti.rule]
             dina_vishesham_match_criteria="tithi"
@@ -884,6 +935,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.arudhra_darshan.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=9                  # 9 - indicates Dhanusu maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.arudhra_darshan.rule]
             dina_vishesham_match_criteria="nakshatram"
@@ -898,6 +950,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.shri_hanumath_jayanthi.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=9                  # 9 - indicates Dhanusu maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.shri_hanumath_jayanthi.rule]
             dina_vishesham_match_criteria="tithi"
@@ -912,6 +965,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.shri_hanumath_jayanthi.rule]
             dina_vishesham_match_criteria="sauramaana_maasam"
             dina_vishesham_match_value=9                  # 9 - indicates Dhanusu maasam
+            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
 
         [dina_vishesham.vaikunta_ekadashi.rule]
             dina_vishesham_match_criteria="tithi"

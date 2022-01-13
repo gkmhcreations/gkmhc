@@ -620,7 +620,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(14, 1, 2021,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAKARA_SANKARANTHI);
         numTCs++;
-        checkDinaVisheshamsforAnyMatch(14, 1, 2022,
+        checkDinaVisheshamsforAnyMatch(15, 1, 2022,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAKARA_SANKARANTHI);
         numTCs++;
         checkDinaVisheshamsforAnyMatch(15, 1, 2023,
@@ -632,9 +632,8 @@ public class VedicCalendarVakhyamSolarUnitTest {
         checkDinaVisheshamsforAnyMatch(14, 1, 2025,
                 VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAKARA_SANKARANTHI);
         numTCs++;
-        // TODO - Not Working!
-        //checkDinaVisheshamsforAnyMatch(14, 1, 2026,
-        //        VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAKARA_SANKARANTHI);
+        checkDinaVisheshamsforAnyMatch(15, 1, 2026,
+                VedicCalendar.PANCHANGAM_DINA_VISHESHAM_MAKARA_SANKARANTHI);
         numTCs++;
         totalTCs += numTCs;
         System.out.println("Dina Vishesham Makara Sankaranthi (" +

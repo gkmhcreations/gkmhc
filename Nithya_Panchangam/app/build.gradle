@@ -30,8 +30,8 @@ android {
         applicationId "com.gkmhc.vedanta.nithya_panchangam"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 104
-        versionName "1.0.4"
+        versionCode 105
+        versionName "1.0.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -101,7 +101,8 @@ dependencies {
     implementation 'androidx.preference:preference:1.1.1'
     implementation 'com.google.android.gms:play-services-location:18.0.0'
     implementation 'com.github.niqo01.rxplayservices:rx-play-services-location:0.4.0'
-    implementation files('libs/swisseph-2.01.00-02.jar')
+    //implementation files('libs/swisseph-2.01.00-02.jar')
+    implementation files('libs/swe-2.10.02a.jar')
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

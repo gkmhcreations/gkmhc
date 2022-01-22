@@ -292,7 +292,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
 
                     // 1) Add Dinaankham
                     //startTime = endTime;
-                    vedicCalendar.setCalendarDate((index - firstDate + 1), npMonth, npYear, 0, 0);
+                    vedicCalendar.setDate((index - firstDate + 1), npMonth, npYear, 0, 0);
                     //endTime = System.nanoTime();
                     //Log.d("NPCalProfiler","setDate()... Time Taken: " +
                     //        VedicCalendar.getTimeTaken(startTime, endTime));

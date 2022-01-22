@@ -621,7 +621,7 @@ public class VedicCalendarDinaVisheshamRuleEngine {
         //        VedicCalendar.getTimeTaken(startTime3, endTime3));
         List<String> dinaVisheshamList = new ArrayList<>();
 
-        //long startTime2 = System.nanoTime();
+        long startTime2 = System.nanoTime();
 
         /*
          * Do a 3-step procedure to get all dina vishesham(s) for the given calendar day.
@@ -634,37 +634,52 @@ public class VedicCalendarDinaVisheshamRuleEngine {
          * Step 1> Get dina vishesham for those events that happen every maasam
          */
         //System.out.println("ALL MAASAMS");
+        long startTime3 = System.nanoTime();
         dinaVisheshamList = getDinaVisheshamListForMaasam(dinaVisheshamList, ALL_MAASAMS,
                 vedicCalendar, sauramaanaMaasam, chaandramanaMaasam, tithiStr, nakshatram, paksham,
                 vaasaram, dinaAnkam, kaalamInfoList);
+        long endTime = System.nanoTime();
+        System.out.println("VedicCalendarDinaVisheshamRuleEngine" + " ALL_MAASAMS() Time Taken: " +
+                VedicCalendar.getTimeTaken(startTime3, endTime));
 
-        /*
-         * Step 2> Get dina vishesham based on sauramaanam maasam
-         */
-        //System.out.println(FIELD_TO_MATCH_SAURAMAANAM_MAASAM);
-        int fieldValueIndex = getFieldValueBasedOnKaalam(vedicCalendar,
-                FIELD_TO_MATCH_SAURAMAANAM_MAASAM, sauramaanaMaasam,
-                DEFAULT_KAALAM_PRADOSHAM, kaalamInfoList);
-        dinaVisheshamList = getDinaVisheshamListForMaasam(dinaVisheshamList, fieldValueIndex,
-                vedicCalendar, sauramaanaMaasam, chaandramanaMaasam, tithiStr, nakshatram, paksham,
-                vaasaram, dinaAnkam, kaalamInfoList);
+        if (!chaandramanaMaasam.contains("(Adhik)")) {
+            /*
+             * Step 2> Get dina vishesham based on sauramaanam maasam
+             */
+            //System.out.println(FIELD_TO_MATCH_SAURAMAANAM_MAASAM);
+            int fieldValueIndex;
+            fieldValueIndex = getFieldValueBasedOnKaalam(vedicCalendar,
+                    FIELD_TO_MATCH_SAURAMAANAM_MAASAM, sauramaanaMaasam,
+                    DEFAULT_KAALAM_PRADOSHAM, kaalamInfoList);
+            startTime3 = System.nanoTime();
+            dinaVisheshamList = getDinaVisheshamListForMaasam(dinaVisheshamList, fieldValueIndex,
+                    vedicCalendar, sauramaanaMaasam, chaandramanaMaasam, tithiStr, nakshatram, paksham,
+                    vaasaram, dinaAnkam, kaalamInfoList);
+            endTime = System.nanoTime();
+            System.out.println("VedicCalendarDinaVisheshamRuleEngine" + " sauramaanaMaasam() Time Taken: " +
+                    VedicCalendar.getTimeTaken(startTime3, endTime));
 
-        /*
-         * Step 3> Get dina vishesham based on chaandramaanam maasam
-         */
-        //System.out.println(FIELD_TO_MATCH_CHAANDRAMAANAM_MAASAM);
-        fieldValueIndex = getFieldValueBasedOnKaalam(vedicCalendar,
-                FIELD_TO_MATCH_CHAANDRAMAANAM_MAASAM, chaandramanaMaasam,
-                DEFAULT_KAALAM_PRADOSHAM, kaalamInfoList);
-        dinaVisheshamList = getDinaVisheshamListForMaasam(dinaVisheshamList, fieldValueIndex,
-                vedicCalendar, sauramaanaMaasam, chaandramanaMaasam, tithiStr, nakshatram, paksham,
-                vaasaram, dinaAnkam, kaalamInfoList);
+            /*
+             * Step 3> Get dina vishesham based on chaandramaanam maasam
+             */
+            //System.out.println(FIELD_TO_MATCH_CHAANDRAMAANAM_MAASAM);
+            fieldValueIndex = getFieldValueBasedOnKaalam(vedicCalendar,
+                    FIELD_TO_MATCH_CHAANDRAMAANAM_MAASAM, chaandramanaMaasam,
+                    DEFAULT_KAALAM_PRADOSHAM, kaalamInfoList);
+            startTime3 = System.nanoTime();
+            dinaVisheshamList = getDinaVisheshamListForMaasam(dinaVisheshamList, fieldValueIndex,
+                    vedicCalendar, sauramaanaMaasam, chaandramanaMaasam, tithiStr, nakshatram, paksham,
+                    vaasaram, dinaAnkam, kaalamInfoList);
+            endTime = System.nanoTime();
+            System.out.println("VedicCalendarDinaVisheshamRuleEngine" + " chaandramanaMaasam() Time Taken: " +
+                    VedicCalendar.getTimeTaken(startTime3, endTime));
+        }
 
-        /*long endTime = System.nanoTime();
-        System.out.println("VedicCalendarDinaVisheshamRuleEngine" + " getDinaVishesham() Time Taken: " +
-                VedicCalendar.getTimeTaken(startTime1, endTime));
-        System.out.println("VedicCalendarDinaVisheshamRuleEngine" + " getDinaVishesham() Time Taken: " +
-                VedicCalendar.getTimeTaken(startTime2, endTime));*/
+        endTime = System.nanoTime();
+        System.out.println("VedicCalendarDinaVisheshamRuleEngine" + " getDinaVisheshams() Time Taken: " +
+                VedicCalendar.getTimeTaken(startTime2, endTime));
+        //System.out.println("VedicCalendarDinaVisheshamRuleEngine" + " getDinaVishesham() Time Taken: " +
+        //        VedicCalendar.getTimeTaken(startTime1, endTime));
         return dinaVisheshamList;
     }
 
@@ -705,6 +720,7 @@ public class VedicCalendarDinaVisheshamRuleEngine {
                 ArrayList<RuleEntry> rulesList = dinaVishesham.ruleEntries;
                 int numRules = rulesList.size();
                 if (numRules > 0) {
+                    //long startTime = System.nanoTime();
                     for (int ruleIndex = 0;ruleIndex < numRules;ruleIndex++) {
                         RuleEntry ruleEntry = rulesList.get(ruleIndex);
                         if (ruleEntry.fieldNameToMatch.equalsIgnoreCase(FIELD_TO_MATCH_SAURAMAANAM_MAASAM)) {
@@ -730,8 +746,8 @@ public class VedicCalendarDinaVisheshamRuleEngine {
                                     FIELD_TO_MATCH_TITHI, tithiStr, ruleEntry.getKaalaSambhavaha(),
                                     kaalamInfoList);
 
-                            // For Varalakshmi Vratham, thithi needs to be last friday before
-                            // pournami (8 < thithi < 15)
+                            // For Varalakshmi Vratham, tithi needs to be last friday before
+                            // pournami (8 < tithi < 15)
                             int matchType = ruleEntry.getMatchType();
                             if (matchType == TITHI_MATCH_TYPE_LAST_OCCURRENCE) {
                                 ruleVisheshamTuple.append(ruleEntry.matchType);
@@ -760,6 +776,9 @@ public class VedicCalendarDinaVisheshamRuleEngine {
                             actualVisheshamTuple.append(fieldValueIndex);
                         }
                     }
+                    //long endTime = System.nanoTime();
+                    //System.out.println("VedicCalendarRuleEngine" + " getDinaVisheshamListForMaasam() Time Taken: " +
+                    //        VedicCalendar.getTimeTaken(startTime, endTime));
 
                     /*System.out.println("VedicCalendarDinaVisheshamRuleEngine" +
                             " Rule Match: " + ruleVisheshamTuple.toString() +

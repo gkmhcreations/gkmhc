@@ -973,14 +973,20 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_kaala_sambhavaha=2             # 2 - indicates Pratah kaalam
             dina_vishesham_selection_criteria=1           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
-    [dina_vishesham.amavaasai]
+    [dina_vishesham.bodhayana_amavaasai]
         dina_vishesham_title="Bodhayana Amavaasai"
         dina_vishesham_description="Bodhayana Amavaasai is the lunar phase of new moon and is observed when Amavaasai tithi prevails during Pradosha kaalam."
 
-        [dina_vishesham.amavaasai.rule]
+        [dina_vishesham.bodhayana_amavaasai.rule]
+            dina_vishesham_match_criteria="tithi"
+            dina_vishesham_match_value=29                 # 29 - indicates Krishna Chathurdashi
+            dina_vishesham_kaala_sambhavaha=2             # 2 - indicates Pratah kaalam
+            dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
+
+        [dina_vishesham.bodhayana_amavaasai.rule]
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=30                 # 30 - indicates Amavaasai
-            dina_vishesham_kaala_sambhavaha=7             # 7 - indicates Pradosha kaalam
+            dina_vishesham_kaala_sambhavaha=8             # 8 - indicates Dhinanta kaalam
             dina_vishesham_selection_criteria=3           # 1 - indicates "purva", (or) 2 - "para" (or) 3 - "vyaapti"
 
 [contact]

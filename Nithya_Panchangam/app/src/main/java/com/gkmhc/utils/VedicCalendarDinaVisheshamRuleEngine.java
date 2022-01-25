@@ -584,7 +584,7 @@ public class VedicCalendarDinaVisheshamRuleEngine {
         //long endTime3 = System.nanoTime();
         //System.out.println("VedicCalendarDinaVisheshamRuleEngine" + " getDinaAnkam() Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime1, endTime3));
-        String tithiStr = vedicCalendar.getTithi(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
+        String tithiStr = vedicCalendar.getTithi(VedicCalendar.MATCH_PANCHANGAM_FULLDAY_CALC_LOCAL);
         //long startTime3 = endTime3;
         //endTime3 = System.nanoTime();
         //System.out.println("VedicCalendarDinaVisheshamRuleEngine" + " getTithi() Time Taken: " +
@@ -604,7 +604,7 @@ public class VedicCalendarDinaVisheshamRuleEngine {
         //endTime3 = System.nanoTime();
         //System.out.println("VedicCalendarDinaVisheshamRuleEngine" + " getPaksham() Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime3, endTime3));
-        String nakshatram = vedicCalendar.getNakshatram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
+        String nakshatram = vedicCalendar.getNakshatram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY_CALC_LOCAL);
         //startTime3 = endTime3;
         //endTime3 = System.nanoTime();
         //System.out.println("VedicCalendarDinaVisheshamRuleEngine" + " getNakshatram() Time Taken: " +

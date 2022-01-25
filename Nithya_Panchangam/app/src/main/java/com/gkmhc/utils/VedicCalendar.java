@@ -65,6 +65,8 @@ public class VedicCalendar extends Calendar {
     private final HashMap<Integer, String[]> vedicCalendarLocaleList;
     private double refRaviAyanamAtDayStart;
     private double refChandraAyanamAtDayStart;
+    private double refTithiSpan;
+    private double refNakshatramSpan;
     private int refHour;
     private int refMin;
     private int refDate;
@@ -513,6 +515,8 @@ public class VedicCalendar extends Calendar {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, date, hourOfDay, minute);
         initRefDates(calendar);
+        refTithiSpan = 0;
+        refNakshatramSpan = 0;
 
         // Get Sunrise & Sunset timings
         sunRiseTotalMins = 0;
@@ -599,6 +603,8 @@ public class VedicCalendar extends Calendar {
             case Calendar.MINUTE:
                 curCalendar.set(field, value);
                 initRefDates(curCalendar);
+                refTithiSpan = 0;
+                refNakshatramSpan = 0;
 
                 // Get Sunrise & Sunset timings
                 sunRiseTotalMins = 0;
@@ -631,6 +637,8 @@ public class VedicCalendar extends Calendar {
             case Calendar.MINUTE:
                 curCalendar.add(field, amount);
                 initRefDates(curCalendar);
+                refTithiSpan = 0;
+                refNakshatramSpan = 0;
 
                 // Get Sunrise & Sunset timings
                 sunRiseTotalMins = 0;
@@ -760,6 +768,8 @@ public class VedicCalendar extends Calendar {
         swissEphInst.swe_set_topo(geoPos[0], geoPos[1], geoPos[2]);
 
         initRefDates(refCalendar);
+        refTithiSpan = 0;
+        refNakshatramSpan = 0;
 
         // Get Sunrise & Sunset timings
         sunRiseTotalMins = 0;
@@ -1450,6 +1460,7 @@ public class VedicCalendar extends Calendar {
 
             // If 1st Tithi occurs before sunrise, then start with next Tithi.
             if (tithiSpan < 0) {
+                refTithiSpan = 0;
                 tithiAtDayStart += 1;
                 tithiAtDayStart %= MAX_TITHIS;
                 tithiSpan = getDrikTithiSpan(((tithiAtDayStart + 1) % MAX_TITHIS), TITHI_DEGREES, calcLocal);
@@ -1829,7 +1840,8 @@ public class VedicCalendar extends Calendar {
             nakshatramSpan = getDrikNakshatramSpan(nakshatramIndex, calcLocal);
 
             // If 1st Nakshatram occurs before sunrise, then start with next Nakshatram.
-            if (nakshatramSpan < sunRiseTotalMins) {
+            if (nakshatramSpan < 0) {
+                refNakshatramSpan = 0;
                 nakshatramIndex += 1;
                 nakshatramIndex %= MAX_NAKSHATHRAMS;
                 nakshatramSpan = getDrikNakshatramSpan(nakshatramIndex, calcLocal);
@@ -1953,7 +1965,8 @@ public class VedicCalendar extends Calendar {
             nakshatramSpan = getDrikNakshatramSpan(nakshatramIndex, false);
 
             // If 1st Nakshatram occurs before sunrise, then start with next Nakshatram.
-            if (nakshatramSpan < sunRiseTotalMins) {
+            if (nakshatramSpan < 0) {
+                refNakshatramSpan = 0;
                 nakshatramIndex += 1;
                 nakshatramIndex %= MAX_NAKSHATHRAMS;
                 nakshatramSpan = getDrikNakshatramSpan(nakshatramIndex, false);
@@ -3762,45 +3775,48 @@ public class VedicCalendar extends Calendar {
      * @return Tithi in celestial minutes.
      */
     private double getDrikTithiSpan(int tithiIndex, int deg, boolean calcLocal) {
-        double tithiSpan;
+        double tithiSpan = refTithiSpan;
 
-        // Calculate manually instead of SwissEph as it might be time/CPU intensive!
-        if (calcLocal) {
-            double chandraRaviDistance = refChandraAyanamAtDayStart - refRaviAyanamAtDayStart;
-            if (chandraRaviDistance < 0) {
-                chandraRaviDistance += MAX_AYANAM_MINUTES;
+        if (refTithiSpan == 0) {
+            // Calculate manually instead of SwissEph as it might be time/CPU intensive!
+            if (calcLocal) {
+                double chandraRaviDistance = refChandraAyanamAtDayStart - refRaviAyanamAtDayStart;
+                if (chandraRaviDistance < 0) {
+                    chandraRaviDistance += MAX_AYANAM_MINUTES;
+                }
+
+                double divMins = MAX_TITHI_MINUTES;
+                if (deg == KARANAM_DEGREES) {
+                    divMins = MAX_KARANAM_MINUTES;
+                }
+                double tithiRef = Math.ceil(chandraRaviDistance / divMins);
+                tithiRef *= divMins;
+                tithiSpan = tithiRef - chandraRaviDistance;
+
+                // 2) Find the Earth Hours during the day based on daily motion of Ravi & Chandra.
+                tithiSpan /= (dailyChandraMotion - dailyRaviMotion);
+                tithiSpan *= MAX_24HOURS;
+                tithiSpan += defTimezone;
+                tithiSpan *= MAX_MINS_IN_HOUR;
+            } else {
+                SweDate sd = new SweDate(refYear, refMonth, refDate, 0);
+                int flags = SweConst.SEFLG_SWIEPH | SweConst.SEFLG_SIDEREAL |
+                        SweConst.SEFLG_TRANSIT_LONGITUDE;
+
+                TransitCalculator tcEnd = new TCPlanetPlanet(swissEphInst, SweConst.SE_MOON, SweConst.SE_SUN,
+                        flags, 0);
+                double tithiDeg = 0;
+                tithiDeg += (tithiIndex * deg); // 12 deg is one tithi (or) 6 deg for karanam
+                tcEnd.setOffset(tithiDeg);
+
+                //long startTime = System.nanoTime();
+                tithiSpan = getSDTimeZone(sd.getJulDay(),
+                        TransitCalculator.getTransitUT(tcEnd, sd.getJulDay(), false));
+                //long endTime = System.nanoTime();
+                //System.out.println("VedicCalendar getDrikTithiSpan()... Time Taken: " +
+                //        getTimeTaken(startTime, endTime));
             }
-
-            double divMins = MAX_TITHI_MINUTES;
-            if (deg == KARANAM_DEGREES) {
-                divMins = MAX_KARANAM_MINUTES;
-            }
-            double tithiRef = Math.ceil(chandraRaviDistance / divMins);
-            tithiRef *= divMins;
-            tithiSpan = tithiRef - chandraRaviDistance;
-
-            // 2) Find the Earth Hours during the day based on daily motion of Ravi & Chandra.
-            tithiSpan /= (dailyChandraMotion - dailyRaviMotion);
-            tithiSpan *= MAX_24HOURS;
-            tithiSpan += defTimezone;
-            tithiSpan *= MAX_MINS_IN_HOUR;
-        } else {
-            SweDate sd = new SweDate(refYear, refMonth, refDate, 0);
-            int flags = SweConst.SEFLG_SWIEPH | SweConst.SEFLG_SIDEREAL |
-                    SweConst.SEFLG_TRANSIT_LONGITUDE;
-
-            TransitCalculator tcEnd = new TCPlanetPlanet(swissEphInst, SweConst.SE_MOON, SweConst.SE_SUN,
-                    flags, 0);
-            double tithiDeg = 0;
-            tithiDeg += (tithiIndex * deg); // 12 deg is one tithi (or) 6 deg for karanam
-            tcEnd.setOffset(tithiDeg);
-
-            //long startTime = System.nanoTime();
-            tithiSpan = getSDTimeZone(sd.getJulDay(),
-                    TransitCalculator.getTransitUT(tcEnd, sd.getJulDay(), false));
-            //long endTime = System.nanoTime();
-            //System.out.println("VedicCalendar getDrikTithiSpan()... Time Taken: " +
-            //        getTimeTaken(startTime, endTime));
+            refTithiSpan = tithiSpan;
         }
 
         return tithiSpan;
@@ -3864,51 +3880,55 @@ public class VedicCalendar extends Calendar {
      * @return Nakshatram in celestial minutes.
      */
     private double getDrikNakshatramSpan(int nakshatramIndex, boolean calcLocal) {
-        double natSpan;
-        int nakshatramVal = (int) (refChandraAyanamAtDayStart / MAX_NAKSHATHRAM_MINUTES);
-        nakshatramVal %= MAX_NAKSHATHRAMS;
+        double nakshatramSpan = refNakshatramSpan;
 
-        // Calculate manually instead of SwissEph as it might be time/CPU intensive!
-        if (calcLocal) {
-            double nakshatramRef = Math.ceil(refChandraAyanamAtDayStart / MAX_NAKSHATHRAM_MINUTES);
-            nakshatramRef *= MAX_NAKSHATHRAM_MINUTES;
-            natSpan = nakshatramRef - refChandraAyanamAtDayStart;
+        if (nakshatramSpan == 0) {
+            int nakshatramVal = (int) (refChandraAyanamAtDayStart / MAX_NAKSHATHRAM_MINUTES);
+            nakshatramVal %= MAX_NAKSHATHRAMS;
 
-            // 2) Find the Earth Hours during the day based on daily motion of Ravi & Chandra.
-            natSpan /= dailyChandraMotion;
-            natSpan *= MAX_24HOURS;
-            natSpan += defTimezone;
-            natSpan *= MAX_MINS_IN_HOUR;
-
-            if (nakshatramVal != nakshatramIndex) {
-                nakshatramRef = Math.ceil(refChandraAyanamAtDayStart / MAX_NAKSHATHRAM_MINUTES);
+            // Calculate manually instead of SwissEph as it might be time/CPU intensive!
+            if (calcLocal) {
+                double nakshatramRef = Math.ceil(refChandraAyanamAtDayStart / MAX_NAKSHATHRAM_MINUTES);
                 nakshatramRef *= MAX_NAKSHATHRAM_MINUTES;
-                natSpan = nakshatramRef - refChandraAyanamAtDayStart + MAX_NAKSHATHRAM_MINUTES;
-                natSpan /= dailyChandraMotion;
-                natSpan *= MAX_24HOURS;
-                natSpan += defTimezone;
-                natSpan *= MAX_MINS_IN_HOUR;
-            }
-        } else {
+                nakshatramSpan = nakshatramRef - refChandraAyanamAtDayStart;
 
-            /*
-             * SwissEph Native does not have support for getTransitUT(). Hence, commenting out
-             * for future reference.
-             */
-            double natOffset = ((nakshatramIndex + 1) % MAX_NAKSHATHRAMS) * (360. / 27.);
-            SweDate sd = new SweDate(refYear, refMonth, refDate, 0);
-            int flags = SweConst.SEFLG_SWIEPH | SweConst.SEFLG_SIDEREAL |
-                    SweConst.SEFLG_TRANSIT_LONGITUDE;
-            TransitCalculator tcEnd = new TCPlanet(swissEphInst, SweConst.SE_MOON, flags, natOffset);
-            //long startTime = System.nanoTime();
-            natSpan = getSDTimeZone(sd.getJulDay(),
-                    TransitCalculator.getTransitUT(tcEnd, sd.getJulDay(), false));
-            //long endTime = System.nanoTime();
-            //System.out.println("VedicCalendar getDrikNakshatramSpan()... Time Taken: " +
-            //        getTimeTaken(startTime, endTime));
+                // 2) Find the Earth Hours during the day based on daily motion of Ravi & Chandra.
+                nakshatramSpan /= dailyChandraMotion;
+                nakshatramSpan *= MAX_24HOURS;
+                nakshatramSpan += defTimezone;
+                nakshatramSpan *= MAX_MINS_IN_HOUR;
+
+                if (nakshatramVal != nakshatramIndex) {
+                    nakshatramRef = Math.ceil(refChandraAyanamAtDayStart / MAX_NAKSHATHRAM_MINUTES);
+                    nakshatramRef *= MAX_NAKSHATHRAM_MINUTES;
+                    nakshatramSpan = nakshatramRef - refChandraAyanamAtDayStart + MAX_NAKSHATHRAM_MINUTES;
+                    nakshatramSpan /= dailyChandraMotion;
+                    nakshatramSpan *= MAX_24HOURS;
+                    nakshatramSpan += defTimezone;
+                    nakshatramSpan *= MAX_MINS_IN_HOUR;
+                }
+            } else {
+
+                /*
+                 * SwissEph Native does not have support for getTransitUT(). Hence, commenting out
+                 * for future reference.
+                 */
+                double natOffset = ((nakshatramIndex + 1) % MAX_NAKSHATHRAMS) * (360. / 27.);
+                SweDate sd = new SweDate(refYear, refMonth, refDate, 0);
+                int flags = SweConst.SEFLG_SWIEPH | SweConst.SEFLG_SIDEREAL |
+                        SweConst.SEFLG_TRANSIT_LONGITUDE;
+                TransitCalculator tcEnd = new TCPlanet(swissEphInst, SweConst.SE_MOON, flags, natOffset);
+                //long startTime = System.nanoTime();
+                nakshatramSpan = getSDTimeZone(sd.getJulDay(),
+                        TransitCalculator.getTransitUT(tcEnd, sd.getJulDay(), false));
+                //long endTime = System.nanoTime();
+                //System.out.println("VedicCalendar getDrikNakshatramSpan()... Time Taken: " +
+                //        getTimeTaken(startTime, endTime));
+            }
+            refNakshatramSpan = nakshatramSpan;
         }
 
-        return natSpan;
+        return nakshatramSpan;
     }
 
     /**

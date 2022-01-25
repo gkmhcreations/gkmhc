@@ -307,7 +307,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
                     // 2) Get Thithi
                     //startTime = endTime;
                     String strThithi =
-                            vedicCalendar.getTithi(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
+                            vedicCalendar.getTithi(VedicCalendar.MATCH_PANCHANGAM_FULLDAY_CALC_LOCAL);
                     //endTime = System.nanoTime();
                     //Log.d("NPCalProfiler","getTithi()... Time Taken: " +
                     //        VedicCalendar.getTimeTaken(startTime, endTime));
@@ -325,7 +325,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
                     // 4) Get Natchathiram
                     //startTime = endTime;
                     String strNakshatram =
-                            vedicCalendar.getNakshatram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
+                            vedicCalendar.getNakshatram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY_CALC_LOCAL);
                     //endTime = System.nanoTime();
                     //Log.d("NPCalProfiler","getNakshatram()... Time Taken: " +
                     //        VedicCalendar.getTimeTaken(startTime, endTime));

@@ -448,9 +448,6 @@ public class Panchangam extends Fragment {
         //Log.d("PanchangamProfiler","getKuligaiTimings()... Time Taken: " +
         //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // TODO - Need to check if this is needed!
-        vedicCalendar.getPlanetsRise();
-
         //startTime = System.nanoTime();
         List<Integer> dhinaVisheshamCodeList = vedicCalendar.getDinaVisheshams();
         String dhinaSpecialStr;

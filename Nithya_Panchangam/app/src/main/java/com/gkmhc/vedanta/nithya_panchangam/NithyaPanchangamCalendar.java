@@ -68,7 +68,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
     private ArrayList<String> drikDinam = null;
     private ArrayList<String> drikDinaVishesham = null;
     private ArrayList<String> drikMaasam = null;
-    private ArrayList<String> drikNatchathiram = null;
+    private ArrayList<String> drikNakshatram = null;
     private String[] gregYearList = null;
     private Menu menu;
 
@@ -264,7 +264,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
         drikDinam = new ArrayList<>();
         drikDinaVishesham = new ArrayList<>();
         drikMaasam = new ArrayList<>();
-        drikNatchathiram = new ArrayList<>();
+        drikNakshatram = new ArrayList<>();
 
         int numDaysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         Calendar calendarIter = (Calendar) calendar.clone();
@@ -280,7 +280,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
                 drikDinam.add("");
                 drikDinaVishesham.add("");
                 drikMaasam.add("");
-                drikNatchathiram.add("");
+                drikNakshatram.add("");
             } else {
                 gregDaysInMonth.add(String.valueOf(index - firstDate + 1));
 
@@ -322,14 +322,14 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
                     //        VedicCalendar.getTimeTaken(startTime, endTime));
                     drikMaasam.add(strMaasam);
 
-                    // 4) Get Natchathiram
+                    // 4) Get Nakshatram
                     //startTime = endTime;
                     String strNakshatram =
                             vedicCalendar.getNakshatram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY_CALC_LOCAL);
                     //endTime = System.nanoTime();
                     //Log.d("NPCalProfiler","getNakshatram()... Time Taken: " +
                     //        VedicCalendar.getTimeTaken(startTime, endTime));
-                    drikNatchathiram.add(strNakshatram);
+                    drikNakshatram.add(strNakshatram);
 
                     // 5) Get a list of dina vishesham(s)
                     //    Add list of strings & icons associated with each vishesham for the given
@@ -424,7 +424,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
             textView = npCalendarCellView.findViewById(R.id.np_cell_thithi);
             textView.setText(drikDinam.get(position));
             textView = npCalendarCellView.findViewById(R.id.np_cell_natchathiram);
-            textView.setText(drikNatchathiram.get(position));
+            textView.setText(drikNakshatram.get(position));
 
             // Set Image Icon(s)
             // Currently 3 dina visheshams(i.e icons) are supported.

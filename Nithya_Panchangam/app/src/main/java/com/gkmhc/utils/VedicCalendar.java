@@ -1456,14 +1456,14 @@ public class VedicCalendar extends Calendar {
 
             boolean calcLocal = ((queryType & MATCH_PANCHANGAM_FULLDAY_CALC_LOCAL) == MATCH_PANCHANGAM_FULLDAY_CALC_LOCAL);
             // 2) Get 1st Tithi Span for the given calendar day
-            tithiSpan = getDrikTithiSpan(((tithiAtDayStart + 1) % MAX_TITHIS), TITHI_DEGREES, calcLocal);
+            tithiSpan = getDrikTithiSpan(((tithiAtDayStart + 1) % MAX_TITHIS), calcLocal);
 
             // If 1st Tithi occurs before sunrise, then start with next Tithi.
             if (tithiSpan < 0) {
                 refTithiSpan = 0;
                 tithiAtDayStart += 1;
                 tithiAtDayStart %= MAX_TITHIS;
-                tithiSpan = getDrikTithiSpan(((tithiAtDayStart + 1) % MAX_TITHIS), TITHI_DEGREES, calcLocal);
+                tithiSpan = getDrikTithiSpan(((tithiAtDayStart + 1) % MAX_TITHIS), calcLocal);
             }
             tithiSpanHour = (int) (tithiSpan / MAX_MINS_IN_HOUR);
             tithiSpanMin = (int) tithiSpan % MAX_MINS_IN_HOUR;
@@ -2258,14 +2258,14 @@ public class VedicCalendar extends Calendar {
             firstHalfKaranam %= MAX_KARANAMS;
 
             // 2) Get 1st Karanam Span for the given calendar day
-            karanamSpan = getDrikTithiSpan(((firstHalfKaranam + 1) % MAX_KARANAMS), KARANAM_DEGREES, false);
+            karanamSpan = getDrikKaranamSpan(((firstHalfKaranam + 1) % MAX_KARANAMS), false);
 
             // If 1st Karanam occurs before sunrise, then start with next Karanam.
             if (karanamSpan < 0) {
                 firstHalfKaranam += 1;
                 firstHalfKaranam %= MAX_KARANAMS;
 
-                karanamSpan = getDrikTithiSpan(((firstHalfKaranam + 1) % MAX_KARANAMS), KARANAM_DEGREES, false);
+                karanamSpan = getDrikKaranamSpan(((firstHalfKaranam + 1) % MAX_KARANAMS), false);
             }
             karanamSpanHour = (int) (karanamSpan / MAX_MINS_IN_HOUR);
         }
@@ -2728,6 +2728,7 @@ public class VedicCalendar extends Calendar {
         //         For Ex: (Given_hour - Udhaya_Lagnam) / 2 ==> Number of Raasi's Ravi has moved
         //         from Udhaya Lagnam
         //long startTime = System.nanoTime();
+        //double val = calcLagnam();
         ArrayList<KaalamInfo> lagnamInfoList = new ArrayList<>();
         int refTotalMins = (refHour * MAX_MINS_IN_HOUR) + refMin;
 
@@ -2981,7 +2982,7 @@ public class VedicCalendar extends Calendar {
 
         Calendar refCalendar = Calendar.getInstance();
         refCalendar.set(refYear, refMonth, refDate, refHour, refMin);
-        /*planetRiseTimings.put(SURYA, calcPlanetLongitude(refCalendar, SweConst.SE_SUN, true));
+        planetRiseTimings.put(SURYA, calcPlanetLongitude(refCalendar, SweConst.SE_SUN, true));
         planetRiseTimings.put(CHANDRA, calcPlanetLongitude(refCalendar, SweConst.SE_MOON, true));
         planetRiseTimings.put(MANGAL, calcPlanetLongitude(refCalendar, SweConst.SE_MARS, true));
         planetRiseTimings.put(BUDH, calcPlanetLongitude(refCalendar, SweConst.SE_MERCURY, true));
@@ -2989,10 +2990,10 @@ public class VedicCalendar extends Calendar {
         planetRiseTimings.put(SUKRA, calcPlanetLongitude(refCalendar, SweConst.SE_VENUS, true));
         planetRiseTimings.put(SHANI, calcPlanetLongitude(refCalendar, SweConst.SE_SATURN, true));
         planetRiseTimings.put(RAAHU, calcPlanetLongitude(refCalendar, SweConst.SE_TRUE_NODE, true));
-        planetRiseTimings.put(KETHU, calcPlanetLongitude(refCalendar, KETHU, true));*/
+        planetRiseTimings.put(KETHU, calcPlanetLongitude(refCalendar, KETHU, true));
         //planetRiseTimings.put(SURYA, calcPlanetRise(SweConst.SE_SUN));
         //planetRiseTimings.put(CHANDRA, calcPlanetRise(SweConst.SE_MOON));
-        calcLagnam();
+        //calcLagnam();
 
         return planetRiseTimings;
     }
@@ -3616,11 +3617,12 @@ public class VedicCalendar extends Calendar {
                 acsc);
         int ayanamDeg = (int) (acsc[0]);
         double ayanamMin = (acsc[0]) - ayanamDeg;
-        double refLagnamMins = (ayanamDeg * 60);
-        refLagnamMins += ((ayanamMin) * 60);
+        double refLagnamMins = (ayanamDeg * MAX_MINS_IN_HOUR);
+        refLagnamMins += ((ayanamMin) * MAX_MINS_IN_HOUR);
 
+        String lagnamStr = getSDTime(refLagnamMins + defTimezone / 24.);
         System.out.println("VedicCalendar" + " Ascendant: " + toDMS(acsc[0]) + " : " +
-                toHMS(acsc[0]) + "\n");
+                toHMS(acsc[0]) + " Lagnam: " + lagnamStr + "\n");
 
         int ascSign = (int)(acsc[0] / 30) + 1;
 
@@ -3769,12 +3771,12 @@ public class VedicCalendar extends Calendar {
     /**
      * Get Tithi span on a given Calendar day.
      *
-     * @param tithiIndex Tithi Index
-     * @param deg Degress
+     * @param tithiIndex    Tithi Index
+     * @param calcLocal     Flag (false - use SwissEph, true - calculate manually)
      *
-     * @return Tithi in celestial minutes.
+     * @return Tithi span in Earth minutes.
      */
-    private double getDrikTithiSpan(int tithiIndex, int deg, boolean calcLocal) {
+    private double getDrikTithiSpan(int tithiIndex, boolean calcLocal) {
         double tithiSpan = refTithiSpan;
 
         if (refTithiSpan == 0) {
@@ -3786,9 +3788,6 @@ public class VedicCalendar extends Calendar {
                 }
 
                 double divMins = MAX_TITHI_MINUTES;
-                if (deg == KARANAM_DEGREES) {
-                    divMins = MAX_KARANAM_MINUTES;
-                }
                 double tithiRef = Math.ceil(chandraRaviDistance / divMins);
                 tithiRef *= divMins;
                 tithiSpan = tithiRef - chandraRaviDistance;
@@ -3806,7 +3805,7 @@ public class VedicCalendar extends Calendar {
                 TransitCalculator tcEnd = new TCPlanetPlanet(swissEphInst, SweConst.SE_MOON, SweConst.SE_SUN,
                         flags, 0);
                 double tithiDeg = 0;
-                tithiDeg += (tithiIndex * deg); // 12 deg is one tithi (or) 6 deg for karanam
+                tithiDeg += (tithiIndex * TITHI_DEGREES);
                 tcEnd.setOffset(tithiDeg);
 
                 //long startTime = System.nanoTime();
@@ -3820,6 +3819,52 @@ public class VedicCalendar extends Calendar {
         }
 
         return tithiSpan;
+    }
+
+    /**
+     * Get Karanam span on a given Calendar day.
+     *
+     * @param karanamIndex  Karanam Index
+     * @param calcLocal     Flag (false - use SwissEph, true - calculate manually)
+     *
+     * @return Karanam span in Earth minutes.
+     */
+    private double getDrikKaranamSpan(int karanamIndex, boolean calcLocal) {
+        double karanamSpan = refTithiSpan;
+
+        // Calculate manually instead of SwissEph as it might be time/CPU intensive!
+        if (calcLocal) {
+            double chandraRaviDistance = refChandraAyanamAtDayStart - refRaviAyanamAtDayStart;
+            if (chandraRaviDistance < 0) {
+                chandraRaviDistance += MAX_AYANAM_MINUTES;
+            }
+
+            double divMins = MAX_KARANAM_MINUTES;
+            double karanamRef = Math.ceil(chandraRaviDistance / divMins);
+            karanamRef *= divMins;
+            karanamSpan = karanamRef - chandraRaviDistance;
+
+            // 2) Find the Earth Hours during the day based on daily motion of Ravi & Chandra.
+            karanamSpan /= (dailyChandraMotion - dailyRaviMotion);
+            karanamSpan *= MAX_24HOURS;
+            karanamSpan += defTimezone;
+            karanamSpan *= MAX_MINS_IN_HOUR;
+        } else {
+            SweDate sd = new SweDate(refYear, refMonth, refDate, 0);
+            int flags = SweConst.SEFLG_SWIEPH | SweConst.SEFLG_SIDEREAL |
+                    SweConst.SEFLG_TRANSIT_LONGITUDE;
+
+            TransitCalculator tcEnd = new TCPlanetPlanet(swissEphInst, SweConst.SE_MOON, SweConst.SE_SUN,
+                    flags, 0);
+            double karanamDeg = 0;
+            karanamDeg += (karanamIndex * KARANAM_DEGREES);
+            tcEnd.setOffset(karanamDeg);
+
+            karanamSpan = getSDTimeZone(sd.getJulDay(),
+                    TransitCalculator.getTransitUT(tcEnd, sd.getJulDay(), false));
+        }
+
+        return karanamSpan;
     }
 
     /**

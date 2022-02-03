@@ -9,7 +9,6 @@
         android:contentDescription="@string/calendar"
         app:showAsAction="ifRoom" />
     <!--
-    TODO - For future revision!
     <item
         android:title="@string/raasi_chart_menu"
         android:id="@+id/raasi_chart"

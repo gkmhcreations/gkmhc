@@ -44,7 +44,7 @@ public class Panchangam extends Fragment {
     private ListView panchangamListView;
     private ArrayList<String> panchangamFields;
     private ArrayList<String> panchangamValues;
-
+    private static int NUM_PANCHANGAM_FIELDS = 27;
     private String maasamStr;
     private int refDinaAnkam = 0;
     private String vaasaramStr;
@@ -160,10 +160,17 @@ public class Panchangam extends Fragment {
             try {
                 // code runs in a thread
                 boolean toRefresh = false;
-                VedicCalendar vedicCalendarTemp = mainActivity.getVedicCalendar();
+                VedicCalendar vedicCalendarTemp = null;
 
+                /*
+                 * Sometimes, this function may be called while Main Activity is initializing.
+                 * So, check before continuing.
+                 */
                 if (mainActivity != null) {
+                    vedicCalendarTemp = mainActivity.getVedicCalendar();
                     mainActivity.updateAppLocale();
+                } else {
+                    return;
                 }
 
                 /*
@@ -260,217 +267,222 @@ public class Panchangam extends Fragment {
         long pStartTime = System.nanoTime();
         //long startTime = System.nanoTime();
 
-        //long endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","VedicCalendar()... Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
-        panchangamValues = new ArrayList<>();
+        /*
+         * Don't fetch details in case VedicCalendar instance is unavailable / invalid.
+         */
+        if (vedicCalendar != null) {
+            //long endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","VedicCalendar()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
+            panchangamValues = new ArrayList<>();
 
-        // Step1: Retrieve Sunrise timings for the given calendar day
-        //startTime = System.nanoTime();
-        panchangamValues.add(vedicCalendar.getSunrise());
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getSunrise()... Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
+            // Step1: Retrieve Sunrise timings for the given calendar day
+            //startTime = System.nanoTime();
+            panchangamValues.add(vedicCalendar.getSunrise());
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getSunrise()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step2: Retrieve Sunset timings for the given calendar day
-        //startTime = System.nanoTime();
-        panchangamValues.add(vedicCalendar.getSunset());
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getSunset()... Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
+            // Step2: Retrieve Sunset timings for the given calendar day
+            //startTime = System.nanoTime();
+            panchangamValues.add(vedicCalendar.getSunset());
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getSunset()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step3: Retrieve Kaala Vibhagaha timings for the given calendar day
-        panchangamValues.add("");
-        kaalamExactList = vedicCalendar.getKaalaVibhaagam(VedicCalendar.MATCH_SANKALPAM_EXACT);
-        kaalamVibhaagahList =
-                vedicCalendar.getKaalaVibhaagam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
+            // Step3: Retrieve Kaala Vibhagaha timings for the given calendar day
+            panchangamValues.add("");
+            kaalamExactList = vedicCalendar.getKaalaVibhaagam(VedicCalendar.MATCH_SANKALPAM_EXACT);
+            kaalamVibhaagahList =
+                    vedicCalendar.getKaalaVibhaagam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
 
-        // Step4: Retrieve Samvatsaram for the given calendar day
-        //startTime = System.nanoTime();
-        panchangamValues.add(vedicCalendar.getSamvatsaram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getSamvatsaram()... Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
+            // Step4: Retrieve Samvatsaram for the given calendar day
+            //startTime = System.nanoTime();
+            panchangamValues.add(vedicCalendar.getSamvatsaram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getSamvatsaram()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step5: Retrieve Ayanam for the given calendar day
-        //startTime = System.nanoTime();
-        panchangamValues.add(vedicCalendar.getAyanam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getAyanam()... Time Taken: " +
-        //      VedicCalendar.getTimeTaken(startTime, endTime));
+            // Step5: Retrieve Ayanam for the given calendar day
+            //startTime = System.nanoTime();
+            panchangamValues.add(vedicCalendar.getAyanam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getAyanam()... Time Taken: " +
+            //      VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step6: Retrieve Dina Ankham for the given calendar day
-        //startTime = System.nanoTime();
-        refDinaAnkam = vedicCalendar.getDinaAnkam();
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getDinaankham()... Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
+            // Step6: Retrieve Dina Ankham for the given calendar day
+            //startTime = System.nanoTime();
+            refDinaAnkam = vedicCalendar.getDinaAnkam();
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getDinaankham()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step7: Retrieve Rithu for the given calendar day
-        //startTime = System.nanoTime();
-        panchangamValues.add(vedicCalendar.getRithu(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getRithu()... Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
+            // Step7: Retrieve Rithu for the given calendar day
+            //startTime = System.nanoTime();
+            panchangamValues.add(vedicCalendar.getRithu(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getRithu()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step8-1: Retrieve Sauramaanam Maasam for the given calendar day
-        //startTime = System.nanoTime();
-        maasamStr = vedicCalendar.getSauramaanamMaasam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
-        panchangamValues.add(maasamStr);
+            // Step8-1: Retrieve Sauramaanam Maasam for the given calendar day
+            //startTime = System.nanoTime();
+            maasamStr = vedicCalendar.getSauramaanamMaasam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
+            panchangamValues.add(maasamStr);
 
-        // Step8-2: Retrieve Chaandramaanam Maasam for the given calendar day
-        //startTime = System.nanoTime();
-        maasamStr = vedicCalendar.getChaandramaanamMaasam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
-        panchangamValues.add(maasamStr);
+            // Step8-2: Retrieve Chaandramaanam Maasam for the given calendar day
+            //startTime = System.nanoTime();
+            maasamStr = vedicCalendar.getChaandramaanamMaasam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
+            panchangamValues.add(maasamStr);
 
-        // For display purposes only!
-        maasamStr = vedicCalendar.getMaasam(VedicCalendar.MATCH_SANKALPAM_EXACT);
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getMaasam()... " + maasamStr + " Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
+            // For display purposes only!
+            maasamStr = vedicCalendar.getMaasam(VedicCalendar.MATCH_SANKALPAM_EXACT);
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getMaasam()... " + maasamStr + " Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step9: Retrieve Paksham for the given calendar day
-        //startTime = System.nanoTime();
-        panchangamValues.add(vedicCalendar.getPaksham(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getPaksham()... Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
+            // Step9: Retrieve Paksham for the given calendar day
+            //startTime = System.nanoTime();
+            panchangamValues.add(vedicCalendar.getPaksham(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getPaksham()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step10-1: Retrieve Tithi for the given calendar day
-        //startTime = System.nanoTime();
-        panchangamValues.add(vedicCalendar.getTithi(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
+            // Step10-1: Retrieve Tithi for the given calendar day
+            //startTime = System.nanoTime();
+            panchangamValues.add(vedicCalendar.getTithi(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
 
-        // Step10-2: Retrieve Shraadha Tithi for the given calendar day
-        panchangamValues.add(vedicCalendar.getShraaddhaTithi(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getTithi()... Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
+            // Step10-2: Retrieve Shraadha Tithi for the given calendar day
+            panchangamValues.add(vedicCalendar.getShraaddhaTithi(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getTithi()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step11: Retrieve Vaasaram for the given calendar day
-        //startTime = System.nanoTime();
-        vaasaramStr = vedicCalendar.getVaasaram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
-        panchangamValues.add(vaasaramStr);
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getVaasaram()... Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
+            // Step11: Retrieve Vaasaram for the given calendar day
+            //startTime = System.nanoTime();
+            vaasaramStr = vedicCalendar.getVaasaram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
+            panchangamValues.add(vaasaramStr);
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getVaasaram()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step12: Retrieve Raasi for the given calendar day
-        //startTime = System.nanoTime();
-        panchangamValues.add(vedicCalendar.getRaasi(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getRaasi()... Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
+            // Step12: Retrieve Raasi for the given calendar day
+            //startTime = System.nanoTime();
+            panchangamValues.add(vedicCalendar.getRaasi(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getRaasi()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step13: Retrieve Nakshatram for the given calendar day
-        //startTime = System.nanoTime();
-        panchangamValues.add(
-                vedicCalendar.getNakshatram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getNatchathiram()... Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
+            // Step13: Retrieve Nakshatram for the given calendar day
+            //startTime = System.nanoTime();
+            panchangamValues.add(
+                    vedicCalendar.getNakshatram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getNatchathiram()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step14: Retrieve Chandrashtama Nakshatram for the given calendar day
-        //startTime = System.nanoTime();
-        panchangamValues.add(
-                vedicCalendar.getChandrashtamaNakshatram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getChandrashtamaNatchathiram()... Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
+            // Step14: Retrieve Chandrashtama Nakshatram for the given calendar day
+            //startTime = System.nanoTime();
+            panchangamValues.add(
+                    vedicCalendar.getChandrashtamaNakshatram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getChandrashtamaNatchathiram()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step15: Retrieve Yogam for the given calendar day
-        //startTime = System.nanoTime();
-        panchangamValues.add(vedicCalendar.getYogam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getYogam()... Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
+            // Step15: Retrieve Yogam for the given calendar day
+            //startTime = System.nanoTime();
+            panchangamValues.add(vedicCalendar.getYogam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getYogam()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step16: Retrieve Karanam for the given calendar day
-        //startTime = System.nanoTime();
-        panchangamValues.add(vedicCalendar.getKaranam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getKaranam()... Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
+            // Step16: Retrieve Karanam for the given calendar day
+            //startTime = System.nanoTime();
+            panchangamValues.add(vedicCalendar.getKaranam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getKaranam()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step17: Retrieve Lagnam list for the given calendar day
-        //startTime = System.nanoTime();
-        lagnamExactList = vedicCalendar.getLagnam(VedicCalendar.MATCH_SANKALPAM_EXACT);
-        panchangamValues.add("");
-        lagnamFullDayList =
-                vedicCalendar.getLagnam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
+            // Step17: Retrieve Lagnam list for the given calendar day
+            //startTime = System.nanoTime();
+            lagnamExactList = vedicCalendar.getLagnam(VedicCalendar.MATCH_SANKALPAM_EXACT);
+            panchangamValues.add("");
+            lagnamFullDayList =
+                    vedicCalendar.getLagnam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
 
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getLagnam()... Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getLagnam()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step18: Retrieve Horai List for the given calendar day
-        //startTime = System.nanoTime();
-        horaiExactList = vedicCalendar.getHorai(VedicCalendar.MATCH_SANKALPAM_EXACT);
-        panchangamValues.add("");
-        horaiFullDayList =
-                vedicCalendar.getHorai(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getHorai()... Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
+            // Step18: Retrieve Horai List for the given calendar day
+            //startTime = System.nanoTime();
+            horaiExactList = vedicCalendar.getHorai(VedicCalendar.MATCH_SANKALPAM_EXACT);
+            panchangamValues.add("");
+            horaiFullDayList =
+                    vedicCalendar.getHorai(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getHorai()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step19: Retrieve Amruthathi Yogam for the given calendar day
-        //startTime = System.nanoTime();
-        panchangamValues.add(
-                vedicCalendar.getAmruthathiYogam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getAmruthathiYogam()... Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
+            // Step19: Retrieve Amruthathi Yogam for the given calendar day
+            //startTime = System.nanoTime();
+            panchangamValues.add(
+                    vedicCalendar.getAmruthathiYogam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getAmruthathiYogam()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step20: Retrieve Shubha Kaalam for the given calendar day
-        //startTime = System.nanoTime();
-        panchangamValues.add(vedicCalendar.getShubhaKaalam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getNallaNeram()... Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
+            // Step20: Retrieve Shubha Kaalam for the given calendar day
+            //startTime = System.nanoTime();
+            panchangamValues.add(vedicCalendar.getShubhaKaalam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getNallaNeram()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step21: Retrieve Raahu Kaalam Timings for the given calendar day
-        //startTime = System.nanoTime();
-        panchangamValues.add(vedicCalendar.getRaahuKaalamTimings(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getRaahuKaalamTimings()... Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
+            // Step21: Retrieve Raahu Kaalam Timings for the given calendar day
+            //startTime = System.nanoTime();
+            panchangamValues.add(vedicCalendar.getRaahuKaalamTimings(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getRaahuKaalamTimings()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step22: Retrieve Yamagandam Timings for the given calendar day
-        //startTime = System.nanoTime();
-        panchangamValues.add(vedicCalendar.getYamakandamTimings(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getYamakandamTimings()... Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
+            // Step22: Retrieve Yamagandam Timings for the given calendar day
+            //startTime = System.nanoTime();
+            panchangamValues.add(vedicCalendar.getYamakandamTimings(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getYamakandamTimings()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        // Step23: Retrieve Kuligai Timings for the given calendar day
-        //startTime = System.nanoTime();
-        panchangamValues.add(vedicCalendar.getKuligaiTimings(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getKuligaiTimings()... Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
+            // Step23: Retrieve Kuligai Timings for the given calendar day
+            //startTime = System.nanoTime();
+            panchangamValues.add(vedicCalendar.getKuligaiTimings(VedicCalendar.MATCH_PANCHANGAM_FULLDAY));
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getKuligaiTimings()... Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
 
-        //startTime = System.nanoTime();
-        List<Integer> dhinaVisheshamCodeList = vedicCalendar.getDinaVisheshams();
-        String dhinaSpecialStr;
-        if (dhinaVisheshamCodeList.size() > 0) {
-            // Form a list of Dina Vishesham(s) in case there is more than 1 occuring in a
-            // given calendar day.
-            List<String> dhinaVisheshamStrList = new ArrayList<>();
-            for (int code = 0; code < dhinaVisheshamCodeList.size(); code++) {
-                int visheshamCode = dhinaVisheshamCodeList.get(code);
-                int labelID = Reminder.getDinaVisheshamLabel(visheshamCode);
-                dhinaVisheshamStrList.add(getString(labelID));
+            //startTime = System.nanoTime();
+            List<Integer> dhinaVisheshamCodeList = vedicCalendar.getDinaVisheshams();
+            String dhinaSpecialStr;
+            if (dhinaVisheshamCodeList.size() > 0) {
+                // Form a list of Dina Vishesham(s) in case there is more than 1 occuring in a
+                // given calendar day.
+                List<String> dhinaVisheshamStrList = new ArrayList<>();
+                for (int code = 0; code < dhinaVisheshamCodeList.size(); code++) {
+                    int visheshamCode = dhinaVisheshamCodeList.get(code);
+                    int labelID = Reminder.getDinaVisheshamLabel(visheshamCode);
+                    dhinaVisheshamStrList.add(getString(labelID));
+                }
+                dhinaSpecialStr = dhinaVisheshamStrList.toString();
+                dhinaSpecialStr = dhinaSpecialStr.substring(1, dhinaSpecialStr.length() - 1);
+            } else {
+                dhinaSpecialStr = "";
             }
-            dhinaSpecialStr = dhinaVisheshamStrList.toString();
-            dhinaSpecialStr = dhinaSpecialStr.substring(1, dhinaSpecialStr.length() - 1);
-        } else {
-            dhinaSpecialStr = "";
+            panchangamValues.add(0, dhinaSpecialStr);
+            panchangamValues.add(vedicCalendar.getShoolamParihaaram());
+            panchangamValues.add("");
+            //endTime = System.nanoTime();
+            //Log.d("PanchangamProfiler","getDinaVishesham()..." + " Time Taken: " +
+            //        VedicCalendar.getTimeTaken(startTime, endTime));
         }
-        panchangamValues.add(0, dhinaSpecialStr);
-        panchangamValues.add(vedicCalendar.getShoolamParihaaram());
-        panchangamValues.add("");
-        //endTime = System.nanoTime();
-        //Log.d("PanchangamProfiler","getDinaVishesham()..." + " Time Taken: " +
-        //        VedicCalendar.getTimeTaken(startTime, endTime));
 
         long pEndTime = System.nanoTime();
         Log.d("PanchangamProfiler", "Overall Retrieve Time Taken: " +
@@ -486,11 +498,14 @@ public class Panchangam extends Fragment {
     private void updatePanchangamFragment(View root) {
         long pStartTime = System.nanoTime();
         int pos = panchangamListView.getFirstVisiblePosition();
-        PanchangamAdapter panchangamAdapter = new PanchangamAdapter(getContext(),
-                panchangamFields, panchangamValues, lagnamExactList, lagnamFullDayList,
-                kaalamExactList, kaalamVibhaagahList, horaiExactList, horaiFullDayList);
-        panchangamListView.setAdapter(panchangamAdapter);
-        panchangamListView.setSelection(pos);
+        int numPanchangamFields = panchangamValues.size();
+        if (numPanchangamFields == NUM_PANCHANGAM_FIELDS) {
+            PanchangamAdapter panchangamAdapter = new PanchangamAdapter(getContext(),
+                    panchangamFields, panchangamValues, lagnamExactList, lagnamFullDayList,
+                    kaalamExactList, kaalamVibhaagahList, horaiExactList, horaiFullDayList);
+            panchangamListView.setAdapter(panchangamAdapter);
+            panchangamListView.setSelection(pos);
+        }
 
         updateCurLocation(mainActivity.getLocationCity());
 

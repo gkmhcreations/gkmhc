@@ -43,8 +43,8 @@ public class RaasiChart extends AppCompatActivity implements
         Intent recvdIntent = this.getIntent();
         if (recvdIntent.hasExtra(EXTRA_DATE)) {
             int date = recvdIntent.getIntExtra(EXTRA_DATE, currCalendar.get(Calendar.DATE));
-            int month = recvdIntent.getIntExtra(EXTRA_DATE, currCalendar.get(Calendar.MONTH));
-            int year = recvdIntent.getIntExtra(EXTRA_DATE, currCalendar.get(Calendar.YEAR));
+            int month = recvdIntent.getIntExtra(EXTRA_MONTH, currCalendar.get(Calendar.MONTH));
+            int year = recvdIntent.getIntExtra(EXTRA_YEAR, currCalendar.get(Calendar.YEAR));
 
             currCalendar.set(year, month, date);
         }

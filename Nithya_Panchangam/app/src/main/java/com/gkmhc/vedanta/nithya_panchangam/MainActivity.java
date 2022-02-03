@@ -456,7 +456,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             Intent browserIntent = new Intent(Intent.ACTION_VIEW,
                     Uri.parse("https://www.gkmhc.in/gkm-heritage-creations/apps-games/nithya-panchangam"));
             startActivity(browserIntent);
-        } else if (itemID == R.id.calendar_np) {
+        } /*else if (itemID == R.id.raasi_chart) {
+            Intent raasiChartIntent = new Intent(this, RaasiChart.class);
+            raasiChartIntent.putExtra(RaasiChart.EXTRA_DATE, vedicCalendar.get(Calendar.DATE));
+            raasiChartIntent.getIntExtra(RaasiChart.EXTRA_MONTH, vedicCalendar.get(Calendar.MONTH));
+            raasiChartIntent.getIntExtra(RaasiChart.EXTRA_YEAR, vedicCalendar.get(Calendar.YEAR));
+            startActivityForResult(raasiChartIntent, RAASI_CHART_CODE);
+        } */else if (itemID == R.id.calendar_np) {
             // Create a dialog for displaying Calender with "English" as default locale
             Locale locale = new Locale("EN");
             Locale.setDefault(locale);

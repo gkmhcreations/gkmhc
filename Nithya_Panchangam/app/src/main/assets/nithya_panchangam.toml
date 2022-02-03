@@ -145,6 +145,16 @@ copyright="© GKM Heritage Creations, 2021"
             dina_vishesham_kaala_sambhavaha=2             # 2 - indicates Pratah kaalam
             dina_vishesham_selection_criteria=1           # 1 - poorvaviddha
 
+    [dina_vishesham.amavaasai]
+        dina_vishesham_title="Amavaasai"
+        dina_vishesham_description="Amavaasai is the lunar phase of new moon and is also observed when Amavaasai tithi prevails during Sayahna kaalam."
+
+        [dina_vishesham.amavaasai.rule]
+            dina_vishesham_match_criteria="tithi"
+            dina_vishesham_match_value=30                 # 30 - indicates Amavaasai
+            dina_vishesham_kaala_sambhavaha=6             # 6 - indicates Sayahna kaalam
+            dina_vishesham_selection_criteria=1           # 1 - poorvaviddha
+
     [dina_vishesham.pournami]
         dina_vishesham_title="Pournami"
         dina_vishesham_description="Pournami is the lunar phase of full moon and is observed when Pournami tithi prevails during Pratah kaalam."
@@ -255,7 +265,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.vasantha_panchami.rule]
             dina_vishesham_match_criteria="tithi"
             dina_vishesham_match_value=5                  # 5 - indicates Panchami
-            dina_vishesham_kaala_sambhavaha=3             # 3 - indicates Sangava kaalam
+            dina_vishesham_kaala_sambhavaha=4             # 4 - indicates Madhyahna kaalam
             dina_vishesham_selection_criteria=1           # 1 - poorvaviddha
 
     [dina_vishesham.ratha_sapthami]
@@ -300,7 +310,7 @@ copyright="© GKM Heritage Creations, 2021"
         [dina_vishesham.maasi_magam.rule]
             dina_vishesham_match_criteria="nakshatram"
             dina_vishesham_match_value=10                 # 10 - indicates Magha "nakshatram"
-            dina_vishesham_kaala_sambhavaha=3             # 3 - indicates Sangava kaalam
+            dina_vishesham_kaala_sambhavaha=4             # 4 - indicates Madhyahna kaalam
             dina_vishesham_selection_criteria=1           # 1 - poorvaviddha
 
     [dina_vishesham.bala_periyava_jayanthi]

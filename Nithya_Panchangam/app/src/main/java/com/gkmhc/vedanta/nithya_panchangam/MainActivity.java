@@ -1451,40 +1451,48 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         placesTimezoneDB.put("Seoul, South Korea", new PlacesInfo(126.9780, 37.5665, 9.0, TIMEZONE_ASIA));
 
         // DST Adjusted
-        placesTimezoneDB.put("Adelaide, Australia", new PlacesInfo(138.6007, -34.9285, 10.5, TIMEZONE_AUSTRALIA));
         placesTimezoneDB.put("Melbourne, Australia", new PlacesInfo(144.9631, -37.8136, 11.0, TIMEZONE_AUSTRALIA));
+        placesTimezoneDB.put("Adelaide, Australia", new PlacesInfo(138.6007, -34.9285, 10.5, TIMEZONE_AUSTRALIA));
         placesTimezoneDB.put("Sydney, Australia", new PlacesInfo(151.2093, -33.8688, 11.0, TIMEZONE_AUSTRALIA));
         placesTimezoneDB.put("Canberra, Australia", new PlacesInfo(149.1300, -35.2809, 11.0, TIMEZONE_AUSTRALIA));
         placesTimezoneDB.put("Brisbane, Australia", new PlacesInfo(153.0260, -27.4705, 10.0, TIMEZONE_AUSTRALIA));
         placesTimezoneDB.put("Hobart, Australia", new PlacesInfo(147.3257, -42.8826, 11.0, TIMEZONE_AUSTRALIA));
         placesTimezoneDB.put("Christchurch, New Zealand", new PlacesInfo(172.6306, -43.5320, 13.0, TIMEZONE_AUSTRALIA));
         placesTimezoneDB.put("Wellington, New Zealand", new PlacesInfo(174.7787, -41.2924, 13.0, TIMEZONE_AUSTRALIA));
+        placesTimezoneDB.put("Waikiki, USA", new PlacesInfo(-157.8292, 21.2793, -10.0, TIMEZONE_AMERICA));
+        placesTimezoneDB.put("Hawaii, USA", new PlacesInfo(-155.5828, 19.8968, -10.0, TIMEZONE_AMERICA));
+        placesTimezoneDB.put("Anchorage, USA", new PlacesInfo(-149.9003, 61.2181, -9.0, TIMEZONE_AMERICA));
         placesTimezoneDB.put("San Francisco, USA", new PlacesInfo(-122.4194, 37.7749, -8.0, TIMEZONE_AMERICA));
         placesTimezoneDB.put("San Jose, USA", new PlacesInfo(-121.8863, 37.3382, -8.0, TIMEZONE_AMERICA));
         placesTimezoneDB.put("Fremont, USA", new PlacesInfo(-121.9886, 37.5485, -8.0, TIMEZONE_AMERICA));
         placesTimezoneDB.put("Las Vegas, USA", new PlacesInfo(-115.1398, 36.1699, -8.0, TIMEZONE_AMERICA));
-        placesTimezoneDB.put("Phoenix, USA", new PlacesInfo(-112.0740, 33.4484, -7.0, TIMEZONE_AMERICA));
         placesTimezoneDB.put("Seattle, USA", new PlacesInfo(-122.3321, 47.6062, -8.0, TIMEZONE_AMERICA));
+        placesTimezoneDB.put("Portland, USA", new PlacesInfo(-122.6784, 45.5152, -8.0, TIMEZONE_AMERICA));
+        placesTimezoneDB.put("Phoenix, USA", new PlacesInfo(-112.0740, 33.4484, -7.0, TIMEZONE_AMERICA));
+        placesTimezoneDB.put("Denver, USA", new PlacesInfo(-104.9903, 39.7392, -7.0, TIMEZONE_AMERICA));
+        placesTimezoneDB.put("Memphis, USA", new PlacesInfo(-90.0490, 35.1495, -6.0, TIMEZONE_AMERICA));
         placesTimezoneDB.put("Winnipeg, Canada", new PlacesInfo(-97.1384, 49.8951, -6.0, TIMEZONE_AMERICA));
         placesTimezoneDB.put("Dallas, USA", new PlacesInfo(-96.7970, 32.7767, -6.0, TIMEZONE_AMERICA));
         placesTimezoneDB.put("Kansas, USA", new PlacesInfo(-98.4842, 39.0119, -6.0, TIMEZONE_AMERICA));
-        placesTimezoneDB.put("Ann Arbor, USA", new PlacesInfo(-83.7430, 42.2808, -5.0, TIMEZONE_AMERICA));
-        placesTimezoneDB.put("New Jersey, USA", new PlacesInfo(-74.4057, 40.0583, -5.0, TIMEZONE_AMERICA));
         placesTimezoneDB.put("Mexico city, Mexico", new PlacesInfo(-99.1332, 19.4326, -6.0, TIMEZONE_AMERICA));
         placesTimezoneDB.put("Chicago, USA", new PlacesInfo(-87.6298, 41.8781, -6.0, TIMEZONE_AMERICA));
         placesTimezoneDB.put("Houston, USA", new PlacesInfo(-95.3698, 29.7604, -6.0, TIMEZONE_AMERICA));
+        placesTimezoneDB.put("Detroit, USA", new PlacesInfo(-83.0458, 42.3314, -5.0, TIMEZONE_AMERICA));
+        placesTimezoneDB.put("Atlanta, USA", new PlacesInfo(-84.3880, 33.7490, -5.0, TIMEZONE_AMERICA));
+        placesTimezoneDB.put("Charlotte, USA", new PlacesInfo(-80.8431, 35.2271, -5.0, TIMEZONE_AMERICA));
+        placesTimezoneDB.put("Ann Arbor, USA", new PlacesInfo(-83.7430, 42.2808, -5.0, TIMEZONE_AMERICA));
         placesTimezoneDB.put("Toronto, Canada", new PlacesInfo(-79.3832, 43.6532, -5.0, TIMEZONE_AMERICA));
         placesTimezoneDB.put("St Augustine, USA", new PlacesInfo(-81.3124, 29.9012, -5.0, TIMEZONE_AMERICA));
         placesTimezoneDB.put("Chester Springs, USA", new PlacesInfo(-75.6343, 40.0784, -5.0, TIMEZONE_AMERICA));
         placesTimezoneDB.put("Richmond, USA", new PlacesInfo(-77.4360, 37.5407, -5.0, TIMEZONE_AMERICA));
         placesTimezoneDB.put("New York, USA", new PlacesInfo(-74.0060, 40.7128, -5.0, TIMEZONE_AMERICA));
-        placesTimezoneDB.put("Washington, USA", new PlacesInfo(-120.7401, 47.7511, -5.0, TIMEZONE_AMERICA));
+        placesTimezoneDB.put("Washington, D.C., USA", new PlacesInfo(-77.0369, 38.9072, -5.0, TIMEZONE_AMERICA));
         placesTimezoneDB.put("Boston, USA", new PlacesInfo(-71.0589, 42.3601, -5.0, TIMEZONE_AMERICA));
         placesTimezoneDB.put("Miami, USA", new PlacesInfo(-80.1918, 25.7617, -5.0, TIMEZONE_AMERICA));
         placesTimezoneDB.put("Tampa Bay, USA", new PlacesInfo(-82.5437, 27.7634, -5.0, TIMEZONE_AMERICA));
         placesTimezoneDB.put("Jacksonville, USA", new PlacesInfo(-81.6557, 30.3322, -5.0, TIMEZONE_AMERICA));
         placesTimezoneDB.put("Ottawa, Canada", new PlacesInfo(-75.6972, 45.4215, -5.0, TIMEZONE_AMERICA));
-        placesTimezoneDB.put("Salem, USA", new PlacesInfo(-70.8967, 42.5195, -5.0, TIMEZONE_AMERICA));
+        placesTimezoneDB.put("Salem, MA, USA", new PlacesInfo(-70.8967, 42.5195, -5.0, TIMEZONE_AMERICA));
 
         // No DST Adjustment needed!
         placesTimezoneDB.put("Buenos Aires, Argentina", new PlacesInfo(-58.3816, -34.6037, -3.0, TIMEZONE_AMERICA));

@@ -197,7 +197,7 @@ public class Reminder extends Fragment {
                 dhinaVishesham = R.string.sankata_hara_chathurthi;
                 break;
             case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SASHTI_VRATHAM:
-                dhinaVishesham = R.string.subramanya_sashti;
+                dhinaVishesham = R.string.sashti_vratham;
                 break;
             case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_EKADASHI:
                 dhinaVishesham = R.string.ekadasi;
@@ -338,7 +338,7 @@ public class Reminder extends Fragment {
                 dhinaVishesham = R.string.karthigai_deepam;
                 break;
             case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_SUBRAMANYA_SASHTI:
-                dhinaVishesham = R.string.sashti_vratham;
+                dhinaVishesham = R.string.subramanya_sashti;
                 break;
             case VedicCalendar.PANCHANGAM_DINA_VISHESHAM_ARUDHRA_DARSHAN:
                 dhinaVishesham = R.string.arudhra_darshan;

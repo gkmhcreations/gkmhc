@@ -174,7 +174,7 @@ public class Sankalpam extends Fragment {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-        }, 50);
+        }, 100);
     }
 
     @Override
@@ -259,6 +259,10 @@ public class Sankalpam extends Fragment {
         // Step 1: Beginning part that involves common constructs as per sankalpam type
         // Step 2: Middle part that are specific to the location, region, space, time etc
         // Step 3: Final part that involves common constructs as per sankalpam type
+        if (vedicCalendar == null) {
+            return;
+        }
+
         long pStartTime = System.nanoTime();
         String htmlFontHdrStart = "<font color='#990000'>";
         String htmlFontHdrEnd = "</font>";
@@ -272,7 +276,7 @@ public class Sankalpam extends Fragment {
         // Change sankalpam location information based on the continent.
         String location = MainActivity.readDefLocationSetting(requireContext());
         MainActivity.PlacesInfo placesInfo = MainActivity.getLocationDetails(location);
-        switch (placesInfo.continent) {
+        switch (placesInfo.timeZoneID) {
             /*case MainActivity.TIMEZONE_OCEANIA:
                 sankalpamStr += htmlFontHdrStart +
                         getString(R.string.sankalpam_shubam_begin_part2_oceania) + htmlFontHdrEnd;

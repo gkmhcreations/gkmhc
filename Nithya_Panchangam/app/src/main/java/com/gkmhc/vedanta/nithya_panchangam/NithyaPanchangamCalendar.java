@@ -105,7 +105,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
             vedicCalendar = VedicCalendar.getInstance(
                     MainActivity.getPathToLocalAssets(getApplicationContext()),
                     panchangamType, calendar, placesInfo.longitude, placesInfo.latitude,
-                    placesInfo.timezone, ayanamsaMode, MainActivity.readPrefChaandramanaType(this),
+                    placesInfo.timeZoneID, ayanamsaMode, MainActivity.readPrefChaandramanaType(this),
                     vedicCalendarLocaleList);
         } catch (Exception e) {
             // Nothing to do here.

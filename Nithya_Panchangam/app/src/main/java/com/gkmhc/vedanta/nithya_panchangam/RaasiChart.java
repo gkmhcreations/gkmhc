@@ -96,7 +96,7 @@ public class RaasiChart extends AppCompatActivity implements
             VedicCalendar vedicCalendar = VedicCalendar.getInstance(
                     MainActivity.getPathToLocalAssets(getApplicationContext()),
                     MainActivity.readPrefPanchangamType(this), currCalendar, placesInfo.longitude,
-                    placesInfo.latitude, placesInfo.timezone, ayanamsaMode,
+                    placesInfo.latitude, placesInfo.timeZoneID, ayanamsaMode,
                     MainActivity.readPrefChaandramanaType(this), vedicCalendarLocaleList);
             HashMap<Integer, Double> planetsRiseTimings = vedicCalendar.getPlanetsRise();
             long endTime = System.nanoTime();

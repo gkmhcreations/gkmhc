@@ -220,7 +220,7 @@ public class Panchangam extends Fragment {
             } catch (final Exception ex) {
                 ex.printStackTrace();
             }
-        }, 50);
+        }, 100);
     }
 
     /**
@@ -497,30 +497,33 @@ public class Panchangam extends Fragment {
      */
     private void updatePanchangamFragment(View root) {
         long pStartTime = System.nanoTime();
-        int pos = panchangamListView.getFirstVisiblePosition();
-        int numPanchangamFields = panchangamValues.size();
-        if (numPanchangamFields == NUM_PANCHANGAM_FIELDS) {
-            PanchangamAdapter panchangamAdapter = new PanchangamAdapter(getContext(),
-                    panchangamFields, panchangamValues, lagnamExactList, lagnamFullDayList,
-                    kaalamExactList, kaalamVibhaagahList, horaiExactList, horaiFullDayList);
-            panchangamListView.setAdapter(panchangamAdapter);
-            panchangamListView.setSelection(pos);
+        if ((panchangamValues != null) && (panchangamValues.size() > 0)) {
+            int pos = panchangamListView.getFirstVisiblePosition();
+            int numPanchangamFields = panchangamValues.size();
+            if (numPanchangamFields == NUM_PANCHANGAM_FIELDS) {
+                PanchangamAdapter panchangamAdapter = new PanchangamAdapter(getContext(),
+                        panchangamFields, panchangamValues, lagnamExactList, lagnamFullDayList,
+                        kaalamExactList, kaalamVibhaagahList, horaiExactList, horaiFullDayList);
+                panchangamListView.setAdapter(panchangamAdapter);
+                panchangamListView.setSelection(pos);
+            }
         }
 
         updateCurLocation(mainActivity.getLocationCity());
 
         // Final Step: update Header with today's date in native format (Gregorian format)
-        TextView textView = root.findViewById(R.id.nithya_panchangam_hdr);
-        int currYear = vedicCalendar.get(Calendar.YEAR);
-        int currDate = vedicCalendar.get(Calendar.DATE);
-        int dayOfWeek = vedicCalendar.get(Calendar.DAY_OF_WEEK) - 1;
-        String[] dayNames = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
-        String npHeader = refDinaAnkam + ", " + vaasaramStr + "-" + maasamStr + " (" +
-                dayNames[dayOfWeek] + ", " + currDate + "-" +
-                vedicCalendar.getDisplayName(Calendar.MONTH, Calendar.SHORT,
-                        Locale.ENGLISH) + "-" + currYear + ")";
-        textView.setText(npHeader);
-
+        if (vedicCalendar != null) {
+            TextView textView = root.findViewById(R.id.nithya_panchangam_hdr);
+            int currYear = vedicCalendar.get(Calendar.YEAR);
+            int currDate = vedicCalendar.get(Calendar.DATE);
+            int dayOfWeek = vedicCalendar.get(Calendar.DAY_OF_WEEK) - 1;
+            String[] dayNames = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+            String npHeader = refDinaAnkam + ", " + vaasaramStr + "-" + maasamStr + " (" +
+                    dayNames[dayOfWeek] + ", " + currDate + "-" +
+                    vedicCalendar.getDisplayName(Calendar.MONTH, Calendar.SHORT,
+                            Locale.ENGLISH) + "-" + currYear + ")";
+            textView.setText(npHeader);
+        }
         updatePanchangamFieldsHeader();
         long pEndTime = System.nanoTime();
         Log.d("PanchangamProfiler","Overall Update Time Taken: " +

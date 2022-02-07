@@ -919,7 +919,7 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
             String assetsLocation = MainActivity.getPathToLocalAssets(context);
             VedicCalendar vedicCalendar = VedicCalendar.getInstance(
                     assetsLocation, MainActivity.readPrefPanchangamType(context), currCalendar,
-                    placesInfo.longitude, placesInfo.latitude, placesInfo.timezone,
+                    placesInfo.longitude, placesInfo.latitude, placesInfo.timeZoneID,
                     MainActivity.readPrefAyanamsaSelection(context),
                     MainActivity.readPrefChaandramanaType(context),
                     vedicCalendarLocaleList);

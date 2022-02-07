@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
+
 import swisseph.*;
 
 /**
@@ -79,6 +81,7 @@ public class VedicCalendar extends Calendar {
     private double suryaGathi;                  // Vakyam
     private double chandraGathi;                // Vakyam
     private int timeFormatSettings = PANCHANGAM_TIME_FORMAT_HHMM;
+    private final String timeZoneID;
 
     private static class FieldSpan {
         private final int fieldIndex;
@@ -149,6 +152,7 @@ public class VedicCalendar extends Calendar {
     private static final int VAKYAM_CHANDRASHTAMA_NAKSHATHRAM_OFFSET = 15;
     private static final double MAX_KAALAM_FACTOR = 0.125;
     private static final double LAGNAM_DAILY_OFFSET = 4.05; // TODO - This needs to be fine-tuned
+    private static final double ONE_HOUR_IN_MSEC = 3600000;
     private static double vcLongitude = (82 + 58.34 / 60.0); // Default to Varanasi
     private static double vcLatitude = (25 + 19 / 60.0); // Default to Varanasi
     private static double defTimezone = INDIAN_STANDARD_TIME; // IST
@@ -423,7 +427,7 @@ public class VedicCalendar extends Calendar {
      * @param calendar          A Calendar date as per Gregorian Calendar
      * @param locLongitude      Longitude of the location
      * @param locLatitude       Latitude of the location
-     * @param timeZoneOffset    Timezone of the location (in hours)
+     * @param timeZoneID        Timezone of the location (as per Timezone format)
      * @param prefAyanamsa      Preferred Ayanamsa
      * @param chaandramanaType  Preferred Chaandramana Type
      * @param vcLocaleList      List of panchangam fields & values as per the locale of choice.
@@ -440,7 +444,7 @@ public class VedicCalendar extends Calendar {
      */
     public static VedicCalendar getInstance(String localPath, int panchangamType, Calendar calendar,
                                             double locLongitude, double locLatitude,
-                                            double timeZoneOffset, int prefAyanamsa,
+                                            String timeZoneID, int prefAyanamsa,
                                             int chaandramanaType,
                                             HashMap<Integer, String[]> vcLocaleList)
             throws InvalidParameterSpecException {
@@ -480,9 +484,22 @@ public class VedicCalendar extends Calendar {
             throw new InvalidParameterSpecException("Invalid Ayanamsa!");
         }
 
+        // Check if the timezone ID is listed among the supported ones.
+        boolean foundValidTimeZone = false;
+        String[] timeZoneIDs = TimeZone.getAvailableIDs();
+        for (String str : timeZoneIDs) {
+            if (str != null && str.equals(timeZoneID)) {
+                foundValidTimeZone = true;
+                break;
+            }
+        }
+        if (!foundValidTimeZone) {
+            throw new InvalidParameterSpecException("Invalid Timezone ID!");
+        }
+
         // Initialize SwissEph library based on the assets in localPath
         initSwissEph(localPath);
-        return new VedicCalendar(panchangamType, calendar, locLongitude, locLatitude, timeZoneOffset,
+        return new VedicCalendar(panchangamType, calendar, locLongitude, locLatitude, timeZoneID,
                                  prefAyanamsa, chaandramanaType, vcLocaleList);
     }
 
@@ -498,6 +515,20 @@ public class VedicCalendar extends Calendar {
         refMonth = refCalendar.get(Calendar.MONTH) + 1;
         refYear = refCalendar.get(Calendar.YEAR);
         refVaasaram = refCalendar.get(Calendar.DAY_OF_WEEK);
+
+        /*
+         * Get current location's timezone and align timezone offset along with DST.
+         */
+        TimeZone timeZone = TimeZone.getTimeZone(timeZoneID);
+        if (timeZone != null) {
+            Calendar calendar = Calendar.getInstance(timeZone);
+            calendar.set(refYear, (refMonth - 1), refDate, refHour, refMin);
+            double zoneOffset = calendar.get(Calendar.ZONE_OFFSET);
+            zoneOffset /= ONE_HOUR_IN_MSEC; // Convert to hours
+            double dstOffset = calendar.get(Calendar.DST_OFFSET);
+            dstOffset /= ONE_HOUR_IN_MSEC; // Convert to hours
+            defTimezone = zoneOffset + dstOffset;
+        }
     }
 
     /**
@@ -722,13 +753,13 @@ public class VedicCalendar extends Calendar {
      * @param refCalendar       A Calendar date as per Gregorian Calendar
      * @param locLongitude      Longitude of the location
      * @param locLatitude       Latitude of the location
-     * @param timeZoneOffset    Timezone of the location (in hours)
+     * @param timeZoneID        Timezone of the location (as per Timezone format)
      * @param prefAyanamsa      Preferred Ayanamsa
      * @param chaandramanaType  Preferred Chaandramana Type
      * @param vcLocaleList      List of panchangam fields & values as per the locale of choice.
      */
     private VedicCalendar(int panchangamType, Calendar refCalendar,
-                          double locLongitude, double locLatitude, double timeZoneOffset,
+                          double locLongitude, double locLatitude, String timeZoneID,
                           int prefAyanamsa, int chaandramanaType,
                           HashMap<Integer, String[]> vcLocaleList) {
         // Create a Dina Vishesham list for each instance as the locale may change for
@@ -738,7 +769,7 @@ public class VedicCalendar extends Calendar {
         vedicCalendarLocaleList = vcLocaleList;
         createDinaVisheshamsList();
 
-        defTimezone = timeZoneOffset;
+        this.timeZoneID = timeZoneID;
 
         // Note:
         // Drik Ganitham - SwissEph is used for all calculations and is aligned to UTC
@@ -1458,7 +1489,7 @@ public class VedicCalendar extends Calendar {
             // 2) Get 1st Tithi Span for the given calendar day
             tithiSpan = getDrikTithiSpan(((tithiAtDayStart + 1) % MAX_TITHIS), calcLocal);
 
-            // If 1st Tithi occurs before sunrise, then start with next Tithi.
+            // If span is -ve, then choose the next one.
             if (tithiSpan < 0) {
                 refTithiSpan = 0;
                 tithiAtDayStart += 1;
@@ -1839,7 +1870,7 @@ public class VedicCalendar extends Calendar {
             // 2) Get 1st Nakshatram Span for the given calendar day
             nakshatramSpan = getDrikNakshatramSpan(nakshatramIndex, calcLocal);
 
-            // If 1st Nakshatram occurs before sunrise, then start with next Nakshatram.
+            // If span is -ve, then choose the next one.
             if (nakshatramSpan < 0) {
                 refNakshatramSpan = 0;
                 nakshatramIndex += 1;
@@ -1964,7 +1995,7 @@ public class VedicCalendar extends Calendar {
             // 2) Get 1st Nakshatram Span for the given calendar day
             nakshatramSpan = getDrikNakshatramSpan(nakshatramIndex, false);
 
-            // If 1st Nakshatram occurs before sunrise, then start with next Nakshatram.
+            // If span is -ve, then choose the next one.
             if (nakshatramSpan < 0) {
                 refNakshatramSpan = 0;
                 nakshatramIndex += 1;
@@ -2070,8 +2101,8 @@ public class VedicCalendar extends Calendar {
             // 2) Get 1st Raasi span for the given calendar day
             raasiSpan = getDrikRaasiSpan(raasiIndex, false);
 
-            // If 1st Yogam occurs before sunrise, then start with next Yogam.
-            if (raasiSpan < sunRiseTotalMins) {
+            // If span is -ve, then choose the next one.
+            if (raasiSpan < 0) {
                 raasiIndex += 1;
                 raasiIndex %= MAX_RAASIS;
                 raasiSpan = getDrikNakshatramSpan(raasiIndex, false);
@@ -2162,8 +2193,8 @@ public class VedicCalendar extends Calendar {
             // 2) Get 1st Yogam Span for the given calendar day
             yogamSpan = getDrikYogamSpan(yogamIndex, false);
 
-            // If 1st Yogam occurs before sunrise, then start with next Yogam.
-            if (yogamSpan < sunRiseTotalMins) {
+            // If span is -ve, then choose the next one.
+            if (yogamSpan < 0) {
                 yogamIndex += 1;
                 yogamIndex %= MAX_NAKSHATHRAMS;
                 yogamSpan = getDrikNakshatramSpan(yogamIndex, false);
@@ -2260,7 +2291,7 @@ public class VedicCalendar extends Calendar {
             // 2) Get 1st Karanam Span for the given calendar day
             karanamSpan = getDrikKaranamSpan(((firstHalfKaranam + 1) % MAX_KARANAMS), false);
 
-            // If 1st Karanam occurs before sunrise, then start with next Karanam.
+            // If span is -ve, then choose the next one.
             if (karanamSpan < 0) {
                 firstHalfKaranam += 1;
                 firstHalfKaranam %= MAX_KARANAMS;
@@ -2349,8 +2380,8 @@ public class VedicCalendar extends Calendar {
             // 2) Get 1st Nakshatram span for the given calendar day
             nakshatramSpan = getDrikNakshatramSpan(nakshatramIndex, false);
 
-            // If 1st Nakshatram occurs before sunrise, then start with next Nakshatram.
-            if (nakshatramSpan < sunRiseTotalMins) {
+            // If span is -ve, then choose the next one.
+            if (nakshatramSpan < 0) {
                 nakshatramIndex += 1;
                 nakshatramIndex %= MAX_NAKSHATHRAMS;
                 nakshatramSpan = getDrikNakshatramSpan(nakshatramIndex, false);

@@ -49,7 +49,7 @@ public class VedicCalendarVakhyamSolarUnitTest {
             vedicCalendar = VedicCalendar.getInstance(assetsLocation,
                     VedicCalendar.PANCHANGAM_TYPE_VAKHYAM_LUNI_SOLAR, currCalendar,
                     placesInfo.longitude, placesInfo.latitude,
-                    placesInfo.timezone, VedicCalendar.AYANAMSA_CHITRAPAKSHA,
+                    placesInfo.timeZoneID, VedicCalendar.AYANAMSA_CHITRAPAKSHA,
                     VedicCalendar.CHAANDRAMAANAM_TYPE_AMANTA, vedicCalendarLocaleList);
             vedicCalendar.configureDinaVisheshamRules(assetsLocation + "/" +
                     MainActivity.DINA_VISHESHAM_RULES_FILE);

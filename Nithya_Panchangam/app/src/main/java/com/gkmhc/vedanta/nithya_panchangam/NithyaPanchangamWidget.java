@@ -51,12 +51,9 @@ public class NithyaPanchangamWidget extends AppWidgetProvider {
                     MainActivity.readPrefPanchangamType(context), currCalendar, placesInfo.longitude,
                     placesInfo.latitude, placesInfo.timeZoneID, ayanamsaMode,
                     MainActivity.readPrefChaandramanaType(context), vedicCalendarLocaleList);
-            int refDinaangam =
-                    vedicCalendar.getDinaAnkam();
-            String vaasaramStr =
-                    vedicCalendar.getVaasaram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
-            String maasamStr =
-                    vedicCalendar.getMaasam(VedicCalendar.MATCH_WIDGET_EXACT);
+            int refDinaangam = vedicCalendar.getDinaAnkam();
+            String vaasaramStr = vedicCalendar.getVaasaram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
+            String maasamStr = vedicCalendar.getMaasam(VedicCalendar.MATCH_WIDGET_EXACT);
             float textSize = 12f;
 
             // Increase font size for Sanskrit alone but keep default for Tamil & English
@@ -74,10 +71,11 @@ public class NithyaPanchangamWidget extends AppWidgetProvider {
             Intent openMainApp = new Intent(context, SplashScreen.class);
             PendingIntent pIntent = PendingIntent.getActivity(context, 0, openMainApp, 0);
             views.setOnClickPendingIntent(R.id.widget_clock, pIntent);
+
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views);
         } catch (Exception e) {
-            // Do Nothing
+            e.printStackTrace();
         }
     }
 

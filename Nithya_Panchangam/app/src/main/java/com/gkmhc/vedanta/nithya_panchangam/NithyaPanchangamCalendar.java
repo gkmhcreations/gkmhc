@@ -108,7 +108,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
                     placesInfo.timeZoneID, ayanamsaMode, MainActivity.readPrefChaandramanaType(this),
                     vedicCalendarLocaleList);
         } catch (Exception e) {
-            // Nothing to do here.
+            e.printStackTrace();
         }
 
         super.onCreate(savedInstanceState);
@@ -244,17 +244,20 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
     private void setMonthView() {
         monthYearText.setText(calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT,
                               Locale.ENGLISH) + " " + npYear);
-        selPosition = getDrikDaysInMonth(calendar);
-        CalendarAdapter calendarAdapter = new CalendarAdapter(this, gregDaysInMonth,
-                drikDaysInMonth, drikImgIDOfMonth, drikMaasam, this);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
-        calendarRecyclerView.setHasFixedSize(true);
-        calendarRecyclerView.setLayoutManager(layoutManager);
-        calendarRecyclerView.setAdapter(calendarAdapter);
-        calendarAdapter.notifyDataSetChanged();
+        int selPos = getDrikDaysInMonth(calendar);
+        if (selPos != -1) {
+            selPosition = selPos;
+            CalendarAdapter calendarAdapter = new CalendarAdapter(this, gregDaysInMonth,
+                    drikDaysInMonth, drikImgIDOfMonth, drikMaasam, this);
+            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
+            calendarRecyclerView.setHasFixedSize(true);
+            calendarRecyclerView.setLayoutManager(layoutManager);
+            calendarRecyclerView.setAdapter(calendarAdapter);
+            calendarAdapter.notifyDataSetChanged();
 
-        selPosition += (refDate - 1);
-        new Handler().postDelayed(() -> selectCell(selPosition),100);
+            selPosition += (refDate - 1);
+            new Handler().postDelayed(() -> selectCell(selPosition), 100);
+        }
     }
 
     private int getDrikDaysInMonth (Calendar calendar) {
@@ -355,6 +358,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
                     calendarIter.add(Calendar.DATE, 1);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    return -1;
                 }
             }
             //long mEndTime = System.nanoTime();

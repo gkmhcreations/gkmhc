@@ -17,6 +17,7 @@
         android:text="@string/def_stopwatch_value"
         android:textSize="48sp"
         android:minHeight="48dp"
+        android:autoSizeMaxTextSize="48sp"
         android:maxLines="2"
         android:textStyle="normal"
         android:textColor="@color/blue" />

@@ -776,17 +776,15 @@ public class VedicCalendar extends Calendar {
         // Vakhyam - SwissEph is used only for Sunrise & Sunset but for the rest uses local
         //           calculations and is aligned to IST
         //           For now, no need to take care of timezone for local calculations.
-
-        if (prefAyanamsa == AYANAMSA_CHITRAPAKSHA) {
-            // Set sidereal mode: SE_SIDM_TRUE_CITRA for "Drik Ganitham"
-            swissEphInst.swe_set_sid_mode(SweConst.SE_SIDM_TRUE_CITRA, 0, 0);
-        } else if (prefAyanamsa == AYANAMSA_KRISHNAMURTI) {
+        int siderealMode = SweConst.SE_SIDM_TRUE_CITRA; // Default mode
+        if (prefAyanamsa == AYANAMSA_KRISHNAMURTI) {
             // Set sidereal mode: SE_SIDM_KRISHNAMURTI for "Krishnamurti" Ayanamsa
-            swissEphInst.swe_set_sid_mode(SweConst.SE_SIDM_KRISHNAMURTI, 0, 0);
-        } else {
+            siderealMode = SweConst.SE_SIDM_KRISHNAMURTI;
+        } else if (prefAyanamsa == AYANAMSA_LAHIRI) {
             // Set sidereal mode: SE_SIDM_LAHIRI for "Lahiri" Ayanamsa
-            swissEphInst.swe_set_sid_mode(SweConst.SE_SIDM_LAHIRI, 0, 0);
+            siderealMode = SweConst.SE_SIDM_LAHIRI;
         }
+        swissEphInst.swe_set_sid_mode(siderealMode, 0, 0);
 
         // If no longitude or latitude is given, then assume Varanasi's longitude & latitude
         if (locLongitude != 0) {
@@ -1328,7 +1326,7 @@ public class VedicCalendar extends Calendar {
 
         String[] pakshamList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_PAKSHAM);
         String pakshamStr = pakshamList[pakshamIndex];
-        String secondPakshamStr = pakshamList[(pakshamIndex + 1) % MAX_PAKSHAMS];
+        String secondPakshamStr = pakshamList[secondPakshamIndex];
         // If the query is for "Sankalpam", then return "tithi" + "suffix" (locale-specific)
         // 3 scenarios here:
         // 1) If 1st Tithi is present before sunrise then choose 2nd Tithi (or)
@@ -1341,7 +1339,7 @@ public class VedicCalendar extends Calendar {
         //      next_nakshatram}
         //    - Sankalpam needs the exact Tithi at the time of the current query
         if (queryType == MATCH_PANCHANGAM_FULLDAY) {
-            if (tithiSpanHour < MAX_24HOURS) {
+            if (tithiSpan < MAX_MINS_IN_DAY_PLUS_MINS_TILL_SUNRISE) {
                 if (pakshamIndex != secondPakshamIndex) {
                     pakshamStr += " (" + formatTimeInTimeFormat(tithiSpan) + ")";
                     pakshamStr += ARROW_SYMBOL + secondPakshamStr;
@@ -1442,8 +1440,8 @@ public class VedicCalendar extends Calendar {
         //    - Sankalpam needs the exact Tithi at the time of the current query
         if ((queryType == MATCH_PANCHANGAM_FULLDAY) ||
             (queryType == MATCH_PANCHANGAM_FULLDAY_CALC_LOCAL)) {
-            tithiStr += " (" + formatTimeInTimeFormat(tithiSpan) + ")";
             if (tithiSpan < MAX_MINS_IN_DAY_PLUS_MINS_TILL_SUNRISE) {
+                tithiStr += " (" + formatTimeInTimeFormat(tithiSpan) + ")";
                 tithiStr += ARROW_SYMBOL + secondTithiStr;
             }
         } else if (queryType == MATCH_SANKALPAM_EXACT) {
@@ -1899,8 +1897,8 @@ public class VedicCalendar extends Calendar {
         //    - Sankalpam needs the exact nakshatram at the time of the current query
         if ((queryType == MATCH_PANCHANGAM_FULLDAY) ||
             (queryType == MATCH_PANCHANGAM_FULLDAY_CALC_LOCAL)) {
-            nakshatramStr += " (" + formatTimeInTimeFormat(nakshatramSpan) + ")";
-            if (nakshatramSpanHour < MAX_24HOURS) {
+            if (nakshatramSpan < MAX_MINS_IN_DAY_PLUS_MINS_TILL_SUNRISE) {
+                nakshatramStr += " (" + formatTimeInTimeFormat(nakshatramSpan) + ")";
                 nakshatramStr += ARROW_SYMBOL + secondNakshatramStr;
             }
         } else if (queryType == MATCH_SANKALPAM_EXACT) {
@@ -2025,8 +2023,8 @@ public class VedicCalendar extends Calendar {
         //      next_nakshatram}
         //    - Sankalpam needs the exact nakshatram at the time of the current query
         if (queryType == MATCH_PANCHANGAM_FULLDAY) {
-            nakshatramStr += " (" + formatTimeInTimeFormat(nakshatramSpan) + ")";
-            if (nakshatramSpanHour < MAX_24HOURS) {
+            if (nakshatramSpan < MAX_MINS_IN_DAY_PLUS_MINS_TILL_SUNRISE) {
+                nakshatramStr += " (" + formatTimeInTimeFormat(nakshatramSpan) + ")";
                 nakshatramStr += ARROW_SYMBOL + secondNakshatramStr;
             }
         } else if (queryType == MATCH_SANKALPAM_EXACT) {
@@ -2118,7 +2116,7 @@ public class VedicCalendar extends Calendar {
         // For Panchangam, entire day's calculation would be good enough
         // But for Sankalpam, exact nakshatram given the current time would be desirable.
         if (queryType == MATCH_PANCHANGAM_FULLDAY) {
-            if (raasiSpanHour < MAX_24HOURS) {
+            if (raasiSpan < MAX_MINS_IN_DAY_PLUS_MINS_TILL_SUNRISE) {
                 raasiStr += " (" + formatTimeInTimeFormat(raasiSpan) + ")";
                 raasiStr += ARROW_SYMBOL + secondRaasiStr;
             }
@@ -2210,8 +2208,8 @@ public class VedicCalendar extends Calendar {
         //    - Panchangam needs full day's yogam details {yogam (HH:MM) > next_yogam}
         //    - Sankalpam needs the exact yogam at the time of the current query
         if (queryType == MATCH_PANCHANGAM_FULLDAY) {
-            yogamStr += " (" + formatTimeInTimeFormat(yogamSpan) + ")";
-            if (yogamSpanHour < MAX_24HOURS) {
+            if (yogamSpan < MAX_MINS_IN_DAY_PLUS_MINS_TILL_SUNRISE) {
+                yogamStr += " (" + formatTimeInTimeFormat(yogamSpan) + ")";
                 yogamStr += ARROW_SYMBOL + secondYogamStr;
             }
         } else if (queryType == MATCH_SANKALPAM_EXACT) {
@@ -2309,8 +2307,8 @@ public class VedicCalendar extends Calendar {
         //    - Panchangam needs full day's karanam details {karanam (HH:MM) > next_karanam}
         //    - Sankalpam needs the exact karanam at the time of the current query
         if (queryType == MATCH_PANCHANGAM_FULLDAY) {
-            karanamStr += " (" + formatTimeInTimeFormat(karanamSpan) + ")";
-            if (karanamSpanHour < MAX_24HOURS) {
+            if (karanamSpan < MAX_MINS_IN_DAY_PLUS_MINS_TILL_SUNRISE) {
+                karanamStr += " (" + formatTimeInTimeFormat(karanamSpan) + ")";
                 karanamStr += ARROW_SYMBOL + karanamSecHalfStr;
             }
         } else if (queryType == MATCH_SANKALPAM_EXACT) {
@@ -2400,8 +2398,8 @@ public class VedicCalendar extends Calendar {
         //    - Sankalpam needs the exact yogam at the time of the current query
         if (queryType == MATCH_PANCHANGAM_FULLDAY) {
             if (!ayogamStr.equalsIgnoreCase(secondAyogamStr)) {
-                ayogamStr += " (" + formatTimeInTimeFormat(nakshatramSpan) + ")";
-                if (nakshatramSpanHour < MAX_24HOURS) {
+                if (nakshatramSpan < MAX_MINS_IN_DAY_PLUS_MINS_TILL_SUNRISE) {
+                    ayogamStr += " (" + formatTimeInTimeFormat(nakshatramSpan) + ")";
                     ayogamStr += ARROW_SYMBOL + secondAyogamStr;
                 }
             }

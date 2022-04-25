@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="sankalpam_limitation_india_only">***** Bhāratadēśaṁ mātramē *****</string>
     <string name="sankalpam_shubam_begin_part1">"Mamopātta-samasta-duritakṣayadvārā śrī parameśvara-prītyarthaṃ śubhe śobhane muhūrte adya brahmaṇaḥ dvitīyaparārdhe śvetavarāhakalpe vaivasvata-manvantare aṣṭāviṃśatitame kaliyuge prathame pāde "</string>
+    <string name="sankalpam_shubam_begin_part2">"jambūdvīpe bhāratavarṣe bharatakhaṇḍe meroḥ dakṣiṇe pārśve "</string>
+    <string name="sankalpam_shubam_begin_part2_north_america">"kraun̄ca dvīpē, ramaṇaka varṣē, aindra khaṇḍē, mērōhō paścimē pārśva digbhāgē "</string>
+    <string name="sankalpam_shubam_begin_part3">śakābde asmin vartamāne vyāvahārike prabhavādīnāṃ ṣaṣṭyāḥ saṃvatsarāṇāṃ madhye</string>
+    <string name="sankalpam_shubam_end">evaṃ guṇa viśeṣaṇa viśiṣṭāyām asyām #### śubhatithau asmākam sarveṣāṃ sahakuṭumbāṇām kṣema, sthairya, vīrya, vijaya, āyuḥ ārogya, aiśvarya, abhivṛddhyartham, mama gṛhe mahālakṣmī nitya nivāsa siddhyartham, mama iṣṭa kāmya phala siddhyartham, mama vyāpāra, vyavahāra, udyoga abhivṛddhi siddhyartham, samasta maṅgala avāptyartham, śarīre vartamāna kāla vartiṣyamāna sakala roga parihāra dvārā kṣipra ārogya saukhyam siddhyartham</string>
+    <string name="sankalpam_punya_thithou">puṇya tithau</string>
+    <string name="sankalpam_srardham_begin_part1">Mamopātta samasta duritakṣayadvārā śrī parameśvara-prītyarthaṃ apavitraḥ pavitro vā sarvāvasthāgato\'pi vā| yaḥ smaretpuṇḍarīkākṣaṃ sa bāhyābhyantaraḥ śuciḥ|| mānasaṃ vācikaṃ pāpaṃ karmaṇā samupārjitam ||śrīrāmasmaraṇenaiva vyapohati na saṃśayaḥ|| śrī rāma rāma rāma| tithirviṣṇuḥ tathā vāraḥ nakṣatraṃ viṣṇureva ca| yogaśca karaṇaṃ caiva sarvaṃ viṣṇumayaṃ jagat| śrī govinda govinda govinda| adya śrī bhagavataḥ mahāpuruṣasya viṣṇorājñayā pravartamānasya adya brahmaṇaḥ dvitīyaparārdhe śvetavarāhakalpe vaivasvata-manvantare aṣṭāviṃśatitame kaliyuge prathame pāde </string>
+    <string name="sankalpam_srardham_begin_part2">jambūdvīpe bhāratavarṣe bharatakhaṇḍe meroḥ dakṣiṇe pārśve </string>
+    <string name="sankalpam_srardham_begin_part3">śakābde asmin vartamāne vyāvahārike prabhavādīnāṃ ṣaṣṭyāḥ saṃvatsarāṇāṃ madhye</string>
+    <string name="sankalpam_srardham_end_1">Viṣṇu yoga viṣṇu karaṇa evaṃ guṇa viśeṣaṇa viśiṣṭāyāṃ asyāṃ</string>
+    <string name="sankalpam_srardham_end_2">(prācīnāvīti) ............ gotrāṇām, vasurudra āditya svarūpāṇām asmad pitṛ pitāmaha prapitāmahānām --- (mātā asti cet) pitāmahī pituḥ pitāmahī pituḥ prapitāmahī (no cet) mātṛ, pitāmahī pituḥ prapitāmahīnām (mātuḥ janma gotram vadatu) ............ gotrāṇām sapatnīka, mātāmaha, mātuḥ pitāmaha, mātuḥ prapitāmahānām ubhaya vaṃśa pitṝṇām akṣayya tṛptayartham</string>
+    <string name="sankalpam_srardham_end_3">puṇya kāle darśaśrāddham hiraṇyarūpeṇa adya kariṣye</string>
     <string name="app_name">Nitya pañcāṅgaṃ</string>
     <string name="nithya_panchangam_header">Nitya pañcāṅgaḥ</string>
     <string name="samvatsaram_heading">Saṃvatsaraḥ</string>
@@ -24,8 +36,6 @@
     <string name="alarm_tab_heading">Stara saṅketadhvaniḥ</string>
     <string name="stopwatch_tab_heading">Virāmaghaṭī</string>
     <string name="splash_screen_banner">Svāmiye śaraṇaṃ ayyappā</string>
-
-    <string name="sankalpam_shubam_end">evaṃ guṇa viśeṣaṇa viśiṣṭāyām asyām **** śubhatithau asmākam sarveṣāṃ sahakuṭumbāṇām kṣema, sthairya, vīrya, vijaya, āyuḥ ārogya, aiśvarya, abhivṛddhyartham, mama gṛhe mahālakṣmī nitya nivāsa siddhyartham, mama iṣṭa kāmya phala siddhyartham, mama vyāpāra, vyavahāra, udyoga abhivṛddhi siddhyartham, samasta maṅgala avāptyartham, śarīre vartamāna kāla vartiṣyamāna sakala roga parihāra dvārā kṣipra ārogya saukhyam siddhyartham</string>
     <string name="sankalpam_nama_samvathsare">nāma saṃvatsare</string>
     <string name="sankalpam_maase">māse</string>
     <string name="sankalpam_subha_thithou">Śubhatithau</string>
@@ -36,10 +46,6 @@
     <string name="chandrashtama_nakshathram_heading">candrāṣṭama nakṣatram</string>
     <string name="lagnam_heading">Lagnaḥ</string>
     <string name="horai_heading">Horā</string>
-    <string name="sankalpam_srardham_begin">Mamopātta samasta duritakṣayadvārā śrī parameśvara-prītyarthaṃ apavitraḥ pavitro vā sarvāvasthāgato\'pi vā| yaḥ smaretpuṇḍarīkākṣaṃ sa bāhyābhyantaraḥ śuciḥ|| mānasaṃ vācikaṃ pāpaṃ karmaṇā samupārjitam ||śrīrāmasmaraṇenaiva vyapohati na saṃśayaḥ|| śrī rāma rāma rāma| tithirviṣṇuḥ tathā vāraḥ nakṣatraṃ viṣṇureva ca| yogaśca karaṇaṃ caiva sarvaṃ viṣṇumayaṃ jagat| śrī govinda govinda govinda| adya śrī bhagavataḥ mahāpuruṣasya viṣṇorājñayā pravartamānasya adya brahmaṇaḥ dvitīyaparārdhe śvetavarāhakalpe vaivasvata-manvantare aṣṭāviṃśatitame kaliyuge prathame pāde jambūdvīpe bhāratavarṣe bharatakhaṇḍe meroḥ dakṣiṇe pārśve śakābde asmin vartamāne vyāvahārike prabhavādīnāṃ ṣaṣṭyāḥ saṃvatsarāṇāṃ madhye</string>
-    <string name="sankalpam_punya_thithou">puṇya tithau</string>
-    <string name="sankalpam_srardham_end_1">Viṣṇu yoga viṣṇu karaṇa evaṃ guṇa viśeṣaṇa viśiṣṭāyāṃ asyāṃ</string>
-    <string name="sankalpam_srardham_end_2">(prācīnāvīti) ............ gotrāṇām, vasurudra āditya svarūpāṇām asmad pitṛ pitāmaha prapitāmahānām --- (mātā asti cet) pitāmahī pituḥ pitāmahī pituḥ prapitāmahī (no cet) mātṛ, pitāmahī pituḥ prapitāmahīnām (mātuḥ janma gotram vadatu) ............ gotrāṇām sapatnīka, mātāmaha, mātuḥ pitāmaha, mātuḥ prapitāmahānām ubhaya vaṃśa pitṝṇām akṣayya tṛptayartham</string>
     <string name="amruthathi_yogam_heading">amṛtādi yogaṃ</string>
     <string name="vaasaram_suffix">Vāsara</string>
     <string name="solar_calendar">Sauramānam</string>
@@ -126,7 +132,6 @@
     <string name="gkm_copyright">© GKM paramparā kṛti, 2022</string>
     <string name="snooze_alarm">Svāpa</string>
     <string name="dismiss_alarm">Muñca</string>
-    <string name="sankalpam_srardham_end_3">puṇya kāle darśaśrāddham hiraṇyarūpeṇa adya kariṣye</string>
     <string name="vedic">Vaidika</string>
     <string name="alarm_time">"Stara saṃketadhvani samayaṃ - "</string>
     <string name="vibrate_when_alarm_sounds">Vepati</string>
@@ -271,8 +276,8 @@
         <item>kṛṣṇa</item>
     </string-array>
 
-    <!-- Thithi (Lunar Day) -->
-    <string-array name="thithi_list">
+    <!-- Tithi (Lunar Day) -->
+    <string-array name="tithi_list">
         <item>prathamā</item>
         <item>dvitīyā</item>
         <item>tṛtīyā</item>
@@ -305,8 +310,8 @@
         <item>amāvasyā</item>
     </string-array>
 
-    <!-- Sankalpa Thithi (Lunar Day) with grammar suffix -->
-    <string-array name="sankalpa_thithi_list">
+    <!-- Sankalpa Tithi (Lunar Day) with grammar suffix -->
+    <string-array name="sankalpa_tithi_list">
         <item>prathamāyāṃ</item>
         <item>dvitīyāyāṃ</item>
         <item>tṛtīyāyāṃ</item>
@@ -448,7 +453,7 @@
         <item>vaidhṛtiḥ</item>
     </string-array>
 
-    <!-- Karanam (half-thithi) -->
+    <!-- Karanam (half-tithi) -->
     <string-array name="karanam_list">
         <item>kiṃstughnaḥ</item>
         <item>bavaḥ</item>
@@ -566,4 +571,25 @@
     </string-array>
     <string name="kaalam_details">Nityakalāhā</string>
     <string name="kaalam_heading">Kālahā</string>
+    <string name="thiru_ganitha_panchangam">Dṛggaṇita-Pañchāṅgam</string>
+    <string name="vakhya_panchangam">Vākya Pañcāṅgaṁ</string>
+    <string name="telugu_panchangam">Telugu pan̄cāṅgaṁ</string>
+    <string name="kannada_panchangam">Kannaḍa pan̄cāṅgaṁ</string>
+    <string name="vakyam_calendar_unavailable">Vakya Panchangam Calendar for next year is NOT yet available!</string>
+    <string name="humble_namaskarams">The primary aim of this app is to enable people to conveniently reckon the daily panchaangam, as well as various festivals &amp; observances. We apologise for any inadvertent errors that may have crept in, and request feedback for improvement. We dedicate this App to scholars and Panchaanga-karta(s) across the country, who have mastered these calculations and participate in Panchanga Sadas across the country, debating the nitty-gritties of various aspects of Panchangam(s). We request all app users to continue to support their traditional Panchanga(s), Panchanga-karta(s), and family Vathiyar(s). 🙏 Pls send your feedback to gkmhcreations@gmail.com.</string>
+    <string name="bodhayana_amavaasai">Bōdhāyana amāvāsya</string>
+    <string name="vaikunta_ekadashi">Vaikuṇṭa ēkādaśi</string>
+    <string name="shraadha_tithi_heading">Śrad\'dhā Tithiḥ</string>
+
+    <string name="shoolam_heading">Śūlam (Parihāraḥ)</string>
+    <!-- Kaala Vibhaagaha -->
+    <string-array name="shoolam_parihaaram_list">
+        <item>Pratīchī Dik (Guḍam)</item>
+        <item>Prāchī Dik (Dadhi)</item>
+        <item>Udīchī Dik (Kṣīram)</item>
+        <item>Udīchī Dik (Kṣīram)</item>
+        <item>Dakṣiṇā Dik (Tailam)</item>
+        <item>Pratīchī Dik (Guḍam)</item>
+        <item>Prāchī Dik (Dadhi)</item>
+    </string-array>
 </resources>

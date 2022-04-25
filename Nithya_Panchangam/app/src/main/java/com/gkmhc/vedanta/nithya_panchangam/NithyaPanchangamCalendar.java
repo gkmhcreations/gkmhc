@@ -319,7 +319,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
                     // 3) Get Maasam
                     //startTime = endTime;
                     String strMaasam =
-                            vedicCalendar.getMaasam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
+                            vedicCalendar.getMaasam(VedicCalendar.MATCH_SANKALPAM_EXACT);
                     //endTime = System.nanoTime();
                     //Log.d("NPCalProfiler","getMaasam()... Time Taken: " +
                     //        VedicCalendar.getTimeTaken(startTime, endTime));

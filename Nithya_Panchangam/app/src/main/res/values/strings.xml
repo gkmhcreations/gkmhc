@@ -3,11 +3,24 @@
     <string name="nithya_panchangam_header">
         "Nithya Panchangam"
     </string>
+    <string name="sankalpam_limitation_india_only">**** INDIA ONLY ****</string>
     <string name="sankalpam_shubam_begin_part1">"Mamo patha, samastha duritha kshayadwara Shri Parameshwara preethyartham shubhe shobhane muhoorthe adhyabrahmanaha dwithiya-parardhe shwetha varaha kalpe vaivasvatha manvanthare ashta vimshathi thame kaliyuge prathame pade "</string>
-    <string name="sankalpam_shubam_var_mid_portion" translatable="false">
-        "**** nama samvathsare Uttarayane/Dakshinayane **** rithou **** maase Krishnapakshe/Shuklapakshe **** shubha thithou ****vasara yuktaayaam **** nakshatra yuktaayaam **** nama yoga yuktaayaam, **** karana yuktaayaam"
-    </string>
-    <string name="sankalpam_shubam_end">evam guna visheshana vishishtayaam asyaam **** shubha thithou asmaakam, sarveshaam, sakudumbanaam, kshema, sthairya, veerya, vijaya, ayur arogya, aishwarya, abhivriddhyartham, mama gruhe mahalakshmi nitya nivaasa siddhyartham, mama ishta kaamya phala siddhyartham, mama vyaapaara, vyavahaara, udyoga abhivriddhi siddhyartham samastha mangala avaapthyartham, sharire vartamaanakaala varthishyamaana sakala rogha parihara dwara kshipra arogya saukhya siddhyartham</string>
+    <string name="sankalpam_shubam_begin_part2">"jambudweepe bhaaratha varshe bharatha khande meroho dakshine parshwe "</string>
+    <string name="sankalpam_shubam_begin_part3">shakabdhe asmin varthamane vyavahaarike prabhavadhinaam shashtyaaha samvatsaranaam madhye</string>
+    <string name="sankalpam_shubam_begin_part2_north_america">kraunchadweepe, ramanaka varshe, aindra khande, meroho pashchime parshwa digbhage</string>
+    <string name="sankalpam_shubam_begin_part2_oceania">kushadweepe, ramanaka varshe, aindra khande, meroho pashchime parshwa digbhage</string>
+    <string name="sankalpam_shubam_begin_part2_australia">shalmalidweepe, ramanaka varshe, aindra khande, meroho pashchime parshwa digbhage</string>
+    <string name="sankalpam_shubam_begin_part2_africa">pushkaradweepe, ramanaka varshe, aindra khande, meroho pashchime parshwa digbhage</string>
+    <string name="sankalpam_shubam_begin_part2_south_america">plaskadweepe, ramanaka varshe, aindra khande, meroho pashchime parshwa digbhage</string>
+    <string name="sankalpam_shubam_begin_part2_europe">shakadweepe, ramanaka varshe, aindra khande, meroho pashchime parshwa digbhage</string>
+    <string name="sankalpam_punya_thithou">punya thithou</string>
+    <string name="sankalpam_srardham_begin_part1">Mamo patha, samastha duritha kshyadwara Shri Parameshwara preethyartham, apavithra pavithrova sarvavastham gathopiva | yassmareth pundarikaksham sa baahyaa abhyantharaha suchihi || maanasam vaachikam paapam karmanaa samupaarjitham | Shri Rama smaranenaiva vyapohathi na samshayaha ||  Shri Rama Rama Rama | Thithirvishnuhu thathaa vaaraha nakshathram Vishnu revacha | yogashcha karanam chaiva sarvam Vishnu mayam Jagat || Shri Govinda Govinda Govinda || Adya Shri Bhagavathaha maha purushasya Vishnoho aajnayaa pravarthamaanasya adya brahmanaha dwithiya paraardhe shwetha varaha kalpe vaivasvatha manvanthare ashtaavimshathi thame kaliyuge prathame pade </string>
+    <string name="sankalpam_srardham_begin_part2">jambudweepe bhaaratha varshe bharatha khande meroho dakshine parshwe </string>
+    <string name="sankalpam_srardham_begin_part3">shakabde asmin varthamane vyavahaarike prabhavadinaam shashtyaaha samvatsaranaam madhye</string>
+    <string name="sankalpam_srardham_end_1">Vishnu yoga Vishnu karana evam guna visheshana vishishtayaam asyaam</string>
+    <string name="sankalpam_srardham_end_2">(Prachinaviti) ............ Gothranaam, Vasurudra adithya swaroopanam asmad pithru pithamaha prapitamahaanam --- (if mother alive) pithamahi, pithu-pithamahi pithu-prapitaamahi (or else) (if mother not alive) matuhu, pithamahi, pithu-pithamahi, (mother’s gothram) ............ Gothranaam, sapatneeka, mathamaha, mathu-pithaamaha, mathu-prapithaamaha naam ubhaya vamsha pithrunaam akshayya thripthyartham</string>
+    <string name="sankalpam_srardham_end_3">punya kale Darsha Shrardham hiranya roopena adhya karishye</string>
+    <string name="sankalpam_shubam_end">evam guna visheshana vishishtayaam asyaam #### shubha thithou asmaakam, sarveshaam, sakudumbanaam, kshema, sthairya, veerya, vijaya, ayur arogya, aishwarya, abhivriddhyartham, mama gruhe mahalakshmi nitya nivaasa siddhyartham, mama ishta kaamya phala siddhyartham, mama vyaapaara, vyavahaara, udyoga abhivriddhi siddhyartham samastha mangala avaapthyartham, sharire vartamaanakaala varthishyamaana sakala rogha parihara dwara kshipra arogya saukhya siddhyartham</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="gkm_copyright">© GKM Heritage Creations, 2022</string>
@@ -37,7 +50,7 @@
     <string name="pref_sankalpam" translatable="false">Sankalpam</string>
     <string name="pref_sankalpam_details" translatable="false">Sankalpam Type</string>
     <string name="pref_sankalpam_type_shubam" translatable="false">Shubham</string>
-    <string name="pref_sankalpam_type_srardham" translatable="false">Shraaddham</string>
+    <string name="pref_sankalpam_type_srardham" translatable="false">Sraardham</string>
     <string name="pref_def_sankalpam_type" translatable="false">@string/pref_sankalpam_type_shubam</string>
     <string name="pref_ayanamsa_chitrapaksha" translatable="false">Chitrapaksha</string>
     <string name="pref_ayanamsa_lahiri" translatable="false">Lahiri</string>
@@ -97,7 +110,7 @@
     <string name="raasi_heading">Raasi (Planet)</string>
     <string name="nakshatram_heading">Nakshatram (Star)</string>
     <string name="yogam_heading">Yogam (Time)</string>
-    <string name="karanam_heading">Karanam (Half-Thithi)</string>
+    <string name="karanam_heading">Karanam (Half-Tithi)</string>
     <string name="good_time_heading">Good Time</string>
     <string name="raahu_kaalam_heading">Raahu Kaalam</string>
     <string name="emakandam_heading">Yamagandam</string>
@@ -117,11 +130,6 @@
     <string name="chandrashtama_nakshathram_heading">Chandrashtama Nakshatram (Star)</string>
     <string name="lagnam_heading">Lagnam</string>
     <string name="horai_heading">Horai</string>
-    <string name="sankalpam_srardham_begin">Mamo patha, samastha duritha kshyadwara Shri Parameshwara preethyartham, apavithra pavithrova sarvavastham gathopiva | yassmareth pundarikaksham sa baahyaa abhyantharaha suchihi || maanasam vaachikam paapam karmanaa samupaarjitham | Shri Rama smaranenaiva vyapohathi na samshayaha ||  Shri Rama Rama Rama | Thithirvishnuhu thathaa vaaraha nakshathram Vishnu revacha | yogashcha karanam chaiva sarvam Vishnu mayam Jagat || Shri Govinda Govinda Govinda || Adya Shri Bhagavathaha maha purushasya Vishnoho aajnayaa pravarthamaanasya adya brahmanaha dwithiya paraardhe shwetha varaha kalpe vaivasvatha manvanthare ashtaavimshathi thame kaliyuge prathame pade jambudweepe bhaaratha varshe bharatha khande meroho dakshine parshwe shakabde asmin varthamane vyavahaarike prabhavadinaam shashtyaaha samvatsaranaam madhye</string>
-    <string name="sankalpam_punya_thithou">punya thithou</string>
-    <string name="sankalpam_srardham_end_1">Vishnu yoga Vishnu karana evam guna visheshana vishishtayaam asyaam</string>
-    <string name="sankalpam_srardham_end_2">(Prachinaviti) ............ Gothranaam, Vasurudra adithya swaroopanam asmad pithru pithamaha prapitamahaanam --- (if mother alive) pithamahi, pithu-pithamahi pithu-prapitaamahi (or else) (if mother not alive) matuhu, pithamahi, pithu-pithamahi, (mother’s gothram) ............ Gothranaam, sapatneeka, mathamaha, mathu-pithaamaha, mathu-prapithaamaha naam ubhaya vamsha pithrunaam akshayya thripthyartham</string>
-    <string name="sankalpam_srardham_end_3">punya kale Darsha Shrardham hiranya roopena adhya karishye</string>
     <string name="amruthathi_yogam_heading">Amruthathi Yogam</string>
     <string name="vaasaram_suffix">vaasara</string>
     <string name="solar_calendar">Sauramānam</string>
@@ -383,8 +391,8 @@
         <item>Krishna</item>
     </string-array>
 
-    <!-- Thithi (Lunar Day) -->
-    <string-array name="thithi_list">
+    <!-- Tithi (Lunar Day) -->
+    <string-array name="tithi_list">
         <item>Prathama</item>
         <item>Dvithiya</item>
         <item>Thrithiya</item>
@@ -417,8 +425,8 @@
         <item>Amavasya</item>
     </string-array>
 
-    <!-- Sankalpa Thithi (Lunar Day) with grammar suffix -->
-    <string-array name="sankalpa_thithi_list">
+    <!-- Sankalpa Tithi (Lunar Day) with grammar suffix -->
+    <string-array name="sankalpa_tithi_list">
         <item>Prathamayam</item>
         <item>Dvithiyayam</item>
         <item>Thrithiyayam</item>
@@ -560,7 +568,7 @@
         <item>Vaithruthi</item>
     </string-array>
 
-    <!-- Karanam (half-thithi) -->
+    <!-- Karanam (half-tithi) -->
     <string-array name="karanam_list">
         <item>Kimsthuknam</item>
         <item>Bava</item>
@@ -689,28 +697,7 @@
         <item>Pradosha</item>
         <item>Dhinanta</item>
     </string-array>
-    <string name="kaalam_details">Nithya Kaalam</string>
-    <string name="kaalam_heading">Kaalam</string>
-    <string name="thiru_ganitha_panchangam">Drik Ganitha Panchangam</string>
-    <string name="vakhya_panchangam">Vakya Panchangam</string>
-    <string name="telugu_panchangam">Telugu Panchangam</string>
-    <string name="kannada_panchangam">Kannada Panchangam</string>
-    <string name="vakyam_calendar_unavailable">Vakya Panchangam Calendar for next year is NOT yet available!</string>
-    <string name="learn_more">Learn More</string>
-    <string name="humble_namaskarams">The primary aim of this app is to enable people to conveniently reckon the daily panchaangam, as well as various festivals &amp; observances. We apologise for any inadvertent errors that may have crept in, and request feedback for improvement. We dedicate this App to scholars and Panchaanga-karta(s) across the country, who have mastered these calculations and participate in "Panchanga Sadas" across the country, debating the nitty-gritties of various aspects of Panchangam(s). We request all app users to continue to support their traditional Panchanga(s), Panchanga-karta(s), and family Vathiyar(s). 🙏 Pls send your feedback to gkmhcreations@gmail.com.</string>
-    <string name="sankalpam_shubam_begin_part2">"jambudweepe bhaaratha varshe bharatha khande meroho dakshine parshwe "</string>
-    <string name="sankalpam_shubam_begin_part3">shakabdhe asmin varthamane vyavahaarike prabhavadhinaam shashtyaaha samvatsaranaam madhye</string>
-    <string name="sankalpam_shubam_begin_part2_north_america">kraunchadweepe, ramanaka varshe, aindra khande, meroho pashchime parshwa digbhage</string>
-    <string name="sankalpam_shubam_begin_part2_oceania">kushadweepe, ramanaka varshe, aindra khande, meroho pashchime parshwa digbhage</string>
-    <string name="sankalpam_shubam_begin_part2_australia">shalmalidweepe, ramanaka varshe, aindra khande, meroho pashchime parshwa digbhage</string>
-    <string name="sankalpam_shubam_begin_part2_africa">pushkaradweepe, ramanaka varshe, aindra khande, meroho pashchime parshwa digbhage</string>
-    <string name="sankalpam_shubam_begin_part2_south_america">plaskadweepe, ramanaka varshe, aindra khande, meroho pashchime parshwa digbhage</string>
-    <string name="sankalpam_shubam_begin_part2_europe">shakadweepe, ramanaka varshe, aindra khande, meroho pashchime parshwa digbhage</string>
-    <string name="vaikunta_ekadashi">Vaikunta Ekadashi</string>
-    <string name="bodhayana_amavaasai">Bodhayana Amavaasai</string>
-    <string name="shraadha_tithi_heading">Shraarddha Tithi</string>
 
-    <string name="shoolam_heading">Shoolam (Parihaaram)</string>
     <!-- Kaala Vibhaagaha -->
     <string-array name="shoolam_parihaaram_list">
         <item>West (Jaggery)</item>
@@ -721,4 +708,19 @@
         <item>West (Jaggery)</item>
         <item>East (Curd)</item>
     </string-array>
+
+    <string name="kaalam_details">Nithya Kaalam</string>
+    <string name="kaalam_heading">Kaalam</string>
+    <string name="thiru_ganitha_panchangam">Drik Ganitha Panchangam</string>
+    <string name="vakhya_panchangam">Vakya Panchangam</string>
+    <string name="telugu_panchangam">Telugu Panchangam</string>
+    <string name="kannada_panchangam">Kannada Panchangam</string>
+    <string name="vakyam_calendar_unavailable">Vakya Panchangam Calendar for next year is NOT yet available!</string>
+    <string name="learn_more">Learn More</string>
+    <string name="humble_namaskarams">The primary aim of this app is to enable people to conveniently reckon the daily panchaangam, as well as various festivals &amp; observances. We apologise for any inadvertent errors that may have crept in, and request feedback for improvement. We dedicate this App to scholars and Panchaanga-karta(s) across the country, who have mastered these calculations and participate in "Panchanga Sadas" across the country, debating the nitty-gritties of various aspects of Panchangam(s). We request all app users to continue to support their traditional Panchanga(s), Panchanga-karta(s), and family Vathiyar(s). 🙏 Pls send your feedback to gkmhcreations@gmail.com.</string>
+    <string name="vaikunta_ekadashi">Vaikunta Ekadashi</string>
+    <string name="bodhayana_amavaasai">Bodhayana Amavaasai</string>
+    <string name="shraadha_tithi_heading">Shraarddha Tithi</string>
+
+    <string name="shoolam_heading">Shoolam (Parihaaram)</string>
 </resources>

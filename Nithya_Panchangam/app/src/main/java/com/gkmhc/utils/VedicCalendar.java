@@ -82,6 +82,7 @@ public class VedicCalendar extends Calendar {
     private double chandraGathi;                // Vakyam
     private int timeFormatSettings = PANCHANGAM_TIME_FORMAT_HHMM;
     private final String timeZoneID;
+    private static HashMap<Integer, String[]> vcDefaultLocaleList = null;
 
     private static class FieldSpan {
         private final int fieldIndex;
@@ -226,6 +227,441 @@ public class VedicCalendar extends Calendar {
     public static final int AYANAMSA_CHITRAPAKSHA = 0;
     public static final int AYANAMSA_LAHIRI = 1;
     public static final int AYANAMSA_KRISHNAMURTI = 2;
+
+    // Samvatsaram (Year)
+    private static final String[] samvatsaram_list = {
+            "Prabhava",
+            "Vibhava",
+            "Sukla",
+            "Pramodoota",
+            "Prachorpaththi",
+            "Aangirasa",
+            "Srimukha",
+            "Bhava",
+            "Yuva",
+            "Dhaatu",
+            "Eeswara",
+            "Vehudhanya",
+            "Pramathi",
+            "Vikrama",
+            "Vishu",
+            "Chithrabhaanu",
+            "Subhaanu",
+            "Dhaarana",
+            "Paarthiba",
+            "Viya",
+            "Sarvajith",
+            "Sarvadhari",
+            "Virodhi",
+            "Vikruthi",
+            "Kara",
+            "Nandhana",
+            "Vijaya",
+            "Jaya",
+            "Manmatha",
+            "Dhunmukhi",
+            "Hevalambhi",
+            "Vilambhi",
+            "Vikari",
+            "Saarvari",
+            "Plava",
+            "Subakrith",
+            "Sobakrith",
+            "Krodhi",
+            "Visuvaasuva",
+            "Parabhaava",
+            "Plavanga",
+            "Keelaka",
+            "Saumya",
+            "Sadharana",
+            "Virodhikrithu",
+            "Paridhaabi",
+            "Paramaadhisa",
+            "Aanandha",
+            "Rakshasa",
+            "Nala",
+            "Pingala",
+            "Kalayukthi",
+            "Siddharthi",
+            "Raudhri",
+            "Dunmathi",
+            "Dhundubhi",
+            "Rudhrodhgaari",
+            "Raktakshi",
+            "Krodhana",
+            "Akshaya",
+    };
+
+    // Ayanam (6-month) period
+    private static final String[] ayanam_list = {
+            "Utharayanam",
+            "Dhakshinayanam",
+    };
+
+    // Rithu (Season) 2-month period
+    private static final String[] rithu_list = {
+            "Vasantharithu",
+            "Greeshmarithu",
+            "Varsharithu",
+            "Sharadarithu",
+            "Hemantharithu",
+            "Shishirarithu",
+    };
+
+    // Sauramaanam Maasam (Solar Month)
+    private static final String[] sauramaanam_maasam_list = {
+            "Mesha",
+            "Rishabha",
+            "Mithuna",
+            "Kataka",
+            "Simha",
+            "Kanni",
+            "Thula",
+            "Vrichiga",
+            "Dhanusu",
+            "Makara",
+            "Kumbha",
+            "Meena",
+    };
+
+    // Chaandramaanam Maasam (Lunar Month)
+    private static final String[] chaandramaanam_maasam_list = {
+            "Chaitra",
+            "Vaishakha",
+            "Jyeshta",
+            "Aashadha",
+            "Shraavana",
+            "Bhadrapada",
+            "Ashwina",
+            "Kaartika",
+            "Margashirsha",
+            "Pausha",
+            "Maagha",
+            "Phaalguna",
+    };
+
+    // Paksham (15-day) period
+    private static final String[] paksham_list = {
+            "Shukla",
+            "Krishna",
+    };
+
+    // Tithi (Lunar Day)
+    private static final String[] tithi_list = {
+            "Prathama",
+            "Dvithiya",
+            "Thrithiya",
+            "Chathurthi",
+            "Panchami",
+            "Sashti",
+            "Sapthami",
+            "Ashtami",
+            "Navami",
+            "Dashami",
+            "Ekadashi",
+            "Dvadashi",
+            "Thrayodashi",
+            "Chathurdashi",
+            "Pournami",
+            "Prathama",
+            "Dvithiya",
+            "Thrithiya",
+            "Chathurthi",
+            "Panchami",
+            "Sashti",
+            "Sapthami",
+            "Ashtami",
+            "Navami",
+            "Dashami",
+            "Ekadashi",
+            "Dvadashi",
+            "Thrayodashi",
+            "Chathurdashi",
+            "Amavasya",
+    };
+
+    // Sankalpa Tithi (Lunar Day) with grammar suffix
+    private static final String[] sankalpa_tithi_list = {
+            "Prathamayam",
+            "Dvithiyayam",
+            "Thrithiyayam",
+            "Chathurthyam",
+            "Panchamyam",
+            "Sashtyam",
+            "Sapthamyam",
+            "Ashtamyam",
+            "Navamyam",
+            "Dashamyam",
+            "Ekadashyam",
+            "Dvadashyam",
+            "Thrayodashyam",
+            "Chathurdashyam",
+            "Pournamyam",
+            "Prathamayam",
+            "Dvithiyayam",
+            "Thrithiyayam",
+            "Chathurthyam",
+            "Panchamyam",
+            "Sashtyam",
+            "Sapthamyam",
+            "Ashtamyam",
+            "Navamyam",
+            "Dashamyam",
+            "Ekadashyam",
+            "Dvadashyam",
+            "Thrayodashyam",
+            "Chathurdashyam",
+            "Amavasyayam",
+    };
+
+    // Raasi (Planet)
+    private static final String[] raasi_list = {
+            "Mesha",
+            "Rishabha",
+            "Mithuna",
+            "Kataka",
+            "Simha",
+            "Kanni",
+            "Thula",
+            "Vrichiga",
+            "Dhanusu",
+            "Makara",
+            "Kumbha",
+            "Meena",
+    };
+
+    // Nakshatram (Star) used for Panchangam purposes
+    private static final String[] nakshathram_list = {
+            "Ashwini",
+            "Bharani",
+            "Karthikai",
+            "Rohini",
+            "Mrigashirisham",
+            "Thiruvathirai",
+            "Punarpoosam",
+            "Poosam",
+            "Ayilyam",
+            "Magam",
+            "Pooram",
+            "Uthiram",
+            "Hastham",
+            "Chithirai",
+            "Swathi",
+            "Visaka",
+            "Anusham",
+            "Kettai",
+            "Moolam",
+            "Pooradam",
+            "Uthiradam",
+            "Thiruvonam",
+            "Avittam",
+            "Sadhayam",
+            "Poorattathi",
+            "Uthirattathi",
+            "Revathi",
+    };
+
+    // Sankalpa Nakshatram (Star) used for Sankapalpam Purposes with grammar suffix
+    private static final String[] sankalpa_nakshathram_list = {
+            "Ashwini",
+            "Apabharani",
+            "Kruthika",
+            "Rohini",
+            "Mrigashiro",
+            "Arthra",
+            "Punarvasu",
+            "Pushya",
+            "Aslesha",
+            "Maga",
+            "Purva Palguni",
+            "Uthira Palguni",
+            "Hastha",
+            "Chithirai",
+            "Swathi",
+            "Visaka",
+            "Anuradha",
+            "Jyeshta",
+            "Moola",
+            "Purvashada",
+            "Uthirashada",
+            "Sravana",
+            "Sravishta",
+            "Sadhabhishaka",
+            "Purva Proshtapadha",
+            "Uthira Proshtapadha",
+            "Revathi",
+    };
+
+    // Yogam used to indicate yogam of the Day
+    private static final String[] yogam_list = {
+            "Vishkambam",
+            "Preethi",
+            "Ayushmaan",
+            "Sowbhagyam",
+            "Shobanam",
+            "Athikandam",
+            "Sukarmam",
+            "Thruthi",
+            "Soolam",
+            "Kandam",
+            "Vruddhi",
+            "Duruvam",
+            "Vyakadam",
+            "Arisanam",
+            "Vachiram",
+            "Siddhi",
+            "Vyathipaadam",
+            "Variyaam",
+            "Parikam",
+            "Sivam",
+            "Sittham",
+            "Saththyam",
+            "Subham",
+            "Suppiram",
+            "Bramyam",
+            "Ainthiram",
+            "Vaithruthi",
+    };
+
+    // Karanam (half-tithi)
+    private static final String[] karanam_list = {
+            "Kimsthuknam",
+            "Bava",
+            "Baalava",
+            "Koulava",
+            "Thaithila",
+            "Gara",
+            "Vanija",
+            "Vishti",
+            "Bava",
+            "Baalava",
+            "Koulava",
+            "Thaithila",
+            "Gara",
+            "Vanija",
+            "Vishti",
+            "Bava",
+            "Baalava",
+            "Koulava",
+            "Thaithila",
+            "Gara",
+            "Vanija",
+            "Vishti",
+            "Bava",
+            "Baalava",
+            "Koulava",
+            "Thaithila",
+            "Gara",
+            "Vanija",
+            "Vishti",
+            "Bava",
+            "Baalava",
+            "Koulava",
+            "Thaithila",
+            "Gara",
+            "Vanija",
+            "Vishti",
+            "Bava",
+            "Baalava",
+            "Koulava",
+            "Thaithila",
+            "Gara",
+            "Vanija",
+            "Vishti",
+            "Bava",
+            "Baalava",
+            "Koulava",
+            "Thaithila",
+            "Gara",
+            "Vanija",
+            "Vishti",
+            "Bava",
+            "Baalava",
+            "Koulava",
+            "Thaithila",
+            "Gara",
+            "Vanija",
+            "Vishti",
+            "Shakuni",
+            "Chatushpaada",
+            "Naga",
+    };
+
+    // Vaasaram (weekday)
+    private static final String[] vaasaram_list = {
+            "Bhanu",
+            "Indhu",
+            "Bhouma",
+            "Soumya",
+            "Guru",
+            "Brughu",
+            "Sthira",
+    };
+
+    // Dhinam (Day)
+    private static final String[] dhinam_list = {
+            "Bhanu",
+            "Indhu",
+            "Bhouma",
+            "Soumya",
+            "Guru",
+            "Brughu",
+            "Sthira",
+    };
+
+    // Planets
+    private static final String[] planet_list = {
+            "Sun",
+            "Moon",
+            "Mars",
+            "Mercury",
+            "Jupiter",
+            "Venus",
+            "Saturn",
+            "Raahu",
+            "Kethu",
+    };
+
+    // Horai (Auspicious Hour of the Day)
+    private static final String[] horai_list = {
+            "Sooriya",
+            "Chandra",
+            "Mangal",
+            "Budh",
+            "Guru",
+            "Sukra",
+            "Shani",
+    };
+
+    // Amruthathi Yogam used to indicate auspiciousness of the Day
+    private static final String[] amruthathi_yogam_list = {
+            "Amruthayogam",
+            "Siddhayogam",
+            "Maranayogam",
+    };
+
+    // Kaala Vibhaagaha
+    private static final String[] kaala_vibhaagaha_list = {
+            "Brahma muhurta",
+            "Pratah",
+            "Sangava",
+            "Madhyahna",
+            "Aparahna",
+            "Sayahna",
+            "Pradosha",
+            "Dhinanta",
+    };
+
+    // Kaala Vibhaagaha
+    private static final String[] shoolam_parihaaram_list = {
+    	"West (Jaggery)",
+    	"East (Curd)",
+    	"North (Milk)",
+    	"North (Milk)",
+    	"South (Balm)",
+    	"West (Jaggery)",
+    	"East (Curd)",
+    };
 
     // To facilitate if Horai is subham or not based on lookup {horaiIndex}
     // Design considerations:
@@ -430,7 +866,8 @@ public class VedicCalendar extends Calendar {
      * @param timeZoneID        Timezone of the location (as per Timezone format)
      * @param prefAyanamsa      Preferred Ayanamsa
      * @param chaandramanaType  Preferred Chaandramana Type
-     * @param vcLocaleList      List of panchangam fields & values as per the locale of choice.
+     * @param vcLocaleList      List of panchangam fields & values as per the locale of choice (or)
+     *                          null for "English".
      *
      * @return  Returns a valid instance of VedicCalendar class (or)
      *          throws InvalidParameterSpecException if any or all of the input parameters are
@@ -456,7 +893,9 @@ public class VedicCalendar extends Calendar {
         }
 
         if (vcLocaleList == null) {
-            throw new InvalidParameterSpecException("Invalid Locale List!");
+            //throw new InvalidParameterSpecException("Invalid Locale List!");
+            createVCList();
+            vcLocaleList = vcDefaultLocaleList;
         }
 
         if ((panchangamType != PANCHANGAM_TYPE_DRIK_GANITHAM_LUNI_SOLAR) &&
@@ -3140,7 +3579,82 @@ public class VedicCalendar extends Calendar {
                 isValid = true;
             }
         }
+
         return isValid;
+    }
+
+    /**
+     * Use this utility function to create a vcLocaleList containing default locale="En".
+     *
+     * @return  Returns a VC List based on default locale lists
+     */
+    private static boolean createVCList() {
+        if (vcDefaultLocaleList == null) {
+            vcDefaultLocaleList = new HashMap<>();
+
+            try {
+                // Step1: Samvatsaram
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_SAMVATSARAM, samvatsaram_list);
+
+                // Step2: Ayanam
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_AYANAM, ayanam_list);
+
+                // Step3: Rithu
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_RITHU, rithu_list);
+
+                // Step4-1: Maasam (Solar Months)
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_SAURAMANA_MAASAM, sauramaanam_maasam_list);
+
+                // Step4-2: Maasam (Lunar Months)
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_CHAANDRAMANA_MAASAM, chaandramaanam_maasam_list);
+
+                // Step5: Paksham
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_PAKSHAM, paksham_list);
+
+                // Step6: Thithi
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_TITHI, tithi_list);
+
+                // Step7: Sankalpa Thithi
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_TITHI, sankalpa_tithi_list);
+
+                // Step8: Raasi
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_RAASI, raasi_list);
+
+                // Step9: Nakshathram
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_NAKSHATHRAM, nakshathram_list);
+
+                // Step10: Sankalpa Nakshathram
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_NAKSHATHRAM, sankalpa_nakshathram_list);
+
+                // Step11: Yogam
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_YOGAM, yogam_list);
+
+                // Step12: Karanam
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_KARANAM, karanam_list);
+
+                // Step13: Vaasaram
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_VAASARAM, vaasaram_list);
+
+                // Step14: Dhinam
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_DINAM, dhinam_list);
+
+                // Step15: Horai
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_HORAI, horai_list);
+
+                // Step16: Amruthathi Yogam
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_AMRUTATHI_YOGAM, amruthathi_yogam_list);
+
+                // Step17: Kaala Vibhagah
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_KAALA_VIBHAAGAH, kaala_vibhaagaha_list);
+
+                // Step18: Shooam (Parihaaram)
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_SHOOLAM_PARIHAARAM, shoolam_parihaaram_list);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

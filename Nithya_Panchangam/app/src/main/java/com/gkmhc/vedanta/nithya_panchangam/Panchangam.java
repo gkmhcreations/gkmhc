@@ -134,7 +134,11 @@ public class Panchangam extends Fragment {
 
         if (mainActivity.isAppLaunchedFirstTime()) {
             mainActivity.updateAppLaunchedFirstTime();
-            textViewCurLocation.performClick();
+            try {
+                textViewCurLocation.performClick();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         //SwipeListener swipeListener = new SwipeListener(root);

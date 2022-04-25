@@ -49,7 +49,7 @@ public class Sankalpam extends Fragment {
     private String rithouStr;
     private String maasamStr;
     private String pakshamStr;
-    private String thithiStr;
+    private String tithiStr;
     private String shraaddhaTithiStr;
     private int refDinaAnkam = 0;
     private String vaasaramStr;
@@ -209,7 +209,7 @@ public class Sankalpam extends Fragment {
 
             // Step3: Retrieve correct rithou  given current system time
             // Step5: Retrieve correct paksham  given current system time
-            // Step6: Retrieve correct thithi  given current system time
+            // Step6: Retrieve correct tithi  given current system time
             refDinaAnkam = vedicCalendar.getDinaAnkam();
 
             // Step3: Retrieve correct rithou  given current system time
@@ -221,23 +221,23 @@ public class Sankalpam extends Fragment {
             // Step5: Retrieve correct paksham given current system time
             pakshamStr = vedicCalendar.getPaksham(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-            // Step6-1: Retrieve correct thithi given current system time
-            thithiStr = vedicCalendar.getTithi(VedicCalendar.MATCH_SANKALPAM_EXACT);
+            // Step6-1: Retrieve correct tithi given current system time
+            tithiStr = vedicCalendar.getTithi(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-            // Step6-2: Retrieve correct shraaddha thithi for the given calendar day
+            // Step6-2: Retrieve correct shraaddha tithi for the given calendar day
             shraaddhaTithiStr = vedicCalendar.getShraaddhaTithi(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-            // Step7: Retrieve correct vaasaram for the current thithi
+            // Step7: Retrieve correct vaasaram for the current tithi
             vaasaramStr = vedicCalendar.getVaasaram(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-            // Step8: Retrieve correct natchathiram for the current thithi
+            // Step8: Retrieve correct natchathiram for the current tithi
             natchathiramStr =
                     vedicCalendar.getNakshatram(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-            // Step9: Retrieve correct Yogam for the current thithi
+            // Step9: Retrieve correct Yogam for the current tithi
             yogamStr = vedicCalendar.getYogam(VedicCalendar.MATCH_SANKALPAM_EXACT);
 
-            // Step10: Retrieve correct Karanam for the current thithi
+            // Step10: Retrieve correct Karanam for the current tithi
             karanamStr = vedicCalendar.getKaranam(VedicCalendar.MATCH_SANKALPAM_EXACT);
         }
         long pEndTime = System.nanoTime();
@@ -271,7 +271,9 @@ public class Sankalpam extends Fragment {
 
         // Step 1: Beginning part that involves common constructs as per sankalpam type
         begSankalpamTextView = root.findViewById(R.id.sankalpam_res_begin);
-        String sankalpamStr = getString(R.string.sankalpam_shubam_begin_part1);
+        String sankalpamLimitation = htmlFontHdrStart +
+                getString(R.string.sankalpam_limitation_india_only) + htmlFontHdrEnd + "<br>";
+        String sankalpamStr = sankalpamLimitation + getString(R.string.sankalpam_shubam_begin_part1);
 
         // Change sankalpam location information based on the continent.
         String location = MainActivity.readDefLocationSetting(requireContext());
@@ -322,14 +324,16 @@ public class Sankalpam extends Fragment {
             String sanskritAyanamStr = ayanamStr;
             String sanskritRithouStr = rithouStr;
             String sanskritPakshamStr = pakshamStr;
-            String sanskritThithiStr = thithiStr;
+            String sanskritTithiStr = tithiStr;
             String sanskritVaasaramStr = vaasaramStr + getString(R.string.vaasaram_suffix);
             String sanskritNatchathiramStr = natchathiramStr;
             String sanskritYogamStr = yogamStr;
 
             if (prefSankalpamType.equals(getString(R.string.pref_sankalpam_type_srardham))) {
-                sankalpamStr = getString(R.string.sankalpam_srardham_begin) + " ... ";
-                sanskritThithiStr = shraaddhaTithiStr;
+                sankalpamStr = sankalpamLimitation + getString(R.string.sankalpam_srardham_begin_part1);
+                sankalpamStr += htmlFontHdrStart + getString(R.string.sankalpam_srardham_begin_part2) +
+                        htmlFontHdrEnd + " ... ";
+                sanskritTithiStr = shraaddhaTithiStr;
             }
 
             // Change last 1 or 2 alphabets in the suffix of below strings as per the grammar of the
@@ -419,7 +423,7 @@ public class Sankalpam extends Fragment {
                     htmlFontHdrStart + maasamStr + htmlFontHdrEnd + " " +
                     getString(R.string.sankalpam_maase) + " " +
                     htmlFontHdrStart + sanskritPakshamStr + htmlFontHdrEnd + " " +
-                    htmlFontHdrStart + sanskritThithiStr + htmlFontHdrEnd + " ";
+                    htmlFontHdrStart + sanskritTithiStr + htmlFontHdrEnd + " ";
             if (prefSankalpamType.equals(getString(R.string.pref_sankalpam_type_shubam))) {
                 sankalpamMiddle += " " + getString(R.string.sankalpam_subha_thithou) + " ";
             } else if (prefSankalpamType.equals(getString(R.string.pref_sankalpam_type_srardham))) {
@@ -442,14 +446,16 @@ public class Sankalpam extends Fragment {
             // If Subham (or) Srardham, then generate sankalpam accordingly.
             if (prefSankalpamType.equals(getString(R.string.pref_sankalpam_type_shubam))) {
                 sankalpamStr += getString(R.string.sankalpam_shubam_end) + " ||" + "<br>";
-                sankalpamStr = sankalpamStr.replaceAll("\\*\\*\\*\\*",
-                        htmlFontHdrStart + sanskritThithiStr + htmlFontHdrEnd);
+
+                // This is needed to replace "####" from last part of Sankalpam with actual tithi
+                sankalpamStr = sankalpamStr.replaceAll("####",
+                        htmlFontHdrStart + sanskritTithiStr + htmlFontHdrEnd);
             } else if (prefSankalpamType.equals(getString(R.string.pref_sankalpam_type_srardham))) {
                 sankalpamStr += getString(R.string.sankalpam_srardham_end_1) + " " +
-                        htmlFontHdrStart + sanskritThithiStr + htmlFontHdrEnd + " " +
+                        htmlFontHdrStart + sanskritTithiStr + htmlFontHdrEnd + " " +
                         getString(R.string.sankalpam_punya_thithou) + " ";
                 sankalpamStr += getString(R.string.sankalpam_srardham_end_2) + " " +
-                        htmlFontHdrStart + sanskritThithiStr + htmlFontHdrEnd + " " +
+                        htmlFontHdrStart + sanskritTithiStr + htmlFontHdrEnd + " " +
                         getString(R.string.sankalpam_srardham_end_3) + " ||" + "<br>";
             }
             //Log.d("Sankalpam", "Value: " + Html.fromHtml(sankalpamStr));

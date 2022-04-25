@@ -1109,7 +1109,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         placesTimezoneDB.put("Mumbai, India", new PlacesInfo(72.8777, 19.0760, TIMEZONE_INDIA));
         placesTimezoneDB.put("Kolkata, India", new PlacesInfo(88.3639, 22.5726, TIMEZONE_INDIA));
         placesTimezoneDB.put("New Delhi, India", new PlacesInfo(77.2090, 28.6139, TIMEZONE_INDIA));
-        placesTimezoneDB.put("Tirunelveli, India", new PlacesInfo(77.7567, 8.7139, TIMEZONE_INDIA));
+        placesTimezoneDB.put("Thirunelveli, India", new PlacesInfo(77.7567, 8.7139, TIMEZONE_INDIA));
         placesTimezoneDB.put("Salem, India", new PlacesInfo(78.1460, 11.6643, TIMEZONE_INDIA));
         placesTimezoneDB.put("Chidambaram, India", new PlacesInfo(79.6912, 11.4070, TIMEZONE_INDIA));
         placesTimezoneDB.put("Tenkasi, India", new PlacesInfo(77.3161, 8.9594, TIMEZONE_INDIA));
@@ -1118,7 +1118,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         placesTimezoneDB.put("Thanjavur, India", new PlacesInfo(79.1378, 10.7870, TIMEZONE_INDIA));
         placesTimezoneDB.put("Kancheepuram, India", new PlacesInfo(79.6947, 12.8185, TIMEZONE_INDIA));
         placesTimezoneDB.put("Erode, India", new PlacesInfo(77.7172, 11.3410, TIMEZONE_INDIA));
-        placesTimezoneDB.put("Tiruvannamalai, India", new PlacesInfo(79.0747, 12.2253, TIMEZONE_INDIA));
+        placesTimezoneDB.put("Thiruvannamalai, India", new PlacesInfo(79.0747, 12.2253, TIMEZONE_INDIA));
         placesTimezoneDB.put("Manali, India", new PlacesInfo(77.1892, 32.2432, TIMEZONE_INDIA));
         placesTimezoneDB.put("Shimla, India", new PlacesInfo(77.1734, 31.1048, TIMEZONE_INDIA));
         placesTimezoneDB.put("Dehradun, India", new PlacesInfo(78.0322, 30.3165, TIMEZONE_INDIA));
@@ -1188,10 +1188,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         placesTimezoneDB.put("Solapur, India", new PlacesInfo(75.9064, 17.6599, TIMEZONE_INDIA));
         placesTimezoneDB.put("Hubballi, India", new PlacesInfo(75.1240, 15.3647, TIMEZONE_INDIA));
         placesTimezoneDB.put("Mysuru, India", new PlacesInfo(76.6394, 12.2958, TIMEZONE_INDIA));
-        placesTimezoneDB.put("Tiruchirappalli, India", new PlacesInfo(78.7047, 10.7905, TIMEZONE_INDIA));
+        placesTimezoneDB.put("Thiruchirappalli, India", new PlacesInfo(78.7047, 10.7905, TIMEZONE_INDIA));
         placesTimezoneDB.put("Bareilly, India", new PlacesInfo(79.4304, 28.3670, TIMEZONE_INDIA));
         placesTimezoneDB.put("Aligarh, India", new PlacesInfo(78.0880, 27.8974, TIMEZONE_INDIA));
-        placesTimezoneDB.put("Tiruppur, India", new PlacesInfo(77.3411, 11.1085, TIMEZONE_INDIA));
+        placesTimezoneDB.put("Thiruppur, India", new PlacesInfo(77.3411, 11.1085, TIMEZONE_INDIA));
         placesTimezoneDB.put("Gurugram, India", new PlacesInfo(77.0266, 28.4595, TIMEZONE_INDIA));
         placesTimezoneDB.put("Moradabad, India", new PlacesInfo(78.7733, 28.8386, TIMEZONE_INDIA));
         placesTimezoneDB.put("Jalandhar, India", new PlacesInfo(75.5762, 31.3260, TIMEZONE_INDIA));
@@ -1229,8 +1229,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         placesTimezoneDB.put("Rajahmundry, India", new PlacesInfo(81.8040, 17.0005, TIMEZONE_INDIA));
         placesTimezoneDB.put("Malegaon, India", new PlacesInfo(74.5089, 20.5579, TIMEZONE_INDIA));
         placesTimezoneDB.put("Kurnool, India", new PlacesInfo(78.0373, 15.8281, TIMEZONE_INDIA));
-        placesTimezoneDB.put("Tirupati, India", new PlacesInfo(79.4192, 13.6288, TIMEZONE_INDIA));
-        placesTimezoneDB.put("Tirumala, India", new PlacesInfo(79.3509, 13.6288, TIMEZONE_INDIA));
+        placesTimezoneDB.put("Thirupati, India", new PlacesInfo(79.4192, 13.6288, TIMEZONE_INDIA));
+        placesTimezoneDB.put("Thirumala, India", new PlacesInfo(79.3509, 13.6288, TIMEZONE_INDIA));
         placesTimezoneDB.put("Udaipur, India", new PlacesInfo(73.7125, 24.5854, TIMEZONE_INDIA));
         placesTimezoneDB.put("Kakinada, India", new PlacesInfo(82.2475, 16.9891, TIMEZONE_INDIA));
         placesTimezoneDB.put("Davanagere, India", new PlacesInfo(75.9218, 14.4644, TIMEZONE_INDIA));
@@ -1297,7 +1297,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         placesTimezoneDB.put("Bharatpur, India", new PlacesInfo(77.5030, 27.2152, TIMEZONE_INDIA));
         placesTimezoneDB.put("Begusarai, India", new PlacesInfo(86.1272, 25.4182, TIMEZONE_INDIA));
         placesTimezoneDB.put("Gandhidham, India", new PlacesInfo(70.1337, 23.0753, TIMEZONE_INDIA));
-        placesTimezoneDB.put("Tiruvottiyur, India", new PlacesInfo(80.3001, 13.1643, TIMEZONE_INDIA));
+        placesTimezoneDB.put("Thiruvottiyur, India", new PlacesInfo(80.3001, 13.1643, TIMEZONE_INDIA));
         placesTimezoneDB.put("Pondicherry, India", new PlacesInfo(79.8083, 11.9416, TIMEZONE_INDIA));
         placesTimezoneDB.put("Sikar, India", new PlacesInfo(75.1398, 27.6094, TIMEZONE_INDIA));
         placesTimezoneDB.put("Thoothukudi, India", new PlacesInfo(78.1348, 8.7642, TIMEZONE_INDIA));
@@ -1615,11 +1615,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             vedicCalendarLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_PAKSHAM, arrayList);
 
             // Step6: Thithi
-            arrayList = context.getResources().getStringArray(R.array.thithi_list);
+            arrayList = context.getResources().getStringArray(R.array.tithi_list);
             vedicCalendarLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_TITHI, arrayList);
 
             // Step7: Sankalpa Thithi
-            arrayList = context.getResources().getStringArray(R.array.sankalpa_thithi_list);
+            arrayList = context.getResources().getStringArray(R.array.sankalpa_tithi_list);
             vedicCalendarLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_TITHI, arrayList);
 
             // Step8: Raasi

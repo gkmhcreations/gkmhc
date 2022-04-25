@@ -299,86 +299,90 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
      * @param recvdIntent   Intent that contains Alarm Information
      */
     private void startAlarm(Context context, Intent recvdIntent) {
-        AlarmManager alManager =
-                (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        if (alManager != null) {
+        try {
+            AlarmManager alManager =
+                    (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            if (alManager != null) {
 
-            /*
-             * Alarm Information present in the received Intent is as follows:
-             * alarmType         Alarm Type (Standard / Panchangam)
-             * alarmID           Alarm ID
-             * alarmHourOfDay    Alarm Hour of Day (24-hour format)
-             * alarmMin          Alarm Minutes
-             * ringTone          Full path to Ringtone
-             * toVibrate         true - Vibrate, false - Do NOT Vibrate
-             * repeatOption      Once   - Buzz Alarm one-time
-             *                   Daily  - Buzz Alarm daily at the Alarm Hour & Minute
-             *                   Custom - Buzz Alarm at the Alarm Hour & Minute on selected days
-             */
-            boolean alarmType = recvdIntent.getBooleanExtra(EXTRA_NOTIFICATION_ALARM_TYPE, Alarm.ALARM_TYPE_STANDARD);
-            int alarmID = recvdIntent.getIntExtra(EXTRA_NOTIFICATION_ALARM_ID, Alarm.INVALID_VALUE);
-            int alarmHourOfDay = recvdIntent.getIntExtra(EXTRA_NOTIFICATION_ALARM_HOUR_OF_DAY, 0);
-            int alarmMin = recvdIntent.getIntExtra(EXTRA_NOTIFICATION_ALARM_MIN, 0);
-            String ringTone = recvdIntent.getStringExtra(EXTRA_NOTIFICATION_RINGTONE);
-            boolean toVibrate = recvdIntent.getBooleanExtra(EXTRA_NOTIFICATION_VIBRATE, false);
-            int repeatOption = recvdIntent.getIntExtra(EXTRA_NOTIFICATION_REPEAT, Alarm.INVALID_VALUE);
-            boolean forceRestart = recvdIntent.getBooleanExtra(EXTRA_NOTIFICATION_RESTART, false);
-            String label = recvdIntent.getStringExtra(EXTRA_NOTIFICATION_LABEL);
-            int iconID = recvdIntent.getIntExtra(EXTRA_NOTIFICATION_ICON_ID, R.drawable.swamy_ayyappan_circle);
+                /*
+                 * Alarm Information present in the received Intent is as follows:
+                 * alarmType         Alarm Type (Standard / Panchangam)
+                 * alarmID           Alarm ID
+                 * alarmHourOfDay    Alarm Hour of Day (24-hour format)
+                 * alarmMin          Alarm Minutes
+                 * ringTone          Full path to Ringtone
+                 * toVibrate         true - Vibrate, false - Do NOT Vibrate
+                 * repeatOption      Once   - Buzz Alarm one-time
+                 *                   Daily  - Buzz Alarm daily at the Alarm Hour & Minute
+                 *                   Custom - Buzz Alarm at the Alarm Hour & Minute on selected days
+                 */
+                boolean alarmType = recvdIntent.getBooleanExtra(EXTRA_NOTIFICATION_ALARM_TYPE, Alarm.ALARM_TYPE_STANDARD);
+                int alarmID = recvdIntent.getIntExtra(EXTRA_NOTIFICATION_ALARM_ID, Alarm.INVALID_VALUE);
+                int alarmHourOfDay = recvdIntent.getIntExtra(EXTRA_NOTIFICATION_ALARM_HOUR_OF_DAY, 0);
+                int alarmMin = recvdIntent.getIntExtra(EXTRA_NOTIFICATION_ALARM_MIN, 0);
+                String ringTone = recvdIntent.getStringExtra(EXTRA_NOTIFICATION_RINGTONE);
+                boolean toVibrate = recvdIntent.getBooleanExtra(EXTRA_NOTIFICATION_VIBRATE, false);
+                int repeatOption = recvdIntent.getIntExtra(EXTRA_NOTIFICATION_REPEAT, Alarm.INVALID_VALUE);
+                boolean forceRestart = recvdIntent.getBooleanExtra(EXTRA_NOTIFICATION_RESTART, false);
+                String label = recvdIntent.getStringExtra(EXTRA_NOTIFICATION_LABEL);
+                int iconID = recvdIntent.getIntExtra(EXTRA_NOTIFICATION_ICON_ID, R.drawable.swamy_ayyappan_circle);
 
-            Log.i("NPBroadcastReceiver", "NPAlarm: " + START_ALARM + "(" + alarmID + ") received!");
+                Log.i("NPBroadcastReceiver", "NPAlarm: " + START_ALARM + "(" + alarmID + ") received!");
 
-            // Scenarios to handle:
-            // 1) If force Alarm restart is true then create alarm with same alarmID
-            //    --> This should restart alarm!
-            // 2) If force restart is false, then
-            //    - If alarm is NOT running, then create new alarm
-            //    - Else ignore
-            if ((forceRestart) || (isAlarmOff(context, alarmID))) {
-                Calendar curCalendar = Calendar.getInstance();
-                int curCalendarHour = curCalendar.get(Calendar.HOUR_OF_DAY);
-                int curCalendarMin = curCalendar.get(Calendar.MINUTE);
+                // Scenarios to handle:
+                // 1) If force Alarm restart is true then create alarm with same alarmID
+                //    --> This should restart alarm!
+                // 2) If force restart is false, then
+                //    - If alarm is NOT running, then create new alarm
+                //    - Else ignore
+                if ((forceRestart) || (isAlarmOff(context, alarmID))) {
+                    Calendar curCalendar = Calendar.getInstance();
+                    int curCalendarHour = curCalendar.get(Calendar.HOUR_OF_DAY);
+                    int curCalendarMin = curCalendar.get(Calendar.MINUTE);
 
-                // Change date to next day if any of the below conditions match:
-                // 1) If alarm hour is less than current hour
-                // 2) If alarm minutes is less than current minute
-                if (curCalendarHour > alarmHourOfDay) {
-                    curCalendar.add(Calendar.DATE, 1);
-                } else if ((curCalendarHour == alarmHourOfDay) && (curCalendarMin >= alarmMin)) {
-                    curCalendar.add(Calendar.DATE, 1);
+                    // Change date to next day if any of the below conditions match:
+                    // 1) If alarm hour is less than current hour
+                    // 2) If alarm minutes is less than current minute
+                    if (curCalendarHour > alarmHourOfDay) {
+                        curCalendar.add(Calendar.DATE, 1);
+                    } else if ((curCalendarHour == alarmHourOfDay) && (curCalendarMin >= alarmMin)) {
+                        curCalendar.add(Calendar.DATE, 1);
+                    }
+
+                    curCalendar.set(Calendar.HOUR_OF_DAY, alarmHourOfDay);
+                    curCalendar.set(Calendar.MINUTE, alarmMin);
+                    curCalendar.set(Calendar.SECOND, 0);
+
+                    int alarmDate = curCalendar.get((Calendar.DATE));
+                    int alarmMonth = curCalendar.get((Calendar.MONTH));
+                    int alarmYear = curCalendar.get((Calendar.YEAR));
+                    Intent startIntent = new Intent(context, NPBroadcastReceiver.class);
+                    startIntent.putExtra(EXTRA_NOTIFICATION_ALARM_TYPE, alarmType);
+                    startIntent.putExtra(EXTRA_NOTIFICATION_ALARM_ID, alarmID);
+                    startIntent.putExtra(EXTRA_NOTIFICATION_ALARM_HOUR_OF_DAY, alarmHourOfDay);
+                    startIntent.putExtra(EXTRA_NOTIFICATION_ALARM_MIN, alarmMin);
+                    startIntent.putExtra(EXTRA_NOTIFICATION_RINGTONE, ringTone);
+                    startIntent.putExtra(EXTRA_NOTIFICATION_VIBRATE, toVibrate);
+                    startIntent.putExtra(EXTRA_NOTIFICATION_REPEAT, repeatOption);
+                    startIntent.putExtra(EXTRA_NOTIFICATION_LABEL, label);
+                    startIntent.putExtra(EXTRA_NOTIFICATION_ICON_ID, iconID);
+                    startIntent.setAction(START_ALARM_HANDLER);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, alarmID,
+                            startIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+                    long alarmDuration = curCalendar.getTimeInMillis();
+                    alManager.setExact(AlarmManager.RTC_WAKEUP, alarmDuration, pendingIntent);
+                    Log.i("NPBroadcastReceiver",
+                            "Starting Exact Alarm(" + alarmID + ") to fire on " +
+                                    alarmDate + "/" + (alarmMonth + 1) + "/" + alarmYear + " " +
+                                    alarmHourOfDay + ":" + alarmMin + " for " + alarmDuration +
+                                    " ms, with Ringtone: " + ringTone + " Repeat: " +
+                                    repeatOption + " !");
+                    NPDB.updateAlarmStateInDB(context, alarmType, alarmID, Alarm.ALARM_STATE_ON);
                 }
-
-                curCalendar.set(Calendar.HOUR_OF_DAY, alarmHourOfDay);
-                curCalendar.set(Calendar.MINUTE, alarmMin);
-                curCalendar.set(Calendar.SECOND, 0);
-
-                int alarmDate = curCalendar.get((Calendar.DATE));
-                int alarmMonth = curCalendar.get((Calendar.MONTH));
-                int alarmYear = curCalendar.get((Calendar.YEAR));
-                Intent startIntent = new Intent(context, NPBroadcastReceiver.class);
-                startIntent.putExtra(EXTRA_NOTIFICATION_ALARM_TYPE, alarmType);
-                startIntent.putExtra(EXTRA_NOTIFICATION_ALARM_ID, alarmID);
-                startIntent.putExtra(EXTRA_NOTIFICATION_ALARM_HOUR_OF_DAY, alarmHourOfDay);
-                startIntent.putExtra(EXTRA_NOTIFICATION_ALARM_MIN, alarmMin);
-                startIntent.putExtra(EXTRA_NOTIFICATION_RINGTONE, ringTone);
-                startIntent.putExtra(EXTRA_NOTIFICATION_VIBRATE, toVibrate);
-                startIntent.putExtra(EXTRA_NOTIFICATION_REPEAT, repeatOption);
-                startIntent.putExtra(EXTRA_NOTIFICATION_LABEL, label);
-                startIntent.putExtra(EXTRA_NOTIFICATION_ICON_ID, iconID);
-                startIntent.setAction(START_ALARM_HANDLER);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, alarmID,
-                        startIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-                long alarmDuration = curCalendar.getTimeInMillis();
-                alManager.setExact(AlarmManager.RTC_WAKEUP, alarmDuration, pendingIntent);
-                Log.i("NPBroadcastReceiver",
-                        "Starting Exact Alarm(" + alarmID + ") to fire on " +
-                                alarmDate + "/" + (alarmMonth + 1) + "/" + alarmYear + " " +
-                                alarmHourOfDay + ":" + alarmMin + " for " + alarmDuration +
-                                " ms, with Ringtone: " + ringTone + " Repeat: " +
-                                repeatOption + " !");
-                NPDB.updateAlarmStateInDB(context, alarmType, alarmID, Alarm.ALARM_STATE_ON);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -402,129 +406,133 @@ public class NPBroadcastReceiver extends BroadcastReceiver {
      * @param alarmID           Alarm ID
      */
     private void triggerAlarm(Context context, Intent recvdIntent, int alarmID) {
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, alarmID,
-                recvdIntent, PendingIntent.FLAG_NO_CREATE);
-        if (pendingIntent != null) {
+        try {
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, alarmID,
+                    recvdIntent, PendingIntent.FLAG_NO_CREATE);
+            if (pendingIntent != null) {
 
-            boolean alarmType = recvdIntent.getBooleanExtra(EXTRA_NOTIFICATION_ALARM_TYPE, Alarm.ALARM_TYPE_STANDARD);
-            int alarmHourOfDay = recvdIntent.getIntExtra(EXTRA_NOTIFICATION_ALARM_HOUR_OF_DAY, 0);
-            int alarmMin = recvdIntent.getIntExtra(EXTRA_NOTIFICATION_ALARM_MIN, 0);
-            String ringTone = recvdIntent.getStringExtra(EXTRA_NOTIFICATION_RINGTONE);
-            boolean toVibrate = recvdIntent.getBooleanExtra(EXTRA_NOTIFICATION_VIBRATE, false);
-            int repeatOption = recvdIntent.getIntExtra(EXTRA_NOTIFICATION_REPEAT, Alarm.INVALID_VALUE);
-            String label = recvdIntent.getStringExtra(EXTRA_NOTIFICATION_LABEL);
-            int iconID = recvdIntent.getIntExtra(EXTRA_NOTIFICATION_ICON_ID, R.drawable.swamy_ayyappan_circle);
+                boolean alarmType = recvdIntent.getBooleanExtra(EXTRA_NOTIFICATION_ALARM_TYPE, Alarm.ALARM_TYPE_STANDARD);
+                int alarmHourOfDay = recvdIntent.getIntExtra(EXTRA_NOTIFICATION_ALARM_HOUR_OF_DAY, 0);
+                int alarmMin = recvdIntent.getIntExtra(EXTRA_NOTIFICATION_ALARM_MIN, 0);
+                String ringTone = recvdIntent.getStringExtra(EXTRA_NOTIFICATION_RINGTONE);
+                boolean toVibrate = recvdIntent.getBooleanExtra(EXTRA_NOTIFICATION_VIBRATE, false);
+                int repeatOption = recvdIntent.getIntExtra(EXTRA_NOTIFICATION_REPEAT, Alarm.INVALID_VALUE);
+                String label = recvdIntent.getStringExtra(EXTRA_NOTIFICATION_LABEL);
+                int iconID = recvdIntent.getIntExtra(EXTRA_NOTIFICATION_ICON_ID, R.drawable.swamy_ayyappan_circle);
 
-            boolean isRingToneAlreadyPlaying = playRingToneAndVibration(context, alarmID, ringTone,
-                                                                        toVibrate);
-            if (isRingToneAlreadyPlaying) {
-                Log.d("NPBroadcastReceiver", "NOT Playing RingTone for " +
-                        "AlarmID: " + alarmID + " Status: " + EXTRA_NOTIFICATION_RINGTONE_START +
-                        " Ringtone: " + ringTone + " Vibrate: " + toVibrate + " Repeat: " + repeatOption);
-                cancelAlarm(context, recvdIntent, alarmID, false);
-                snoozeAlarm(context, recvdIntent, alarmID, SNOOZE_10MINS);
-            } else {
-                Log.d("NPBroadcastReceiver", "Playing RingTone for " +
-                        "AlarmID: " + alarmID + " Status: " + EXTRA_NOTIFICATION_RINGTONE_START +
-                        " Ringtone: " + ringTone + " Vibrate: " + toVibrate + " Repeat: " + repeatOption);
+                boolean isRingToneAlreadyPlaying = playRingToneAndVibration(context, alarmID, ringTone,
+                        toVibrate);
+                if (isRingToneAlreadyPlaying) {
+                    Log.d("NPBroadcastReceiver", "NOT Playing RingTone for " +
+                            "AlarmID: " + alarmID + " Status: " + EXTRA_NOTIFICATION_RINGTONE_START +
+                            " Ringtone: " + ringTone + " Vibrate: " + toVibrate + " Repeat: " + repeatOption);
+                    cancelAlarm(context, recvdIntent, alarmID, false);
+                    snoozeAlarm(context, recvdIntent, alarmID, SNOOZE_10MINS);
+                } else {
+                    Log.d("NPBroadcastReceiver", "Playing RingTone for " +
+                            "AlarmID: " + alarmID + " Status: " + EXTRA_NOTIFICATION_RINGTONE_START +
+                            " Ringtone: " + ringTone + " Vibrate: " + toVibrate + " Repeat: " + repeatOption);
 
-                // 2) Create 4 intents:
-                //    - 1st to launch MainActivity when tapped
-                //    - 2nd to register a callback with Notifications to dismiss Alarm
-                //    - 3rd to register a callback with Notifications to snooze Alarm
-                //    - 4th to register a callback with Notifications to show lock screen
+                    // 2) Create 4 intents:
+                    //    - 1st to launch MainActivity when tapped
+                    //    - 2nd to register a callback with Notifications to dismiss Alarm
+                    //    - 3rd to register a callback with Notifications to snooze Alarm
+                    //    - 4th to register a callback with Notifications to show lock screen
 
-                // This is needed so that Alarm texts & notifications display texts in the
-                // preferred language.
-                MainActivity.updateSelLocale(context.getApplicationContext());
+                    // This is needed so that Alarm texts & notifications display texts in the
+                    // preferred language.
+                    MainActivity.updateSelLocale(context.getApplicationContext());
 
-                // Retrieve the "Reminder" label as per latest locale selection!
-                if (alarmType == Alarm.ALARM_TYPE_VEDIC) {
-                    label = context.getString(Reminder.getDinaVisheshamLabel(alarmID));
+                    // Retrieve the "Reminder" label as per latest locale selection!
+                    if (alarmType == Alarm.ALARM_TYPE_VEDIC) {
+                        label = context.getString(Reminder.getDinaVisheshamLabel(alarmID));
+                    }
+
+                    //    - 1st to launch MainActivity when tapped
+                    Intent tapIntent = new Intent(context, MainActivity.class);
+                    tapIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    PendingIntent tapPendingIntent = PendingIntent.getActivity(context,
+                            0, tapIntent, 0);
+
+                    //    - 2nd to register a callback with Notifications to dismiss Alarm
+                    Intent dismissIntent = new Intent(context, NPBroadcastReceiver.class);
+                    dismissIntent.setType(String.valueOf(alarmID));
+                    dismissIntent.setAction(DISMISS_ALARM);
+                    dismissIntent.putExtra(EXTRA_NOTIFICATION_ALARM_TYPE, alarmType);
+                    dismissIntent.putExtra(EXTRA_NOTIFICATION_ALARM_ID, alarmID);
+                    dismissIntent.putExtra(EXTRA_NOTIFICATION_ALARM_HOUR_OF_DAY, alarmHourOfDay);
+                    dismissIntent.putExtra(EXTRA_NOTIFICATION_ALARM_MIN, alarmMin);
+                    dismissIntent.putExtra(EXTRA_NOTIFICATION_RINGTONE, ringTone);
+                    dismissIntent.putExtra(EXTRA_NOTIFICATION_VIBRATE, toVibrate);
+                    dismissIntent.putExtra(EXTRA_NOTIFICATION_REPEAT, repeatOption);
+                    dismissIntent.putExtra(EXTRA_NOTIFICATION_LABEL, label);
+                    dismissIntent.putExtra(EXTRA_NOTIFICATION_ICON_ID, iconID);
+                    PendingIntent dismissPendingIntent =
+                            PendingIntent.getBroadcast(context, 0, dismissIntent,
+                                    PendingIntent.FLAG_UPDATE_CURRENT);
+
+                    //    - 3rd to register a callback with Notifications to snooze Alarm
+                    Intent snoozeIntent = new Intent(context, NPBroadcastReceiver.class);
+                    snoozeIntent.setType(String.valueOf(alarmID));
+                    snoozeIntent.setAction(SNOOZE_ALARM);
+                    snoozeIntent.putExtra(EXTRA_NOTIFICATION_ALARM_TYPE, alarmType);
+                    snoozeIntent.putExtra(EXTRA_NOTIFICATION_ALARM_ID, alarmID);
+                    snoozeIntent.putExtra(EXTRA_NOTIFICATION_ALARM_HOUR_OF_DAY, alarmHourOfDay);
+                    snoozeIntent.putExtra(EXTRA_NOTIFICATION_ALARM_MIN, alarmMin);
+                    snoozeIntent.putExtra(EXTRA_NOTIFICATION_RINGTONE, ringTone);
+                    snoozeIntent.putExtra(EXTRA_NOTIFICATION_VIBRATE, toVibrate);
+                    snoozeIntent.putExtra(EXTRA_NOTIFICATION_REPEAT, repeatOption);
+                    snoozeIntent.putExtra(EXTRA_NOTIFICATION_LABEL, label);
+                    snoozeIntent.putExtra(EXTRA_NOTIFICATION_ICON_ID, iconID);
+                    PendingIntent snoozePendingIntent =
+                            PendingIntent.getBroadcast(context, 0, snoozeIntent,
+                                    PendingIntent.FLAG_UPDATE_CURRENT);
+
+                    //    - 4th to register a callback with Notifications to show lock screen
+                    Intent fullScreenIntent = new Intent(context, AlarmLockScreenNotification.class);
+                    fullScreenIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    fullScreenIntent.setType(String.valueOf(alarmID));
+                    fullScreenIntent.putExtra(EXTRA_NOTIFICATION_ALARM_TYPE, alarmType);
+                    fullScreenIntent.putExtra(EXTRA_NOTIFICATION_ALARM_ID, alarmID);
+                    fullScreenIntent.putExtra(EXTRA_NOTIFICATION_ALARM_HOUR_OF_DAY, alarmHourOfDay);
+                    fullScreenIntent.putExtra(EXTRA_NOTIFICATION_ALARM_MIN, alarmMin);
+                    fullScreenIntent.putExtra(EXTRA_NOTIFICATION_RINGTONE, ringTone);
+                    fullScreenIntent.putExtra(EXTRA_NOTIFICATION_VIBRATE, toVibrate);
+                    fullScreenIntent.putExtra(EXTRA_NOTIFICATION_REPEAT, repeatOption);
+                    fullScreenIntent.putExtra(EXTRA_NOTIFICATION_LABEL, label);
+                    fullScreenIntent.putExtra(EXTRA_NOTIFICATION_ICON_ID, iconID);
+                    PendingIntent fullScreenPendingIntent =
+                            PendingIntent.getActivity(context, 0,
+                                    fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                    // Show Notification on NP channel ID
+                    String notifText = getNotificationText(context, alarmType, label);
+                    NotificationCompat.Builder notification =
+                            new NotificationCompat.Builder(context, MainActivity.NP_CHANNEL_ID)
+                                    .setSmallIcon(R.drawable.ic_ringtone)
+                                    .setContentTitle(context.getString(R.string.nithya_panchangam_header))
+                                    .setContentText(notifText)
+                                    .setContentIntent(tapPendingIntent)
+                                    .setFullScreenIntent(fullScreenPendingIntent, true)
+                                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                    .setCategory(NotificationCompat.CATEGORY_ALARM)
+                                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                                    .setOngoing(true)
+                                    .addAction(R.drawable.swamy_ayyappan_circle,
+                                            context.getString(R.string.snooze_alarm), snoozePendingIntent)
+                                    .addAction(R.drawable.swamy_ayyappan_circle,
+                                            context.getString(R.string.dismiss_alarm), dismissPendingIntent);
+
+                    NotificationManagerCompat notificationManager =
+                            NotificationManagerCompat.from(context);
+                    notificationManager.notify(alarmID, notification.build());
                 }
-
-                //    - 1st to launch MainActivity when tapped
-                Intent tapIntent = new Intent(context, MainActivity.class);
-                tapIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                PendingIntent tapPendingIntent = PendingIntent.getActivity(context,
-                        0, tapIntent, 0);
-
-                //    - 2nd to register a callback with Notifications to dismiss Alarm
-                Intent dismissIntent = new Intent(context, NPBroadcastReceiver.class);
-                dismissIntent.setType(String.valueOf(alarmID));
-                dismissIntent.setAction(DISMISS_ALARM);
-                dismissIntent.putExtra(EXTRA_NOTIFICATION_ALARM_TYPE, alarmType);
-                dismissIntent.putExtra(EXTRA_NOTIFICATION_ALARM_ID, alarmID);
-                dismissIntent.putExtra(EXTRA_NOTIFICATION_ALARM_HOUR_OF_DAY, alarmHourOfDay);
-                dismissIntent.putExtra(EXTRA_NOTIFICATION_ALARM_MIN, alarmMin);
-                dismissIntent.putExtra(EXTRA_NOTIFICATION_RINGTONE, ringTone);
-                dismissIntent.putExtra(EXTRA_NOTIFICATION_VIBRATE, toVibrate);
-                dismissIntent.putExtra(EXTRA_NOTIFICATION_REPEAT, repeatOption);
-                dismissIntent.putExtra(EXTRA_NOTIFICATION_LABEL, label);
-                dismissIntent.putExtra(EXTRA_NOTIFICATION_ICON_ID, iconID);
-                PendingIntent dismissPendingIntent =
-                        PendingIntent.getBroadcast(context, 0, dismissIntent,
-                                PendingIntent.FLAG_UPDATE_CURRENT);
-
-                //    - 3rd to register a callback with Notifications to snooze Alarm
-                Intent snoozeIntent = new Intent(context, NPBroadcastReceiver.class);
-                snoozeIntent.setType(String.valueOf(alarmID));
-                snoozeIntent.setAction(SNOOZE_ALARM);
-                snoozeIntent.putExtra(EXTRA_NOTIFICATION_ALARM_TYPE, alarmType);
-                snoozeIntent.putExtra(EXTRA_NOTIFICATION_ALARM_ID, alarmID);
-                snoozeIntent.putExtra(EXTRA_NOTIFICATION_ALARM_HOUR_OF_DAY, alarmHourOfDay);
-                snoozeIntent.putExtra(EXTRA_NOTIFICATION_ALARM_MIN, alarmMin);
-                snoozeIntent.putExtra(EXTRA_NOTIFICATION_RINGTONE, ringTone);
-                snoozeIntent.putExtra(EXTRA_NOTIFICATION_VIBRATE, toVibrate);
-                snoozeIntent.putExtra(EXTRA_NOTIFICATION_REPEAT, repeatOption);
-                snoozeIntent.putExtra(EXTRA_NOTIFICATION_LABEL, label);
-                snoozeIntent.putExtra(EXTRA_NOTIFICATION_ICON_ID, iconID);
-                PendingIntent snoozePendingIntent =
-                        PendingIntent.getBroadcast(context, 0, snoozeIntent,
-                                PendingIntent.FLAG_UPDATE_CURRENT);
-
-                //    - 4th to register a callback with Notifications to show lock screen
-                Intent fullScreenIntent = new Intent(context, AlarmLockScreenNotification.class);
-                fullScreenIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                fullScreenIntent.setType(String.valueOf(alarmID));
-                fullScreenIntent.putExtra(EXTRA_NOTIFICATION_ALARM_TYPE, alarmType);
-                fullScreenIntent.putExtra(EXTRA_NOTIFICATION_ALARM_ID, alarmID);
-                fullScreenIntent.putExtra(EXTRA_NOTIFICATION_ALARM_HOUR_OF_DAY, alarmHourOfDay);
-                fullScreenIntent.putExtra(EXTRA_NOTIFICATION_ALARM_MIN, alarmMin);
-                fullScreenIntent.putExtra(EXTRA_NOTIFICATION_RINGTONE, ringTone);
-                fullScreenIntent.putExtra(EXTRA_NOTIFICATION_VIBRATE, toVibrate);
-                fullScreenIntent.putExtra(EXTRA_NOTIFICATION_REPEAT, repeatOption);
-                fullScreenIntent.putExtra(EXTRA_NOTIFICATION_LABEL, label);
-                fullScreenIntent.putExtra(EXTRA_NOTIFICATION_ICON_ID, iconID);
-                PendingIntent fullScreenPendingIntent =
-                        PendingIntent.getActivity(context, 0,
-                                fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                // Show Notification on NP channel ID
-                String notifText = getNotificationText(context, alarmType, label);
-                NotificationCompat.Builder notification =
-                        new NotificationCompat.Builder(context, MainActivity.NP_CHANNEL_ID)
-                                .setSmallIcon(R.drawable.ic_ringtone)
-                                .setContentTitle(context.getString(R.string.nithya_panchangam_header))
-                                .setContentText(notifText)
-                                .setContentIntent(tapPendingIntent)
-                                .setFullScreenIntent(fullScreenPendingIntent, true)
-                                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                .setCategory(NotificationCompat.CATEGORY_ALARM)
-                                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                                .setOngoing(true)
-                                .addAction(R.drawable.swamy_ayyappan_circle,
-                                        context.getString(R.string.snooze_alarm), snoozePendingIntent)
-                                .addAction(R.drawable.swamy_ayyappan_circle,
-                                        context.getString(R.string.dismiss_alarm), dismissPendingIntent);
-
-                NotificationManagerCompat notificationManager =
-                        NotificationManagerCompat.from(context);
-                notificationManager.notify(alarmID, notification.build());
+            } else {
+                Log.i("NPBroadcastReceiver", alarmID +
+                        " NOT ACTIVE. Not playing Ringtone!");
             }
-        } else {
-            Log.i("NPBroadcastReceiver", alarmID +
-                    " NOT ACTIVE. Not playing Ringtone!");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

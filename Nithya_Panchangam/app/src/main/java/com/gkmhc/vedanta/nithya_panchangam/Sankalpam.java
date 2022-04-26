@@ -332,7 +332,8 @@ public class Sankalpam extends Fragment {
             if (prefSankalpamType.equals(getString(R.string.pref_sankalpam_type_srardham))) {
                 sankalpamStr = sankalpamLimitation + getString(R.string.sankalpam_srardham_begin_part1);
                 sankalpamStr += htmlFontHdrStart + getString(R.string.sankalpam_srardham_begin_part2) +
-                        htmlFontHdrEnd + " ... ";
+                        htmlFontHdrEnd;
+                sankalpamStr += getString(R.string.sankalpam_srardham_begin_part3) + " ... ";
                 sanskritTithiStr = shraaddhaTithiStr;
             }
 

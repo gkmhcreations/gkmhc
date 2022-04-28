@@ -445,6 +445,31 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
             textView = npCalendarCellView.findViewById(R.id.np_cell_natchathiram);
             textView.setText(drikNakshatram.get(position));
 
+            String[] drishtiList = getResources().getStringArray(R.array.dina_drishti_list);
+            int dinaDrishti = dinaDrishtiInMonth.get(position);
+            String dinaDrishtiStr = drishtiList[dinaDrishti];
+            String htmlFontHdrStart = "<font color='#0000CC'>";
+            String htmlFontHdrEnd = "</font>";
+            switch (dinaDrishti) {
+                case 0:
+                    htmlFontHdrStart = "<font color='#0000CC'>";
+                    break;
+                case 1:
+                    htmlFontHdrStart = "<font color='#FF0000'>";
+                    break;
+                case 2:
+                    htmlFontHdrStart = "<font color='#CC6600'>";
+                    break;
+                case 3:
+                    htmlFontHdrStart = "<font color='#66CC00'>";
+                    break;
+            }
+            if (!dinaDrishtiStr.isEmpty()) {
+                dinaDrishtiStr = htmlFontHdrStart + dinaDrishtiStr + htmlFontHdrEnd;
+                textView = npCalendarCellView.findViewById(R.id.dina_drishti);
+                textView.setText(Html.fromHtml(dinaDrishtiStr));
+            }
+
             // Set Image Icon(s)
             // Currently 3 dina visheshams(i.e icons) are supported.
             List<Integer> resID = drikImgIDOfMonth.get(position);

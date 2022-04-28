@@ -145,7 +145,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             } else if (dinaDrishti.equalsIgnoreCase(arrayList[2])) {
                 htmlFontHdrStart = "<font color='#CC6600'>";
             } else if (dinaDrishti.equalsIgnoreCase(arrayList[3])) {
-                htmlFontHdrStart = "<font color='#336600'>";
+                htmlFontHdrStart = "<font color='#66CC00'>";
             }
             if (!dinaDrishti.isEmpty()) {
                 dinaDrishti = htmlFontHdrStart + dinaDrishti + htmlFontHdrEnd;

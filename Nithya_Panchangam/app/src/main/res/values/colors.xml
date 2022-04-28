@@ -17,4 +17,5 @@
     <color name="red">#FF0000</color>
     <color name="mildred">#FF9999</color>
     <color name="mildgreen">#CCFFCC</color>
+    <color name="lightgreen">#66CC00</color>
 </resources>

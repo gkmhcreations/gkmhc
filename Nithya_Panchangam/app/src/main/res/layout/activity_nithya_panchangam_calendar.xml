@@ -155,4 +155,63 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <LinearLayout
+        android:minHeight="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/calendarRecyclerView">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="2"
+            android:background="@color/lightcyan"
+            android:minHeight="24dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="Selected Day"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textAlignment="center"
+            android:maxLines="3" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="2"
+            android:background="@color/mildred"
+            android:minHeight="24dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="Kari Naal"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textAlignment="center"
+            android:maxLines="2" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="2"
+            android:background="@color/mildgreen"
+            android:minHeight="24dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="Nalla Naal"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textAlignment="center"
+            android:maxLines="2" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="3"
+            android:background="@color/lightgreen"
+            android:minHeight="24dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="Shubha Muhurta Naal"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textAlignment="center"
+            android:maxLines="3" />
+    </LinearLayout>
 </RelativeLayout>

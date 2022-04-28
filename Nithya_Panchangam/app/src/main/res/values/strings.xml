@@ -159,7 +159,7 @@
     <string name="planet_fri">Fri</string>
     <string name="planet_sat">Sat</string>
     <string name="def_stopwatch_value" translatable="false">00:00:000</string>
-    <string name="festivals_events">Day\'s Event(s)</string>
+    <string name="dina_visheshams">Day\'s Event(s)</string>
     <string name="akshaya_thrithiyai">Akshaya Thrithiyai</string>
     <string name="ammavasai">Amavasai</string>
     <string name="pournami">Pournami</string>
@@ -709,6 +709,14 @@
         <item>East (Curd)</item>
     </string-array>
 
+    <!-- Dina Drishti -->
+    <string-array name="dina_drishti_list">
+        <item />
+        <item>Inauspicious Day</item>
+        <item>Careful</item>
+        <item>Shubha Muhurta Naal</item>
+    </string-array>
+
     <string name="kaalam_details">Nithya Kaalam</string>
     <string name="kaalam_heading">Kaalam</string>
     <string name="thiru_ganitha_panchangam">Drik Ganitha Panchangam</string>
@@ -723,4 +731,5 @@
     <string name="shraadha_tithi_heading">Shraarddha Tithi</string>
 
     <string name="shoolam_heading">Shoolam (Parihaaram)</string>
+    <string name="dina_drishti">Dina Drishti</string>
 </resources>

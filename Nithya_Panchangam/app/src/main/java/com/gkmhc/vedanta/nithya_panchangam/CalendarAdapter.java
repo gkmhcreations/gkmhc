@@ -31,26 +31,47 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalenderViewHolder> {
     private final ArrayList<String> drikDaysOfMonth;
     private final ArrayList<List<Integer>> drikImgIDOfMonth;
     private final ArrayList<String> drikMaasam;
+    private final ArrayList<Integer> dinaDrishtiInMonth;
     private final HashMap<Integer, RecyclerView.ViewHolder> holderlist;
     public final OnItemListener onItemListener;
-    private final GradientDrawable gradientDrawable;
+    private final GradientDrawable greyOutDrawable;
+    private final GradientDrawable kariNaalDrawable;
+    private final GradientDrawable normalDayDrawable;
+    private final GradientDrawable shubhaMuhurtaNaalDrawable;
 
     public CalendarAdapter(Context context, ArrayList<String> gregDaysOfMonth,
                            ArrayList<String> drikDaysOfMonth,
                            ArrayList<List<Integer>> drikImgIDOfMonth,
                            ArrayList<String> drikMaasam,
+                           ArrayList<Integer> dinaDrishtiInMonth,
                            OnItemListener onItemListener) {
         this.gregDaysOfMonth = gregDaysOfMonth;
         this.drikDaysOfMonth = drikDaysOfMonth;
         this.drikImgIDOfMonth = drikImgIDOfMonth;
         this.drikMaasam = drikMaasam;
+        this.dinaDrishtiInMonth = dinaDrishtiInMonth;
         this.onItemListener = onItemListener;
         holderlist = new HashMap<>();
 
-        gradientDrawable = new GradientDrawable();
-        gradientDrawable.setColor(context.getResources().getColor(R.color.lightergray));
-        gradientDrawable.setStroke(1, Color.BLUE);
-        gradientDrawable.setGradientRadius(0.1F);
+        greyOutDrawable = new GradientDrawable();
+        greyOutDrawable.setColor(context.getResources().getColor(R.color.lightergray));
+        greyOutDrawable.setStroke(1, Color.BLUE);
+        greyOutDrawable.setGradientRadius(0.1F);
+
+        kariNaalDrawable = new GradientDrawable();
+        kariNaalDrawable.setColor(context.getResources().getColor(R.color.mildred));
+        kariNaalDrawable.setStroke(1, Color.BLUE);
+        kariNaalDrawable.setGradientRadius(0.1F);
+
+        normalDayDrawable = new GradientDrawable();
+        normalDayDrawable.setColor(context.getResources().getColor(R.color.mildgreen));
+        normalDayDrawable.setStroke(1, Color.BLUE);
+        normalDayDrawable.setGradientRadius(0.1F);
+
+        shubhaMuhurtaNaalDrawable = new GradientDrawable();
+        shubhaMuhurtaNaalDrawable.setColor(context.getResources().getColor(R.color.green));
+        shubhaMuhurtaNaalDrawable.setStroke(1, Color.BLUE);
+        shubhaMuhurtaNaalDrawable.setGradientRadius(0.1F);
     }
 
     @NonNull
@@ -68,10 +89,22 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalenderViewHolder> {
         holder.gregDaysOfMonth.setText(gregDaysOfMonth.get(position));
         holder.drikDaysOfMonth.setText(drikDaysOfMonth.get(position));
         List<Integer> imgIDs = drikImgIDOfMonth.get(position);
+        int dinaDrishti = dinaDrishtiInMonth.get(position);
 
         String strMaasam = drikMaasam.get(position);
         if (strMaasam.contains("Adhik")) {
-            holder.parentView.setBackground(gradientDrawable);
+            holder.parentView.setBackground(greyOutDrawable);
+        }
+
+        if (!drikDaysOfMonth.get(position).isEmpty()) {
+            switch (dinaDrishti) {
+                case 0:
+                    holder.parentView.setBackground(normalDayDrawable);
+                    break;
+                case 1:
+                    holder.parentView.setBackground(kariNaalDrawable);
+                    break;
+            }
         }
 
         try {

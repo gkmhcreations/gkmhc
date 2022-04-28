@@ -51,7 +51,7 @@
     <string name="solar_calendar">సౌరమానమ్</string>
     <string name="sunrise_heading">సూర్యోదయః</string>
     <string name="sunset_heading">సుర్యాస్తమయః</string>
-    <string name="festivals_events">దిన విశేషాః</string>
+    <string name="dina_visheshams">దిన విశేషాః</string>
     <string name="akshaya_thrithiyai">అక్షయ్య తృతీయా</string>
     <string name="planet_sun">భానుః</string>
     <string name="planet_mon">ఇందుః</string>
@@ -591,5 +591,13 @@
         <item>దక్షిణ (తైలం)</item>
         <item>వెస్ట్ (బెల్లం)</item>
         <item>తూర్పు (పెరుగు)</item>
+    </string-array>
+    <string name="dina_drishti">రోజు రకం</string>
+    <!-- Dina Drishti -->
+    <string-array name="dina_drishti_list">
+        <item />
+        <item>అశుభ దినం</item>
+        <item>జాగ్రత్త</item>
+        <item>శుభ ముహూర్త నాలు</item>
     </string-array>
 </resources>

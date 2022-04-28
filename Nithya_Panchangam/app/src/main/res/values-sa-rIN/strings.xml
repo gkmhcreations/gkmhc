@@ -51,7 +51,7 @@
     <string name="solar_calendar">सौरमानम्</string>
     <string name="sunrise_heading">सूर्योदयः</string>
     <string name="sunset_heading">सूर्यास्तमयः</string>
-    <string name="festivals_events">दिन विशेषाः</string>
+    <string name="dina_visheshams">दिन विशेषाः</string>
     <string name="akshaya_thrithiyai">अक्षय्य तृतीया</string>
     <string name="planet_sun">भानुः</string>
     <string name="planet_mon">इन्दुः</string>
@@ -603,5 +603,13 @@
         <item>दक्षिणा दिक् (तैलम्)</item>
         <item>प्रतीची दिक् (गुडम्)</item>
         <item>प्राची दिक् (दधि)</item>
+    </string-array>
+    <string name="dina_drishti">दिन दृष्टिः</string>
+    <!-- Dina Drishti -->
+    <string-array name="dina_drishti_list">
+        <item />
+        <item>अशुभ दिनः</item>
+        <item>सावधानम्!</item>
+        <item>शुभ मुहूर्त दिनः</item>
     </string-array>
 </resources>

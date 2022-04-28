@@ -51,7 +51,7 @@
     <string name="solar_calendar">Sauramānam</string>
     <string name="sunrise_heading">Sūryodayaḥ</string>
     <string name="sunset_heading">Suryāstamayaḥ</string>
-    <string name="festivals_events">Dhina viśeṣāḥ</string>
+    <string name="dina_visheshams">Dina viśeṣāḥ</string>
     <string name="akshaya_thrithiyai">Akṣayya tṛtīyā</string>
     <string name="planet_sun">Bhānuḥ</string>
     <string name="planet_mon">Induḥ</string>
@@ -592,4 +592,14 @@
         <item>Pratīchī Dik (Guḍam)</item>
         <item>Prāchī Dik (Dadhi)</item>
     </string-array>
+
+    <string name="dina_drishti">Dina driṣṭi</string>
+    <!-- Dina Drishti -->
+    <string-array name="dina_drishti_list">
+        <item />
+        <item>Aśubha Dinaṁ</item>
+        <item>Jāgratta</item>
+        <item>Śubha muhūrtē nāl</item>
+    </string-array>
+
 </resources>

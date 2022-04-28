@@ -14,4 +14,7 @@
     <color name="lightergray">#E0E0E0</color>
     <color name="lightgray">#A0A0A0</color>
     <color name="gray">#606060</color>
+    <color name="red">#FF0000</color>
+    <color name="mildred">#FF9999</color>
+    <color name="mildgreen">#CCFFCC</color>
 </resources>

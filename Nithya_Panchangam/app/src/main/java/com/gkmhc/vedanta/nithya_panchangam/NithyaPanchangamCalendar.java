@@ -69,6 +69,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
     private ArrayList<String> drikDinaVishesham = null;
     private ArrayList<String> drikMaasam = null;
     private ArrayList<String> drikNakshatram = null;
+    private ArrayList<Integer> dinaDrishtiInMonth = null;
     private String[] gregYearList = null;
     private Menu menu;
 
@@ -248,7 +249,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
         if (selPos != -1) {
             selPosition = selPos;
             CalendarAdapter calendarAdapter = new CalendarAdapter(this, gregDaysInMonth,
-                    drikDaysInMonth, drikImgIDOfMonth, drikMaasam, this);
+                    drikDaysInMonth, drikImgIDOfMonth, drikMaasam, dinaDrishtiInMonth, this);
             RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
             calendarRecyclerView.setHasFixedSize(true);
             calendarRecyclerView.setLayoutManager(layoutManager);
@@ -268,6 +269,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
         drikDinaVishesham = new ArrayList<>();
         drikMaasam = new ArrayList<>();
         drikNakshatram = new ArrayList<>();
+        dinaDrishtiInMonth = new ArrayList<>();
 
         int numDaysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         Calendar calendarIter = (Calendar) calendar.clone();
@@ -284,6 +286,7 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
                 drikDinaVishesham.add("");
                 drikMaasam.add("");
                 drikNakshatram.add("");
+                dinaDrishtiInMonth.add(0);
             } else {
                 gregDaysInMonth.add(String.valueOf(index - firstDate + 1));
 
@@ -356,6 +359,18 @@ public class NithyaPanchangamCalendar extends AppCompatActivity implements
                     //Log.d("NPCalProfiler","getDinaVisheshams()... Time Taken: " +
                     //        VedicCalendar.getTimeTaken(startTime, endTime));
                     calendarIter.add(Calendar.DATE, 1);
+
+                    String dinaDrishti = vedicCalendar.getDinaDrishti();
+                    String[] arrayList = getResources().getStringArray(R.array.dina_drishti_list);
+                    int dinaDrishtiIndex = 0;
+                    if (dinaDrishti.equalsIgnoreCase(arrayList[1])) {
+                        dinaDrishtiIndex = 1;
+                    } else if (dinaDrishti.equalsIgnoreCase(arrayList[2])) {
+                        dinaDrishtiIndex = 2;
+                    } else if (dinaDrishti.equalsIgnoreCase(arrayList[3])) {
+                        dinaDrishtiIndex = 3;
+                    }
+                    dinaDrishtiInMonth.add(dinaDrishtiIndex);
                 } catch (Exception e) {
                     e.printStackTrace();
                     return -1;

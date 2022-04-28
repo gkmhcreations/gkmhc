@@ -52,7 +52,7 @@
     <string name="solar_calendar">ஸௌரமானம்</string>
     <string name="sunrise_heading">ஸூர்யோதயம்</string>
     <string name="sunset_heading">ஸூர்யாஸ்தமனம்</string>
-    <string name="festivals_events">தின விசேஷம்</string>
+    <string name="dina_visheshams">தின விசேஷம்</string>
     <string name="akshaya_thrithiyai">அக்ஷய்ய த்ருதீயை</string>
     <string name="planet_sun">ஞா</string>
     <string name="planet_mon">திங்</string>
@@ -604,5 +604,13 @@
         <item>தெற்கு (எண்ணெய்)</item>
         <item>மேற்கு (வெல்லம்)</item>
         <item>கிழக்கு (தயிர்)</item>
+    </string-array>
+    <string name="dina_drishti">நாள் வகை</string>
+    <!-- Dina Drishti -->
+    <string-array name="dina_drishti_list">
+        <item />
+        <item>கரி நாள்</item>
+        <item>கவனம்</item>
+        <item>சுப முஹூர்த்த நாள்</item>
     </string-array>
 </resources>

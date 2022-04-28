@@ -87,7 +87,7 @@
                 android:maxLines="5"
                 android:textStyle="bold"
                 android:textColor="@color/blue"
-                android:text="@string/festivals_events"
+                android:text="@string/dina_visheshams"
                 android:layout_marginStart="1dp" />
             <TextView
                 android:id="@+id/dina_vishesham"

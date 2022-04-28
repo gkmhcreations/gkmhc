@@ -132,6 +132,7 @@ public class VedicCalendar extends Calendar {
     public static final int MAX_TITHIS = 30;
     public static final int MAX_NAKSHATHRAMS = 27;
     public static final int MAX_VAASARAMS = 7;
+    public static final int MAX_DINA_DRISHTIS = 4;
     private static final int MAX_AMRUTHATHI_YOGAMS = 3;
     private static final int MAX_KAALAMS = 8;
     private static final int BRAHMA_MUHURTHAM_OFFSET = 96; // 2 Muhurtams In Minutes
@@ -222,14 +223,15 @@ public class VedicCalendar extends Calendar {
     public static final int VEDIC_CALENDAR_TABLE_TYPE_AMRUTATHI_YOGAM = 16;
     public static final int VEDIC_CALENDAR_TABLE_TYPE_KAALA_VIBHAAGAH = 17;
     public static final int VEDIC_CALENDAR_TABLE_TYPE_SHOOLAM_PARIHAARAM = 18;
-    private static final int MAX_PANCHANGAM_FIELDS = 19;
+    public static final int VEDIC_CALENDAR_TABLE_TYPE_DINA_DRISHTI = 19;
+    private static final int MAX_PANCHANGAM_FIELDS = 20;
 
     public static final int AYANAMSA_CHITRAPAKSHA = 0;
     public static final int AYANAMSA_LAHIRI = 1;
     public static final int AYANAMSA_KRISHNAMURTI = 2;
 
     // Samvatsaram (Year)
-    private static final String[] samvatsaram_list = {
+    private static final String[] samvatsaramList = {
             "Prabhava",
             "Vibhava",
             "Sukla",
@@ -293,13 +295,13 @@ public class VedicCalendar extends Calendar {
     };
 
     // Ayanam (6-month) period
-    private static final String[] ayanam_list = {
+    private static final String[] ayanamList = {
             "Utharayanam",
             "Dhakshinayanam",
     };
 
     // Rithu (Season) 2-month period
-    private static final String[] rithu_list = {
+    private static final String[] rithuList = {
             "Vasantharithu",
             "Greeshmarithu",
             "Varsharithu",
@@ -309,7 +311,7 @@ public class VedicCalendar extends Calendar {
     };
 
     // Sauramaanam Maasam (Solar Month)
-    private static final String[] sauramaanam_maasam_list = {
+    private static final String[] sauramaanamMaasamList = {
             "Mesha",
             "Rishabha",
             "Mithuna",
@@ -325,7 +327,7 @@ public class VedicCalendar extends Calendar {
     };
 
     // Chaandramaanam Maasam (Lunar Month)
-    private static final String[] chaandramaanam_maasam_list = {
+    private static final String[] chaandramaanamMaasamList = {
             "Chaitra",
             "Vaishakha",
             "Jyeshta",
@@ -341,13 +343,13 @@ public class VedicCalendar extends Calendar {
     };
 
     // Paksham (15-day) period
-    private static final String[] paksham_list = {
+    private static final String[] pakshamList = {
             "Shukla",
             "Krishna",
     };
 
     // Tithi (Lunar Day)
-    private static final String[] tithi_list = {
+    private static final String[] tithiList = {
             "Prathama",
             "Dvithiya",
             "Thrithiya",
@@ -381,7 +383,7 @@ public class VedicCalendar extends Calendar {
     };
 
     // Sankalpa Tithi (Lunar Day) with grammar suffix
-    private static final String[] sankalpa_tithi_list = {
+    private static final String[] sankalpaTithiList = {
             "Prathamayam",
             "Dvithiyayam",
             "Thrithiyayam",
@@ -415,7 +417,7 @@ public class VedicCalendar extends Calendar {
     };
 
     // Raasi (Planet)
-    private static final String[] raasi_list = {
+    private static final String[] raasiList = {
             "Mesha",
             "Rishabha",
             "Mithuna",
@@ -431,7 +433,7 @@ public class VedicCalendar extends Calendar {
     };
 
     // Nakshatram (Star) used for Panchangam purposes
-    private static final String[] nakshathram_list = {
+    private static final String[] nakshathramList = {
             "Ashwini",
             "Bharani",
             "Karthikai",
@@ -462,7 +464,7 @@ public class VedicCalendar extends Calendar {
     };
 
     // Sankalpa Nakshatram (Star) used for Sankapalpam Purposes with grammar suffix
-    private static final String[] sankalpa_nakshathram_list = {
+    private static final String[] sankalpaNakshathramList = {
             "Ashwini",
             "Apabharani",
             "Kruthika",
@@ -493,7 +495,7 @@ public class VedicCalendar extends Calendar {
     };
 
     // Yogam used to indicate yogam of the Day
-    private static final String[] yogam_list = {
+    private static final String[] yogamList = {
             "Vishkambam",
             "Preethi",
             "Ayushmaan",
@@ -524,7 +526,7 @@ public class VedicCalendar extends Calendar {
     };
 
     // Karanam (half-tithi)
-    private static final String[] karanam_list = {
+    private static final String[] karanamList = {
             "Kimsthuknam",
             "Bava",
             "Baalava",
@@ -588,7 +590,7 @@ public class VedicCalendar extends Calendar {
     };
 
     // Vaasaram (weekday)
-    private static final String[] vaasaram_list = {
+    private static final String[] vaasaramList = {
             "Bhanu",
             "Indhu",
             "Bhouma",
@@ -599,7 +601,7 @@ public class VedicCalendar extends Calendar {
     };
 
     // Dhinam (Day)
-    private static final String[] dhinam_list = {
+    private static final String[] dhinamList = {
             "Bhanu",
             "Indhu",
             "Bhouma",
@@ -610,7 +612,7 @@ public class VedicCalendar extends Calendar {
     };
 
     // Planets
-    private static final String[] planet_list = {
+    private static final String[] planetList = {
             "Sun",
             "Moon",
             "Mars",
@@ -623,7 +625,7 @@ public class VedicCalendar extends Calendar {
     };
 
     // Horai (Auspicious Hour of the Day)
-    private static final String[] horai_list = {
+    private static final String[] horaiList = {
             "Sooriya",
             "Chandra",
             "Mangal",
@@ -634,14 +636,14 @@ public class VedicCalendar extends Calendar {
     };
 
     // Amruthathi Yogam used to indicate auspiciousness of the Day
-    private static final String[] amruthathi_yogam_list = {
+    private static final String[] amruthathiYogamList = {
             "Amruthayogam",
             "Siddhayogam",
             "Maranayogam",
     };
 
     // Kaala Vibhaagaha
-    private static final String[] kaala_vibhaagaha_list = {
+    private static final String[] kaalaVibhaagahaList = {
             "Brahma muhurta",
             "Pratah",
             "Sangava",
@@ -653,15 +655,50 @@ public class VedicCalendar extends Calendar {
     };
 
     // Kaala Vibhaagaha
-    private static final String[] shoolam_parihaaram_list = {
-    	"West (Jaggery)",
-    	"East (Curd)",
-    	"North (Milk)",
-    	"North (Milk)",
-    	"South (Balm)",
-    	"West (Jaggery)",
-    	"East (Curd)",
+    private static final String[] shoolamParihaaramList = {
+            "West (Jaggery)",
+            "East (Curd)",
+            "North (Milk)",
+            "North (Milk)",
+            "South (Balm)",
+            "West (Jaggery)",
+            "East (Curd)",
     };
+
+    private static final int[][] kariNaalMap = {
+            {6,15},             // Chithirai
+            {7,16,17},          // Vaikaasi
+            {1,6},              // Aani
+            {2, 10, 20},        // Aadi
+            {2, 9, 28},         // Avani
+            {16, 29},           // Porattasi
+            {6, 20},            // Aippasi
+            {1, 10, 17},        // Karthigai
+            {6, 9, 11},         // Margazhi
+            {1, 2, 3, 11, 17},  // Thai
+            {15, 16, 17},       // Maasi
+            {6, 15, 19}         // Panguni
+    };
+
+    // Dina Drishti List
+    private static final String[] dinaDrishtiList = {
+            "Normal Day",
+            "Kari Naal",
+            "To be Careful",
+            "Shubha Muhurta Naal",
+    };
+    private static final int DINA_DRISHTI_NORMAL_DAY = 0;
+    private static final int DINA_DRISHTI_KARI_NAAL = 1;
+    private static final int DINA_DRISHTI_GAVANAMANA_NAAL = 2;
+    private static final int DINA_DRISHTI_SHUBHA_MUHURTA_NAAL = 2;
+
+    private static final int DINA_DRISHTI_TITHI_ISSUE = 1;
+    private static final int DINA_DRISHTI_NAKSHATRAM_ISSUE = 2;
+    private static final int DINA_DRISHTI_TITHI_NAKSHATRAM_ISSUES = 3;
+    private static final int DINA_DRISHTI_AMRUTHATHIYOGAM_ISSUE = 4;
+    private static final int DINA_DRISHTI_TITHI_AMRUTHATHIYOGAM_ISSUES = 5;
+    private static final int DINA_DRISHTI_NAKSHATRAM_AMRUTHATHIYOGAM_ISSUES = 6;
+    private static final int DINA_DRISHTI_TITHI_NAKSHATRAM_AMRUTHATHIYOGAM_ISSUES = 7;
 
     // To facilitate if Horai is subham or not based on lookup {horaiIndex}
     // Design considerations:
@@ -3511,6 +3548,77 @@ public class VedicCalendar extends Calendar {
     }
 
     /**
+     * Use this API to get Dina Drishti for the given calendar day.
+     *
+     * @return A string that represents Dina Drishti for the given calendar day.
+     */
+    public String getDinaDrishti() {
+        //long startTime = System.nanoTime();
+        int dinaDrishtiIndex = DINA_DRISHTI_NORMAL_DAY;
+        // Step 1: Get selected day's tithi number
+        //FieldSpan tithiFields = getTithiIndex(MATCH_PANCHANGAM_FULLDAY);
+        //int tithiNum = tithiFields.fieldIndex;
+        int dinaAnkam = getDinaAnkam();
+        FieldSpan maasamFields = getSauramaanamMaasamIndex();
+        int maasamIndex = maasamFields.fieldIndex;
+        if (maasamFields.fieldSpan < sunSetTotalMins) {
+            maasamIndex += 1;
+            maasamIndex %= MAX_RAASIS;
+        }
+        int numDays = kariNaalMap[maasamIndex].length;
+        for (int dayIter = 0;dayIter < numDays;dayIter++) {
+            if (dinaAnkam == kariNaalMap[maasamIndex][dayIter]) {
+                dinaDrishtiIndex = DINA_DRISHTI_KARI_NAAL;
+                break;
+            }
+        }
+
+        if (dinaDrishtiIndex != DINA_DRISHTI_KARI_NAAL) {
+            String tithi = getTithi(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
+            String nakshatram = getNakshatram(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
+            String ayogam = getAmruthathiYogam(VedicCalendar.MATCH_PANCHANGAM_FULLDAY);
+
+            String[] tithiList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_TITHI);
+            if (tithi.contains(tithiList[0]) || tithi.contains(tithiList[7]) ||
+                tithi.contains(tithiList[8]) || tithi.contains(tithiList[15]) ||
+                tithi.contains(tithiList[22]) || tithi.contains(tithiList[23])) {
+                dinaDrishtiIndex = DINA_DRISHTI_TITHI_ISSUE;
+            }
+
+            String[] nakshathramList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_NAKSHATHRAM);
+            if (nakshatram.contains(nakshathramList[1]) || nakshatram.contains(nakshathramList[2])) {
+                dinaDrishtiIndex |= DINA_DRISHTI_NAKSHATRAM_ISSUE;
+            }
+
+            String[] amruthathiYogamList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_AMRUTATHI_YOGAM);
+            if (ayogam.contains(amruthathiYogamList[2])) {
+                dinaDrishtiIndex |= DINA_DRISHTI_AMRUTHATHIYOGAM_ISSUE;
+            }
+
+            if ((dinaDrishtiIndex >= DINA_DRISHTI_TITHI_ISSUE) &&
+                (dinaDrishtiIndex < DINA_DRISHTI_TITHI_NAKSHATRAM_AMRUTHATHIYOGAM_ISSUES)) {
+                dinaDrishtiIndex = DINA_DRISHTI_GAVANAMANA_NAAL;
+            } else if (dinaDrishtiIndex == DINA_DRISHTI_TITHI_NAKSHATRAM_AMRUTHATHIYOGAM_ISSUES) {
+                dinaDrishtiIndex = DINA_DRISHTI_GAVANAMANA_NAAL;//DINA_DRISHTI_KARI_NAAL;
+            } else {
+                // TODO: How to determine this?
+                //dinaDrishtiIndex = DINA_DRISHTI_SHUBHA_MUHURTA_NAAL;
+            }
+        }
+
+        String[] dinaDrishtiList = null;
+        if (vedicCalendarLocaleList != null) {
+            dinaDrishtiList = vedicCalendarLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_DINA_DRISHTI);
+        } else {
+            dinaDrishtiList = vcDefaultLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_DINA_DRISHTI);
+        }
+        //long endTime = System.nanoTime();
+        //System.out.println("VedicCalendar" + " getDinaDrishti() Time Taken: " +
+        //        getTimeTaken(startTime, endTime));
+        return dinaDrishtiList[dinaDrishtiIndex];
+    }
+
+    /**
      * Use this API to get a Dina Shoolam & Parihaaram for the given calendar day.
      *
      * @return Shoolam & Parihaaram in String format --- Shoolam(Parihaaram).
@@ -3557,6 +3665,8 @@ public class VedicCalendar extends Calendar {
                     vcLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_KAALA_VIBHAAGAH);
             String[] shoolamParihaaramList =
                     vcLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_SHOOLAM_PARIHAARAM);
+            String[] dinaDrishtiList =
+                    vcLocaleList.get(VEDIC_CALENDAR_TABLE_TYPE_DINA_DRISHTI);
             if (((samvatsaramList != null) && (samvatsaramList.length == MAX_SAMVATSARAMS)) &&
                 ((ayanamList != null) && (ayanamList.length == MAX_AYANAMS)) &&
                 ((rithuList != null) && (rithuList.length == MAX_RITHUS)) &&
@@ -3575,7 +3685,8 @@ public class VedicCalendar extends Calendar {
                 ((horaiList != null) && (horaiList.length == MAX_VAASARAMS)) &&
                 ((ayogamList != null) && (ayogamList.length == MAX_AMRUTHATHI_YOGAMS)) &&
                 ((kaalamList != null) && (kaalamList.length == MAX_KAALAMS)) &&
-                ((shoolamParihaaramList != null) && (shoolamParihaaramList.length == MAX_VAASARAMS))) {
+                ((shoolamParihaaramList != null) && (shoolamParihaaramList.length == MAX_VAASARAMS)) &&
+                ((dinaDrishtiList != null) && (dinaDrishtiList.length == MAX_DINA_DRISHTIS))) {
                 isValid = true;
             }
         }
@@ -3594,61 +3705,64 @@ public class VedicCalendar extends Calendar {
 
             try {
                 // Step1: Samvatsaram
-                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_SAMVATSARAM, samvatsaram_list);
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_SAMVATSARAM, samvatsaramList);
 
                 // Step2: Ayanam
-                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_AYANAM, ayanam_list);
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_AYANAM, ayanamList);
 
                 // Step3: Rithu
-                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_RITHU, rithu_list);
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_RITHU, rithuList);
 
                 // Step4-1: Maasam (Solar Months)
-                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_SAURAMANA_MAASAM, sauramaanam_maasam_list);
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_SAURAMANA_MAASAM, sauramaanamMaasamList);
 
                 // Step4-2: Maasam (Lunar Months)
-                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_CHAANDRAMANA_MAASAM, chaandramaanam_maasam_list);
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_CHAANDRAMANA_MAASAM, chaandramaanamMaasamList);
 
                 // Step5: Paksham
-                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_PAKSHAM, paksham_list);
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_PAKSHAM, pakshamList);
 
                 // Step6: Thithi
-                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_TITHI, tithi_list);
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_TITHI, tithiList);
 
                 // Step7: Sankalpa Thithi
-                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_TITHI, sankalpa_tithi_list);
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_TITHI, sankalpaTithiList);
 
                 // Step8: Raasi
-                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_RAASI, raasi_list);
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_RAASI, raasiList);
 
                 // Step9: Nakshathram
-                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_NAKSHATHRAM, nakshathram_list);
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_NAKSHATHRAM, nakshathramList);
 
                 // Step10: Sankalpa Nakshathram
-                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_NAKSHATHRAM, sankalpa_nakshathram_list);
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_SANKALPA_NAKSHATHRAM, sankalpaNakshathramList);
 
                 // Step11: Yogam
-                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_YOGAM, yogam_list);
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_YOGAM, yogamList);
 
                 // Step12: Karanam
-                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_KARANAM, karanam_list);
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_KARANAM, karanamList);
 
                 // Step13: Vaasaram
-                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_VAASARAM, vaasaram_list);
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_VAASARAM, vaasaramList);
 
                 // Step14: Dhinam
-                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_DINAM, dhinam_list);
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_DINAM, dhinamList);
 
                 // Step15: Horai
-                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_HORAI, horai_list);
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_HORAI, horaiList);
 
                 // Step16: Amruthathi Yogam
-                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_AMRUTATHI_YOGAM, amruthathi_yogam_list);
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_AMRUTATHI_YOGAM, amruthathiYogamList);
 
                 // Step17: Kaala Vibhagah
-                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_KAALA_VIBHAAGAH, kaala_vibhaagaha_list);
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_KAALA_VIBHAAGAH, kaalaVibhaagahaList);
 
                 // Step18: Shooam (Parihaaram)
-                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_SHOOLAM_PARIHAARAM, shoolam_parihaaram_list);
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_SHOOLAM_PARIHAARAM, shoolamParihaaramList);
+
+                // Step18: Dina Drishti
+                vcDefaultLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_DINA_DRISHTI, dinaDrishtiList);
             } catch (Exception e) {
                 e.printStackTrace();
                 return false;

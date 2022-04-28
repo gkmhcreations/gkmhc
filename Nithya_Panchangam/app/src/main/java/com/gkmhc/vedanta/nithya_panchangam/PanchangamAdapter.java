@@ -134,8 +134,26 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
         panchangamViewHolder.panchangamField.setText(panchangamFields.get(position));
         panchangamViewHolder.panchangamField.setTextSize(defTextSize);
 
-        // Make "Kaala Vibhaagaha" value clickable to display a range of Kaalam(s) throughout the day!
-        if (position == 3) {
+        if (position == 1) {
+            // Color code based on the dina drishti
+            String[] arrayList = context.getResources().getStringArray(R.array.dina_drishti_list);
+            String dinaDrishti = panchangamValues.get(position);
+            String htmlFontHdrStart = "<font color='#0000CC'>";
+            String htmlFontHdrEnd = "</font>";
+            if (dinaDrishti.equalsIgnoreCase(arrayList[1])) {
+                htmlFontHdrStart = "<font color='#FF0000'>";
+            } else if (dinaDrishti.equalsIgnoreCase(arrayList[2])) {
+                htmlFontHdrStart = "<font color='#CC6600'>";
+            } else if (dinaDrishti.equalsIgnoreCase(arrayList[3])) {
+                htmlFontHdrStart = "<font color='#336600'>";
+            }
+            if (!dinaDrishti.isEmpty()) {
+                dinaDrishti = htmlFontHdrStart + dinaDrishti + htmlFontHdrEnd;
+            }
+            panchangamViewHolder.panchangamValue.setText(Html.fromHtml(dinaDrishti));
+            panchangamViewHolder.panchangamValue.setTextSize(defTextSize);
+        } else if (position == 4) {
+            // Make "Kaala Vibhaagaha" value clickable to display a range of Kaalam(s) throughout the day!
             // Add Kaala Vibhaagam details
             StringBuilder kaalamVal = new StringBuilder();
             for (int index = 0; index < kaalamExactList.size(); index++) {
@@ -156,7 +174,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
         }
 
         // Make Lagnam value clickable to display a range of lagnams throughout the day!
-        else if (position == 18) {
+        else if (position == 19) {
             // Add Lagnam details
             // Display Lagnam from the list of Lagnams retrieved.
             StringBuilder lagnamVal = new StringBuilder();
@@ -179,7 +197,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             convertView.setOnClickListener(v -> showLagnamDetails());
         }
         // Make Horai value clickable to display a range of horai(s) throughout the day!
-        else if (position == 19) {
+        else if (position == 20) {
             // Add Horai details
             // Display Horai from the list of Horai(s) retrieved.
             StringBuilder horaiVal = new StringBuilder();
@@ -205,7 +223,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             convertView.setOnClickListener(v -> showHoraiDetails());
         }
         // Align & display "Nalla Neram" in HTML format
-        else if (position == 21) {
+        else if (position == 22) {
             // Add "Nalla Neram" details
             String nallaNeramParsedVal = panchangamValues.get(position);
 

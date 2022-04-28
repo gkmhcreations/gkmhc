@@ -51,7 +51,7 @@
     <string name="solar_calendar">സൗരമാനം</string>
     <string name="sunrise_heading">സൂര്‍യോദയഃ</string>
     <string name="sunset_heading">സുര്‍യാസ്തമയഃ</string>
-    <string name="festivals_events">ദിന വിശേഷാഃ</string>
+    <string name="dina_visheshams">ദിന വിശേഷാഃ</string>
     <string name="akshaya_thrithiyai">അക്ഷയ്യ തൃതീയാ</string>
     <string name="planet_sun">ഭാനുഃ</string>
     <string name="planet_mon">ഇന്ദുഃ</string>
@@ -590,5 +590,13 @@
         <item>തെക്ക് (തൈലം)</item>
         <item>പടിഞ്ഞാറ് (ശർക്കര)</item>
         <item>കിഴക്ക് (തൈര്)</item>
+    </string-array>
+    <string name="dina_drishti">ദിവസത്തിന്റെ തരം</string>
+    <!-- Dina Drishti -->
+    <string-array name="dina_drishti_list">
+        <item />
+        <item>അശുഭകരമായ ദിവസം</item>
+        <item>ശ്രദ്ധയോടെ</item>
+        <item>ഹാപ്പി മൊമെന്റ് ഡേ</item>
     </string-array>
 </resources>

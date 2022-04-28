@@ -9,7 +9,7 @@
 
     <ImageView
         android:id="@+id/reminder_icon"
-        android:contentDescription="@string/festivals_events"
+        android:contentDescription="@string/dina_visheshams"
         android:src="@drawable/swamy_ayyappan_circle"
         android:layout_centerVertical="true"
         android:layout_width="40dp"

@@ -1665,6 +1665,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             // Step18: Shooam (Parihaaram)
             arrayList = context.getResources().getStringArray(R.array.shoolam_parihaaram_list);
             vedicCalendarLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_SHOOLAM_PARIHAARAM, arrayList);
+
+            // Step19: Dina Drishti List
+            arrayList = context.getResources().getStringArray(R.array.dina_drishti_list);
+            vedicCalendarLocaleList.put(VedicCalendar.VEDIC_CALENDAR_TABLE_TYPE_DINA_DRISHTI, arrayList);
         }
 
         return vedicCalendarLocaleList;

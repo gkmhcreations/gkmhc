@@ -44,7 +44,7 @@ public class Panchangam extends Fragment {
     private ListView panchangamListView;
     private ArrayList<String> panchangamFields;
     private ArrayList<String> panchangamValues;
-    private static int NUM_PANCHANGAM_FIELDS = 27;
+    private static int NUM_PANCHANGAM_FIELDS = 28;
     private String maasamStr;
     private int refDinaAnkam = 0;
     private String vaasaramStr;
@@ -480,6 +480,11 @@ public class Panchangam extends Fragment {
             } else {
                 dhinaSpecialStr = "";
             }
+
+            // Retrieve Dina Drishti for the given calendar day
+            panchangamValues.add(0, vedicCalendar.getDinaDrishti());
+
+            // Retrieve Dina Vishesham for the given calendar day
             panchangamValues.add(0, dhinaSpecialStr);
             panchangamValues.add(vedicCalendar.getShoolamParihaaram());
             panchangamValues.add("");
@@ -537,7 +542,8 @@ public class Panchangam extends Fragment {
     private void updatePanchangamFieldsHeader() {
         // Need to reconstruct everytime as this can change as per locale selected!
         panchangamFields = new ArrayList<>();
-        panchangamFields.add(getString(R.string.festivals_events));
+        panchangamFields.add(getString(R.string.dina_visheshams));
+        panchangamFields.add(getString(R.string.dina_drishti));
         panchangamFields.add(getString(R.string.sunrise_heading));
         panchangamFields.add(getString(R.string.sunset_heading));
         panchangamFields.add(getString(R.string.kaala_vibhaagaha));

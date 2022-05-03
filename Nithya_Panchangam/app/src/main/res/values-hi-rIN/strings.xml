@@ -593,12 +593,17 @@
         <item>प्रतीची दिक् (गुडम्)</item>
         <item>प्राची दिक् (दधि)</item>
     </string-array>
-    <string name="dina_drishti">दिन दृष्टिः</string>
     <!-- Dina Drishti -->
     <string-array name="dina_drishti_list">
-        <item />
-        <item>अशुभ दिनः</item>
-        <item>सावधानम्!</item>
-        <item>शुभ मुहूर्त दिनः</item>
+        <item>@string/normal_day</item>
+        <item>@string/kari_naal</item>
+        <item>@string/careful_day</item>
+        <item>@string/shubha_muhurta_naal</item>
     </string-array>
+    <string name="dina_drishti">दिन दृष्टिः</string>
+    <string name="selected_day">चयनित दिनः</string>
+    <string name="normal_day">सामान्य दिनः</string>
+    <string name="kari_naal">अशुभ दिनः</string>
+    <string name="careful_day">सावधानम्!</string>
+    <string name="shubha_muhurta_naal">शुभ मुहूर्त दिनः</string>
 </resources>

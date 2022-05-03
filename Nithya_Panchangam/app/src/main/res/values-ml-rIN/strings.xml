@@ -591,12 +591,17 @@
         <item>പടിഞ്ഞാറ് (ശർക്കര)</item>
         <item>കിഴക്ക് (തൈര്)</item>
     </string-array>
-    <string name="dina_drishti">ദിവസത്തിന്റെ തരം</string>
     <!-- Dina Drishti -->
     <string-array name="dina_drishti_list">
-        <item />
-        <item>അശുഭകരമായ ദിവസം</item>
-        <item>ശ്രദ്ധയോടെ</item>
-        <item>ഹാപ്പി മൊമെന്റ് ഡേ</item>
+        <item>@string/normal_day</item>
+        <item>@string/kari_naal</item>
+        <item>@string/careful_day</item>
+        <item>@string/shubha_muhurta_naal</item>
     </string-array>
+    <string name="dina_drishti">ദിവസത്തിന്റെ തരം</string>
+    <string name="selected_day">തിരഞ്ഞെടുത്ത ദിവസം</string>
+    <string name="normal_day">സാധാരണ ദിവസം</string>
+    <string name="kari_naal">അശുഭകരമായ ദിവസം</string>
+    <string name="careful_day">ശ്രദ്ധയോടെ</string>
+    <string name="shubha_muhurta_naal">ഹാപ്പി മൊമെന്റ് ഡേ</string>
 </resources>

@@ -593,13 +593,18 @@
         <item>Prāchī Dik (Dadhi)</item>
     </string-array>
 
-    <string name="dina_drishti">Dina driṣṭi</string>
     <!-- Dina Drishti -->
     <string-array name="dina_drishti_list">
-        <item />
-        <item>Aśubha Dinaṁ</item>
-        <item>Jāgratta</item>
-        <item>Śubha muhūrtē nāl</item>
+        <item>@string/normal_day</item>
+        <item>@string/kari_naal</item>
+        <item>@string/careful_day</item>
+        <item>@string/shubha_muhurta_naal</item>
     </string-array>
+    <string name="dina_drishti">Dina driṣṭi</string>
+    <string name="selected_day">Selected dinaṁ</string>
+    <string name="normal_day">Sādhāraṇa dinaṁ</string>
+    <string name="kari_naal">Aśubha dinaṁ</string>
+    <string name="careful_day">Jāgratta</string>
+    <string name="shubha_muhurta_naal">Śubha muhūrtē dinām</string>
 
 </resources>

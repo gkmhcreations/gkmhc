@@ -592,12 +592,17 @@
         <item>ಪಶ್ಚಿಮ (ಬೆಲ್ಲ)</item>
         <item>ಪೂರ್ವ (ಮೊಸರು)</item>
     </string-array>
-    <string name="dina_drishti">ದಿನದ ಪ್ರಕಾರ</string>
     <!-- Dina Drishti -->
     <string-array name="dina_drishti_list">
-        <item />
-        <item>అశుభ దినం</item>
-        <item>ಎಚ್ಚರಿಕೆಯಿಂದ</item>
-        <item>ಶುಭ ಮುಹೂರ್ತ ನಾಳ</item>
+        <item>@string/normal_day</item>
+        <item>@string/kari_naal</item>
+        <item>@string/careful_day</item>
+        <item>@string/shubha_muhurta_naal</item>
     </string-array>
+    <string name="dina_drishti">ದಿನದ ಪ್ರಕಾರ</string>
+    <string name="selected_day">ಆಯ್ದ ದಿನ</string>
+    <string name="normal_day">ಸಾಮಾನ್ಯ ದಿನ</string>
+    <string name="kari_naal">అశుభ దినం</string>
+    <string name="careful_day">ಎಚ್ಚರಿಕೆಯಿಂದ</string>
+    <string name="shubha_muhurta_naal">ಶುಭ ಮುಹೂರ್ತ ನಾಳ</string>
 </resources>

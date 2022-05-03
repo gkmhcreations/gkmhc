@@ -592,12 +592,17 @@
         <item>వెస్ట్ (బెల్లం)</item>
         <item>తూర్పు (పెరుగు)</item>
     </string-array>
-    <string name="dina_drishti">రోజు రకం</string>
     <!-- Dina Drishti -->
     <string-array name="dina_drishti_list">
-        <item />
-        <item>అశుభ దినం</item>
-        <item>జాగ్రత్త</item>
-        <item>శుభ ముహూర్త నాలు</item>
+        <item>@string/normal_day</item>
+        <item>@string/kari_naal</item>
+        <item>@string/careful_day</item>
+        <item>@string/shubha_muhurta_naal</item>
     </string-array>
+    <string name="dina_drishti">రోజు రకం</string>
+    <string name="selected_day">ఎంచుకున్న రోజు</string>
+    <string name="normal_day">సాధారణ రోజు</string>
+    <string name="kari_naal">అశుభ దినం</string>
+    <string name="careful_day">జాగ్రత్త</string>
+    <string name="shubha_muhurta_naal">శుభ ముహూర్త నాలు</string>
 </resources>

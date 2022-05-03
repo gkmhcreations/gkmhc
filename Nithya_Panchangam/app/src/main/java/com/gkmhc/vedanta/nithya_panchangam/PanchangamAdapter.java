@@ -134,8 +134,8 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
         panchangamViewHolder.panchangamField.setText(panchangamFields.get(position));
         panchangamViewHolder.panchangamField.setTextSize(defTextSize);
 
+        // Color code based on the dina drishti
         if (position == 1) {
-            // Color code based on the dina drishti
             String[] arrayList = context.getResources().getStringArray(R.array.dina_drishti_list);
             String dinaDrishti = panchangamValues.get(position);
             String htmlFontHdrStart = "<font color='#0000CC'>";
@@ -152,9 +152,11 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             }
             panchangamViewHolder.panchangamValue.setText(Html.fromHtml(dinaDrishti));
             panchangamViewHolder.panchangamValue.setTextSize(defTextSize);
-        } else if (position == 4) {
+        }
+
+        // Add Kaala Vibhaagam details
+        else if (position == 4) {
             // Make "Kaala Vibhaagaha" value clickable to display a range of Kaalam(s) throughout the day!
-            // Add Kaala Vibhaagam details
             StringBuilder kaalamVal = new StringBuilder();
             for (int index = 0; index < kaalamExactList.size(); index++) {
                 VedicCalendar.KaalamInfo kaalamInfo = kaalamExactList.get(index);
@@ -196,6 +198,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
                     0, 0, R.drawable.click_here, 0);*/
             convertView.setOnClickListener(v -> showLagnamDetails());
         }
+
         // Make Horai value clickable to display a range of horai(s) throughout the day!
         else if (position == 20) {
             // Add Horai details
@@ -222,6 +225,7 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
                     0, 0, R.drawable.click_here, 0);*/
             convertView.setOnClickListener(v -> showHoraiDetails());
         }
+
         // Align & display "Nalla Neram" in HTML format
         else if (position == 22) {
             // Add "Nalla Neram" details
@@ -232,7 +236,8 @@ public class PanchangamAdapter extends ArrayAdapter<String> {
             panchangamViewHolder.panchangamValue.setText(Html.fromHtml(nallaNeramParsedVal));
             panchangamViewHolder.panchangamValue.setTextSize(defTextSize);
         }
-        // Display remaining fields as-is as retrived!
+
+        // Display remaining fields as-is as retrieved!
         else {
             // Default handling for remaining panchangam fields & values.
             panchangamViewHolder.panchangamValue.setText(panchangamValues.get(position));

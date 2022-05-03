@@ -605,12 +605,17 @@
         <item>மேற்கு (வெல்லம்)</item>
         <item>கிழக்கு (தயிர்)</item>
     </string-array>
-    <string name="dina_drishti">நாள் வகை</string>
     <!-- Dina Drishti -->
     <string-array name="dina_drishti_list">
-        <item />
-        <item>கரி நாள்</item>
-        <item>கவனம்</item>
-        <item>சுப முஹூர்த்த நாள்</item>
+        <item>@string/normal_day</item>
+        <item>@string/kari_naal</item>
+        <item>@string/careful_day</item>
+        <item>@string/shubha_muhurta_naal</item>
     </string-array>
+    <string name="dina_drishti">நாள் வகை</string>
+    <string name="selected_day">தேர்ந்தெடுத்த நாள்</string>
+    <string name="normal_day">சாதாரண நாள்</string>
+    <string name="kari_naal">கரி நாள்</string>
+    <string name="careful_day">கவனம்</string>
+    <string name="shubha_muhurta_naal">சுப முஹூர்த்த நாள்</string>
 </resources>

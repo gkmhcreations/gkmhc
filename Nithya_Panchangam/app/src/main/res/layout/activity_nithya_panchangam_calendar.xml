@@ -1,217 +1,246 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/saffron_background_rr_corner">
+    android:orientation="vertical"
+    android:background="@drawable/saffron_background_rr_corner"
+    android:fillViewport="true">
 
     <LinearLayout
         android:id="@+id/np_top_heading"
-        android:orientation="horizontal"
-        android:minHeight="48dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:orientation="vertical"
+        android:background="@color/lightSaffron"
+        android:gravity="center_vertical"
+        android:layout_weight="2"
+        android:layout_height="0dp"
+        android:layout_width="match_parent">
+        <LinearLayout
+            android:background="@color/lightSaffron"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/np_calendar_prevYear"
-            android:src="@drawable/ic_calendar_prev"
-            android:contentDescription="@string/scroll_calendar_left"
-            android:minHeight="48dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp" />
+            <ImageView
+                android:id="@+id/np_calendar_prevYear"
+                android:src="@drawable/ic_calendar_prev"
+                android:contentDescription="@string/scroll_calendar_left"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp" />
 
-        <ImageView
-            android:id="@+id/np_calendar_prevMonth"
-            android:src="@drawable/ic_calendar_prev_small_arrow"
-            android:contentDescription="@string/scroll_calendar_left"
-            android:minHeight="48dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp" />
+            <ImageView
+                android:id="@+id/np_calendar_prevMonth"
+                android:src="@drawable/ic_calendar_prev_small_arrow"
+                android:contentDescription="@string/scroll_calendar_left"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp" />
 
-        <TextView
-            android:id="@+id/np_calendar_title"
-            android:layout_marginTop="2dp"
-            android:layout_weight="2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:minHeight="48dp"
-            android:textStyle="bold"
-            android:gravity="center_vertical|center_horizontal"
-            android:textAlignment="center"
-            android:text=""
-            android:textColor="@color/maroon"
-            android:textSize="20sp"
-            android:maxLines="3" />
+            <TextView
+                android:id="@+id/np_calendar_title"
+                android:layout_marginTop="2dp"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textAlignment="center"
+                android:text=""
+                android:textColor="@color/maroon"
+                android:gravity="center_vertical|center_horizontal"
+                android:textSize="20sp"
+                android:maxLines="3"
+                android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/np_calendar_nextMonth"
-            android:src="@drawable/ic_calendar_next_small_arrow"
-            android:contentDescription="@string/scroll_calendar_left"
-            android:minHeight="48dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp" />
+            <ImageView
+                android:id="@+id/np_calendar_nextMonth"
+                android:src="@drawable/ic_calendar_next_small_arrow"
+                android:contentDescription="@string/scroll_calendar_right"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp" />
 
-        <ImageView
-            android:id="@+id/np_calendar_nextYear"
-            android:src="@drawable/ic_calendar_next"
-            android:contentDescription="@string/scroll_calendar_right"
-            android:minHeight="48dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp" />
+            <ImageView
+                android:id="@+id/np_calendar_nextYear"
+                android:src="@drawable/ic_calendar_next"
+                android:contentDescription="@string/scroll_calendar_right"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/calendar_view"
-        android:minHeight="48dp"
-        android:layout_width="match_parent"
+        android:id="@+id/np_summary_hdr"
+        android:background="@color/lightSaffron"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:layout_weight="0.25"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/np_top_heading">
+        android:layout_width="match_parent">
+        <LinearLayout
+            android:background="@color/lightSaffron"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:minHeight="48dp"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="@string/planet_sun"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:maxLines="1" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:minHeight="48dp"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="@string/planet_mon"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:maxLines="1" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:minHeight="48dp"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="@string/planet_tue"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:maxLines="1" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:minHeight="48dp"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="@string/planet_wed"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:maxLines="1" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:minHeight="48dp"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="@string/planet_thu"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:maxLines="1" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:minHeight="48dp"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="@string/planet_fri"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:maxLines="1" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:minHeight="48dp"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="@string/planet_sat"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:maxLines="1" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="24dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/planet_sun"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:maxLines="1" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="24dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/planet_mon"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:maxLines="1" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="24dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/planet_tue"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:maxLines="1" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="24dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/planet_wed"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:maxLines="1" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="24dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/planet_thu"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:maxLines="1" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="24dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/planet_fri"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:maxLines="1" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="24dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/planet_sat"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:maxLines="1" />
+        </LinearLayout>
     </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/calendarRecyclerView"
-        android:layout_below="@id/calendar_view"
-        android:scrollbarAlwaysDrawVerticalTrack="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
     <LinearLayout
-        android:minHeight="24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/calendarRecyclerView">
+        android:background="@color/lightSaffron"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_weight="15"
+        android:layout_height="0dp"
+        android:layout_width="match_parent">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_weight="2"
-            android:background="@color/lightcyan"
-            android:minHeight="24dp"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="Selected Day"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="12sp"
-            android:textAlignment="center"
-            android:maxLines="3" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_weight="2"
-            android:background="@color/mildred"
-            android:minHeight="24dp"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="Kari Naal"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="12sp"
-            android:textAlignment="center"
-            android:maxLines="2" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_weight="2"
-            android:background="@color/mildgreen"
-            android:minHeight="24dp"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="Nalla Naal"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="12sp"
-            android:textAlignment="center"
-            android:maxLines="2" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_weight="3"
-            android:background="@color/lightgreen"
-            android:minHeight="24dp"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="Shubha Muhurta Naal"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="12sp"
-            android:textAlignment="center"
-            android:maxLines="3" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/calendarRecyclerView"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </LinearLayout>
-</RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/np_legend_footer"
+        android:background="@color/lightSaffron"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:layout_weight="2"
+        android:layout_height="0dp"
+        android:layout_width="match_parent">
+        <LinearLayout
+            android:background="@color/lightSaffron"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/lightcyan"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/selected_day"
+                android:textColor="@color/blue"
+                android:textAlignment="center"
+                android:maxLines="3" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/mildred"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/kari_naal"
+                android:textColor="@color/blue"
+                android:textAlignment="center"
+                android:maxLines="3" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/lightSaffron"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/careful_day"
+                android:textColor="@color/blue"
+                android:textAlignment="center"
+                android:maxLines="3" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/mildgreen"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/normal_day"
+                android:textColor="@color/blue"
+                android:textAlignment="center"
+                android:maxLines="3" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/lightgreen"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/shubha_muhurta_naal"
+                android:textColor="@color/blue"
+                android:textAlignment="center"
+                android:maxLines="3" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

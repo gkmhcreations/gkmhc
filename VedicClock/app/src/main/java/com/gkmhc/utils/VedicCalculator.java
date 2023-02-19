@@ -3,13 +3,12 @@ package com.gkmhc.utils;
 import java.security.spec.InvalidParameterSpecException;
 
 /**
- * VedicCalculator class exposes set of APIs that can be used to retrieve the given
+ * VedicCalculator class exposes set of APIs that can be used to calculate the given
  * calendar day's field values (typically Tithi, Nakshatram, Yogam, Karanam etc) as per
  * Sunrise timings of the given location. This is also called as Desanthra Samaskaaram!
  *
  * Note: This class can be used as a simple Java Class with NO dependency on Android (or) any other
  *       native platforms.
- *       External Dependency - SwissEph Java public class.
  *
  * @author GKM Heritage Creations, 2023
  *

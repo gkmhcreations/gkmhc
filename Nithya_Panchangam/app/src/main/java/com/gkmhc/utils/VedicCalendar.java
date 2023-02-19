@@ -28,8 +28,8 @@ import swisseph.*;
  *  - Sunrise - Exact Sunrise time given location's longitude & latitude
  *  - Sunset - Exact Sunset time given location's longitude & latitude
  * 3) Celestial Readings
- *  - Ravi Longitude - Longtide of Sun at daybreak(Udhayam) as seen from the given location on Earth
- *  - Chandra Longitude - Longtide of Moon at daybreak(Udhayam) as seen from the given location on Earth
+ *  - Ravi Longitude - Longitude of Sun at daybreak(Udhayam) as seen from the given location on Earth
+ *  - Chandra Longitude - Longitude of Moon at daybreak(Udhayam) as seen from the given location on Earth
  *  - DRM - Time interval between Ravi's longitude between 2 given dates (Daily Ravi Motion).
  *  - DCM - Time interval between Chandra's longitude between 2 given dates (Daily Chandra Motion).
  *
